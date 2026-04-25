@@ -1,14 +1,63 @@
 [
   {
+    "title": "AeroPulse: Real-time Air Quality Mapping",
+    "slug": "aeropulse",
+    "year": 2025,
+    "image": "/projects/aeropulse.png",
+    "summary": "A real-time geovisualization of air quality, surfacing the rhythms of pollution exposure across communities.",
+    "tags": ["air quality", "real-time mapping", "environmental health"],
+    "url": "https://jakobzhao.github.io/aeropulse/"
+  },
+  {
+    "title": "Seattle City Lights: Mapping Urban Illumination",
+    "slug": "scl",
+    "year": 2025,
+    "image": "/projects/scl.png",
+    "lat": 47.6062,
+    "lon": -122.3321,
+    "summary": "An interactive cartography of Seattle's nighttime light landscape, reading the city through its illuminated infrastructures.",
+    "tags": ["urban", "Seattle", "remote sensing"],
+    "url": "https://jakobzhao.github.io/scl/"
+  },
+  {
+    "title": "MBTA Transit Equity Atlas",
+    "slug": "mbta-equity",
+    "year": 2025,
+    "image": "/projects/mbta-equity.png",
+    "lat": 42.3601,
+    "lon": -71.0589,
+    "summary": "An equity-focused web atlas of Boston's MBTA system, examining how transit access intersects with race, income, and opportunity.",
+    "tags": ["transit", "equity", "Boston"],
+    "url": "https://jakobzhao.github.io/mbta_equity/equity.html"
+  },
+  {
+    "title": "Mapping Yi-Fu Tuan's Humanistic Geography",
+    "slug": "yifutuan",
+    "year": 2025,
+    "image": "/projects/yifutuan.png",
+    "summary": "A geo-narrative tribute to Yi-Fu Tuan, tracing the places, ideas, and itineraries that shaped humanistic geography.",
+    "tags": ["humanistic geography", "geo-narrative", "biography"],
+    "url": "https://jakobzhao.github.io/yifutuan/index-en.html"
+  },
+  {
+    "title": "Shifting LGBTQ+ Spaces",
+    "slug": "lgbtqspaces",
+    "year": 2024,
+    "image": "/projects/lgbtqspaces.png",
+    "summary": "A continuing inquiry into the geographies of LGBTQ+ life, charting how queer spaces emerge, persist, and disappear across time.",
+    "tags": ["queer geographies", "historical GIS", "U.S."],
+    "url": "https://hgis.uw.edu/lgbtqspaces"
+  },
+  {
     "title": "Archiving the Capitol Hill Organized Protest (CHOP)",
     "slug": "chop",
     "year": 2023,
-    "image": null,
+    "image": "/projects/chop.png",
     "lat": 47.6149,
     "lon": -122.3194,
     "summary": "Critical and creative (un)mapping of the 2020 CHOP, weaving archival materials and oral histories into a layered geo-narrative of the protest space.",
     "tags": ["geo-narrative", "social justice", "Seattle"],
-    "url": "https://hgis.csde.washington.edu/chop/",
+    "url": "https://hgis.uw.edu/chop/",
     "doi": "10.6069/4KHS-3W59",
     "collaborators": "With D. Koopman, J.-K. Jung, H. Sun, & C. Anderson"
   },
