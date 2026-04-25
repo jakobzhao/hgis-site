@@ -1,26 +1,26 @@
 :root {
-  /* Morandi palette — dusty plum, muted clay, sage, soft rose on warm putty paper */
-  --uw-purple: #6a5a6e;          /* dusty mauve / aubergine — quiet, not vivid */
-  --uw-purple-deep: #4a3e4d;
-  --uw-purple-soft: #9a8b9e;
-  --uw-gold: #a08e6f;            /* muted clay (replacing metallic gold) */
-  --uw-gold-soft: #c5b59a;
+  /* Editorial palette — true UW purple + husky gold on clean cream paper, with saturated sage / berry accents */
+  --uw-purple: #4B2E83;          /* official UW purple — rich, editorial */
+  --uw-purple-deep: #2d1a52;
+  --uw-purple-soft: #8B72B8;     /* lighter purple for hover / soft fills */
+  --uw-gold: #B7A57A;            /* husky gold — warm, not metallic */
+  --uw-gold-soft: #d4c89d;
 
-  --sage: #8e9c8a;               /* dusty sage — collage accent */
-  --sage-soft: #b4bdaf;
-  --rose: #c2a094;               /* dusty rose — collage accent */
-  --rose-soft: #d8c4bb;
-  --mist: #a8b1b3;               /* powder blue-grey */
+  --sage: #4f7c63;               /* deeper, leafier green */
+  --sage-soft: #9bb8a4;
+  --rose: #b54a63;               /* clean berry — less dusty, more present */
+  --rose-soft: #e0a3b1;
+  --mist: #6e8aa3;               /* cooler blue-grey */
 
-  --ink: #2c2823;                /* warm near-black */
-  --ink-soft: #6c6358;
-  --ink-faint: #98907f;
+  --ink: #1d1916;                /* deep warm near-black for crisp contrast */
+  --ink-soft: #4f4940;
+  --ink-faint: #8a8275;
 
-  --rule: #d6cdbf;               /* warm hairline */
-  --rule-soft: #e9e2d4;
-  --bg: #ece5d8;                 /* warm putty paper */
-  --bg-card: #f5efe2;            /* lighter cream for cards */
-  --bg-deep: #ddd4c2;            /* deeper putty */
+  --rule: #d8d2c5;               /* warm hairline */
+  --rule-soft: #ece6d9;
+  --bg: #f6f1e5;                 /* clean cream paper — less yellow than putty */
+  --bg-card: #ffffff;            /* pure white cards — makes screenshots pop */
+  --bg-deep: #e8e1d0;            /* deeper cream for inset surfaces */
 
   --max-w: 1180px;
   --serif: "Fraunces", "Source Serif Pro", "Georgia", serif;
@@ -131,7 +131,7 @@ h3 { font-size: 1.15rem; margin: 1.5em 0 0.4em; font-family: var(--sans); font-w
   aspect-ratio: 16/10;
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(58, 42, 85, 0.12) 0%, rgba(133, 117, 77, 0.18) 100%),
+    linear-gradient(135deg, rgba(75, 46, 131, 0.10) 0%, rgba(183, 165, 122, 0.18) 100%),
     var(--bg-deep);
   border-bottom: 1px solid var(--rule);
 }
