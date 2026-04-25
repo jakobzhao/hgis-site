@@ -4,6 +4,8 @@
     "slug": "aeropulse",
     "year": 2025,
     "image": "/projects/aeropulse.png",
+    "lat": 47.6062,
+    "lon": -122.3321,
     "summary": "A real-time geovisualization of air quality, surfacing the rhythms of pollution exposure across communities.",
     "tags": ["air quality", "real-time mapping", "environmental health"],
     "url": "https://jakobzhao.github.io/aeropulse/"
@@ -35,6 +37,8 @@
     "slug": "yifutuan",
     "year": 2025,
     "image": "/projects/yifutuan.png",
+    "lat": 43.0731,
+    "lon": -89.4012,
     "summary": "A geo-narrative tribute to Yi-Fu Tuan, tracing the places, ideas, and itineraries that shaped humanistic geography.",
     "tags": ["humanistic geography", "geo-narrative", "biography"],
     "url": "https://jakobzhao.github.io/yifutuan/index-en.html"
@@ -44,6 +48,8 @@
     "slug": "lgbtqspaces",
     "year": 2024,
     "image": "/projects/lgbtqspaces.png",
+    "lat": 39.5,
+    "lon": -98.35,
     "summary": "A continuing inquiry into the geographies of LGBTQ+ life, charting how queer spaces emerge, persist, and disappear across time.",
     "tags": ["queer geographies", "historical GIS", "U.S."],
     "url": "https://hgis.uw.edu/lgbtqspaces"
