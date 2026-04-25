@@ -88,7 +88,7 @@ const groups = [
               <Tag class="person" href={m.site} target={m.site && m.site.startsWith('http') ? '_blank' : undefined} rel={m.site && m.site.startsWith('http') ? 'noopener' : undefined}>
                 {m.photo
                   ? <div class="avatar avatar-photo" style={`background-image: url(${m.photo})`}></div>
-                  : <div class="avatar">{m.name.split(' ').map(s => s[0]).join('').slice(0, 2)}</div>
+                  : <div class="avatar">{m.name.split(/\s+/).map(s => s.replace(/[^A-Za-z]/g, '')[0]).filter(Boolean).join('').slice(0, 2)}</div>
                 }
                 <strong>{m.name}</strong>
                 <small>{m.role}</small>
