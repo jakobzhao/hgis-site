@@ -4,7 +4,10 @@ import projects from '../data/projects.json';
 
 const sorted = [...projects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
 ---
-<BaseLayout title="Projects">
+<BaseLayout
+  title="Projects"
+  description="Public scholarship maps and software from the HGIS Lab: CHOP archive, Shifting Queer Space, the Global Refugee Atlas, the COVID-19 infection map, Stand with #StandingRock, and more."
+>
   <section class="container section">
     <span class="eyebrow">Projects</span>
     <h1>Field experiments in humanistic mapping</h1>

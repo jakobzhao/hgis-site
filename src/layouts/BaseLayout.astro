@@ -6,21 +6,99 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  /** Path to a representative image for social cards (relative to site, e.g. /hgis-logo.png). */
+  image?: string;
+  /** Set to true for the home page only — emits Organization + Person JSON-LD. */
+  isHome?: boolean;
 }
-const { title, description = 'Humanistic GIS Laboratory at the University of Washington — geo-narratives, qualitative spatial methods, and humanistic mapping.' } = Astro.props;
+
+const {
+  title,
+  description = 'Humanistic GIS Laboratory at the University of Washington — humanistic GIS, deepfake geography, and geospatial AI. Directed by Bo Zhao.',
+  image = '/hgis-logo.png',
+  isHome = false,
+} = Astro.props;
+
+const SITE_NAME = 'Humanistic GIS Laboratory';
+const fullTitle = isHome
+  ? `${SITE_NAME} · University of Washington`
+  : `${title} · ${SITE_NAME}`;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL(image, Astro.site).toString();
+
+const orgLD = {
+  '@context': 'https://schema.org',
+  '@type': 'ResearchOrganization',
+  name: SITE_NAME,
+  alternateName: 'HGIS Lab',
+  url: 'https://hgis.uw.edu',
+  logo: 'https://hgis.uw.edu/hgis-logo.png',
+  parentOrganization: {
+    '@type': 'CollegeOrUniversity',
+    name: 'University of Washington',
+    url: 'https://www.washington.edu',
+    department: {
+      '@type': 'Organization',
+      name: 'Department of Geography',
+      url: 'https://geography.washington.edu',
+    },
+  },
+  founder: {
+    '@type': 'Person',
+    name: 'Bo Zhao',
+    jobTitle: 'Professor of Geography',
+    url: 'https://hgis.uw.edu/cv/',
+    affiliation: {
+      '@type': 'CollegeOrUniversity',
+      name: 'University of Washington',
+    },
+    sameAs: [
+      'https://geography.washington.edu/people/bo-zhao',
+      'https://github.com/jakobzhao',
+    ],
+  },
+};
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <title>{title} · Humanistic GIS Lab</title>
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={isHome ? 'website' : 'article'} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Crawl hints -->
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Icons -->
     <link rel="icon" type="image/png" href="/hgis-logo.png" />
     <link rel="apple-touch-icon" href="/hgis-logo.png" />
+
+    {isHome && (
+      <script type="application/ld+json" set:html={JSON.stringify(orgLD)} />
+    )}
   </head>
   <body>
     <Header />

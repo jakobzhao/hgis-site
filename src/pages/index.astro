@@ -16,7 +16,11 @@ function formatDate(iso: string) {
   return `${months[parseInt(m, 10) - 1]} ${y}`;
 }
 ---
-<BaseLayout title="Home">
+<BaseLayout
+  title="Humanistic GIS Laboratory"
+  description="Humanistic GIS Laboratory at the University of Washington — research on humanistic GIS, deepfake geography, and geospatial AI. Directed by Professor Bo Zhao, Department of Geography."
+  isHome={true}
+>
   <section class="hero container">
     <div class="hero-grid">
       <div class="hero-text">
