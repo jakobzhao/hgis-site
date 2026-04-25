@@ -56,11 +56,29 @@ git clone https://github.com/jakobzhao/hgis-site.git
 # Point Apache DocumentRoot at hgis-site/dist
 ```
 
-To update the live site:
+### Auto-pull on push (cron)
+
+Every minute, the server checks GitHub and fast-forwards if there are new
+commits — see [`deploy/pull.sh`](deploy/pull.sh). Install once:
 
 ```bash
-git pull            # pulls latest dist/
-# Apache picks it up immediately — static files
+ssh netid@uwserver
+cd ~/hgis-site
+crontab -e
+# add this line:
+* * * * * /home/USER/hgis-site/deploy/pull.sh
+```
+
+`pull.sh` uses `flock` to avoid concurrent runs and only fast-forwards
+(refuses to clobber local edits). Activity is logged to `deploy/pull.log`.
+
+Latency: at most 1 minute from `git push` to live.
+
+### Manual update
+
+```bash
+ssh netid@uwserver
+cd ~/hgis-site && git pull
 ```
 
 When making changes locally:
