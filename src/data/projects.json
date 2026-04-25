@@ -1,13 +1,13 @@
 [
   {
-    "title": "AeroPulse: Real-time Air Quality Mapping",
+    "title": "AeroPulse: Real-time Flight Disruption Tracker",
     "slug": "aeropulse",
     "year": 2025,
     "image": "/projects/aeropulse.png",
     "lat": 47.6062,
     "lon": -122.3321,
-    "summary": "A real-time geovisualization of air quality, surfacing the rhythms of pollution exposure across communities.",
-    "tags": ["air quality", "real-time mapping", "environmental health"],
+    "summary": "A live map of flight delays, cancellations, and diversions, surfacing how disruptions ripple across the global aviation network.",
+    "tags": ["aviation", "real-time mapping", "transportation"],
     "url": "https://jakobzhao.github.io/aeropulse/"
   },
   {
