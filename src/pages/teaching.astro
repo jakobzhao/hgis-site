@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// UW course offerings, sourced from the registrar — newest first.
+const uw = [
+  {
+    code: 'GEOG 458',
+    title: 'Advanced Digital Geographies',
+    offerings: ['Winter 2026', 'Winter 2024', 'Winter 2023'],
+    earlier: '2020Sp · 2021W · 2022Sp',
+    repo: 'https://github.com/jakobzhao/geog458',
+    desc: 'Advanced course on digital geographies, geospatial big data, and the politics of data-intensive society.',
+  },
+  {
+    code: 'GEOG 328',
+    title: 'Web-Based Geographic Information Systems',
+    offerings: ['Autumn 2025', 'Winter 2025', 'Summer 2024', 'Autumn 2023', 'Summer 2023'],
+    repo: 'https://github.com/jakobzhao/geog328',
+    desc: 'Hands-on undergraduate course on building publishable web maps with HTML, JavaScript, and modern mapping libraries.',
+  },
+  {
+    code: 'GEOG 360',
+    title: 'GIS and Mapping',
+    offerings: ['Autumn 2025', 'Autumn 2024'],
+    earlier: '2019F · 2021F/W · 2022F',
+    desc: 'Undergraduate introduction to GIS thinking and cartographic practice.',
+  },
+  {
+    code: 'GEOG 560',
+    title: 'Principles of GIS Mapping',
+    offerings: ['Autumn 2025', 'Autumn 2024'],
+    earlier: '2019F · 2021F/W · 2022F',
+    desc: 'Graduate-level introduction to GIS principles, cartographic design, and spatial analysis.',
+  },
+  {
+    code: 'GEOG 521',
+    title: 'Research Seminar: Critical GIS',
+    offerings: ['Spring 2025', 'Spring 2024'],
+    desc: 'Graduate seminar on the social, ethical, and political dimensions of geographic information systems.',
+  },
+  {
+    code: 'GEOG 497',
+    title: 'Tutorial in Geography',
+    offerings: ['Spring 2025', 'Winter 2025', 'Autumn 2024', 'Spring 2024', 'Winter 2024', 'Autumn 2023'],
+    desc: 'Independent advanced study tailored to individual student research projects.',
+  },
+  {
+    code: 'GEOG 495',
+    title: 'Special Topics',
+    offerings: ['Summer 2025'],
+    earlier: 'Web and Mobile GIS — 2021F, 2022F',
+    repo: 'https://github.com/jakobzhao/geog495',
+    desc: 'Rotating topics in advanced GIS practice. Past iterations: Web and Mobile GIS — designing and deploying interactive maps with modern open-source stacks.',
+  },
+  {
+    code: 'GEOG 595',
+    title: 'Special Topics in Geography',
+    offerings: ['Spring 2023'],
+    earlier: 'Humanistic GIS — 2023Sp · Digital GeoHumanities — 2020W, 2021Sp, 2022W',
+    repo: 'https://github.com/jakobzhao/geog595',
+    desc: 'Graduate seminar on rotating themes. Past iterations: Humanistic GIS (care ethics, place, post-human cartography) and Digital GeoHumanities (computational reading of place).',
+  },
+];
+
+const earlier = [
+  { school: 'Oregon State University · 2016—19', courses: [
+    { code: 'GEOG 370', title: 'Cartography', term: '2018 Winter' },
+    { code: 'GEOG 371 / e371', title: 'Web Mapping', term: '2017—18', repo: 'https://github.com/jakobzhao/geog371' },
+    { code: 'GEOG 571', title: 'Advanced Web Mapping', term: '2017 Winter' },
+    { code: 'GEOG 4/572', title: 'Geovisual Analytics', term: '2017 Spring', repo: 'https://github.com/jakobzhao/geog4572' },
+  ]},
+  { school: 'Ohio State University · 2014—15', courses: [
+    { code: 'GEOG 5220', title: 'Fundamentals of GIS', term: '2015 Summer' },
+  ]},
+];
+---
+<BaseLayout title="Teaching">
+  <section class="container section">
+    <span class="eyebrow">Teaching</span>
+    <h1>Courses</h1>
+    <p class="lede">Courses taught at UW Geography. Most graduate and upper-level course archives are open on GitHub. Syllabi available on request.</p>
+
+    <h2 class="sec-h">University of Washington · 2019—present</h2>
+    <div class="course-list">
+      {uw.map(c => (
+        <article class="course">
+          <div class="code">{c.code}</div>
+          <div>
+            <h3>{c.title}</h3>
+            <ul class="offerings">
+              {c.offerings.map(t => <li>{t}</li>)}
+            </ul>
+            {c.earlier && <p class="earlier">Earlier offerings: {c.earlier}</p>}
+            <p class="desc">{c.desc}</p>
+            {c.repo && <p class="repo"><a href={c.repo} target="_blank" rel="noopener">Course archive on GitHub →</a></p>}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    {earlier.map(group => (
+      <>
+        <h2 class="sec-h">{group.school}</h2>
+        <div class="course-list">
+          {group.courses.map(c => (
+            <article class="course course-compact">
+              <div class="code">{c.code}</div>
+              <div>
+                <h3>{c.title}</h3>
+                <p class="term">{c.term}</p>
+                {c.repo && <p class="repo"><a href={c.repo} target="_blank" rel="noopener">Course archive on GitHub →</a></p>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.1rem; color: var(--ink-soft); max-width: 65ch; }
+  .sec-h {
+    margin-top: 2.5rem;
+    color: var(--uw-purple);
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.4rem;
+  }
+  .course-list { display: grid; gap: 1rem; margin-top: 1.2rem; }
+  .course {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1.25rem;
+    padding: 1.2rem;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--bg-card);
+  }
+  .course-compact { padding: 0.9rem 1.2rem; }
+  .code {
+    font-weight: 700;
+    color: var(--uw-purple);
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+  }
+  .course h3 { margin: 0 0 0.35em; }
+  .term { color: var(--ink-soft); margin: 0 0 0.5em; font-size: 0.9rem; }
+  .offerings {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.6em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .offerings li {
+    font-size: 0.78rem;
+    background: var(--bg-deep);
+    color: var(--uw-purple);
+    padding: 0.18rem 0.55rem;
+    border-radius: 100px;
+    font-variant-numeric: tabular-nums;
+  }
+  .earlier {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    margin: 0 0 0.6em;
+    font-style: italic;
+  }
+  .desc { margin: 0; }
+  .repo { margin-top: 0.5rem; font-size: 0.88rem; }
+</style>

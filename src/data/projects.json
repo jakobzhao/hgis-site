@@ -1,0 +1,170 @@
+[
+  {
+    "title": "Archiving the Capitol Hill Organized Protest (CHOP)",
+    "slug": "chop",
+    "year": 2023,
+    "image": null,
+    "lat": 47.6149,
+    "lon": -122.3194,
+    "summary": "Critical and creative (un)mapping of the 2020 CHOP, weaving archival materials and oral histories into a layered geo-narrative of the protest space.",
+    "tags": ["geo-narrative", "social justice", "Seattle"],
+    "url": "https://hgis.csde.washington.edu/chop/",
+    "doi": "10.6069/4KHS-3W59",
+    "collaborators": "With D. Koopman, J.-K. Jung, H. Sun, & C. Anderson"
+  },
+  {
+    "title": "Shifting Queer Space in the United States (2000—2019)",
+    "slug": "shiftingqueerspace",
+    "year": 2022,
+    "image": "/projects/sqs2.png",
+    "lat": 39.5,
+    "lon": -98.35,
+    "summary": "A web map of Damron Men's Travel Guide venues over two decades, charting the shifting geography of queer life across the United States.",
+    "tags": ["queer geographies", "historical GIS", "U.S."],
+    "url": "https://hgis.uw.edu/shiftingqueerspace",
+    "doi": "10.6069/WT82-TH75",
+    "collaborators": "With Q. Zhang, Y. Xia, J. Huang, & L. Peng"
+  },
+  {
+    "title": "COVID-19 Risk to Washington Workers",
+    "slug": "covid19-workers",
+    "year": 2020,
+    "image": "/projects/risk-workers.png",
+    "lat": 47.4,
+    "lon": -120.5,
+    "summary": "A smart dashboard characterizing occupational risk to Washington workers during the COVID-19 economic recovery.",
+    "tags": ["public health", "labor", "Washington"],
+    "url": "https://hgis.uw.edu/covid19-workers/",
+    "collaborators": "With Marissa Baker & Kim England · UW Population Health Initiative"
+  },
+  {
+    "title": "Novel Coronavirus Infection Map",
+    "slug": "virus",
+    "year": 2020,
+    "image": "/projects/virus.png",
+    "lat": 47.6062,
+    "lon": -122.3321,
+    "summary": "One of the earliest live dashboards of the COVID-19 pandemic, built in February 2020 and reported by BBC, National Geographic, and Anadolu Agency.",
+    "tags": ["public health", "real-time mapping", "global"],
+    "url": "https://hgis.uw.edu/virus",
+    "collaborators": "With F. Xu, L. Kang, J. Ji, J. Ho, & S. Bao"
+  },
+  {
+    "title": "University of Washington Virtual Tour",
+    "slug": "sefs",
+    "year": 2020,
+    "image": "/projects/sefs.jpg",
+    "lat": 47.6553,
+    "lon": -122.3035,
+    "summary": "An interactive virtual tour of UW's School of Environmental and Forest Sciences, blending 3D scenes with on-the-ground photography.",
+    "tags": ["3D", "campus", "virtual tour"],
+    "url": "https://hgis.uw.edu/sefs"
+  },
+  {
+    "title": "Damron Seattle: Mapping Queer Space",
+    "slug": "damron",
+    "year": 2019,
+    "image": "/projects/damron.png",
+    "lat": 47.6062,
+    "lon": -122.3321,
+    "summary": "A Seattle case study from the Damron Men's Travel Guide: locating decades of LGBTQ+ venues to recover a long-silenced urban history.",
+    "tags": ["queer geographies", "Seattle", "historical GIS"],
+    "url": "https://hgis.uw.edu/damron/seattle.html"
+  },
+  {
+    "title": "Global Refugee Atlas",
+    "slug": "refugee",
+    "year": 2018,
+    "image": "/projects/gra.png",
+    "summary": "A National Geographic—funded atlas tracing global refugee flows and the geographies of displacement.",
+    "tags": ["migration", "humanitarian", "global"],
+    "url": "https://hgis.uw.edu/refugee",
+    "collaborators": "With Jamon Van Den Hoek & Jennifer Alix-Garcia · National Geographic NGS-51699S-18"
+  },
+  {
+    "title": "TWCA Water Calculator",
+    "slug": "twca",
+    "year": 2018,
+    "image": "/projects/wc.png",
+    "summary": "A geovisual analytic platform for the Turfgrass Water Conservation Alliance, helping turfgrass producers reason about regional water savings.",
+    "tags": ["sustainability", "water", "platform"],
+    "url": "https://jakobzhao.github.io/twca/",
+    "collaborators": "Funded by Turfgrass Water Conservation Alliance"
+  },
+  {
+    "title": "Goss Point Cloud Viewer",
+    "slug": "goss",
+    "year": 2018,
+    "image": "/projects/point-cloud-goss.jpg",
+    "summary": "A WebGL point cloud viewer for sharing high-resolution lidar scans on the open web.",
+    "tags": ["lidar", "WebGL", "3D"],
+    "url": "https://hgis.uw.edu/goss"
+  },
+  {
+    "title": "Storymap.js",
+    "slug": "storymap-js",
+    "year": 2016,
+    "image": "/projects/storymap.png",
+    "lat": 47.6553,
+    "lon": -122.3035,
+    "summary": "A lightweight JavaScript library for telling place-based stories on web maps. Used in courses and community projects.",
+    "tags": ["software", "cartography", "open source"],
+    "url": "https://github.com/jakobzhao/storymap"
+  },
+  {
+    "title": "Oregon Water Atlas",
+    "slug": "oregon-water",
+    "year": 2017,
+    "image": "/projects/oregonwater.png",
+    "lat": 44.1,
+    "lon": -120.5,
+    "summary": "A digital collection and visualization of Oregon's water resources — winner of the Student Environment Challenge (Oregon Chapter, AWMA).",
+    "tags": ["water", "Oregon", "atlas"],
+    "url": "http://oregonwater.info/"
+  },
+  {
+    "title": "Sea Level Rise Induced Migration",
+    "slug": "slr",
+    "year": 2017,
+    "image": "/projects/slr.jpg",
+    "lat": 30.0,
+    "lon": -89.9,
+    "summary": "An award-winning visualization of how sea level rise reshapes coastal migration patterns in the United States. Grand Prize, Ecological Visualization Contest.",
+    "tags": ["climate", "migration", "visualization"],
+    "url": "https://jakobzhao.github.io/slr",
+    "collaborators": "NSF-DBI-1062566"
+  },
+  {
+    "title": "GEEViz: Google Earth Engine Geovisualization",
+    "slug": "geeviz",
+    "year": 2018,
+    "image": "/projects/geeviz.png",
+    "summary": "A web platform for exploring planetary-scale Google Earth Engine datasets through interactive geovisual analytics.",
+    "tags": ["remote sensing", "GeoAI", "platform"],
+    "url": "https://jakobzhao.github.io/geeviz/",
+    "collaborators": "Supported by Google Cloud Platform · with H. Friedrich"
+  },
+  {
+    "title": "Stand with #StandingRock",
+    "slug": "standingrock",
+    "year": 2018,
+    "image": "/projects/standingrock.png",
+    "lat": 46.0,
+    "lon": -100.7,
+    "summary": "An epistemological experiment in geospatial big data during the post-truth era, supporting the land claims of Sioux tribes through critical mapping.",
+    "tags": ["indigenous", "social justice", "post-truth"],
+    "url": "https://winkyt.github.io/standwithstandingrock/index.html",
+    "collaborators": "With Yuanyuan Tian, Shaozeng Zhang, & Shenliang Chen"
+  },
+  {
+    "title": "H.J. Andrews Experimental Forest Point Cloud",
+    "slug": "hja",
+    "year": 2017,
+    "image": "/projects/hja.jpg",
+    "lat": 44.21,
+    "lon": -122.25,
+    "summary": "A web point-cloud visualization of the H.J. Andrews Experimental Forest headquarters area, built from terrestrial lidar.",
+    "tags": ["lidar", "forest", "Oregon"],
+    "url": "https://jakobzhao.github.io/hja"
+  }
+]

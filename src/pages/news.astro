@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortedNews } from '../data/news';
+
+const sorted = sortedNews();
+
+const groups = sorted.reduce((acc, n) => {
+  const year = n.date.slice(0, 4);
+  (acc[year] ??= []).push(n);
+  return acc;
+}, {});
+const years = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+
+function formatDate(iso) {
+  const [y, m, d] = iso.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m, 10) - 1]} ${parseInt(d, 10)}, ${y}`;
+}
+---
+<BaseLayout title="News">
+  <section class="container section">
+    <span class="eyebrow">News &amp; media</span>
+    <h1>In the news</h1>
+    <p class="lede">Selected media coverage of the lab's research — from deepfake geography and the early COVID-19 dashboard to social-media studies of climate, air pollution, and Black-owned restaurants.</p>
+
+    {years.map(year => (
+      <section class="year-group">
+        <h2>{year}</h2>
+        <ol class="news-feed">
+          {groups[year].map(n => (
+            <li>
+              <span class="outlet">{n.outlet}</span>
+              <h3><a href={n.url} target="_blank" rel="noopener">{n.title}</a></h3>
+              <time>{formatDate(n.date)}</time>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.1rem; color: var(--ink-soft); max-width: 65ch; }
+  .year-group { margin-top: 2rem; }
+  .year-group h2 {
+    font-size: 1.3rem;
+    color: var(--uw-purple);
+    border-bottom: 2px solid var(--uw-purple);
+    padding-bottom: 0.3rem;
+    display: inline-block;
+  }
+  .news-feed { list-style: none; padding: 0; margin: 1rem 0 0; }
+  .news-feed li {
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .news-feed li:last-child { border-bottom: 0; }
+  .outlet {
+    display: inline-block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--uw-gold);
+    font-weight: 600;
+  }
+  .news-feed h3 {
+    margin: 0.25em 0 0.3em;
+    font-size: 1.1rem;
+    line-height: 1.35;
+  }
+  .news-feed h3 a { color: var(--ink); border-bottom: 0; }
+  .news-feed h3 a:hover { color: var(--uw-purple); }
+  .news-feed time {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+  }
+</style>

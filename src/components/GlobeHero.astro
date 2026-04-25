@@ -1,0 +1,378 @@
+---
+import projects from '../data/projects.json';
+import { news, outletCity } from '../data/news';
+import { talks } from '../data/talks';
+
+// Build a unified point list. Each marker has type/lat/lon/title/href/date.
+type Pt = { type: 'project' | 'press' | 'talk'; lat: number; lon: number; title: string; sub: string; href?: string; date?: string };
+
+const pts: Pt[] = [];
+
+for (const p of projects) {
+  if (typeof (p as any).lat === 'number' && typeof (p as any).lon === 'number') {
+    pts.push({ type: 'project', lat: (p as any).lat, lon: (p as any).lon, title: p.title, sub: p.summary ?? '', href: `/projects/#${p.slug}`, date: String(p.year ?? '') });
+  }
+}
+
+for (const n of news) {
+  const c = outletCity[n.outlet];
+  if (!c) continue;
+  pts.push({ type: 'press', lat: c.lat, lon: c.lon, title: n.title, sub: `${n.outlet} · ${c.city}`, href: n.url, date: n.date });
+}
+
+for (const t of talks) {
+  pts.push({ type: 'talk', lat: t.lat, lon: t.lon, title: t.title, sub: `${t.host} · ${t.place}`, date: String(t.year) });
+}
+---
+<div class="globe-wrap">
+  <svg id="globe" data-points={JSON.stringify(pts)} aria-label="Rotating globe of HGIS Lab projects, press, and talks"></svg>
+  <div id="globe-tooltip" class="globe-tooltip" hidden></div>
+</div>
+<div class="globe-legend">
+  <span><i class="dot dot-project"></i> Projects</span>
+  <span><i class="dot dot-press"></i> Press</span>
+  <span><i class="dot dot-talk"></i> Talks</span>
+</div>
+
+<script is:inline type="module">
+  import * as d3 from 'https://esm.sh/d3@7';
+  import { feature } from 'https://esm.sh/topojson-client@3';
+
+  const svg = document.getElementById('globe');
+  const tip = document.getElementById('globe-tooltip');
+  if (!svg) throw new Error('globe svg missing');
+  const pts = JSON.parse(svg.dataset.points || '[]');
+
+  // Pick the single most recent item to keep a sticky popup for.
+  function dateKey(s) {
+    if (!s) return '0000-00-00';
+    if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s;
+    if (/^\d{4}$/.test(s)) return `${s}-12-31`;
+    return s;
+  }
+  const latest = pts.slice().sort((a, b) => dateKey(b.date).localeCompare(dateKey(a.date)))[0] || null;
+  let hoverActive = false;
+
+  const wrap = svg.parentElement;
+  const measure = () => ({ w: wrap.clientWidth, h: Math.min(560, Math.max(360, wrap.clientWidth)) });
+  let { w, h } = measure();
+  const radius = () => Math.min(w, h) * 0.46;
+
+  svg.setAttribute('width', w);
+  svg.setAttribute('height', h);
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+  const root = d3.select(svg);
+  const initialRotate = latest
+    ? [-latest.lon + 25, -latest.lat * 0.6, 0]   // bring latest into view but not dead-center
+    : [-122.3, -47.6, 0];
+  const projection = d3.geoOrthographic()
+    .scale(radius())
+    .translate([w / 2, h / 2])
+    .rotate(initialRotate)
+    .clipAngle(90);
+  const path = d3.geoPath(projection);
+
+  // Layers
+  const gSphere = root.append('g');
+  const gGraticule = root.append('g');
+  const gLand = root.append('g');
+  const gPoints = root.append('g');
+
+  gSphere.append('circle')
+    .attr('cx', w / 2).attr('cy', h / 2).attr('r', radius())
+    .attr('fill', 'var(--bg-deep)')
+    .attr('stroke', 'var(--rule)')
+    .attr('stroke-width', 1);
+
+  // Inner soft ring shadow
+  gSphere.append('circle')
+    .attr('cx', w / 2).attr('cy', h / 2).attr('r', radius())
+    .attr('fill', 'url(#sphere-shade)')
+    .attr('pointer-events', 'none');
+
+  const defs = root.append('defs');
+  const grad = defs.append('radialGradient')
+    .attr('id', 'sphere-shade')
+    .attr('cx', '35%').attr('cy', '35%').attr('r', '70%');
+  grad.append('stop').attr('offset', '0%').attr('stop-color', 'rgba(255,255,255,0.18)');
+  grad.append('stop').attr('offset', '60%').attr('stop-color', 'rgba(255,255,255,0)');
+  grad.append('stop').attr('offset', '100%').attr('stop-color', 'rgba(58,42,38,0.10)');
+
+  const graticule = d3.geoGraticule10();
+
+  let landFeature = null;
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json')
+    .then(r => r.json())
+    .then(world => {
+      landFeature = feature(world, world.objects.land);
+      render();
+    });
+
+  function render() {
+    gGraticule.selectAll('path').data([graticule]).join('path')
+      .attr('d', path)
+      .attr('fill', 'none')
+      .attr('stroke', 'var(--rule-soft)')
+      .attr('stroke-width', 0.6)
+      .attr('opacity', 0.55);
+
+    if (landFeature) {
+      gLand.selectAll('path').data([landFeature]).join('path')
+        .attr('d', path)
+        .attr('fill', 'var(--bg-card)')
+        .attr('stroke', 'var(--rule)')
+        .attr('stroke-width', 0.4);
+    }
+
+    const visible = (d) => {
+      const r = projection.rotate();
+      const center = [-r[0], -r[1]];
+      return d3.geoDistance([d.lon, d.lat], center) < Math.PI / 2 - 0.02;
+    };
+
+    const dots = gPoints.selectAll('g.pt').data(pts, (d, i) => i);
+    const enter = dots.enter().append('g')
+      .attr('class', d => `pt pt-${d.type}`)
+      .style('cursor', d => d.href ? 'pointer' : 'default')
+      .on('mouseenter', (event, d) => { hoverActive = true; showTip(event, d); })
+      .on('mousemove', (event) => moveTip(event))
+      .on('mouseleave', () => { hoverActive = false; updateStickyTip(); })
+      .on('click', (event, d) => { if (d.href) window.open(d.href, d.href.startsWith('http') ? '_blank' : '_self'); });
+    enter.append('circle').attr('class', 'halo').attr('r', 7);
+    enter.append('circle').attr('class', 'core').attr('r', 3);
+
+    const merged = enter.merge(dots);
+    merged.attr('transform', d => {
+      const c = projection([d.lon, d.lat]);
+      if (!c) return 'translate(-9999,-9999)';
+      return `translate(${c[0]},${c[1]})`;
+    }).attr('opacity', d => visible(d) ? 1 : 0);
+
+    // Mark the latest dot with a permanent ring
+    if (latest) {
+      merged.classed('pt-latest', d => d === latest || (d.title === latest.title && d.date === latest.date));
+    }
+
+    if (!hoverActive) updateStickyTip();
+  }
+
+  function updateStickyTip() {
+    if (!latest || !tip || hoverActive) return;
+    const r = projection.rotate();
+    const center = [-r[0], -r[1]];
+    const onFront = d3.geoDistance([latest.lon, latest.lat], center) < Math.PI / 2 - 0.04;
+    if (!onFront) { tip.hidden = true; return; }
+    const c = projection([latest.lon, latest.lat]);
+    if (!c) { tip.hidden = true; return; }
+    setTipContent(latest);
+    tip.hidden = false;
+    placeTipAt(c[0], c[1]);
+  }
+
+  function placeTipAt(x, y) {
+    const tw = tip.offsetWidth;
+    const th = tip.offsetHeight;
+    const wrapW = wrap.clientWidth;
+    const wrapH = svg.clientHeight;
+    let left = x + 14;
+    let top = y - th - 14;
+    if (left + tw > wrapW - 8) left = x - tw - 14;
+    if (top < 8) top = y + 14;
+    tip.style.left = `${Math.max(8, left)}px`;
+    tip.style.top  = `${Math.max(8, top)}px`;
+  }
+
+  function setTipContent(d) {
+    tip.innerHTML = `
+      <span class="tip-kind tip-${d.type}">${d.type}</span>
+      <strong>${escapeHtml(d.title)}</strong>
+      <em>${escapeHtml(d.sub)}</em>
+      ${d.date ? `<time>${escapeHtml(d.date)}</time>` : ''}
+    `;
+  }
+
+  function showTip(event, d) {
+    if (!tip) return;
+    setTipContent(d);
+    tip.hidden = false;
+    moveTip(event);
+  }
+  function moveTip(event) {
+    if (!tip || tip.hidden) return;
+    const rect = wrap.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const tw = tip.offsetWidth;
+    const th = tip.offsetHeight;
+    let left = x + 14;
+    let top = y + 14;
+    if (left + tw > rect.width - 8) left = x - tw - 14;
+    if (top + th > rect.height - 8) top = y - th - 14;
+    tip.style.left = `${Math.max(8, left)}px`;
+    tip.style.top  = `${Math.max(8, top)}px`;
+  }
+  function hideTip() {
+    hoverActive = false;
+    updateStickyTip();
+  }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  // Auto-rotate
+  let autoRotate = true;
+  let lastT = 0;
+  d3.timer(t => {
+    if (!autoRotate) { lastT = t; return; }
+    const dt = t - lastT;
+    lastT = t;
+    if (!landFeature) return;
+    const r = projection.rotate();
+    projection.rotate([r[0] + dt * 0.012, r[1], r[2]]);
+    render();
+  });
+
+  // Drag to rotate
+  let dragStart = null;
+  root.call(
+    d3.drag()
+      .on('start', (event) => {
+        autoRotate = false;
+        hideTip();
+        dragStart = { x: event.x, y: event.y, rot: projection.rotate() };
+      })
+      .on('drag', (event) => {
+        if (!dragStart) return;
+        const dx = event.x - dragStart.x;
+        const dy = event.y - dragStart.y;
+        const k = 0.4;  // sensitivity
+        const newRot = [
+          dragStart.rot[0] + dx * k,
+          Math.max(-85, Math.min(85, dragStart.rot[1] - dy * k)),
+          dragStart.rot[2],
+        ];
+        projection.rotate(newRot);
+        render();
+      })
+      .on('end', () => {
+        dragStart = null;
+        // Resume after a short pause so the user can read
+        setTimeout(() => { autoRotate = true; }, 1800);
+      })
+  );
+
+  // Resize
+  const ro = new ResizeObserver(() => {
+    const m = measure();
+    if (m.w === w && m.h === h) return;
+    w = m.w; h = m.h;
+    svg.setAttribute('width', w);
+    svg.setAttribute('height', h);
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    projection.scale(radius()).translate([w / 2, h / 2]);
+    gSphere.selectAll('circle')
+      .attr('cx', w / 2).attr('cy', h / 2).attr('r', radius());
+    render();
+  });
+  ro.observe(wrap);
+</script>
+
+<style>
+  .globe-wrap {
+    position: relative;
+    width: 100%;
+  }
+  #globe { display: block; width: 100%; touch-action: none; cursor: grab; }
+  #globe:active { cursor: grabbing; }
+
+  .globe-legend {
+    margin: 0.6rem 0 0;
+    padding: 0;
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: center;
+    gap: 1.6rem;
+  }
+  .globe-legend .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .dot-project { background: var(--uw-purple); }
+  .dot-press   { background: var(--uw-gold); }
+  .dot-talk    { background: var(--sage); }
+
+  /* Markers */
+  :global(.pt-project .core) { fill: var(--uw-purple); }
+  :global(.pt-project .halo) { fill: var(--uw-purple); fill-opacity: 0.18; }
+  :global(.pt-press .core)   { fill: var(--uw-gold); }
+  :global(.pt-press .halo)   { fill: var(--uw-gold); fill-opacity: 0.20; }
+  :global(.pt-talk .core)    { fill: var(--sage); }
+  :global(.pt-talk .halo)    { fill: var(--sage); fill-opacity: 0.20; }
+  :global(.pt .core) { stroke: var(--bg-card); stroke-width: 1.2; transition: r 0.15s ease; }
+  :global(.pt:hover .core) { r: 5; }
+  :global(.pt:hover .halo) { fill-opacity: 0.35; }
+
+  /* Latest item gets a pulsing ring to indicate the sticky popup is for it */
+  :global(.pt-latest .halo) {
+    animation: pulse-halo 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse-halo {
+    0%, 100% { r: 7;  fill-opacity: 0.20; }
+    50%      { r: 14; fill-opacity: 0.05; }
+  }
+
+  .globe-tooltip {
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.55rem 0.75rem;
+    max-width: 280px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    box-shadow: 0 4px 18px rgba(50, 42, 38, 0.10);
+  }
+  .globe-tooltip[hidden] { display: none; }
+  .globe-tooltip strong {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0.15rem 0 0.2rem;
+    line-height: 1.3;
+  }
+  .globe-tooltip em {
+    display: block;
+    font-style: normal;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+  }
+  .globe-tooltip time {
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    display: block;
+    margin-top: 0.3rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .tip-kind {
+    display: inline-block;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.1rem 0.4rem;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+  .tip-project { background: var(--uw-purple); color: var(--bg-card); }
+  .tip-press   { background: var(--uw-gold);   color: var(--bg-card); }
+  .tip-talk    { background: var(--sage);      color: var(--bg-card); }
+</style>

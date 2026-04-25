@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const groups = [
+  {
+    label: 'Director',
+    members: [
+      {
+        name: 'Bo Zhao',
+        role: 'Professor of Geography · Director',
+        site: '/cv/',
+        focus: 'Humanistic GIS · Fake Geographies · GeoAI',
+        photo: '/people/bo-zhao.jpg',
+      },
+    ],
+  },
+  {
+    label: 'PhD students',
+    members: [
+      {
+        name: 'Liz Peng',
+        role: 'Doctoral Student · UW Geography',
+        site: 'https://geography.washington.edu/people/liz-peng',
+        focus: 'Critical theory · feminist GIS · queer studies · migration',
+      },
+      {
+        name: 'Tongwei Xu',
+        role: 'Doctoral Student · UW Geography',
+        site: 'https://geography.washington.edu/people/tongwei-xu',
+        focus: 'Digital geographies · platform studies · music geography',
+      },
+    ],
+  },
+  {
+    label: "Master's students",
+    members: [
+      {
+        name: 'Alexander Kirchmeier',
+        role: 'Graduate Student · UW Geography',
+        site: 'https://geography.washington.edu/people/alexander-kirchmeier',
+        focus: 'Critical human geography · justice · urban studies · GIS',
+      },
+    ],
+  },
+  {
+    label: 'Recent alumni',
+    members: [
+      {
+        name: 'Jiaxin Feng',
+        role: 'PhD 2024 · UW Geography',
+        focus: 'Dynamic human emotions toward geographic environments — EEG + GIScience',
+      },
+      {
+        name: 'Xiaoqi "Steven" Bao',
+        role: 'MA 2023 · UW Geography',
+        focus: "Rhythmanalysis of Seattle's Black-owned restaurants during COVID-19 · UW Distinguished Thesis Award (Social Sciences) · AAG Marble Fund Awardee",
+      },
+      {
+        name: 'Yifan Sun',
+        role: 'Ph.C. 2020 · UW Geography',
+        focus: 'Spatial misinformation · neural sensing of place',
+      },
+      {
+        name: 'Tyler McCrea',
+        role: 'MA 2020 · UW Geography',
+        focus: 'Materialist spatial analysis of data centers',
+      },
+    ],
+  },
+];
+---
+<BaseLayout title="People">
+  <section class="container section">
+    <span class="eyebrow">People</span>
+    <h1>Lab members</h1>
+    <p class="lede">A small group of geographers, designers, and computational researchers working on the meaning of place. Full advising history is in the <a href="/cv/">CV</a>.</p>
+
+    {groups.map(g => (
+      <section class="grp">
+        <h2>{g.label}</h2>
+        <div class="people-grid">
+          {g.members.map(m => {
+            const Tag = m.site ? 'a' : 'div';
+            return (
+              <Tag class="person" href={m.site} target={m.site && m.site.startsWith('http') ? '_blank' : undefined} rel={m.site && m.site.startsWith('http') ? 'noopener' : undefined}>
+                {m.photo
+                  ? <div class="avatar avatar-photo" style={`background-image: url(${m.photo})`}></div>
+                  : <div class="avatar">{m.name.split(' ').map(s => s[0]).join('').slice(0, 2)}</div>
+                }
+                <strong>{m.name}</strong>
+                <small>{m.role}</small>
+                {m.focus && <p class="focus">{m.focus}</p>}
+              </Tag>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.1rem; color: var(--ink-soft); max-width: 65ch; }
+  .grp { margin-top: 2.5rem; }
+  .grp h2 {
+    font-size: 1.15rem;
+    color: var(--uw-purple);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .people-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .person {
+    color: var(--ink);
+    text-align: center;
+    display: block;
+    padding: 1rem 0.8rem;
+    border: 1px solid var(--rule-soft);
+    border-radius: 6px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--rule-soft);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  a.person:hover {
+    text-decoration: none;
+    border-color: var(--uw-gold);
+    transform: translateY(-2px);
+  }
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    margin: 0 auto 0.8rem;
+    background: linear-gradient(135deg, var(--rose-soft), var(--sage-soft));
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--uw-purple-deep);
+    letter-spacing: -0.02em;
+  }
+  .avatar-photo {
+    background-size: cover;
+    background-position: center top;
+    box-shadow: 0 1px 3px rgba(58, 42, 85, 0.18);
+  }
+  .person strong { display: block; font-size: 1rem; }
+  .person small {
+    display: block;
+    color: var(--ink-soft);
+    margin-top: 0.15rem;
+    font-size: 0.85rem;
+  }
+  .focus {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    margin: 0.6rem 0 0;
+    line-height: 1.4;
+  }
+</style>

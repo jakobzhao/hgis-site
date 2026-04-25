@@ -1,0 +1,118 @@
+---
+import projects from '../data/projects.json';
+---
+<div class="hero-map-wrap">
+  <div id="hero-map" data-projects={JSON.stringify(projects)} aria-label="Map of Humanistic GIS Lab projects around the world"></div>
+  <div class="hero-map-legend">
+    <span class="dot"></span> Click pins to explore lab projects
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+<script is:inline type="module">
+  // Lazy-load Leaflet from CDN to keep build simple
+  const L = await import('https://esm.sh/leaflet@1.9.4');
+  const el = document.getElementById('hero-map');
+  if (!el) throw new Error('hero-map element missing');
+  const projects = JSON.parse(el.dataset.projects || '[]');
+
+  const map = L.map(el, {
+    center: [25, 10],
+    zoom: 2,
+    minZoom: 2,
+    maxZoom: 8,
+    scrollWheelZoom: false,
+    worldCopyJump: true,
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19,
+    opacity: 0.65,
+  }).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
+    subdomains: 'abcd',
+    maxZoom: 19,
+    opacity: 0.7,
+  }).addTo(map);
+
+  const pinIcon = L.divIcon({
+    className: 'hgis-pin',
+    html: '<span></span>',
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  });
+
+  for (const p of projects) {
+    if (typeof p.lat !== 'number' || typeof p.lon !== 'number') continue;
+    const m = L.marker([p.lat, p.lon], { icon: pinIcon }).addTo(map);
+    m.bindPopup(`
+      <strong>${p.title}</strong><br/>
+      <span style="color:#555;font-size:0.88em;">${p.summary}</span><br/>
+      <a href="/projects/#${p.slug}" style="color:#4b2e83;font-weight:600;">View project →</a>
+    `);
+  }
+</script>
+
+<style>
+  .hero-map-wrap {
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--bg-deep);
+    box-shadow: inset 0 0 0 4px var(--bg-card), 0 1px 3px rgba(58, 42, 85, 0.06);
+  }
+  #hero-map {
+    height: 460px;
+    width: 100%;
+  }
+  .hero-map-legend {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    background: rgba(251, 248, 241, 0.94);
+    backdrop-filter: blur(4px);
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--rule);
+    border-radius: 1px;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.01em;
+    z-index: 500;
+  }
+  .hero-map-legend .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--uw-purple);
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  :global(.hgis-pin span) {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: var(--uw-purple);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(75, 46, 131, 0.25), 0 2px 6px rgba(0,0,0,0.18);
+    transition: transform 0.15s ease;
+  }
+  :global(.hgis-pin:hover span) {
+    transform: scale(1.3);
+    background: var(--uw-gold);
+  }
+  :global(.leaflet-popup-content-wrapper) {
+    border-radius: 8px;
+  }
+  :global(.leaflet-popup-content) {
+    margin: 0.7rem 0.9rem;
+    font-family: var(--sans);
+    line-height: 1.45;
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/research/', label: 'Research' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/publications/', label: 'Publications' },
+  { href: '/people/', label: 'People' },
+  { href: '/teaching/', label: 'Teaching' },
+  { href: '/news/', label: 'News' },
+  { href: '/cv/', label: 'CV' },
+];
+const path = Astro.url.pathname;
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <img src="/hgis-logo.png" alt="HGIS Lab logo" class="brand-logo" width="42" height="42" />
+      <span class="brand-text">
+        <strong>Humanistic GIS Laboratory</strong>
+        <small>University of Washington · Department of Geography</small>
+      </span>
+    </a>
+    <nav>
+      <ul>
+        {nav.map(item => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[ 'nav-link', { active: path === item.href || (item.href !== '/' && path.startsWith(item.href)) } ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+  <div class="gold-rule"></div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .gold-rule {
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--uw-gold) 20%, var(--uw-gold) 80%, transparent 100%);
+    opacity: 0.55;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.75rem;
+    gap: 2rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--ink);
+    border-bottom: 0;
+  }
+  .brand:hover { border-bottom: 0; }
+  .brand-logo {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: block;
+    object-fit: contain;
+  }
+  .brand-text strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    font-weight: 600;
+  }
+  .brand-text small {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  nav ul {
+    display: flex;
+    gap: 0.2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    color: var(--ink);
+    padding: 0.4rem 0.85rem;
+    border-radius: 1px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-bottom: 1px solid transparent;
+  }
+  .nav-link:hover {
+    color: var(--uw-purple);
+    border-bottom-color: var(--uw-gold);
+  }
+  .nav-link.active {
+    color: var(--uw-purple);
+    border-bottom-color: var(--uw-gold);
+  }
+
+  @media (max-width: 720px) {
+    .header-inner { flex-direction: column; gap: 0.85rem; padding: 0.9rem 1.25rem; }
+    nav ul { justify-content: center; }
+  }
+</style>

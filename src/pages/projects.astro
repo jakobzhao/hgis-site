@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import projects from '../data/projects.json';
+
+const sorted = [...projects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+---
+<BaseLayout title="Projects">
+  <section class="container section">
+    <span class="eyebrow">Projects</span>
+    <h1>Field experiments in humanistic mapping</h1>
+    <p class="lede">Each project is a working answer to one question: how do we render the meaning of a place? Below are public-scholarship maps, web platforms, and software released by the lab.</p>
+
+    <div class="proj-list">
+      {sorted.map(p => (
+        <article class="proj" id={p.slug}>
+          {p.image
+            ? <a class="proj-img" href={p.url ?? '#'} target="_blank" rel="noopener" style={`background-image: url(${p.image})`}></a>
+            : <div class="proj-img proj-img-placeholder"></div>
+          }
+          <div class="proj-body">
+            <p class="year">{p.year}</p>
+            <h2>{p.title}</h2>
+            <p>{p.summary}</p>
+            {p.collaborators && <p class="collab">{p.collaborators}</p>}
+            <ul class="tags">{p.tags.map(t => <li>{t}</li>)}</ul>
+            <p class="meta">
+              {p.url && <a href={p.url} target="_blank" rel="noopener">Visit site →</a>}
+              {p.doi && <a href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener">DOI: {p.doi}</a>}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 65ch; }
+  .proj-list { display: grid; gap: 2rem; margin-top: 2rem; }
+  .proj {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 1.75rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .proj:last-child { border-bottom: 0; }
+  .proj-img {
+    aspect-ratio: 4/3;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--bg-deep);
+    border: 1px solid var(--rule);
+    display: block;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  a.proj-img:hover {
+    border-color: var(--uw-gold);
+    transform: scale(1.01);
+  }
+  .proj-img-placeholder {
+    background: linear-gradient(135deg, var(--rose-soft) 0%, var(--sage-soft) 100%);
+  }
+  .year {
+    font-size: 0.78rem;
+    color: var(--uw-gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 0.3rem;
+    font-weight: 600;
+  }
+  .proj h2 { margin: 0 0 0.5em; font-size: 1.4rem; }
+  .collab { color: var(--ink-soft); font-size: 0.92rem; margin: 0.4rem 0 0.6rem; font-style: italic; }
+  .tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0; }
+  .tags li {
+    font-size: 0.78rem;
+    background: var(--rule-soft);
+    color: var(--uw-purple);
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+  }
+  .meta { font-size: 0.95rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+  @media (max-width: 720px) {
+    .proj { grid-template-columns: 1fr; }
+  }
+</style>

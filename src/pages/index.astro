@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GlobeHero from '../components/GlobeHero.astro';
+import projects from '../data/projects.json';
+import { sortedNews } from '../data/news';
+
+const featured = projects
+  .filter(p => p.image)
+  .slice(0, 3);
+
+const recentNews = sortedNews().slice(0, 4);
+
+function formatDate(iso: string) {
+  const [y, m] = iso.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m, 10) - 1]} ${y}`;
+}
+---
+<BaseLayout title="Home">
+  <section class="hero container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          <span>Humanistic</span>
+          <span class="italic">GIS Laboratory</span>
+        </h1>
+        <p class="hero-lede">
+          Geographic information is not only a technical instrument, but also a moral and affective medium — capable of <em>care</em>, <em>connection</em>, and <em>collective memory</em>.
+        </p>
+        <p class="hero-sub">
+          Through research, teaching, and public scholarship, we examine how geospatial technologies can serve as instruments for empathy, justice, and human understanding — even as we interrogate <em>deepfake geography</em>, the collapse of <em>GeoAI</em>, and the reproduction of bias in geospatial big data.
+        </p>
+        <div class="cta-row">
+          <a class="btn" href="/research/">Explore the research</a>
+          <a class="btn-link" href="/cv/">Director's statement →</a>
+        </div>
+      </div>
+      <div class="hero-globe">
+        <GlobeHero />
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <section class="container section">
+    <div class="section-head">
+      <span class="eyebrow">Featured projects</span>
+      <h2>Selected work</h2>
+    </div>
+    <div class="card-grid">
+      {featured.map(p => (
+        <a class="card" href={`/projects/#${p.slug}`}>
+          <div class="card-img" style={p.image ? `background-image: url(${p.image})` : ''}></div>
+          <div class="card-body">
+            <p class="card-year">{p.year}</p>
+            <h3>{p.title}</h3>
+            <p>{p.summary}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+    <p class="more"><a href="/projects/">All projects →</a></p>
+  </section>
+
+  <hr class="rule" />
+
+  <section class="container section">
+    <div class="section-head">
+      <span class="eyebrow">In the press</span>
+      <h2>Recent media</h2>
+    </div>
+    <ul class="news-list">
+      {recentNews.map(n => (
+        <li>
+          <time>{formatDate(n.date)}</time>
+          <div>
+            <span class="news-outlet">{n.outlet}</span>
+            <a href={n.url} target="_blank" rel="noopener">{n.title}</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="more"><a href="/news/">Full press archive →</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 3.5rem 1.75rem 3.5rem;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) minmax(360px, 1.15fr);
+    gap: 2.8rem;
+    align-items: center;
+  }
+  .hero-text {
+    min-width: 0;
+  }
+  .hero-globe {
+    position: relative;
+    min-width: 0;
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 4.6vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.4rem;
+    color: var(--ink);
+  }
+  .hero-title span { display: block; }
+  .hero-title .italic {
+    font-style: italic;
+    color: var(--uw-purple);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .hero-lede {
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 1.4vw, 1.32rem);
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0 0 1.2rem;
+    font-weight: 400;
+    font-variation-settings: "opsz" 24, "SOFT" 50;
+  }
+  .hero-lede em {
+    font-style: italic;
+    color: var(--uw-purple);
+  }
+  .hero-sub {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0 0 1.6rem;
+  }
+  .hero-sub em {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--uw-purple);
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-link {
+    color: var(--uw-purple);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+  }
+  .btn-link:hover { border-bottom-color: var(--uw-gold); }
+
+  .rule {
+    border: 0;
+    height: 1px;
+    background: var(--rule);
+    margin: 0;
+    max-width: var(--max-w);
+    margin-inline: auto;
+    width: calc(100% - 3.5rem);
+    position: relative;
+  }
+  .rule::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -3px;
+    width: 6px;
+    height: 6px;
+    background: var(--sage);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .section-head { margin-bottom: 1.8rem; }
+  .section-head h2 {
+    margin: 0.3em 0 0;
+    font-size: 1.7rem;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-variation-settings: "opsz" 48, "SOFT" 50;
+  }
+
+  .card { display: block; color: inherit; }
+  .card .card-img {
+    background-size: cover;
+    background-position: center;
+  }
+  .card-year {
+    font-size: 0.72rem;
+    color: var(--uw-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 0.3rem;
+    font-weight: 600;
+  }
+
+  .more { margin-top: 2rem; font-size: 0.95rem; }
+
+  .news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .news-list li {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1.4rem;
+    padding: 1.05rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .news-list li:last-child { border-bottom: 0; }
+  .news-list time {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+  }
+  .news-outlet {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--uw-gold);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  .news-list a {
+    color: var(--ink);
+    border-bottom: 0;
+    line-height: 1.4;
+  }
+  .news-list a:hover { color: var(--uw-purple); }
+
+  @media (max-width: 720px) {
+    .hero { padding: 2.5rem 1.25rem 2rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .news-list li { grid-template-columns: 80px 1fr; gap: 0.9rem; }
+  }
+</style>

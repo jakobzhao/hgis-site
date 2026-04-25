@@ -1,0 +1,72 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="gold-rule"></div>
+  <div class="container footer-grid">
+    <div>
+      <strong>Humanistic GIS Laboratory</strong>
+      <p>Department of Geography<br/>University of Washington<br/>Seattle, WA 98195</p>
+    </div>
+    <div>
+      <strong>Contact</strong>
+      <p>
+        <a href="mailto:hgis@uw.edu">hgis@uw.edu</a><br/>
+        <a href="https://github.com/" rel="noopener">GitHub</a> · <a href="https://twitter.com/" rel="noopener">Twitter / X</a>
+      </p>
+    </div>
+    <div>
+      <strong>Affiliations</strong>
+      <p>
+        <a href="https://geography.washington.edu/">UW Geography</a><br/>
+        <a href="https://www.washington.edu/">University of Washington</a>
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <small>© {year} Humanistic GIS Laboratory · Built with Astro · <a href="https://github.com/">Source</a></small>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 5rem;
+    background: var(--uw-purple-deep);
+    color: #d6cfdf;
+    padding: 0 0 1.25rem;
+  }
+  .gold-rule {
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--uw-gold) 20%, var(--uw-gold) 80%, transparent 100%);
+    opacity: 0.55;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2.5rem;
+    padding-top: 2.75rem;
+  }
+  .site-footer a {
+    color: var(--uw-gold-soft);
+    border-bottom-color: transparent;
+  }
+  .site-footer a:hover { border-bottom-color: var(--uw-gold-soft); }
+  .site-footer strong {
+    color: var(--bg);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    font-weight: 600;
+  }
+  .footer-grid p { margin: 0; font-size: 0.88rem; line-height: 1.75; color: #b9b1c6; }
+  .footer-bottom {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #3a2a55;
+    font-size: 0.78rem;
+    color: #807891;
+    letter-spacing: 0.02em;
+  }
+</style>

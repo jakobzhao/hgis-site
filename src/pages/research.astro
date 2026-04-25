@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const themes = [
+  {
+    title: 'Humanistic GIS',
+    desc: 'Rethinking GIS as a medium for poetic dwelling on the digital earth — joining critical theory, care ethics, and cartographic practice. We study the social implications of emerging GIS technologies and develop methods that keep human meaning, memory, and ambiguity at the center.',
+    keywords: ['critical GIS', 'care ethics', 'digital geohumanities', 'place'],
+  },
+  {
+    title: 'Fake Geographies',
+    desc: 'How do deepfake satellite imagery, location spoofing, and synthetic places challenge what we mean by spatial truth? The lab investigates the technical, ethical, and epistemological consequences of geospatial misinformation in a post-truth world.',
+    keywords: ['deepfake geography', 'location spoofing', 'post-truth', 'misinformation'],
+  },
+  {
+    title: 'Geospatial AI &amp; Spatial Data Science',
+    desc: 'GeoAI uncertainty, ethics, and the limits of automation. We build and critique large-scale spatial models — from Earth embeddings to neural sensing of emotion — and ask what placelessness, bias, and reflexivity mean for the next generation of geographic intelligence.',
+    keywords: ['GeoAI', 'spatial data science', 'ethics', 'reflexivity'],
+  },
+];
+
+const grants = [
+  { years: '2020—24', title: 'Examining Shifting Geographies of Historically Underrepresented Groups', sponsor: 'NSF Human-Environment and Geographical Sciences (1951072)', amount: '$395,839', role: 'Co-PI' },
+  { years: '2019—21', title: 'Coastal Hazard Planning in Time', sponsor: 'NSF Coastlines and People EAGER (1940024)', amount: '$297,288', role: 'Co-PI' },
+  { years: '2024', title: 'GeoAI for Social Sciences and Humanities', sponsor: 'UW Data Science Minor Grant', amount: '$12,800', role: 'PI' },
+  { years: '2023', title: 'Critical and Creative (Un)Mapping of the Capitol Hill Organized Protest', sponsor: 'UW Humanities Data Science Summer Institute', amount: '~$22,000', role: 'Co-PI' },
+  { years: '2022', title: 'Detecting Deepfaked Satellite Imagery with Machine Learning', sponsor: 'Samsung / Joule', amount: '$64,970', role: 'PI' },
+  { years: '2022', title: 'Better Methods to Enumerate Individuals Experiencing Homelessness', sponsor: 'UW Population Health Initiative', amount: '$106,822', role: 'Co-PI' },
+  { years: '2022', title: 'Web Programming for GIS Applications', sponsor: 'UW Data Science Minor Grant', amount: '$20,000', role: 'PI' },
+  { years: '2021—22', title: 'Improving Enumeration of Homelessness Using Cell Phone Location Data', sponsor: 'Urban@UW Research Spark', amount: '$19,299', role: 'Co-PI' },
+  { years: '2020—21', title: 'CORAL Study (PETAL Network)', sponsor: 'NIH NHLBI (3U01HL123009-06S2)', amount: '$69,173', role: 'Site PI' },
+  { years: '2020', title: 'COVID-19 Smart Dashboard for Risk to Washington Workers', sponsor: 'UW Population Health Initiative', amount: '$19,537', role: 'PI' },
+  { years: '2018—19', title: 'The Global Refugee Atlas', sponsor: 'National Geographic (NGS-51699S-18)', amount: '$68,383', role: 'PI' },
+  { years: '2018—19', title: 'Fanno Creek Watershed Geovisualization', sponsor: 'Clean Water Service', amount: '$50,000', role: 'PI' },
+  { years: '2015—16', title: 'Rajawali Fellowship', sponsor: "Harvard Kennedy School", amount: '$50,000', role: 'PI' },
+];
+---
+<BaseLayout title="Research">
+  <section class="container section">
+    <span class="eyebrow">Research</span>
+    <h1>Themes &amp; methods</h1>
+    <p class="lede">We study how places carry meaning, memory, and power — and we build new tools to represent that meaning cartographically.</p>
+
+    <div class="theme-grid">
+      {themes.map(t => (
+        <article class="theme">
+          <h3 set:html={t.title}></h3>
+          <p>{t.desc}</p>
+          <ul class="kw">{t.keywords.map(k => <li>{k}</li>)}</ul>
+        </article>
+      ))}
+    </div>
+
+    <h2 class="grants-heading">Selected funded research</h2>
+    <p class="lede small">A partial list of awarded grants supporting work in the lab. The full record is in the <a href="/cv/">CV</a>.</p>
+    <table class="grants">
+      <thead>
+        <tr><th>Years</th><th>Project</th><th>Sponsor</th><th>Amount</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        {grants.map(g => (
+          <tr>
+            <td class="years">{g.years}</td>
+            <td><strong>{g.title}</strong></td>
+            <td>{g.sponsor}</td>
+            <td class="amt">{g.amount}</td>
+            <td>{g.role}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 65ch; }
+  .lede.small { font-size: 1rem; }
+  .theme-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin-top: 2rem;
+  }
+  .theme {
+    padding: 1.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--bg-card);
+  }
+  .theme h3 { margin-top: 0; color: var(--uw-purple); }
+  .kw {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .kw li {
+    font-size: 0.78rem;
+    background: var(--rule-soft);
+    color: var(--uw-purple);
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+  }
+  .grants-heading {
+    margin-top: 3rem;
+    color: var(--uw-purple);
+    font-size: 1.5rem;
+  }
+  table.grants {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.2rem;
+    font-size: 0.92rem;
+  }
+  table.grants th {
+    text-align: left;
+    color: var(--ink-faint);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 2px solid var(--uw-purple);
+  }
+  table.grants td {
+    padding: 0.7rem 0.5rem;
+    border-bottom: 1px dotted var(--rule-soft);
+    vertical-align: top;
+  }
+  td.years, td.amt {
+    font-variant-numeric: tabular-nums;
+    color: var(--uw-gold);
+    white-space: nowrap;
+  }
+  @media (max-width: 720px) {
+    table.grants thead { display: none; }
+    table.grants tr {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    table.grants td { padding: 0.15rem 0; border-bottom: 0; }
+    table.grants td::before {
+      content: attr(data-label);
+      color: var(--ink-faint);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: block;
+    }
+  }
+</style>

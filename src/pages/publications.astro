@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// authors with set:html so we can use the &amp; entity safely
+const pubs = [
+  { year: 2026, items: [
+    { authors: 'Zhao, B., Y. Lin', title: 'GeoAI collapse? Ethical implications of synthetic geospatial data use', venue: 'International Journal of Geographical Information Science', doi: null },
+    { authors: 'Luo, C., P. Zhao, B. Wang, S. Feng, Y., L. Meng', title: 'Ethical Spatial Analysis: Addressing Endogenous Bias Through Visual Analytics', venue: 'Journal of Geovisualization and Spatial Analysis, 10(1), 4', doi: null },
+    { authors: 'Huang, T., X. Ye, T. Yigitcanlar, B. Xu, G. Newman, B. Zhao, et al.', title: 'Artificial intelligence in urban design: A systematic review', venue: 'Cities, 169, 106527', doi: '10.1016/j.cities.2025.106527' },
+  ]},
+  { year: 2025, items: [
+    { authors: 'Hong, R., B. Zhao, S. Zhou', title: 'Root metaphors in cartography: Bridging critical and quantitative approaches', venue: 'Transactions of the Institute of British Geographers, e70035', doi: '10.1111/tran.70035' },
+    { authors: 'Ma, X., Zheng, G., Xu, C., Moskal, L. M., Gong, P., Guo, Q., et al., B. Zhao, Y. Zhou', title: 'A global product of 150-m urban building height based on spaceborne lidar', venue: 'Scientific Data, 11(1), 1387', doi: '10.1038/s41597-024-04237-5' },
+    { authors: 'Yang, T., B. Zhao, S. Gao, W. Dong', title: 'Neural representation of geoinformation in the human brain: affected by abstraction levels and spatial scales', venue: 'Annals of GIS, 1—16', doi: '10.1080/19475683.2025.2487979' },
+    { authors: 'Frazier, A., T. Nelson, P. Kedron, E. Shook, S. Dodge, et al., B. Zhao, W. Xu', title: 'GIScience Education in an Age of Disruptions', venue: 'Transactions in GIS, 29(2), e70048', doi: null },
+    { authors: 'Lin, Y., B. Zhao', title: 'Post-human cartography? Rethinking artificial intelligence, cartographic practices, and reflexivity', venue: 'Annals of the American Association of Geographers, 115(3), 499—512', doi: null },
+  ]},
+  { year: 2024, items: [
+    { authors: 'Dodge, S., A. Frazier, M. Goodchild, P. Kedron, et al., B. Zhao, et al., J. Wilson', title: 'A Research Agenda for GIScience and Spatial Data Science Amid Disruptions to Science', venue: 'International Journal of Geographical Information Science, 39(1), 1—24', doi: null },
+    { authors: 'Zhao, B., J. Feng, Y. Sun, X. Chang, S. Shaw', title: 'Neural Sensing: Towards a new approach to understanding emotional responses to place', venue: 'Transactions in GIS', doi: '10.1111/tgis.13244' },
+    { authors: 'Vranas, K., S. Jain, D. Costa, A. Admon, B. Zhao, J. Kahn, M. Kerlin', title: 'Cancellation &amp; Resumption of Elective Surgeries Over Time Across a National Sample of U.S. Hospitals during the COVID-19 Pandemic', venue: 'CHEST Critical Care, 2(3): 100080', doi: null },
+    { authors: 'Zhao, B., L. Zhang', title: 'Understanding the Spatial Narratives of Puzzle Films Using Cognitive Maps', venue: 'Professional Geographer, 76(4): 450—457', doi: '10.1080/00330124.2024.2326986' },
+    { authors: 'Lin, B., L. Zou, B. Zhao, X. Huang, H. Cai, M. Yang, B. Zhou', title: 'Sensing the Pulse of the Pandemic: Geovisualizing the Demographic Disparities of Public Sentiment toward COVID-19 through social media', venue: 'Cartography and Geographic Information Science, 51(3): 366—384', doi: '10.1080/15230406.2024.2323489' },
+    { authors: 'Peng, L., B. Zhao', title: 'Navigating the Ethical Landscape Behind ChatGPT', venue: 'Big Data &amp; Society, 11(1)', doi: '10.1177/20539517241237488' },
+    { authors: 'Feng, J., B. Zhao, S. Shaw', title: 'The Study of Emotion in GIScience: Status and Prospects', venue: 'Cartography and Geographic Information Science, 1—16', doi: '10.1080/15230406.2024.2326153' },
+    { authors: 'Zhao, B.', title: 'Emplacing the disposition towards automation', venue: 'Dialogue in Human Geography, 14(1): 85—88', doi: '10.1177/2043820623115142' },
+    { authors: 'Zhao, B.', title: 'Reorient GIScience for a Data-intensive Society', venue: 'Dialogue in Human Geography, 14(2): 327—331', doi: '10.1177/20438206231179230' },
+    { authors: 'Zhao, B.', title: 'Humanistic GIS', venue: 'Encyclopedia of Human Geography, ed. Barney Warf. Springer', doi: null, kind: 'chapter' },
+  ]},
+  { year: 2023, items: [
+    { authors: 'Yang, Y., X. Chen, S. Gao, Z. Li, Z. Zhang, B. Zhao', title: 'Embracing geospatial analytical technologies in tourism studies', venue: 'Information Technology &amp; Tourism, 25(2): 137—150', doi: '10.1007/s40558-023-00249' },
+    { authors: 'Huang, X., X. Bao, Z. Li, S. Zhang, B. Zhao', title: 'Black businesses matter: A longitudinal study of black-owned restaurants in the COVID-19 Pandemic', venue: 'Annals of the American Association of Geographers, 113(1): 189—205', doi: '10.1080/24694452.2022.2095971' },
+    { authors: 'Zhao, B.', title: 'A Humanistic Rewire of GIScience', venue: 'Handbook of Cartographic Humanities, eds. L.L. Presti and T. Rossetto. Taylor &amp; Francis. 216—222', doi: '10.4324/9781003327578-28', kind: 'chapter' },
+    { authors: 'Zhao, B.', title: 'Social Media Analytics', venue: 'Oxford Bibliographies in Geography, ed. Barney Warf. Oxford University Press', doi: null, kind: 'chapter' },
+    { authors: 'Zhao, B., J. Feng', title: 'A Humanistic Future of GeoAI', venue: 'Handbook of Geospatial Artificial Intelligence, eds. S. Gao, Y. Hu, W. Li. Taylor &amp; Francis', doi: '10.1201/9781003308423-20', kind: 'chapter' },
+  ]},
+  { year: 2022, items: [
+    { authors: 'Yu, Y., B. Dylan, B. Zhao', title: "Digital geographies of the bug: A case study of China's contact tracing systems in the COVID-19", venue: 'GeoForum, 137: 94—104', doi: '10.1016/j.geoforum.2022.10.007' },
+    { authors: 'Bennett, M. M., J. Van Den Hoek, B. Zhao, A. V. Prishchepov', title: 'Improving Satellite Monitoring of Armed Conflicts', venue: "Earth's Future, 10(90): 1—6", doi: '10.1029/2022EF002904' },
+    { authors: 'Chen, X., B. Zhao, X. Yang', title: 'The obesogenity of restaurant food: Mapping the nutritional foodscape of Franklin County, Ohio using food review images', venue: 'Applied Geography, 144(2022): 1—8', doi: null },
+    { authors: 'Zhang, S., D. Xu, B. Zhao', title: '"Small" analysis of Big Data: An evaluation of the effects of social distancing in the United States', venue: 'Methodological Innovations, 15(2): 142—151', doi: '10.1177/20597991221090856' },
+    { authors: 'Huang, X., Y. Xu, R. Liu, Siqin Wang, Sicheng Wang, M. Zhang, Y. Kang, Z. Zhang, S. Gao, B. Zhao, Z. Li', title: 'Exploring the spatial disparity of home-dwelling time patterns in the U.S. during the COVID-19 pandemic via Bayesian inference', venue: 'Transactions in GIS, 26(4): 1939—1961', doi: '10.1111/TGIS.12918' },
+    { authors: 'Zhao, B.', title: 'Humanistic GIS: Towards a Research Agenda', venue: 'Annals of the American Association of Geographers, 112(6): 1576—1592', doi: '10.1080/24694452.2021.2004875' },
+    { authors: 'Yu, Y., B. Zhao', title: 'Can TikTok Promote a Healthier Ageing Paradigm? A Case Study of Older Digital Celebrities from China', venue: 'Area, 54(2): 322—329', doi: '10.1111/area.12777' },
+  ]},
+  { year: 2021, items: [
+    { authors: 'He, C., Q. Huang, X. Bai, D. T. Robinson, P. Shi, Y. Dou, B. Zhao, J. Yan, Q. Zhang, F. Xu, J. Daniel', title: 'A Global Analysis of the Relationship between Urbanization and Fatalities in Earthquake-prone Areas', venue: 'International Journal of Disaster Risk Science, 12: 805—820', doi: '10.1007/s13753-021-00385-z' },
+    { authors: 'Zhao, B., S. Zhang, C. Xu, Y. Sun, C. Deng', title: 'Deep fake geography? When geospatial data encounter artificial intelligence', venue: 'Cartography and Geographic Information Science, 48(4): 338—352', doi: '10.1080/15230406.2021.1910075' },
+    { authors: 'Mathews, K. S., K. P. Seitz, K. C. Vranas, A. Duggal, T. S. Valley, B. Zhao, S. Gundel, M. O. Harhay, S. Y. Chang, C. L. Hough', title: 'Variation in initial U.S. Hospital Responses to the Coronavirus Disease 2019 Pandemic', venue: 'Critical Care Medicine, 49(7): 1038—1048', doi: '10.1097/CCM.0000000000005013' },
+    { authors: 'Zhang, S., B. Zhao, Y. Tian, S. Chen', title: 'Stand with #StandingRock: Envisioning an epistemological shift in understanding geospatial big data in the "post-truth" era', venue: 'Annals of the American Association of Geographers, 111(4): 1025—1045', doi: '10.1080/24694452.2020.1782166' },
+    { authors: 'Huang, X., B. Zhao', title: 'A Permanent Virtual Memorial for a Whistleblower of the COVID-19 Pandemic: A Case Study of Crypto Place on the Blockchain', venue: 'Mapping COVID-19 in Space and Time, eds. S. Shaw and D. Sui. Springer. 47—59', doi: null, kind: 'chapter' },
+  ]},
+  { year: 2020, items: [
+    { authors: 'Zhao, B., X. Huang', title: 'Encrypted monument: The birth of crypto place on the blockchain', venue: 'GeoForum, 116: 149—152', doi: '10.1016/j.geoforum.2020.08.011' },
+    { authors: 'Chen, Z., D. Chen, C. Zhao, M. P. Kwan, J. Cai, Y. Zhuang, B. Zhao, et al.', title: 'Influence of meteorological conditions on PM2.5 concentrations across China: A review of methodology and mechanism', venue: 'Environment International, 139 (105558)', doi: '10.1016/j.envint.2020.105558' },
+    { authors: 'Huang, X., B. Zhao, Y. Liu, D. Xue', title: 'Belonging to a Place: An Analysis of the Perceptions of Rural-to-Urban Migrants in China', venue: 'Geographical Review, 110(3): 406—424', doi: '10.1111/gere.12366' },
+    { authors: 'Zhao, B., S. Zhang, C. Xu, X. Liu', title: 'Spoofing in Geography: Can we trust Artificial Intelligence to manage geospatial data?', venue: 'Spatial Synthesis: Computational Social Science and Humanities, eds. X. Ye and H. Lin. Springer. 325—338', doi: '10.1007/978-3-030-52734-1', kind: 'chapter' },
+    { authors: 'Ye, X., B. Zhao, T. H. Nguyen, S. Wang', title: 'Social media and Social Awareness', venue: 'Manual of Digital Earth, eds. H. Guo, M. F. Goodchild, A. Annoni. Springer, Singapore. 425—440', doi: '10.1007/978-981-32-9915-3_12', kind: 'chapter' },
+  ]},
+  { year: 2019, items: [
+    { authors: 'Chen, Z., D. Chen, N. Cheng, Y. Zhuang, M. P. Kwan, B. Chen, B. Zhao, et al.', title: 'Evaluating the recent 2+26 regional strategy for air quality improvement during two orange air pollution alerts in Beijing', venue: 'Atmospheric Chemistry and Physics, 19(10): 6879—6891', doi: '10.5194/acp-2018-1085' },
+    { authors: 'Zhao, B., X. Huang, D. Z. Sui', title: 'Place spoofing: A case study of the xenophilic copycat community in Beijing, China', venue: 'Professional Geographer, 71(2): 265—277', doi: '10.1080/00330124.2018.1501711' },
+    { authors: 'Zhao, B., S. Zhang', title: 'Rethinking spatial data quality: Pokémon Go as a case study of location spoofing', venue: 'Professional Geographer, 70(4): 1—13', doi: '10.1080/00330124.2018.1479973' },
+  ]},
+  { year: 2017, items: [
+    { authors: 'Zhao, B., D. Z. Sui', title: 'True lies in geospatial big data: detecting location spoofing in social media', venue: 'Annals of GIS, 23(1): 1—14', doi: '10.1080/19475683.2017.1280536' },
+    { authors: 'Zhao, B., D. Z. Sui, Z. Li', title: 'Visualizing the gay community in Beijing with location-based social media', venue: 'Environment and Planning A, 49(5): 977—79', doi: '10.1177/0308518X16685885' },
+    { authors: 'Liu, J. C., B. Zhao', title: 'Who speaks for climate change in China? Evidence from Weibo', venue: 'Climatic Change, 140(3-4): 413—422', doi: '10.1007/s10584-016-1883-y' },
+    { authors: 'Zhao, B., Q. Chen', title: 'Location Spoofing in a Location-Based Game: A Case Study of Pokémon Go', venue: 'Lecture Notes Geoinformation, Cartography, Advances in Cartography and GIScience, ed. M. P. Peterson. 21—32', doi: '10.1007/978-3-319-57336-6_2', kind: 'chapter' },
+  ]},
+];
+---
+<BaseLayout title="Publications">
+  <section class="container section">
+    <span class="eyebrow">Publications</span>
+    <h1>Selected work</h1>
+    <p class="lede">Peer-reviewed journal articles and book chapters from the lab. Conference proceedings, Chinese-language venues, and earlier work are listed in the <a href="/cv/">full CV</a>.</p>
+
+    {pubs.map(group => (
+      <section class="year-group">
+        <h2>{group.year}</h2>
+        <ol class="pub-list">
+          {group.items.map(p => (
+            <li>
+              <span class="authors" set:html={p.authors}></span>.
+              "<strong>{p.title}</strong>". <em set:html={p.venue}></em>.
+              {p.kind === 'chapter' && <span class="kind">[chapter]</span>}
+              {p.doi && <a class="doi" href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener">[DOI]</a>}
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .lede { font-size: 1.1rem; color: var(--ink-soft); max-width: 65ch; }
+  .year-group { margin-top: 2rem; }
+  .year-group h2 {
+    font-size: 1.3rem;
+    color: var(--uw-purple);
+    border-bottom: 2px solid var(--uw-purple);
+    padding-bottom: 0.3rem;
+    display: inline-block;
+  }
+  .pub-list { padding-left: 1.2rem; }
+  .pub-list li { margin: 0.9rem 0; line-height: 1.55; font-size: 0.96rem; }
+  .doi {
+    font-size: 0.85rem;
+    margin-left: 0.4rem;
+    color: var(--uw-gold);
+  }
+  .kind {
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    margin-left: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>
