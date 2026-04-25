@@ -1,0 +1,631 @@
+---
+import projects from '../data/projects.json';
+
+type Pt = { slug: string; lat: number; lon: number; title: string; year: number | string; image?: string; summary?: string };
+const pts: Pt[] = [];
+for (const p of projects) {
+  if (typeof (p as any).lat === 'number' && typeof (p as any).lon === 'number') {
+    pts.push({
+      slug: p.slug,
+      lat: (p as any).lat,
+      lon: (p as any).lon,
+      title: p.title,
+      year: p.year ?? '',
+      image: (p as any).image,
+      summary: (p as any).summary,
+    });
+  }
+}
+---
+<figure class="pmap-wrap" aria-label="Butterfly atlas of HGIS Laboratory projects in flight">
+  <div class="pmap-stage">
+    <canvas id="pmap-canvas" data-points={JSON.stringify(pts)}></canvas>
+    <div class="pmap-marker" id="pmap-marker" aria-hidden="true"></div>
+  </div>
+  <figcaption>
+    <span class="pmap-cap-lede">Atlas in flight — the world unfolded from an octahedron.</span>
+    <span class="pmap-cap-cite">Cahill butterfly projection, restless under wind. Hover any thumbnail below — its place lights up on the wing.</span>
+  </figcaption>
+  <div class="pmap-strip" aria-label="Projects — locate any of these places on the wing">
+    {pts.map(p => (
+      <button
+        type="button"
+        class="pmap-thumb"
+        data-slug={p.slug}
+        style={p.image ? `background-image: url(${p.image})` : undefined}
+        aria-label={`${p.title}${p.year ? ` (${p.year})` : ''}`}
+      />
+    ))}
+  </div>
+  <div id="pmap-tip" class="pmap-tip" hidden></div>
+</figure>
+
+<script is:inline type="module">
+  import * as THREE from 'https://esm.sh/three@0.160.0';
+  import * as d3 from 'https://esm.sh/d3@7';
+  import { geoPolyhedralButterfly } from 'https://esm.sh/d3-geo-projection@4';
+  import { feature } from 'https://esm.sh/topojson-client@3';
+
+  const canvas = document.getElementById('pmap-canvas');
+  const wrap = canvas.closest('.pmap-wrap');
+  const stage = canvas.parentElement;
+  const pts = JSON.parse(canvas.dataset.points || '[]');
+
+  // ----- sizing -----
+  const measure = () => {
+    const w = stage.clientWidth;
+    const h = Math.min(440, Math.max(280, w * 0.52));
+    return { w, h };
+  };
+  let { w, h } = measure();
+
+  // ----- three.js setup -----
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h, false);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100);
+  camera.position.set(0, 1.4, 5.4);
+  camera.lookAt(0, -0.05, 0);
+
+  // ----- map texture: D3-rendered Cahill butterfly atlas.
+  //       The canvas is transparent outside the butterfly silhouette,
+  //       so the rendered plane only shows where the world is. -----
+  const TEX_W = 2048;
+  const TEX_H = 1280;
+  const texCanvas = document.createElement('canvas');
+  texCanvas.width = TEX_W;
+  texCanvas.height = TEX_H;
+  const texCtx = texCanvas.getContext('2d');
+  texCtx.clearRect(0, 0, TEX_W, TEX_H);
+
+  const projection = geoPolyhedralButterfly();
+  projection.fitSize([TEX_W - 60, TEX_H - 60], { type: 'Sphere' });
+  const path = d3.geoPath(projection, texCtx);
+  const graticule = d3.geoGraticule10();
+
+  const mapTexture = new THREE.CanvasTexture(texCanvas);
+  mapTexture.colorSpace = THREE.SRGBColorSpace;
+  mapTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+  // ----- plane (the paper) + custom shader for folds + flap -----
+  const PLANE_W = 5.6;
+  const PLANE_H = 3.5;          // butterfly aspect ~ 1.6:1
+  const planeGeom = new THREE.PlaneGeometry(PLANE_W, PLANE_H, 130, 80);
+
+  const uniforms = {
+    uMap:           { value: mapTexture },
+    uFocal:         { value: new THREE.Vector2(0.5, 0.5) },
+    uFocalStrength: { value: 0 },
+    uTime:          { value: 0 },
+  };
+
+  const planeMaterial = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: `
+      uniform vec2  uFocal;
+      uniform float uFocalStrength;
+      uniform float uTime;
+      varying vec2  vUv;
+      varying float vDisp;
+      void main() {
+        vUv = uv;
+        vec3 pos = position;
+        vec2 p = uv * 2.0 - 1.0;       // -1..1 across plane
+        float wingSign   = sign(p.x);
+        float wingFactor = pow(abs(p.x), 1.5);   // 0 at body, 1 at tip
+
+        // ---- focal fold (when a project card is hovered below) ----
+        vec2 d = uv - uFocal;
+        float r = length(d);
+        float tent    = uFocalStrength * exp(-r * r * 42.0) * 0.95;
+        float ang     = atan(d.y, d.x);
+        float creases = sin(ang * 4.0 + 0.7) * uFocalStrength * 0.32 * exp(-r * r * 16.0);
+
+        // ---- BUTTERFLY FLIGHT --------------------------------------
+        // 1. Main flap: punchy, dwells at peaks. Slight per-wing
+        //    phase asymmetry so the two wings aren't a perfect mirror.
+        float asym = wingSign * 0.06 * sin(uTime * 0.31);
+        float rawPhase  = sin(uTime * 2.0 + asym);
+        float flapPhase = sign(rawPhase) * pow(abs(rawPhase), 0.55);
+        float flap = flapPhase * 0.78 * wingFactor;
+        // 2. Trailing-edge lag: phase varies along p.y so the wing
+        //    ripples from leading edge back like real chitin.
+        float lag = sin(uTime * 2.0 - p.y * 1.1 + asym) * 0.14 * wingFactor;
+        // 3. Wing-tip curl on the upstroke only — very tip flips up.
+        float curl = max(flapPhase, 0.0) * pow(abs(p.x), 4.0) * 0.55;
+        // 4. Body bob (figure-8): counter-phase Y to flap + slow
+        //    cross-drift in X so the butterfly is never on rails.
+        pos.y += -flapPhase * 0.07 + sin(uTime * 0.43) * 0.022;
+        pos.x +=  sin(uTime * 0.31 + 1.2) * 0.030 + cos(uTime * 0.18) * 0.018;
+        // 5. Body roll: torso tips left/right slowly. Adds linear z
+        //    contribution proportional to p.x so the whole plane tilts.
+        float roll = sin(uTime * 0.46 + 0.8) * 0.10;
+
+        // ---- WIND from a slowly rotating direction --------------
+        // The wind angle wanders smoothly so gusts come from any side.
+        float windAng = uTime * 0.13 + 0.85 * sin(uTime * 0.07);
+        vec2  windDir = vec2(cos(windAng), sin(windAng));
+        vec2  crossDir = vec2(-windDir.y, windDir.x);
+        float u_along = dot(uv - 0.5, windDir);
+        float u_cross = dot(uv - 0.5, crossDir);
+        float gust = 0.5 + 0.5 * sin(uTime * 0.28 + 0.7);
+        float w1 = sin(u_along *  9.0 - uTime * 1.05) * 0.110;
+        float w2 = sin(u_along * 17.0 - uTime * 1.85 + u_cross * 4.0) * 0.050;
+        float w3 = cos(u_along * 24.0 - uTime * 2.40 + u_cross * 7.0) * 0.030;
+        float w4 = sin(u_cross *  8.0 + uTime * 0.95) * 0.040;
+        float edgeBias = 0.45 + 0.55 * pow(max(abs(p.x), abs(p.y)), 1.25);
+        float wind = (w1 + w2 + w3 + w4) * edgeBias * gust;
+
+        // small breath in the body so it's never frozen
+        float breath = sin(uv.x * 2.6 + uTime * 0.45)
+                     * cos(uv.y * 1.7 - uTime * 0.32) * 0.022;
+
+        pos.z += tent + creases + flap + lag + curl + roll * p.x + wind + breath;
+        vDisp = pos.z;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+      }
+    `,
+    fragmentShader: `
+      precision highp float;
+      uniform sampler2D uMap;
+      varying vec2  vUv;
+      varying float vDisp;
+      void main() {
+        vec4 c = texture2D(uMap, vUv);
+        if (c.a < 0.02) discard;
+        // Clamp so a hard downstroke doesn't bake the wing into a dark
+        // shadow. Lift and crease are now nearly symmetric.
+        float shaded = clamp(vDisp, -0.45, 0.45);
+        float lift   = max( shaded, 0.0);
+        float crease = max(-shaded, 0.0);
+        vec3 col = c.rgb;
+        col += lift   * 0.18;
+        col -= crease * 0.14;
+        gl_FragColor = vec4(col, c.a);
+      }
+    `,
+    transparent: true,
+    depthWrite: false,
+  });
+
+  const plane = new THREE.Mesh(planeGeom, planeMaterial);
+  plane.rotation.x = -0.62;     // tilt the paper toward the viewer (~-35°)
+  scene.add(plane);
+
+  // ----- compute each project's UV from lat/lon — kept for the
+  //       card-hover -> fold-at-its-location interaction below -----
+  pts.forEach(pt => {
+    const c = projection([pt.lon, pt.lat]);
+    if (!c) return;
+    pt.uv = { x: c[0] / TEX_W, y: c[1] / TEX_H };
+  });
+
+  // ----- focal animation state -----
+  const focalTarget  = { x: 0.5, y: 0.5, strength: 0 };
+  const focalCurrent = { x: 0.5, y: 0.5, strength: 0 };
+
+  function setFocalTarget(pt) {
+    if (!pt || !pt.uv) return;
+    focalTarget.x = pt.uv.x;
+    focalTarget.y = pt.uv.y;
+    focalTarget.strength = 1.0;
+  }
+  function clearFocal() {
+    focalTarget.strength = 0;
+  }
+
+  // when a project article is hovered below, light its marker on the wing
+  document.addEventListener('pointerover', (e) => {
+    if (!e.target || !e.target.closest) return;
+    const card = e.target.closest('article.proj');
+    if (!card || !card.id) return;
+    const from = e.relatedTarget && e.relatedTarget.closest
+      ? e.relatedTarget.closest('article.proj') : null;
+    if (from && from.id === card.id) return;
+    const pt = pts.find(p => p.slug === card.id);
+    if (pt) activate(pt, null);
+  });
+  document.addEventListener('pointerout', (e) => {
+    if (!e.target || !e.target.closest) return;
+    const card = e.target.closest('article.proj');
+    if (!card) return;
+    const to = e.relatedTarget && e.relatedTarget.closest
+      ? e.relatedTarget.closest('article.proj') : null;
+    if (to && card.id === to.id) return;
+    deactivate(null);
+  });
+
+  // ----- world atlas: paint butterfly silhouette + content -----
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json')
+    .then(r => r.json())
+    .then(world => {
+      const land = feature(world, world.objects.land);
+      texCtx.clearRect(0, 0, TEX_W, TEX_H);
+      // 1. Sphere/ocean fill — matches the homepage globe (bg-deep)
+      texCtx.fillStyle = '#ddd4c2';
+      texCtx.beginPath();
+      path({ type: 'Sphere' });
+      texCtx.fill();
+      // 2. Clip subsequent drawing to the butterfly so graticule + land
+      //    don't bleed past the wing edges.
+      texCtx.save();
+      texCtx.beginPath();
+      path({ type: 'Sphere' });
+      texCtx.clip();
+      // graticule (rule-soft, low alpha — same as the globe)
+      texCtx.strokeStyle = '#e9e2d4';
+      texCtx.lineWidth = 1.4;
+      texCtx.globalAlpha = 0.55;
+      texCtx.beginPath();
+      path(graticule);
+      texCtx.stroke();
+      texCtx.globalAlpha = 1;
+      // land (bg-card fill + rule stroke — matches the globe)
+      texCtx.fillStyle = '#f5efe2';
+      texCtx.strokeStyle = '#d6cdbf';
+      texCtx.lineWidth = 1.0;
+      texCtx.beginPath();
+      path(land);
+      texCtx.fill();
+      texCtx.stroke();
+      texCtx.restore();
+      // 3. Sphere outline last (no clip) — clean wing edge
+      texCtx.strokeStyle = '#d6cdbf';
+      texCtx.lineWidth = 1.6;
+      texCtx.beginPath();
+      path({ type: 'Sphere' });
+      texCtx.stroke();
+      mapTexture.needsUpdate = true;
+    })
+    .catch(() => {});
+
+// ----- main loop. Paused while the canvas is off-screen so we don't
+  //       burn GPU + battery for nothing. -----
+  let raf = 0;
+  let visible = true;
+  let baseTime = 0;
+  let pauseStart = 0;
+  function animate(t) {
+    const time = (t - baseTime) * 0.001;
+    uniforms.uTime.value = time;
+    // focal fold is dormant (left at zero) — surface stays unchanged
+    uniforms.uFocalStrength.value = 0;
+    if (typeof updateMarker === 'function') updateMarker(time);
+    renderer.render(scene, camera);
+    raf = requestAnimationFrame(animate);
+  }
+  function startLoop() {
+    if (raf) return;
+    if (pauseStart) baseTime += performance.now() - pauseStart;
+    raf = requestAnimationFrame(animate);
+  }
+  function stopLoop() {
+    if (!raf) return;
+    cancelAnimationFrame(raf);
+    raf = 0;
+    pauseStart = performance.now();
+  }
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      visible = e.isIntersecting;
+      if (visible) startLoop(); else stopLoop();
+    }
+  }, { rootMargin: '120px' });
+  io.observe(canvas);
+  // Also pause when the tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopLoop();
+    else if (visible) startLoop();
+  });
+  // Honor reduced-motion preference
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // render one frame then stop forever — paper sits still
+    renderer.render(scene, camera);
+  } else {
+    startLoop();
+  }
+
+
+  // ----- thumbnail strip — hover/focus shows a single marker glued
+  //       to the live (wind- and flap-deformed) surface; the butterfly
+  //       itself stays unchanged. -----
+  const markerEl = document.getElementById('pmap-marker');
+  let activePt = null;
+
+  // Mirror the shader's per-vertex displacement (without the focal fold,
+  // which we no longer trigger) so the marker rides the same surface.
+  function displacementAt(uv, time) {
+    const px = uv.x * 2 - 1;
+    const py = uv.y * 2 - 1;
+    const wingSign = Math.sign(px);
+    const wingFactor = Math.pow(Math.abs(px), 1.5);
+    const asym = wingSign * 0.06 * Math.sin(time * 0.31);
+    const rawPhase = Math.sin(time * 2.0 + asym);
+    const flapPhase = Math.sign(rawPhase) * Math.pow(Math.abs(rawPhase), 0.55);
+    const flap = flapPhase * 0.78 * wingFactor;
+    const lag  = Math.sin(time * 2.0 - py * 1.1 + asym) * 0.14 * wingFactor;
+    const curl = Math.max(flapPhase, 0) * Math.pow(Math.abs(px), 4.0) * 0.55;
+    const roll = Math.sin(time * 0.46 + 0.8) * 0.10;
+    const windAng = time * 0.13 + 0.85 * Math.sin(time * 0.07);
+    const wdx = Math.cos(windAng);
+    const wdy = Math.sin(windAng);
+    const u_along = (uv.x - 0.5) * wdx + (uv.y - 0.5) * wdy;
+    const u_cross = (uv.x - 0.5) * (-wdy) + (uv.y - 0.5) * wdx;
+    const gust = 0.5 + 0.5 * Math.sin(time * 0.28 + 0.7);
+    const w1 = Math.sin(u_along *  9.0 - time * 1.05) * 0.110;
+    const w2 = Math.sin(u_along * 17.0 - time * 1.85 + u_cross * 4.0) * 0.050;
+    const w3 = Math.cos(u_along * 24.0 - time * 2.40 + u_cross * 7.0) * 0.030;
+    const w4 = Math.sin(u_cross *  8.0 + time * 0.95) * 0.040;
+    const edgeBias = 0.45 + 0.55 * Math.pow(Math.max(Math.abs(px), Math.abs(py)), 1.25);
+    const wind = (w1 + w2 + w3 + w4) * edgeBias * gust;
+    const breath = Math.sin(uv.x * 2.6 + time * 0.45)
+                 * Math.cos(uv.y * 1.7 - time * 0.32) * 0.022;
+    return flap + lag + curl + roll * px + wind + breath;
+  }
+  function bodyTranslation(time) {
+    const rawPhase = Math.sin(time * 2.0);
+    const flapPhase = Math.sign(rawPhase) * Math.pow(Math.abs(rawPhase), 0.55);
+    return {
+      dx: Math.sin(time * 0.31 + 1.2) * 0.030 + Math.cos(time * 0.18) * 0.018,
+      dy: -flapPhase * 0.07 + Math.sin(time * 0.43) * 0.022,
+    };
+  }
+  const tmpVec = new THREE.Vector3();
+  function updateMarker(time) {
+    if (!activePt || !markerEl) return;
+    const { dx, dy } = bodyTranslation(time);
+    const lx = (activePt.uv.x - 0.5) * PLANE_W + dx;
+    const ly = (0.5 - activePt.uv.y) * PLANE_H + dy;
+    const lz = displacementAt(activePt.uv, time);
+    tmpVec.set(lx, ly, lz);
+    tmpVec.applyMatrix4(plane.matrixWorld);
+    tmpVec.project(camera);
+    const rect = canvas.getBoundingClientRect();
+    const sx = (tmpVec.x * 0.5 + 0.5) * rect.width;
+    const sy = (-tmpVec.y * 0.5 + 0.5) * rect.height;
+    markerEl.style.transform = `translate(${sx.toFixed(1)}px, ${sy.toFixed(1)}px)`;
+  }
+
+  const tipEl = document.getElementById('pmap-tip');
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function showTip(pt) {
+    if (!tipEl || !pt) return;
+    tipEl.innerHTML =
+      `<strong>${escapeHtml(pt.title)}</strong>` +
+      (pt.year ? `<time>${escapeHtml(String(pt.year))}</time>` : '') +
+      (pt.summary ? `<em>${escapeHtml(pt.summary)}</em>` : '');
+    tipEl.hidden = false;
+  }
+  function moveTip(e) {
+    if (!tipEl || tipEl.hidden) return;
+    const rect = wrap.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const tw = tipEl.offsetWidth;
+    const th = tipEl.offsetHeight;
+    let left = x + 14;
+    let top  = y - th - 14;
+    if (left + tw > rect.width - 8) left = x - tw - 14;
+    if (top < 8) top = y + 18;
+    tipEl.style.left = `${Math.max(8, left)}px`;
+    tipEl.style.top  = `${Math.max(8, top)}px`;
+  }
+  function hideTip() { if (tipEl) tipEl.hidden = true; }
+
+  function activate(pt, btn) {
+    activePt = pt;
+    if (markerEl) markerEl.classList.add('is-on');
+    if (btn) btn.classList.add('is-active');
+    showTip(pt);
+  }
+  function deactivate(btn) {
+    activePt = null;
+    if (markerEl) markerEl.classList.remove('is-on');
+    if (btn) btn.classList.remove('is-active');
+    hideTip();
+  }
+
+  document.querySelectorAll('.pmap-strip .pmap-thumb').forEach(btn => {
+    const slug = btn.dataset.slug;
+    const pt = pts.find(p => p.slug === slug);
+    if (!pt) return;
+    btn.addEventListener('pointerenter', (e) => { activate(pt, btn); moveTip(e); });
+    btn.addEventListener('pointermove',  moveTip);
+    btn.addEventListener('pointerleave', () => deactivate(btn));
+    btn.addEventListener('focus',        () => {
+      activate(pt, btn);
+      // position tip near the focused thumb
+      const r = btn.getBoundingClientRect();
+      moveTip({ clientX: r.left + r.width / 2, clientY: r.top });
+    });
+    btn.addEventListener('blur',         () => deactivate(btn));
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(slug);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.classList.add('proj-flash');
+      setTimeout(() => target.classList.remove('proj-flash'), 1400);
+    });
+  });
+
+  // ----- resize -----
+  const ro = new ResizeObserver(() => {
+    const m = measure();
+    if (m.w === w && m.h === h) return;
+    w = m.w; h = m.h;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  });
+  ro.observe(stage);
+
+  window.addEventListener('beforeunload', () => cancelAnimationFrame(raf));
+</script>
+
+<style>
+  .pmap-wrap {
+    position: relative;
+    margin: 0 0 2.5rem;
+    padding: 0.4rem 0 0.2rem;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .pmap-stage {
+    position: relative;
+    width: 100%;
+  }
+  #pmap-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .pmap-dots {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .pmap-wrap figcaption {
+    font-family: var(--sans);
+    text-align: center;
+    padding: 0.7rem 0 0.2rem;
+    line-height: 1.45;
+  }
+  .pmap-cap-lede {
+    display: block;
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .pmap-cap-cite {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 0.3rem;
+    max-width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pmap-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 0.7rem auto 0.4rem;
+    padding: 0 1rem;
+    max-width: 880px;
+  }
+  .pmap-thumb {
+    width: 44px;
+    height: 44px;
+    background-color: var(--bg-deep);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, z-index 0s 0.18s;
+    position: relative;
+  }
+  .pmap-thumb:hover,
+  .pmap-thumb.is-active,
+  .pmap-thumb:focus-visible {
+    border-color: var(--uw-gold);
+    transform: translateY(-1px) scale(1.12);
+    box-shadow: 0 4px 12px rgba(50, 42, 38, 0.22);
+    outline: none;
+    z-index: 2;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, z-index 0s 0s;
+  }
+
+  /* Single marker that lights at the active project's place on the wing.
+     Glued to the live (wind+flap-deformed) surface via JS each frame. */
+  .pmap-marker {
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 3;
+  }
+  .pmap-marker.is-on { opacity: 1; }
+  .pmap-marker::before,
+  .pmap-marker::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .pmap-marker::before {
+    width: 26px;
+    height: 26px;
+    background: var(--uw-purple);
+    opacity: 0.28;
+    animation: pmap-marker-pulse 1.6s ease-in-out infinite;
+  }
+  .pmap-marker::after {
+    width: 9px;
+    height: 9px;
+    background: var(--uw-purple);
+    border: 1.5px solid var(--bg-card);
+    box-shadow: 0 1px 3px rgba(50, 42, 38, 0.45);
+  }
+  @keyframes pmap-marker-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.32; }
+    50%      { transform: translate(-50%, -50%) scale(1.15); opacity: 0.10; }
+  }
+
+  .pmap-tip {
+    position: absolute;
+    pointer-events: none;
+    z-index: 6;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.5rem 0.7rem;
+    max-width: 280px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    box-shadow: 0 6px 18px rgba(50, 42, 38, 0.14);
+  }
+  .pmap-tip[hidden] { display: none; }
+  .pmap-tip strong {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 0.15rem;
+    line-height: 1.25;
+  }
+  .pmap-tip time {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--uw-gold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 0.3rem;
+  }
+  .pmap-tip em {
+    display: block;
+    font-style: normal;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+</style>

@@ -1,26 +1,26 @@
 :root {
-  /* Editorial palette — true UW purple + husky gold on clean cream paper, with saturated sage / berry accents */
-  --uw-purple: #4B2E83;          /* official UW purple — rich, editorial */
-  --uw-purple-deep: #2d1a52;
-  --uw-purple-soft: #8B72B8;     /* lighter purple for hover / soft fills */
-  --uw-gold: #B7A57A;            /* husky gold — warm, not metallic */
-  --uw-gold-soft: #d4c89d;
+  /* Morandi palette — dusty plum, muted clay, sage, soft rose on warm putty paper */
+  --uw-purple: #6a5a6e;          /* dusty mauve / aubergine — quiet, not vivid */
+  --uw-purple-deep: #4a3e4d;
+  --uw-purple-soft: #9a8b9e;
+  --uw-gold: #a08e6f;            /* muted clay (replacing metallic gold) */
+  --uw-gold-soft: #c5b59a;
 
-  --sage: #4f7c63;               /* deeper, leafier green */
-  --sage-soft: #9bb8a4;
-  --rose: #b54a63;               /* clean berry — less dusty, more present */
-  --rose-soft: #e0a3b1;
-  --mist: #6e8aa3;               /* cooler blue-grey */
+  --sage: #8e9c8a;               /* dusty sage — collage accent */
+  --sage-soft: #b4bdaf;
+  --rose: #c2a094;               /* dusty rose — collage accent */
+  --rose-soft: #d8c4bb;
+  --mist: #a8b1b3;               /* powder blue-grey */
 
-  --ink: #1d1916;                /* deep warm near-black for crisp contrast */
-  --ink-soft: #4f4940;
-  --ink-faint: #8a8275;
+  --ink: #2c2823;                /* warm near-black */
+  --ink-soft: #6c6358;
+  --ink-faint: #98907f;
 
-  --rule: #d8d2c5;               /* warm hairline */
-  --rule-soft: #ece6d9;
-  --bg: #f6f1e5;                 /* clean cream paper — less yellow than putty */
-  --bg-card: #ffffff;            /* pure white cards — makes screenshots pop */
-  --bg-deep: #e8e1d0;            /* deeper cream for inset surfaces */
+  --rule: #d6cdbf;               /* warm hairline */
+  --rule-soft: #e9e2d4;
+  --bg: #ece5d8;                 /* warm putty paper */
+  --bg-card: #f5efe2;            /* lighter cream for cards */
+  --bg-deep: #ddd4c2;            /* deeper putty */
 
   --max-w: 1180px;
   --serif: "Fraunces", "Source Serif Pro", "Georgia", serif;
@@ -39,6 +39,13 @@ html, body {
   font-size: 16px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* tabular figures wherever digits need to align in columns */
+table, .figures-tabular, .news-list time, .card-year, dl.dated dt {
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 /* very subtle paper grain */
@@ -128,18 +135,16 @@ h3 { font-size: 1.15rem; margin: 1.5em 0 0.4em; font-family: var(--sans); font-w
 .card .card-img {
   display: block;
   width: 100%;
-  aspect-ratio: 16/10;
+  aspect-ratio: 4/3;
   overflow: hidden;
-  background:
-    linear-gradient(135deg, rgba(75, 46, 131, 0.10) 0%, rgba(183, 165, 122, 0.18) 100%),
-    var(--bg-deep);
+  background: var(--bg-deep);
   border-bottom: 1px solid var(--rule);
 }
 .card .card-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center top;
   display: block;
 }
 
@@ -166,6 +171,38 @@ h3 { font-size: 1.15rem; margin: 1.5em 0 0.4em; font-family: var(--sans); font-w
   height: 6px;
   background: var(--uw-gold);
   transform: translateX(-50%) rotate(45deg);
+}
+
+/* graticule rule — cartographic motif: hairline + small vertical ticks
+   like the tick marks on a map's neat-line. Replaces plain <hr>. */
+hr.rule {
+  border: 0;
+  height: 7px;
+  margin: 3.75rem 0;
+  background:
+    linear-gradient(to right,
+      transparent 0,
+      var(--rule) 6%,
+      var(--rule) 94%,
+      transparent 100%) center / 100% 1px no-repeat,
+    repeating-linear-gradient(to right,
+      var(--rule) 0 1px,
+      transparent 1px 40px) center / calc(100% - 12%) 5px no-repeat;
+  opacity: 0.85;
+}
+
+/* drop cap — for opening paragraph of long-form / thesis pages.
+   Apply alongside .lede via class="lede dropcap". */
+.dropcap::first-letter {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--uw-purple);
+  font-size: 4.2em;
+  line-height: 0.82;
+  float: left;
+  margin: 0.06em 0.12em -0.04em 0;
+  padding: 0.02em 0.04em 0 0;
 }
 
 .btn {

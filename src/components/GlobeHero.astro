@@ -220,6 +220,7 @@ for (const t of talks) {
 
   // Auto-rotate
   let autoRotate = true;
+  let hoverInside = false;
   let lastT = 0;
   d3.timer(t => {
     if (!autoRotate) { lastT = t; return; }
@@ -227,9 +228,15 @@ for (const t of talks) {
     lastT = t;
     if (!landFeature) return;
     const r = projection.rotate();
-    projection.rotate([r[0] + dt * 0.012, r[1], r[2]]);
+    // Slow down when the cursor is over the globe so the user can read it.
+    const speed = hoverInside ? 0.003 : 0.012;
+    projection.rotate([r[0] + dt * speed, r[1], r[2]]);
     render();
   });
+
+  // Cursor-aware slowdown
+  wrap.addEventListener('pointerenter', () => { hoverInside = true; });
+  wrap.addEventListener('pointerleave', () => { hoverInside = false; });
 
   // Drag to rotate
   let dragStart = null;

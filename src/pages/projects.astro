@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectsMap from '../components/ProjectsMap.astro';
 import projects from '../data/projects.json';
 
 const sorted = [...projects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
@@ -12,6 +13,8 @@ const sorted = [...projects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
     <span class="eyebrow">Projects</span>
     <h1>Field experiments in humanistic mapping</h1>
     <p class="lede">Each project is a working answer to one question: how do we render the meaning of a place? Below are public-scholarship maps, web platforms, and software released by the lab.</p>
+
+    <ProjectsMap />
 
     <div class="proj-list">
       {sorted.map(p => (
@@ -50,6 +53,13 @@ const sorted = [...projects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
     border-bottom: 1px solid var(--rule);
   }
   .proj:last-child { border-bottom: 0; }
+  .proj { transition: background-color 0.25s ease; }
+  .proj.is-mapped {
+    background-color: rgba(160, 142, 111, 0.06);
+  }
+  .proj.proj-flash {
+    background-color: rgba(160, 142, 111, 0.18);
+  }
   .proj-img {
     aspect-ratio: 4/3;
     border-radius: 8px;
