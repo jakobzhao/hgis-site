@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsWormhole from '../components/NewsWormhole.astro';
 import { sortedNews } from '../data/news';
 
 const sorted = sortedNews();
@@ -26,12 +27,14 @@ function formatDate(iso) {
     <h1>In the news</h1>
     <p class="lede">Selected media coverage of the lab's research — from deepfake geography and the early COVID-19 dashboard to social-media studies of climate, air pollution, and Black-owned restaurants.</p>
 
+    <NewsWormhole />
+
     {years.map(year => (
       <section class="year-group">
         <h2>{year}</h2>
         <ol class="news-feed">
           {groups[year].map(n => (
-            <li>
+            <li data-date={n.date} data-outlet={n.outlet}>
               <span class="outlet">{n.outlet}</span>
               <h3><a href={n.url} target="_blank" rel="noopener">{n.title}</a></h3>
               <time>{formatDate(n.date)}</time>

@@ -1,0 +1,624 @@
+---
+import { news, outletCity } from '../data/news';
+
+type Spot = { date: string; outlet: string; title: string; url: string; lat: number; lon: number; city: string };
+const spots: Spot[] = [];
+for (const n of news) {
+  const c = outletCity[n.outlet];
+  if (!c) continue;
+  if (c.city === 'Seattle') continue;
+  spots.push({ ...n, ...c });
+}
+spots.sort((a, b) => b.date.localeCompare(a.date));
+
+const SEATTLE = { lat: 47.6062, lon: -122.3321, city: 'Seattle' };
+const initial = spots[0] ?? SEATTLE;
+---
+<figure class="wh-wrap" aria-label="Wormhole atlas joining Seattle to the city of the most recent news story">
+  <div class="wh-stage">
+    <canvas id="wh-canvas"
+      data-spots={JSON.stringify(spots)}
+      data-seattle={JSON.stringify(SEATTLE)}
+      data-initial={JSON.stringify(initial)}
+    ></canvas>
+    <div class="wh-meta" id="wh-meta">
+      <span class="wh-meta-line wh-meta-top">
+        <span class="wh-arrow" aria-hidden="true">↑</span>
+        <span class="wh-meta-city">{initial.city}</span>
+        <span class="wh-meta-outlet">— {initial.outlet}</span>
+      </span>
+      <span class="wh-meta-line wh-meta-bottom">
+        <span class="wh-arrow" aria-hidden="true">↓</span>
+        <span class="wh-meta-city">Seattle</span>
+        <span class="wh-meta-outlet">— Humanistic GIS Lab</span>
+      </span>
+    </div>
+    <div class="wh-tag" id="wh-tag" aria-hidden="true">
+      <span class="wh-tag-line"></span>
+      <span class="wh-tag-text">
+        <em>spacetime wormhole</em>
+        <small>where attention crosses</small>
+      </span>
+    </div>
+  </div>
+  <figcaption>
+    <span class="wh-cap-lede">Two terra, one moment of attention.</span>
+    <span class="wh-cap-cite">Seattle below; above, where today's story rises from. Hover any item — the upper terrain re-centers on the journalist's city, and the wormhole reseats.</span>
+  </figcaption>
+</figure>
+
+<script is:inline type="module">
+  import * as THREE from 'https://esm.sh/three@0.160.0';
+  import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+  import * as d3 from 'https://esm.sh/d3@7';
+  import { feature } from 'https://esm.sh/topojson-client@3';
+
+  const canvas = document.getElementById('wh-canvas');
+  if (!canvas) throw new Error('wh canvas missing');
+  const stage = canvas.parentElement;
+  const meta = document.getElementById('wh-meta');
+  const metaTop = meta?.querySelector('.wh-meta-top .wh-meta-city');
+  const metaTopOutlet = meta?.querySelector('.wh-meta-top .wh-meta-outlet');
+
+  const spots = JSON.parse(canvas.dataset.spots || '[]');
+  const seattle = JSON.parse(canvas.dataset.seattle || '{}');
+  let topCity = JSON.parse(canvas.dataset.initial || '{}');
+
+  // ----- sizing -----
+  const measure = () => {
+    const w = stage.clientWidth;
+    const h = Math.min(560, Math.max(360, w * 0.62));
+    return { w, h };
+  };
+  let { w, h } = measure();
+
+  // ----- three.js scene -----
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h, false);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100);
+  camera.position.set(0, 0.4, 5.2);
+  camera.lookAt(0, 0, 0);
+
+  // ----- orbit controls — drag to inspect, idle = slow auto-rotate -----
+  const controls = new OrbitControls(camera, canvas);
+  controls.target.set(0, 0, 0);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.enablePan = false;
+  controls.enableZoom = true;
+  controls.minDistance = 3.4;
+  controls.maxDistance = 7.5;
+  controls.minPolarAngle = Math.PI * 0.18;     // can't look from straight above
+  controls.maxPolarAngle = Math.PI * 0.82;     // can't look from straight below
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 0.55;             // ~70 s per revolution
+  controls.update();
+  let resumeTimer = 0;
+  controls.addEventListener('start', () => {
+    controls.autoRotate = false;
+    if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = 0; }
+  });
+  controls.addEventListener('end', () => {
+    if (resumeTimer) clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(() => { controls.autoRotate = true; }, 2500);
+  });
+
+  // ----- texture (vector cap, drawn with d3 into a 2D canvas) -----
+  const TEX = 1024;
+  function makeMapTexture() {
+    const c = document.createElement('canvas');
+    c.width = TEX; c.height = TEX;
+    const ctx = c.getContext('2d');
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return { canvas: c, ctx, tex };
+  }
+  const bottomTex = makeMapTexture();
+  const topTex    = makeMapTexture();
+
+  const projection = d3.geoOrthographic()
+    .scale(TEX * 0.95)
+    .translate([TEX / 2, TEX / 2])
+    .clipAngle(30);
+  let landFeature = null;
+
+  function paintCity({ ctx, tex }, lat, lon) {
+    projection.rotate([-lon, -lat, 0]);
+    const path = d3.geoPath(projection, ctx);
+    const cx = TEX / 2, cy = TEX / 2, R = TEX * 0.48;
+    ctx.clearRect(0, 0, TEX, TEX);
+    // Draw inside a soft circle — no hard outline.
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.clip();
+    // Paper backdrop
+    ctx.fillStyle = '#f5efe2';
+    ctx.fillRect(0, 0, TEX, TEX);
+    // graticule
+    const grat = d3.geoGraticule().step([10, 10])();
+    ctx.strokeStyle = '#e9e2d4';
+    ctx.lineWidth = 1.3;
+    ctx.globalAlpha = 0.55;
+    ctx.beginPath(); path(grat); ctx.stroke();
+    ctx.globalAlpha = 1;
+    if (landFeature) {
+      ctx.fillStyle = '#ddd4c2';
+      ctx.strokeStyle = '#c5b59a';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); path(landFeature); ctx.fill(); ctx.stroke();
+    }
+    ctx.restore();
+    // Radial alpha mask — content stays solid through ~85% of the radius,
+    // then fades over the last 15% so there's no hard line.
+    const fade = ctx.createRadialGradient(cx, cy, R * 0.82, cx, cy, R);
+    fade.addColorStop(0, 'rgba(0,0,0,1)');
+    fade.addColorStop(0.55, 'rgba(0,0,0,0.95)');
+    fade.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.globalCompositeOperation = 'destination-in';
+    ctx.fillStyle = fade;
+    ctx.fillRect(0, 0, TEX, TEX);
+    ctx.globalCompositeOperation = 'source-over';
+    // Center city marker drawn last, after the mask, so it stays crisp.
+    ctx.fillStyle = 'rgba(106, 90, 110, 0.22)';
+    ctx.beginPath(); ctx.arc(cx, cy, 28, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#6a5a6e';
+    ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#f5efe2';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    tex.needsUpdate = true;
+  }
+
+  // ----- terra material — peak + creases + procedural fbm hillshade
+  //       The fbm displacement gives every patch a real "topography":
+  //       ridges, valleys, foothills. Each terra is seeded uniquely so
+  //       Seattle's hills don't look identical to wherever the news is from. -----
+  function makeTerraMaterial(texture, direction, seed) {
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        uMap:   { value: texture },
+        uTime:  { value: 0 },
+        uPeak:  { value: 0 },
+        uDir:   { value: direction },
+        uSeed:  { value: seed },
+      },
+      vertexShader: `
+        uniform float uTime;
+        uniform float uPeak;
+        uniform float uDir;
+        uniform float uSeed;
+        varying vec2  vUv;
+        varying float vDisp;
+        varying float vRelief;
+
+        // value noise — cheap, good enough for terrain feel
+        float hash(vec2 p) {
+          return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+        }
+        float vnoise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+          float a = hash(i);
+          float b = hash(i + vec2(1.0, 0.0));
+          float c = hash(i + vec2(0.0, 1.0));
+          float d = hash(i + vec2(1.0, 1.0));
+          return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+        // 5-octave fbm
+        float fbm(vec2 p) {
+          float v = 0.0;
+          float a = 0.5;
+          for (int i = 0; i < 5; i++) {
+            v += a * vnoise(p);
+            p = p * 2.07 + vec2(13.1, 7.3);
+            a *= 0.5;
+          }
+          return v;
+        }
+
+        void main() {
+          vUv = uv;
+          vec3 pos = position;
+          vec2 d = uv - 0.5;
+          float r = length(d) * 2.0;
+
+          // 1. tent peak — tips reach the meeting plane exactly. The apex
+          //    alpha fade in the fragment shader dissolves them into the
+          //    central glow before geometry would have to overlap.
+          float peak = uPeak * exp(-r * r * 22.0) * 1.45;
+
+          // 2. radial creases — fan out from the apex
+          float ang = atan(d.y, d.x);
+          float creases = sin(ang * 5.0 + 1.2) * uPeak * 0.22 * exp(-r * r * 6.0);
+
+          // 3. fbm hillshade — finer noise so we see real ridges/valleys
+          vec2 noiseUv = uv * 18.0 + vec2(uSeed, uSeed * 1.7);
+          float relief = fbm(noiseUv) - 0.5;
+          // fade relief out toward the cap edge so the rim stays "paper",
+          // and AT the peak so the needle isn't blunted by noise
+          float fadeRelief = smoothstep(1.0, 0.65, r) * smoothstep(0.0, 0.10, r);
+          relief *= fadeRelief * 0.22;
+
+          // 4. ambient breath
+          float breath = sin(uv.x * 7.0 + uTime * 0.55) * cos(uv.y * 5.5 - uTime * 0.42) * 0.012;
+
+          float disp = peak + creases + relief + breath;
+          pos.z += disp;
+          vDisp = disp * uDir;
+          vRelief = relief;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+        }
+      `,
+      fragmentShader: `
+        #ifdef GL_OES_standard_derivatives
+        #extension GL_OES_standard_derivatives : enable
+        #endif
+        precision highp float;
+        uniform sampler2D uMap;
+        varying vec2  vUv;
+        varying float vDisp;
+        varying float vRelief;
+        void main() {
+          vec4 c = texture2D(uMap, vUv);
+          if (c.a < 0.02) discard;
+          vec2 grad = vec2(dFdx(vRelief), dFdy(vRelief));
+          float shade = clamp(0.5 + 4.0 * (-grad.x + grad.y), 0.0, 1.0);
+          float shaded = clamp(vDisp, -0.5, 0.5);
+          float lift   = max( shaded, 0.0);
+          float crease = max(-shaded, 0.0);
+          vec3 col = c.rgb;
+          col += lift * 0.16;
+          col -= crease * 0.14;
+          col *= mix(0.78, 1.10, shade);
+          // ---- Apex magic: at the tip, the texture itself dissolves to
+          //      transparent so the central glow shines straight through.
+          //      The cones become spires of light, not matter, where they meet.
+          vec2 dd = vUv - 0.5;
+          float rr = length(dd) * 2.0;
+          float apexAlpha = smoothstep(0.06, 0.22, rr);   // 0 at center -> 1 by 0.22
+          // strong purple-tinted halo on the apex region (still visible because
+          // we add to col and the surrounding non-zero alpha carries it)
+          float tipFalloff = pow(max(0.0, 1.0 - rr * 4.5), 2.6);
+          col += vec3(0.34, 0.24, 0.42) * tipFalloff * 1.2;
+          gl_FragColor = vec4(col, c.a * apexAlpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+      extensions: { derivatives: true },
+    });
+  }
+
+  const PLANE = 4.4;
+  // higher subdivision so the fbm hillshade reads at fine scale
+  const planeGeom = new THREE.PlaneGeometry(PLANE, PLANE, 192, 192);
+
+  const bottomMat = makeTerraMaterial(bottomTex.tex, +1, 17.3);
+  const bottomMesh = new THREE.Mesh(planeGeom, bottomMat);
+  bottomMesh.rotation.x = -Math.PI / 2;
+  bottomMesh.position.y = -1.45;
+  scene.add(bottomMesh);
+
+  const topMat = makeTerraMaterial(topTex.tex, -1, 49.7);
+  const topMesh = new THREE.Mesh(planeGeom, topMat);
+  topMesh.rotation.x =  Math.PI / 2;
+  topMesh.position.y = +1.45;
+  scene.add(topMesh);
+
+  // ----- The wormhole's "magic point" — pure light where the two terra
+  //       apices dissolve into transparency. No solid core, just layered
+  //       additive glow with a custom shader: bright pulsing center,
+  //       multi-octave noise modulation, smooth radial falloff. -----
+  const glowMat = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime:     { value: 0 },
+      uIntensity:{ value: 0 },
+    },
+    vertexShader: `
+      varying vec3 vLocal;
+      void main() {
+        vLocal = position;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      precision highp float;
+      uniform float uTime;
+      uniform float uIntensity;
+      varying vec3 vLocal;
+      // cheap noise for the energy shimmer
+      float hash(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
+      void main() {
+        float r = length(vLocal) / 0.55;        // sphere normalized radius
+        if (r > 1.0) discard;
+        // smooth radial falloff: bright core, soft edge
+        float core    = pow(1.0 - r, 2.2);
+        float falloff = pow(1.0 - r, 4.5);
+        // slow pulse + faster shimmer
+        float pulse   = 0.78 + 0.22 * sin(uTime * 1.35);
+        float shimmer = 0.86 + 0.14 * sin(vLocal.x * 12.0 + uTime * 2.6)
+                                   * cos(vLocal.y * 11.0 - uTime * 2.1)
+                                   * sin(vLocal.z * 9.0 + uTime * 1.7);
+        float a = (falloff * 0.95 + core * 0.55) * pulse * shimmer * uIntensity;
+        // color mix: violet warm core, cooler purple edge
+        vec3 col = mix(vec3(0.35, 0.25, 0.42), vec3(1.00, 0.92, 1.00), core);
+        gl_FragColor = vec4(col * (0.6 + 1.2 * core), a);
+      }
+    `,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.FrontSide,
+  });
+  const glowMesh = new THREE.Mesh(new THREE.SphereGeometry(0.55, 48, 48), glowMat);
+  glowMesh.renderOrder = 0;       // behind terra by default; terra alpha lets it shine through
+  scene.add(glowMesh);
+
+  // A second, larger, very faint outer aura — just a hint of bloom.
+  const auraMat = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime:     { value: 0 },
+      uIntensity:{ value: 0 },
+    },
+    vertexShader: glowMat.vertexShader,
+    fragmentShader: `
+      precision highp float;
+      uniform float uTime;
+      uniform float uIntensity;
+      varying vec3 vLocal;
+      void main() {
+        float r = length(vLocal) / 1.10;
+        if (r > 1.0) discard;
+        float falloff = pow(1.0 - r, 5.0);
+        float pulse = 0.8 + 0.2 * cos(uTime * 0.85);
+        float a = falloff * 0.30 * pulse * uIntensity;
+        vec3 col = vec3(0.45, 0.32, 0.55);
+        gl_FragColor = vec4(col, a);
+      }
+    `,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+  const auraMesh = new THREE.Mesh(new THREE.SphereGeometry(1.10, 32, 32), auraMat);
+  auraMesh.renderOrder = -1;       // farthest back so it doesn't block anything
+  scene.add(auraMesh);
+
+  // Make the cones render after the glow so apex alpha lets glow show through.
+  bottomMesh.renderOrder = 2;
+  topMesh.renderOrder    = 2;
+
+  // ----- world data + initial paint -----
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json')
+    .then(r => r.json())
+    .then(world => {
+      landFeature = feature(world, world.objects.land);
+      paintCity(bottomTex, seattle.lat, seattle.lon);
+      paintCity(topTex,    topCity.lat, topCity.lon);
+    });
+
+  // ----- peak animation -----
+  const peakTarget = { v: 1.0 };
+  const peakCurrent = { v: 0.0 };
+  let topPeakTarget = 1.0;
+  let topPeakCurrent = 0.0;
+
+  // ----- news <li> hover sync -----
+  function setTopCity(spot) {
+    if (!spot || !landFeature) return;
+    if (spot.city === topCity.city && spot.outlet === topCity.outlet) return;
+    topCity = spot;
+    paintCity(topTex, spot.lat, spot.lon);
+    if (metaTop) metaTop.textContent = spot.city;
+    if (metaTopOutlet) metaTopOutlet.textContent = `— ${spot.outlet}`;
+    // also reseed the top terra's relief so mountains recompose for the new place
+    topMat.uniforms.uSeed.value = 11.0 + Math.random() * 80.0;
+    topPeakTarget = 0.18;
+    setTimeout(() => { topPeakTarget = 1.0; }, 220);
+  }
+
+  document.addEventListener('pointerover', (e) => {
+    if (!e.target || !e.target.closest) return;
+    const li = e.target.closest('.news-feed li[data-outlet]');
+    if (!li) return;
+    const from = e.relatedTarget && e.relatedTarget.closest
+      ? e.relatedTarget.closest('.news-feed li[data-outlet]') : null;
+    if (from === li) return;
+    const date = li.dataset.date;
+    const outlet = li.dataset.outlet;
+    const match = spots.find(s => s.date === date && s.outlet === outlet);
+    if (match) setTopCity(match);
+  });
+
+  // ----- annotation label that follows the wormhole's screen position -----
+  const tagEl = document.getElementById('wh-tag');
+  const tagAnchor = new THREE.Vector3(0, 0, 0);   // world origin (the junction)
+  function updateTagPosition() {
+    if (!tagEl) return;
+    const v = tagAnchor.clone().project(camera);
+    const rect = canvas.getBoundingClientRect();
+    const sx = (v.x * 0.5 + 0.5) * rect.width;
+    const sy = (-v.y * 0.5 + 0.5) * rect.height;
+    // place the tag up-right from the junction in screen space
+    tagEl.style.left = `${sx + 64}px`;
+    tagEl.style.top  = `${sy - 28}px`;
+  }
+
+  // ----- main loop -----
+  let raf = 0;
+  function animate(t) {
+    const time = t * 0.001;
+    const ease = 0.10;
+    peakCurrent.v += (peakTarget.v - peakCurrent.v) * ease;
+    topPeakCurrent += (topPeakTarget - topPeakCurrent) * ease;
+    bottomMat.uniforms.uTime.value = time;
+    bottomMat.uniforms.uPeak.value = peakCurrent.v;
+    topMat.uniforms.uTime.value = time + 1.7;
+    topMat.uniforms.uPeak.value = topPeakCurrent;
+    // junction glow — intensity follows the smaller of the two peaks (so
+    // it dims while the top terra is reseating), shader handles pulse + shimmer
+    const both = Math.min(peakCurrent.v, topPeakCurrent);
+    glowMat.uniforms.uTime.value = time;
+    glowMat.uniforms.uIntensity.value = both;
+    auraMat.uniforms.uTime.value = time;
+    auraMat.uniforms.uIntensity.value = both;
+    glowMesh.scale.setScalar(1.0 + 0.06 * Math.sin(time * 1.35));
+    auraMesh.scale.setScalar(1.0 + 0.04 * Math.cos(time * 0.85));
+    updateTagPosition();
+    controls.update();
+    renderer.render(scene, camera);
+    raf = requestAnimationFrame(animate);
+  }
+
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        if (!raf) raf = requestAnimationFrame(animate);
+      } else if (raf) {
+        cancelAnimationFrame(raf); raf = 0;
+      }
+    }
+  }, { rootMargin: '120px' });
+  io.observe(canvas);
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    peakCurrent.v = 1.0; topPeakCurrent = 1.0;
+    bottomMat.uniforms.uPeak.value = 1.0;
+    topMat.uniforms.uPeak.value = 1.0;
+    renderer.render(scene, camera);
+  } else if (!raf) {
+    raf = requestAnimationFrame(animate);
+  }
+
+  const ro = new ResizeObserver(() => {
+    const m = measure();
+    if (m.w === w && m.h === h) return;
+    w = m.w; h = m.h;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  });
+  ro.observe(stage);
+</script>
+
+<style>
+  .wh-wrap {
+    position: relative;
+    margin: 0 0 2.5rem;
+    padding: 0.4rem 0 0.2rem;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .wh-stage { position: relative; width: 100%; }
+  #wh-canvas {
+    display: block;
+    width: 100%;
+    cursor: grab;
+    touch-action: none;
+  }
+  #wh-canvas:active { cursor: grabbing; }
+
+  .wh-meta {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem 1.4rem;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+  }
+  .wh-tag {
+    position: absolute;
+    pointer-events: none;
+    z-index: 4;
+    transform: translate(0, 0);
+    white-space: nowrap;
+    font-family: var(--serif);
+  }
+  .wh-tag-line {
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: 44px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--ink-faint));
+    transform: rotate(-22deg);
+    transform-origin: right center;
+    margin-right: 8px;
+  }
+  .wh-tag-text { display: inline-block; }
+  .wh-tag-text em {
+    display: block;
+    font-size: 0.82rem;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .wh-tag-text small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-top: 0.18rem;
+  }
+
+  .wh-meta-line { display: block; }
+  .wh-meta-top { text-align: left; }
+  .wh-meta-bottom { text-align: right; }
+  .wh-meta-city {
+    font-family: var(--serif);
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 1.05rem;
+    letter-spacing: 0;
+  }
+  .wh-meta-outlet {
+    color: var(--ink-faint);
+    font-style: italic;
+    font-size: 0.78rem;
+    margin-left: 0.35rem;
+  }
+  .wh-arrow {
+    color: var(--uw-purple);
+    font-weight: 600;
+    margin-right: 0.3rem;
+  }
+
+  .wh-wrap figcaption {
+    text-align: center;
+    padding: 0.7rem 0 0.2rem;
+    line-height: 1.45;
+  }
+  .wh-cap-lede {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .wh-cap-cite {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 0.25rem;
+    max-width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
