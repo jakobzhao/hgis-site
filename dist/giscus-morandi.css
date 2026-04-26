@@ -1,0 +1,211 @@
+/*
+ * Giscus custom theme — Morandi palette to match the rest of hgis.uw.edu.
+ *
+ * Loaded by giscus inside its iframe via `data-theme=<absolute URL>`.
+ * Variable names below mirror GitHub's Primer tokens; giscus reads them
+ * and re-applies them across its UI. Copy of the upstream `light.css`
+ * with the lab's putty / mauve / sage palette substituted.
+ */
+main {
+  --color-prettylights-syntax-comment: #6c6358;
+  --color-prettylights-syntax-constant: #6a5a6e;
+  --color-prettylights-syntax-entity: #6a5a6e;
+  --color-prettylights-syntax-storage-modifier-import: #2c2823;
+  --color-prettylights-syntax-entity-tag: #2f6b54;
+  --color-prettylights-syntax-keyword: #a13d2a;
+  --color-prettylights-syntax-string: #2f6b54;
+  --color-prettylights-syntax-variable: #a08e6f;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #a13d2a;
+  --color-prettylights-syntax-invalid-illegal-text: #f6f0e0;
+  --color-prettylights-syntax-invalid-illegal-bg: #a13d2a;
+  --color-prettylights-syntax-carriage-return-text: #f6f0e0;
+  --color-prettylights-syntax-carriage-return-bg: #a13d2a;
+  --color-prettylights-syntax-string-regexp: #2f6b54;
+  --color-prettylights-syntax-markup-list: #6c6358;
+  --color-prettylights-syntax-markup-heading: #4a3e4d;
+  --color-prettylights-syntax-markup-italic: #2c2823;
+  --color-prettylights-syntax-markup-bold: #2c2823;
+  --color-prettylights-syntax-markup-deleted-text: #a13d2a;
+  --color-prettylights-syntax-markup-deleted-bg: #f5efe2;
+  --color-prettylights-syntax-markup-inserted-text: #2f6b54;
+  --color-prettylights-syntax-markup-inserted-bg: #f5efe2;
+  --color-prettylights-syntax-markup-changed-text: #a08e6f;
+  --color-prettylights-syntax-markup-changed-bg: #f5efe2;
+  --color-prettylights-syntax-markup-ignored-text: #2c2823;
+  --color-prettylights-syntax-markup-ignored-bg: #6a5a6e;
+  --color-prettylights-syntax-meta-diff-range: #6a5a6e;
+  --color-prettylights-syntax-brackethighlighter-angle: #6c6358;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #98907f;
+  --color-prettylights-syntax-constant-other-reference-link: #6a5a6e;
+
+  --color-btn-text: #2c2823;
+  --color-btn-bg: #fffdf7;
+  --color-btn-border: #e9e2d4;
+  --color-btn-shadow: none;
+  --color-btn-inset-shadow: none;
+  --color-btn-hover-bg: #f5efe2;
+  --color-btn-hover-border: #e9e2d4;
+  --color-btn-active-bg: #ece5d8;
+  --color-btn-active-border: #e9e2d4;
+  --color-btn-selected-bg: #ece5d8;
+
+  --color-btn-primary-text: #fffdf7;
+  --color-btn-primary-bg: #6a5a6e;
+  --color-btn-primary-border: #6a5a6e;
+  --color-btn-primary-shadow: none;
+  --color-btn-primary-inset-shadow: none;
+  --color-btn-primary-hover-bg: #5a4d5e;
+  --color-btn-primary-hover-border: #5a4d5e;
+  --color-btn-primary-selected-bg: #4a3e4d;
+  --color-btn-primary-selected-shadow: none;
+  --color-btn-primary-disabled-text: rgba(255, 253, 247, 0.7);
+  --color-btn-primary-disabled-bg: #9a8b9e;
+  --color-btn-primary-disabled-border: #9a8b9e;
+
+  --color-action-list-item-default-hover-bg: #f5efe2;
+
+  --color-segmented-control-bg: #f5efe2;
+  --color-segmented-control-button-bg: #fffdf7;
+  --color-segmented-control-button-selected-border: #e9e2d4;
+
+  --color-fg-default: #2c2823;
+  --color-fg-muted: #6c6358;
+  --color-fg-subtle: #98907f;
+  --color-canvas-default: #f5efe2;
+  --color-canvas-overlay: #fffdf7;
+  --color-canvas-inset: #f5efe2;
+  --color-canvas-subtle: #f5efe2;
+  --color-border-default: #e9e2d4;
+  --color-border-muted: #f5efe2;
+  --color-neutral-muted: rgba(233, 226, 212, 0.6);
+  --color-accent-fg: #6a5a6e;
+  --color-accent-emphasis: #6a5a6e;
+  --color-accent-muted: rgba(154, 139, 158, 0.4);
+  --color-accent-subtle: #f5efe2;
+  --color-success-fg: #2f6b54;
+  --color-success-emphasis: #2f6b54;
+  --color-attention-fg: #a08e6f;
+  --color-attention-emphasis: #a08e6f;
+  --color-attention-muted: rgba(197, 181, 154, 0.4);
+  --color-attention-subtle: #f5efe2;
+  --color-danger-fg: #a13d2a;
+  --color-danger-emphasis: #a13d2a;
+  --color-danger-muted: rgba(161, 61, 42, 0.4);
+  --color-danger-subtle: #f5efe2;
+  --color-primer-shadow-inset: rgba(74, 47, 130, 0.06);
+  --color-scale-gray-1: #ece5d8;
+  --color-scale-blue-1: #c5b59a;
+  --color-scale-blue-5: #a08e6f;
+
+  /* Type — pull body to the same serif the rest of the site uses for
+     editorial copy, but keep monospace as-is for code blocks. */
+  font-family: "Fraunces", "Source Serif Pro", Georgia, serif;
+}
+
+main .markdown-body,
+main .gsc-comment-box-textarea,
+main .gsc-comment-author,
+main .gsc-comment-content,
+main .gsc-reply-author {
+  font-family: "Fraunces", "Source Serif Pro", Georgia, serif;
+}
+
+main .markdown-body code,
+main .markdown-body pre,
+main code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+/* Avatars: drop the bright GitHub blue ring; let them sit clean. */
+main .gsc-comment-avatar {
+  border: 1px solid var(--color-border-muted);
+}
+
+/* All giscus container borders: pull every visible hairline to a
+   near-bg tone so the comment block reads as one continuous surface,
+   not a stack of dark-ringed cards. Targets every class giscus uses
+   for outer/divider edges. */
+main .gsc-comment,
+main .gsc-reply,
+main .gsc-comment-box,
+main .gsc-comment-author-avatar,
+main .gsc-replies {
+  box-shadow: none !important;
+}
+
+/* Outer + structural containers — hairline almost matches bg. */
+main .gsc-main,
+main .gsc-comments,
+main .gsc-timeline,
+main .gsc-header,
+main .gsc-comment,
+main .gsc-comment-box,
+main .gsc-comment-box-main,
+main .gsc-comment-box-write,
+main .gsc-comment-box-preview,
+main .gsc-comment-box-tabs,
+main .gsc-comment-box-bottom,
+main .gsc-comment-box-handle,
+main .gsc-comment-box-preview-invalid,
+main .gsc-pagination,
+main .gsc-replies,
+main .gsc-reply {
+  border-color: #f0e9da !important;
+}
+
+/* Section dividers giscus draws between header / box / list. The
+   "0 comments — powered by giscus" header has a bottom rule; keep
+   it visible enough to read as a divider but in the page's hairline
+   register, not GitHub's. */
+main .gsc-header,
+main .gsc-comments > * + *,
+main .gsc-timeline > * + * {
+  border-color: #f0e9da !important;
+}
+
+/* Reactions pill (the "2 reactions 👍 ❤️" cluster). Drop its outer
+   ring entirely; the chip background is enough to delineate it. */
+main .gsc-reactions,
+main .gsc-reactions-count,
+main .gsc-direct-reactions {
+  border-color: transparent !important;
+  background: transparent !important;
+}
+main .gsc-reactions-popover-buttons,
+main .gsc-reactions button {
+  border-color: #f0e9da !important;
+}
+
+/* The textarea itself stays a touch more visible than the outer
+   wrapper, so "this is where you type" still reads. Focus state
+   bumps to rule (#d6cdbf) — the only place the heavier hairline
+   appears, and only after you click in. */
+main .gsc-comment-box-textarea {
+  border-color: #e9e2d4 !important;
+  background: #fffdf7 !important;
+}
+main .gsc-comment-box-textarea:focus,
+main .gsc-comment-box-textarea:focus-visible {
+  border-color: #d6cdbf !important;
+  outline: none !important;
+}
+
+/* The dashed "drag-drop file here" outline inside the textarea —
+   GitHub draws this to advertise file upload. It looks like a
+   second, darker textarea border. Hide it (Markdown-only column,
+   no need for image uploads from readers anyway). */
+main .gsc-comment-box-md-toolbar,
+main .gsc-comment-box-textarea[data-attaching-file="true"] {
+  border-style: solid !important;
+}
+
+/* Active tab underline ("Write" when typing) — same hairline tier. */
+main .gsc-comment-box-tab[aria-selected="true"] {
+  border-bottom-color: #6a5a6e !important;
+}
+
+/* Quote marks above replies — soften and italicise. */
+main .gsc-comment-header,
+main .gsc-reply-header {
+  font-style: italic;
+}

@@ -244,6 +244,19 @@ const articleSchema = {
         </div>
       </section>
 
+      <section class="fh-comments" aria-label="comments">
+        <!--
+          Giscus thread mount point. The script is added by the inline
+          loader at the bottom of this layout once the page is parsed —
+          we have to inject it programmatically so that the language
+          attribute can track the EN/中 toggle without a page reload.
+          The giscus iframe's own "0 comments — powered by giscus"
+          header is the only label readers see; we don't double it
+          up with a redundant section heading.
+        -->
+        <div class="fh-giscus" id="fh-giscus" aria-live="polite"></div>
+      </section>
+
       <footer class="fh-foot">
         <a href="/friday-harbor/">
           <span data-lang="en">{UI.back.en}</span><span data-lang="zh">{UI.back.zh}</span>
@@ -508,6 +521,22 @@ const articleSchema = {
   }
   .fh-citation:not(.is-active) { display: none; }
 
+  /* ---- Giscus comments block (GitHub Discussions) ----------------
+     No external heading or help text — the giscus iframe carries its
+     own "0 comments — powered by giscus" line, which is enough.
+     Hairline divider above keeps it visually separated from the
+     share row. */
+  .fh-comments {
+    margin-top: 2.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .fh-giscus { min-height: 1px; }
+  .fh-giscus :global(.giscus),
+  .fh-giscus :global(.giscus-frame) {
+    width: 100%;
+  }
+
   .fh-foot {
     display: flex; justify-content: space-between;
     margin-top: 1.4rem; padding-top: 1rem;
@@ -694,8 +723,66 @@ const articleSchema = {
       root.setAttribute('data-lang', next);
       try { localStorage.setItem('fh-lang', next); } catch (e) {}
       paintLangBtns();
+      reloadGiscus();
     }));
     paintLangBtns();
+
+    // ----- giscus comments (GitHub Discussions) ------------------------
+    // Configuration is defined as constants the user can flip after
+    // running giscus.app's wizard once. Until the repo IDs are filled
+    // in, the script silently no-ops so deploys don't break.
+    const GISCUS = {
+      repo:       'jakobzhao/hgis-site',
+      repoId:     'R_kgDOSMIehg',
+      category:   'Comments',
+      categoryId: 'DIC_kwDOSMIehs4C7wE-',
+      // Custom theme: a Morandi-palette CSS file in /public/. Must be
+      // served from the same host the page is served from (giscus
+      // injects it into its iframe via <link>; no CORS step needed).
+      themeUrl:   'https://hgis.uw.edu/giscus-morandi.css',
+    };
+    const giscusMount = document.getElementById('fh-giscus');
+    function giscusLang() {
+      return root.getAttribute('data-lang') === 'zh' ? 'zh-CN' : 'en';
+    }
+    function loadGiscus() {
+      if (!giscusMount) return;
+      if (GISCUS.repoId.startsWith('REPLACE_') || GISCUS.categoryId.startsWith('REPLACE_')) {
+        // Placeholder mode — leave the help text up, don't try to mount.
+        return;
+      }
+      // Wipe any prior frame (called on language switch)
+      giscusMount.innerHTML = '';
+      const s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.async = true;
+      s.crossOrigin = 'anonymous';
+      const attrs = {
+        'data-repo': GISCUS.repo,
+        'data-repo-id': GISCUS.repoId,
+        'data-category': GISCUS.category,
+        'data-category-id': GISCUS.categoryId,
+        'data-mapping': 'pathname',
+        'data-strict': '0',
+        'data-reactions-enabled': '1',
+        'data-emit-metadata': '0',
+        'data-input-position': 'bottom',
+        // Custom Morandi theme — see /public/giscus-morandi.css.
+        'data-theme': GISCUS.themeUrl,
+        'data-lang': giscusLang(),
+        'data-loading': 'lazy',
+      };
+      Object.keys(attrs).forEach(k => s.setAttribute(k, attrs[k]));
+      giscusMount.appendChild(s);
+    }
+    function reloadGiscus() {
+      // The mounted iframe accepts setConfig messages without a full
+      // remount, but it's only modestly more efficient and adds risk
+      // when the script has hot-reload variants. Full remount is the
+      // safe path for a low-traffic column.
+      loadGiscus();
+    }
+    loadGiscus();
 
     // ----- share row -----
     const url = location.href;
