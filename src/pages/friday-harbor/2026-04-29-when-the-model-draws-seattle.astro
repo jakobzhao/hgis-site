@@ -370,8 +370,8 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
   }
 
   function drawAll() {
-    drawPanel('stage-real',   _real,   { fill: REAL_FILL,   stroke: REAL_STROKE,   strokeDash: null });
-    drawPanel('stage-claude', _claude, { fill: CLAUDE_FILL, stroke: CLAUDE_STROKE, strokeDash: '4 3' });
+    drawPanel('stage-real',   _real,   { fill: REAL_FILL,   stroke: REAL_STROKE,   strokeDash: null,   showSilhouette: false });
+    drawPanel('stage-claude', _claude, { fill: CLAUDE_FILL, stroke: CLAUDE_STROKE, strokeDash: '4 3',  showSilhouette: true  });
   }
 
   function makeProjection(W, H) {
@@ -417,6 +417,21 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
       .attr('width', W - 1).attr('height', H - 1)
       .attr('fill', 'none').attr('stroke', c.ink).attr('stroke-opacity', 0.25)
       .attr('stroke-width', 0.6);
+
+    // On the Claude panel, draw the actual Seattle silhouette underneath
+    // (very faint paper fill, thin stroke) so the viewer can SEE how the
+    // model's rectangles relate to where the city actually is.
+    if (style.showSilhouette) {
+      svg.append('g').attr('class', 'silhouette')
+        .selectAll('path')
+        .data(_real.features)
+        .join('path')
+        .attr('d', path)
+        .attr('fill', '#e8e3d6')
+        .attr('stroke', c.inkFaint).attr('stroke-opacity', 0.45)
+        .attr('stroke-width', 0.5)
+        .attr('stroke-linejoin', 'round');
+    }
 
     // Polygons
     const layer = svg.append('g').attr('class', 'nbhd-layer');
