@@ -55,6 +55,34 @@ export type Entry = {
 
 export const entries: Entry[] = [
   {
+    slug: "2026-04-29-when-the-model-draws-seattle",
+    date: "2026-04-29",
+    title: {
+      en: "When the Model Draws Seattle",
+      zh: "当模型来画西雅图",
+    },
+    subtitle: {
+      en: "The city's GIS office publishes 90 named neighborhoods. Asked to draw them from memory, Claude returned 35 axis-aligned rectangles — and forgot the rest. The map of what the model knows is also a map of what it doesn't.",
+      zh: "市政府公布了 90 个标准命名街区；被要求凭印象画出来，Claude 给了 35 个与经纬线对齐的矩形——其余的它没记起来。模型知道什么的地图，同时也是它不知道什么的地图。",
+    },
+    place: {
+      en: "Seattle, WA · 47.6° N, 122.3° W",
+      zh: "西雅图 · 北纬 47.6°，西经 122.3°",
+    },
+    techniques: ["anti-map", "palimpsest", "projection-critique"],
+    kind: "anti-map",
+    author: "Bo Zhao",
+    thumb: {
+      bbox: { west: -122.46, east: -122.23, south: 47.49, north: 47.74 },
+      pins: [
+        { lon: -122.335, lat: 47.608 },   // Downtown
+        { lon: -122.317, lat: 47.625 },   // Capitol Hill
+        { lon: -122.380, lat: 47.668 },   // Ballard
+        { lon: -122.285, lat: 47.555 },   // Columbia City
+      ],
+    },
+  },
+  {
     slug: "2026-04-28-anacortes-to-friday-harbor",
     date: "2026-04-28",
     title: {

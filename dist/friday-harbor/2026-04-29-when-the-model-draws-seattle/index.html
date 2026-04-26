@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>When the Model Draws Seattle · Friday Harbor · Humanistic GIS Laboratory</title><meta name="description" content="The city's GIS office publishes 90 named neighborhoods. Asked to draw them from memory, Claude returned 35 axis-aligned rectangles — and forgot the rest. The map of what the model knows is also a map of what it doesn't."><link rel="canonical" href="https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/"><!-- Open Graph --><meta property="og:type" content="article"><meta property="og:site_name" content="Humanistic GIS Laboratory"><meta property="og:title" content="When the Model Draws Seattle · Friday Harbor · Humanistic GIS Laboratory"><meta property="og:description" content="The city's GIS office publishes 90 named neighborhoods. Asked to draw them from memory, Claude returned 35 axis-aligned rectangles — and forgot the rest. The map of what the model knows is also a map of what it doesn't."><meta property="og:url" content="https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/"><meta property="og:image" content="https://hgis.uw.edu/hgis-logo.png"><meta property="og:locale" content="en_US"><!-- Twitter / X card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="When the Model Draws Seattle · Friday Harbor · Humanistic GIS Laboratory"><meta name="twitter:description" content="The city's GIS office publishes 90 named neighborhoods. Asked to draw them from memory, Claude returned 35 axis-aligned rectangles — and forgot the rest. The map of what the model knows is also a map of what it doesn't."><meta name="twitter:image" content="https://hgis.uw.edu/hgis-logo.png"><!-- Crawl hints --><meta name="robots" content="index, follow, max-image-preview:large"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><!-- Icons --><link rel="icon" type="image/png" href="/hgis-logo.png"><link rel="apple-touch-icon" href="/hgis-logo.png"><style>.seamap-figure[data-astro-cid-3whg3lmh]{margin:0}.seamap-pair[data-astro-cid-3whg3lmh]{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}.seamap-panel[data-astro-cid-3whg3lmh]{display:flex;flex-direction:column}.seamap-tag[data-astro-cid-3whg3lmh]{font-family:var(--serif);font-style:italic;font-size:.95rem;letter-spacing:.04em;color:var(--ink-soft);margin:0 0 .4rem;padding:.18rem .55rem;background:#8e9c8a29;border-left:2px solid var(--sage);align-self:flex-start;border-radius:0 2px 2px 0}.seamap-tag[data-astro-cid-3whg3lmh].tag-claude{background:#c2a09433;border-left-color:#8a3e2e;color:#6e3024}.seamap-stage[data-astro-cid-3whg3lmh]{width:100%;aspect-ratio:4 / 5;background:transparent;border:0;overflow:hidden;display:grid;place-items:center}.seamap-stage[data-astro-cid-3whg3lmh] svg[data-astro-cid-3whg3lmh]{display:block;width:100%;height:100%}.map-status[data-astro-cid-3whg3lmh]{margin:0;color:var(--ink-faint);font-family:var(--serif);font-style:italic}.seamap-source[data-astro-cid-3whg3lmh]{margin:.4rem .1rem 0;font-size:.74rem;color:var(--ink-faint);font-family:Inter,Noto Sans CJK,sans-serif;line-height:1.45}.seamap-figure[data-astro-cid-3whg3lmh] figcaption[data-astro-cid-3whg3lmh]{margin:1.2rem .2rem 0;font-size:.94rem;color:var(--ink-soft);font-family:var(--serif);line-height:1.65;max-width:880px}.seamap-figure[data-astro-cid-3whg3lmh] figcaption[data-astro-cid-3whg3lmh] b[data-astro-cid-3whg3lmh]{color:var(--ink);font-weight:500}.seamap-figure[data-astro-cid-3whg3lmh] figcaption[data-astro-cid-3whg3lmh] em[data-astro-cid-3whg3lmh]{color:var(--uw-purple-deep);font-style:italic}.seamap-figure[data-astro-cid-3whg3lmh] figcaption[data-astro-cid-3whg3lmh] .legend-line[data-astro-cid-3whg3lmh]{display:flex;align-items:flex-start;gap:.55rem;margin-top:.5rem;font-size:.92rem}.seamap-figure[data-astro-cid-3whg3lmh] figcaption[data-astro-cid-3whg3lmh] .legend-swatch[data-astro-cid-3whg3lmh]{flex:0 0 auto;margin-top:6px;width:18px;height:12px;border-radius:2px}.swatch-real[data-astro-cid-3whg3lmh]{background:#8e9c8a8c;border:1px solid #687366}.swatch-claude[data-astro-cid-3whg3lmh]{background:#c2a0948c;border:1.5px dashed #8a3e2e}.seamap-stats[data-astro-cid-3whg3lmh]{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin:1.4rem .2rem 0;padding:1rem 0 0;border-top:1px solid var(--rule)}.seamap-stats[data-astro-cid-3whg3lmh] .stat[data-astro-cid-3whg3lmh]{display:flex;flex-direction:column;align-items:flex-start;gap:.2rem}.seamap-stats[data-astro-cid-3whg3lmh] .stat-num[data-astro-cid-3whg3lmh]{font-family:var(--display, "Cormorant Garamond", Georgia, serif);font-size:1.85rem;font-weight:500;line-height:1;color:var(--uw-purple-deep);letter-spacing:-.005em;font-variant-numeric:tabular-nums lining-nums}.seamap-stats[data-astro-cid-3whg3lmh] .stat-num[data-astro-cid-3whg3lmh] small[data-astro-cid-3whg3lmh]{font-size:.55em;font-weight:400;color:var(--ink-soft);letter-spacing:.04em;margin-left:.1em}.seamap-stats[data-astro-cid-3whg3lmh] .stat-label[data-astro-cid-3whg3lmh]{font-family:var(--serif);font-style:italic;font-size:.78rem;line-height:1.35;color:var(--ink-faint);max-width:14em}@media(max-width:820px){.seamap-pair[data-astro-cid-3whg3lmh]{grid-template-columns:1fr;gap:2rem}.seamap-stats[data-astro-cid-3whg3lmh]{grid-template-columns:repeat(2,1fr);gap:1rem}}
+</style>
+<link rel="stylesheet" href="/_astro/2026-04-25-eye-of-the-needle.DjRYQLAo.css">
+<link rel="stylesheet" href="/_astro/2026-04-25-eye-of-the-needle.CS82-Djn.css"></head> <body> <header class="site-header" data-astro-cid-3ef6ksr2> <div class="container header-inner" data-astro-cid-3ef6ksr2> <a href="/" class="brand" aria-label="Humanistic GIS Laboratory home" data-astro-cid-3ef6ksr2> <svg class="brand-logo" viewBox="160 555 325 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HGIS Lab logo" data-astro-cid-3ef6ksr2> <path class="brand-bar brand-bar-humanistic" pathLength="100" d="M299.2,565.6L175,791.6l22.8,41l103-186.7l57.5,105.9h45.5L299.2,565.6z" data-astro-cid-3ef6ksr2></path> <path class="brand-bar brand-bar-geoai" pathLength="100" d="M300.8,645.9l22.7,41.8l-58.4,103.9l205.9,0.1l-21.7,42l-251.5-1.2L300.8,645.9z" data-astro-cid-3ef6ksr2></path> <path class="brand-bar brand-bar-fake" pathLength="100" d="M299.2,565.6l104.5,186.1l-116.2,0.1l-22.3,39.8l205.8,0L345.5,565.5L299.2,565.6z" data-astro-cid-3ef6ksr2></path> </svg> <span class="brand-text" data-astro-cid-3ef6ksr2> <strong data-astro-cid-3ef6ksr2>Humanistic GIS Laboratory</strong> <small data-astro-cid-3ef6ksr2>University of Washington · Department of Geography</small> </span> </a> <nav data-astro-cid-3ef6ksr2> <ul data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2> <a href="/" class="nav-link" data-astro-cid-3ef6ksr2> Home </a> </li><li data-astro-cid-3ef6ksr2> <a href="/friday-harbor/" class="nav-link nav-featured active" aria-label="Friday Harbor — issue 005" data-astro-cid-3ef6ksr2> <span class="nav-marker" aria-hidden="true" data-astro-cid-3ef6ksr2></span> <em class="nav-featured-text" data-astro-cid-3ef6ksr2> Friday Harbor<sup class="nav-issue" data-astro-cid-3ef6ksr2>005</sup> </em> </a> </li><li data-astro-cid-3ef6ksr2> <a href="/research/" class="nav-link" data-astro-cid-3ef6ksr2> Research </a> </li><li data-astro-cid-3ef6ksr2> <a href="/projects/" class="nav-link" data-astro-cid-3ef6ksr2> Projects </a> </li><li data-astro-cid-3ef6ksr2> <a href="/publications/" class="nav-link" data-astro-cid-3ef6ksr2> Publications </a> </li><li data-astro-cid-3ef6ksr2> <a href="/people/" class="nav-link" data-astro-cid-3ef6ksr2> People </a> </li><li data-astro-cid-3ef6ksr2> <a href="/teaching/" class="nav-link" data-astro-cid-3ef6ksr2> Teaching </a> </li> </ul> </nav> </div> <div class="gold-rule" data-astro-cid-3ef6ksr2></div> </header>  <script>
+  (function () {
+    const logo = document.querySelector('.brand-logo');
+    if (!logo) return;
+    // Only play an entry animation on the first pageview of the session;
+    // subsequent navigations skip entry but still get the idle motion.
+    let played = false;
+    try { played = sessionStorage.getItem('hgis-logo-entry') === '1'; } catch (e) {}
+    if (played) {
+      logo.classList.add('is-idle');
+      return;
+    }
+    const variants = ['entry-spin', 'entry-draw', 'entry-assemble'];
+    const pick = variants[Math.floor(Math.random() * variants.length)];
+    logo.classList.add(pick);
+    try { sessionStorage.setItem('hgis-logo-entry', '1'); } catch (e) {}
+    // After the entry animation settles, hand off to the idle loop so the
+    // logo never sits dead-still but also never feels overactive.
+    setTimeout(() => {
+      logo.classList.remove(pick);
+      logo.classList.add('is-idle');
+    }, 1800);
+  })();
+</script> <main>  <div class="fh-root" data-lang="en" data-astro-cid-wvq62lyj> <article class="fh-entry" data-astro-cid-wvq62lyj> <header class="fh-masthead" data-astro-cid-wvq62lyj> <a href="/friday-harbor/" class="fh-rubric" data-astro-cid-wvq62lyj> <em data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Friday Harbor</span><span data-lang="zh" data-astro-cid-wvq62lyj>周五港</span></em> </a> <div class="fh-meta" data-astro-cid-wvq62lyj> <span data-astro-cid-wvq62lyj>№ 005</span> <span data-lang="en" data-astro-cid-wvq62lyj>Wednesday, April 29, 2026</span> <span data-lang="zh" data-astro-cid-wvq62lyj>2026年4月29日星期三</span> <span class="fh-place" data-lang="en" data-astro-cid-wvq62lyj>Seattle, WA · 47.6° N, 122.3° W</span> <span class="fh-place" data-lang="zh" data-astro-cid-wvq62lyj>西雅图 · 北纬 47.6°，西经 122.3°</span> <button class="fh-lang-toggle" type="button" aria-label="switch language" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>中文</span><span data-lang="zh" data-astro-cid-wvq62lyj>EN</span> </button> </div> </header> <h1 class="fh-title" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>When the Model Draws Seattle</span> <span data-lang="zh" data-astro-cid-wvq62lyj>当模型来画西雅图</span> </h1> <p class="fh-lede" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>The city&#39;s GIS office publishes 90 named neighborhoods. Asked to draw them from memory, Claude returned 35 axis-aligned rectangles — and forgot the rest. The map of what the model knows is also a map of what it doesn&#39;t.</span> <span data-lang="zh" data-astro-cid-wvq62lyj>市政府公布了 90 个标准命名街区；被要求凭印象画出来，Claude 给了 35 个与经纬线对齐的矩形——其余的它没记起来。模型知道什么的地图，同时也是它不知道什么的地图。</span> </p> <div class="fh-figure-wrap" data-astro-cid-wvq62lyj> <figure class="seamap-figure" data-astro-cid-3whg3lmh> <div class="seamap-pair" data-astro-cid-3whg3lmh> <div class="seamap-panel" data-astro-cid-3whg3lmh> <div class="seamap-tag" data-astro-cid-3whg3lmh> <span data-lang="en" data-astro-cid-3whg3lmh>As the city publishes it</span> <span data-lang="zh" data-astro-cid-3whg3lmh>城市公布的版本</span> </div> <div class="seamap-stage" id="stage-real" data-source="real" aria-label="Seattle neighborhoods, City of Seattle GIS" data-astro-cid-3whg3lmh> <p class="map-status" data-astro-cid-3whg3lmh><span data-lang="en" data-astro-cid-3whg3lmh>Loading map…</span><span data-lang="zh" data-astro-cid-3whg3lmh>地图加载中…</span></p> </div> <p class="seamap-source" data-astro-cid-3whg3lmh> <span data-lang="en" data-astro-cid-3whg3lmh>Source: City of Seattle Neighborhood Map Atlas (90 named neighborhoods)</span> <span data-lang="zh" data-astro-cid-3whg3lmh>数据：西雅图市政府《Neighborhood Map Atlas》（共 90 个标准命名街区）</span> </p> </div> <div class="seamap-panel" data-astro-cid-3whg3lmh> <div class="seamap-tag tag-claude" data-astro-cid-3whg3lmh> <span data-lang="en" data-astro-cid-3whg3lmh>As Claude draws it from memory</span> <span data-lang="zh" data-astro-cid-3whg3lmh>Claude 凭印象画出的版本</span> </div> <div class="seamap-stage" id="stage-claude" data-source="claude" aria-label="Seattle neighborhoods, AI from memory" data-astro-cid-3whg3lmh> <p class="map-status" data-astro-cid-3whg3lmh><span data-lang="en" data-astro-cid-3whg3lmh>Loading map…</span><span data-lang="zh" data-astro-cid-3whg3lmh>地图加载中…</span></p> </div> <p class="seamap-source" data-astro-cid-3whg3lmh> <span data-lang="en" data-astro-cid-3whg3lmh>Source: Claude (claude-opus-4-7) asked for GeoJSON polygons of named Seattle neighborhoods, no map allowed.</span> <span data-lang="zh" data-astro-cid-3whg3lmh>数据：Claude（claude-opus-4-7）被请求按记忆给出西雅图街区 GeoJSON 多边形，未查询任何地图。</span> </p> </div> </div> <figcaption data-lang="en" data-astro-cid-3whg3lmh> <b data-astro-cid-3whg3lmh>The city has 90 named neighborhoods. Asked to draw them from memory, Claude returned 35 axis-aligned rectangles — and forgot the rest.</b>
+The two maps above use the same projection, the same scale, and the same labels. The left panel is what the City of Seattle GIS office publishes. The right panel is what the model holds — boundaries that snap to lat/lon grid lines, blocks of city that the model has condensed into a single name, and parts of South Seattle that quietly fall off the page.
+<span class="legend-line" data-astro-cid-3whg3lmh> <span class="legend-swatch swatch-real" data-astro-cid-3whg3lmh></span> <span data-astro-cid-3whg3lmh><b data-astro-cid-3whg3lmh>Sage</b> — neighborhood polygons as the city publishes them. Edges follow streets, water, and topography.</span> </span> <span class="legend-line" data-astro-cid-3whg3lmh> <span class="legend-swatch swatch-claude" data-astro-cid-3whg3lmh></span> <span data-astro-cid-3whg3lmh><b data-astro-cid-3whg3lmh>Terracotta</b> — what Claude returned. Edges are straight lines between rounded coordinates because the model does not really have a coastline; it has a list.</span> </span> </figcaption> <figcaption data-lang="zh" data-astro-cid-3whg3lmh> <b data-astro-cid-3whg3lmh>这座城市有 90 个标准命名街区。当被要求凭记忆画出来时，Claude 给出了 35 个轴向对齐的矩形——其余的，它没记起来。</b>
+上面两张图共享同一个投影、同一个比例尺、同一组标签。左图是西雅图市 GIS 办公室公布的版本。右图是这个语言模型大脑里的版本——边界对齐在经纬度网格上，几个邻近街区被模型合并成一个名字，南西雅图的某些区域，干脆从纸面上掉下去了。
+<span class="legend-line" data-astro-cid-3whg3lmh> <span class="legend-swatch swatch-real" data-astro-cid-3whg3lmh></span> <span data-astro-cid-3whg3lmh><b data-astro-cid-3whg3lmh>鼠尾草色</b>—— 市政府公布的街区多边形。边界沿街道、水岸与地形走。</span> </span> <span class="legend-line" data-astro-cid-3whg3lmh> <span class="legend-swatch swatch-claude" data-astro-cid-3whg3lmh></span> <span data-astro-cid-3whg3lmh><b data-astro-cid-3whg3lmh>赭红色</b>—— Claude 返回的多边形。边界是取整经纬度之间的直线段——因为模型并没有海岸线，它只有一份列表。</span> </span> </figcaption> <aside class="seamap-stats" aria-label="key comparison figures" data-astro-cid-3whg3lmh> <div class="stat" data-lang="en" data-astro-cid-3whg3lmh> <span class="stat-num" data-astro-cid-3whg3lmh>90</span> <span class="stat-label" data-astro-cid-3whg3lmh>neighborhoods in the city's official atlas</span> </div> <div class="stat" data-lang="zh" data-astro-cid-3whg3lmh> <span class="stat-num" data-astro-cid-3whg3lmh>90</span> <span class="stat-label" data-astro-cid-3whg3lmh>市政府官方街区图册中的街区数</span> </div> <div class="stat" data-lang="en" data-astro-cid-3whg3lmh> <span class="stat-num" data-astro-cid-3whg3lmh>35</span> <span class="stat-label" data-astro-cid-3whg3lmh>neighborhoods Claude was able to name and draw</span> </div> <div class="stat" data-lang="zh" data-astro-cid-3whg3lmh> <span class="stat-num" data-astro-cid-3whg3lmh>35</span> <span class="stat-label" data-astro-cid-3whg3lmh>Claude 能叫出名字并画出位置的街区数</span> </div> <div class="stat" data-lang="en" data-astro-cid-3whg3lmh> <span class="stat-num" data-astro-cid-3whg3lmh>100<small data-astro-cid-3whg3lmh>&nbsp;%</small></span> <span class="stat-label" data-astro-cid-3whg3lmh>of Claude's polygons are axis-aligned rectangles</span> </div> <div class="stat" data-lang="zh" data-astro-cid-3whg3lmh> <span class="stat-num" data-astro-cid-3whg3lmh>100<small data-astro-cid-3whg3lmh>&nbsp;%</small></span> <span class="stat-label" data-astro-cid-3whg3lmh>Claude 的多边形——全部都是与经纬度对齐的矩形</span> </div> <div class="stat" data-lang="en" data-astro-cid-3whg3lmh> <span class="stat-num" data-astro-cid-3whg3lmh>~ 800<small data-astro-cid-3whg3lmh>&nbsp;m</small></span> <span class="stat-label" data-astro-cid-3whg3lmh>median centroid drift from the real boundary</span> </div> <div class="stat" data-lang="zh" data-astro-cid-3whg3lmh> <span class="stat-num" data-astro-cid-3whg3lmh>约 800<small data-astro-cid-3whg3lmh>&nbsp;m</small></span> <span class="stat-label" data-astro-cid-3whg3lmh>质心相对真实边界的中位偏移</span> </div> </aside> </figure> </div> <div class="fh-body" data-astro-cid-wvq62lyj> <section class="fh-col fh-notebook" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>The notebook</span><span data-lang="zh" data-astro-cid-wvq62lyj>札记</span></h2> <div data-lang="en" data-astro-cid-wvq62lyj><div data-astro-cid-3whg3lmh> <p data-astro-cid-3whg3lmh>
+The exercise on this page is small. Take the City of Seattle's official
+      list of named neighborhoods. Ask a state-of-the-art language model — in
+      this case Claude (Opus 4.7) — to return GeoJSON polygons for them. Tell
+      the model not to look anything up. Render both layers at the same scale,
+      with the same projection, on the same page. Look at what comes back.
+</p> <p data-astro-cid-3whg3lmh>
+The answer is on the right. Claude returned thirty-five polygons. Every
+      single one is a rectangle whose sides are aligned to lines of latitude
+      and longitude. The corners sit on coordinates rounded to three decimal
+      places. The model did not draw a city; it drew a checklist with bounding
+      boxes attached. Lake Washington, Puget Sound, Lake Union, the
+      Lake Washington Ship Canal, the Duwamish — none of these are present in
+      what came back, because none of them are in the prompt and the model
+      does not have a way to reach for them on its own.
+</p> <p data-astro-cid-3whg3lmh>
+The neighborhoods that <em data-astro-cid-3whg3lmh>did</em> come back are also instructive.
+      The model returned Capitol Hill, Ballard, Fremont, Wallingford,
+      Queen Anne, Magnolia, the U District — neighborhoods that are talked
+      about, written about, real-estate-listed, marketed, gentrified, sung
+      about. It returned roughly four neighborhoods inside Rainier Valley
+      where the city has fourteen — Hillman City, Brighton, Dunlap, Rainier
+      Beach, Lakewood, Genesee, all collapsed into "Rainier Valley." It did
+      not return Yesler Terrace, Atlantic, Holly Park, High Point, Riverview,
+      Roxhill, Westwood, Pinehurst, Olympic Hills, Bitter Lake, Haller Lake,
+      Cedar Park, Matthews Beach. The pattern of what is named and what is
+      forgotten is not random. It tracks who writes about Seattle on the
+      internet, in English, in volume.
+</p> <p data-astro-cid-3whg3lmh>
+A second pattern: the polygons that did come back have rounded edges.
+      The model knows Capitol Hill is "around 47.62 north, 122.32 west." It
+      does not know that Capitol Hill's western edge is the I-5 trench. It
+      does not know that its southern edge follows East Madison and East
+      Pike, which are diagonal streets that no axis-aligned rectangle can
+      capture. The model's geometry is the geometry of memorized centroids
+      with arbitrary rectangular skirts thrown over them. The actual city is
+      drawn by streets and water, neither of which the model is consulting.
+</p> <p data-astro-cid-3whg3lmh>
+So this map is a small anti-map of the kind GIS Friday Harbor entries
+      argue for: it shows what is missing more than what is there. The model
+      is good at many things. It is not good at being a map of Seattle. The
+      reason is not that it lacks intelligence — it is that what it has read
+      about Seattle is not the same as what Seattle is.
+</p> </div></div> <div data-lang="zh" data-astro-cid-wvq62lyj><div data-astro-cid-3whg3lmh> <p data-astro-cid-3whg3lmh>
+这一页做的事情很简单：拿西雅图市政府公布的标准街区列表，请目前最新的语言模型——这里用的是
+      Claude（Opus 4.7）——返回每个街区的 GeoJSON 多边形。要求它不要查阅任何资料。把两层数据用同一个投影、同一个比例、放在同一个页面上一起渲染。然后看返回了什么。
+</p> <p data-astro-cid-3whg3lmh>
+右边那张图，就是答案。Claude 返回了 35 个多边形。每一个，都是一组与经纬线对齐的矩形。所有顶点都落在保留三位小数的坐标上。这不是一个城市的地图；这是一份"清单 + 外接矩形"。华盛顿湖、普吉特海湾、联合湖、华盛顿湖船运河、Duwamish 河——这些全都不在它返回的内容里，因为它们也不在 prompt 里；模型没有办法主动伸手去拿它们。
+</p> <p data-astro-cid-3whg3lmh>
+返回的那些街区，也是有规律的。Capitol Hill、Ballard、Fremont、Wallingford、
+      Queen Anne、Magnolia、U District——这些是人们会聊、会写、会挂房产中介牌、会被士绅化、会出现在歌词里的街区。它在 Rainier Valley 里返回了大约 4 个子街区，而市政府那里有 14 个——Hillman City、Brighton、Dunlap、Rainier Beach、Lakewood、Genesee 等等，全部被它合并成了一个"Rainier Valley"。它完全没有返回的：Yesler Terrace、Atlantic、Holly Park、High Point、Riverview、Roxhill、Westwood、Pinehurst、Olympic Hills、Bitter Lake、Haller Lake、Cedar Park、Matthews Beach。被叫得出名字的与被遗忘的，不是随机的——它跟踪的是「谁在用英文，在互联网上，大量地写过西雅图」。
+</p> <p data-astro-cid-3whg3lmh>
+第二个规律：被画出来的那些街区，边界是圆滑取整后的。模型知道 Capitol Hill 大约在 47.62°N, 122.32°W。它不知道 Capitol Hill 的西界是 I-5 高速路下沉段。它不知道南界其实是沿着 E Madison 和 E Pike 这两条斜街——任何与经纬度对齐的矩形都无法表示这种斜线。模型的几何，是「被记住的中心点 + 任意大小的外接矩形」的几何。真实城市的几何，是由街道与水岸刻出的；这两样东西，模型都没在查。
+</p> <p data-astro-cid-3whg3lmh>
+所以这张图是一种 GIS Friday Harbor 那一脉所主张的「反图」（anti-map）——它要展示的是缺席本身，而不是在场。这不是说模型不聪明。它只是不擅长当一张西雅图的地图。原因也不复杂：它读到的关于西雅图的东西，并不等于西雅图。
+</p> </div></div> </section> <section class="fh-col fh-provenance" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>The provenance</span><span data-lang="zh" data-astro-cid-wvq62lyj>出处</span></h2> <div data-lang="en" data-astro-cid-wvq62lyj><ul data-astro-cid-3whg3lmh> <li data-astro-cid-3whg3lmh>Real boundaries: City of Seattle Neighborhood Map Atlas via the <a href="https://github.com/seattleio/seattle-boundaries-data" rel="noopener" data-astro-cid-3whg3lmh>seattleio/seattle-boundaries-data</a> repository, filtered to <code data-astro-cid-3whg3lmh>city == "Seattle"</code>; coordinates rounded to 4 decimal places (~11 m precision).</li> <li data-astro-cid-3whg3lmh>AI boundaries: prompt issued to Claude Opus 4.7 within this writing session, asking for GeoJSON polygons of named Seattle neighborhoods with no external lookups. The returned polygons are stored verbatim — not reshaped, not cleaned. The model's output is the data.</li> <li data-astro-cid-3whg3lmh>Both layers projected with d3-geo's Albers projection, parallels at 47.5° and 47.75°, centred on Seattle.</li> <li data-astro-cid-3whg3lmh>Centroid drift figure computed locally as the median Haversine distance between the centroid of each Claude polygon and the centroid of the same-named real polygon (35 pairs).</li> <li data-astro-cid-3whg3lmh>Source map &amp; build script: <code data-astro-cid-3whg3lmh>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>; data files in <code data-astro-cid-3whg3lmh>public/data/seattle-neighborhoods-real.geojson</code> and <code data-astro-cid-3whg3lmh>seattle-neighborhoods-claude.geojson</code>.</li> </ul></div> <div data-lang="zh" data-astro-cid-wvq62lyj><ul data-astro-cid-3whg3lmh> <li data-astro-cid-3whg3lmh>真实边界：西雅图市《Neighborhood Map Atlas》，经 <a href="https://github.com/seattleio/seattle-boundaries-data" rel="noopener" data-astro-cid-3whg3lmh>seattleio/seattle-boundaries-data</a> 仓库加载，筛选 <code data-astro-cid-3whg3lmh>city == "Seattle"</code>；坐标保留 4 位小数（约 11 m 精度）。</li> <li data-astro-cid-3whg3lmh>AI 边界：在本次写作会话中，向 Claude Opus 4.7 发出请求，要求返回西雅图街区的 GeoJSON 多边形，禁止查阅外部资料。返回的多边形原样保存——未做任何整形、对齐或清洗。模型输出本身就是数据。</li> <li data-astro-cid-3whg3lmh>两层数据均用 d3-geo 的 Albers 投影渲染，标准纬线 47.5°、47.75°，中心点设在西雅图。</li> <li data-astro-cid-3whg3lmh>质心偏移：本地计算，每对同名街区（共 35 对）的多边形质心间的 Haversine 距离，取其中位数。</li> <li data-astro-cid-3whg3lmh>源码与构建脚本：<code data-astro-cid-3whg3lmh>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>；数据文件：<code data-astro-cid-3whg3lmh>public/data/seattle-neighborhoods-real.geojson</code> 与 <code data-astro-cid-3whg3lmh>seattle-neighborhoods-claude.geojson</code>。</li> </ul></div> </section> <section class="fh-col fh-cite" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>How to cite</span><span data-lang="zh" data-astro-cid-wvq62lyj>引用格式</span></h2> <pre class="fh-citation" data-lang="en" data-astro-cid-wvq62lyj>Zhao, B. (2026). When the Model Draws Seattle.
+Friday Harbor № 005, HGIS Lab,
+University of Washington.
+https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre> <pre class="fh-citation" data-lang="zh" data-astro-cid-wvq62lyj>赵博（2026）。当模型来画西雅图。
+Friday Harbor № 005，HGIS 实验室，
+华盛顿大学。
+https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre> </section> </div> <section class="fh-share" aria-label="share this entry" data-astro-cid-wvq62lyj> <div class="fh-share-row" data-astro-cid-wvq62lyj> <span class="fh-share-label" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>Share</span><span data-lang="zh" data-astro-cid-wvq62lyj>Share</span> </span> <a class="fh-share-btn" data-share="x" href="#" rel="noopener" data-astro-cid-wvq62lyj>X</a> <a class="fh-share-btn" data-share="linkedin" href="#" rel="noopener" data-astro-cid-wvq62lyj>LinkedIn</a> <a class="fh-share-btn" data-share="facebook" href="#" rel="noopener" data-astro-cid-wvq62lyj>Facebook</a> <a class="fh-share-btn" data-share="email" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Email</span><span data-lang="zh" data-astro-cid-wvq62lyj>邮件</span></a> </div> <div class="fh-share-row fh-share-cn" data-astro-cid-wvq62lyj> <span class="fh-share-label" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>分享</span><span data-lang="zh" data-astro-cid-wvq62lyj>分享</span> </span> <a class="fh-share-btn" data-share="weibo" href="#" rel="noopener" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Weibo</span><span data-lang="zh" data-astro-cid-wvq62lyj>微博</span></a> <a class="fh-share-btn" data-share="wechat" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>WeChat</span><span data-lang="zh" data-astro-cid-wvq62lyj>微信</span></a> <a class="fh-share-btn" data-share="xhs" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Xiaohongshu</span><span data-lang="zh" data-astro-cid-wvq62lyj>小红书</span></a> <a class="fh-share-btn fh-share-copy" data-share="copy" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Copy link</span><span data-lang="zh" data-astro-cid-wvq62lyj>复制链接</span></a> </div> <!-- WeChat QR popover (hidden by default) --> <div class="fh-wechat" id="fh-wechat" hidden data-astro-cid-wvq62lyj> <button class="fh-wechat-x" type="button" aria-label="close" data-astro-cid-wvq62lyj>×</button> <img class="fh-wechat-qr" alt="WeChat QR" data-astro-cid-wvq62lyj> <p class="fh-wechat-tip" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>Scan with the WeChat camera. The page link is below.</span><span data-lang="zh" data-astro-cid-wvq62lyj>用微信扫一扫。下方为页面链接。</span> </p> <code class="fh-wechat-url" data-astro-cid-wvq62lyj></code> </div> </section> <footer class="fh-foot" data-astro-cid-wvq62lyj> <a href="/friday-harbor/" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>← back to the harbor</span><span data-lang="zh" data-astro-cid-wvq62lyj>← 返回港口</span> </a> <span data-astro-cid-wvq62lyj> <em data-astro-cid-wvq62lyj>Bo Zhao</em>,
+<span data-lang="en" data-astro-cid-wvq62lyj> HGIS Lab</span><span data-lang="zh" data-astro-cid-wvq62lyj> HGIS 实验室</span> </span> </footer> </article> </div>  </main> <footer class="site-footer" data-astro-cid-sz7xmlte> <div class="gold-rule" data-astro-cid-sz7xmlte></div> <div class="container footer-grid" data-astro-cid-sz7xmlte> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Humanistic GIS Laboratory</strong> <p data-astro-cid-sz7xmlte>Department of Geography<br data-astro-cid-sz7xmlte>University of Washington<br data-astro-cid-sz7xmlte>Seattle, WA 98195</p> </div> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Contact</strong> <p data-astro-cid-sz7xmlte> <a href="mailto:hgis@uw.edu" data-astro-cid-sz7xmlte>hgis@uw.edu</a><br data-astro-cid-sz7xmlte> <a href="https://github.com/" rel="noopener" data-astro-cid-sz7xmlte>GitHub</a> · <a href="https://twitter.com/" rel="noopener" data-astro-cid-sz7xmlte>Twitter / X</a> </p> </div> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Affiliations</strong> <p data-astro-cid-sz7xmlte> <a href="https://geography.washington.edu/" data-astro-cid-sz7xmlte>UW Geography</a><br data-astro-cid-sz7xmlte> <a href="https://www.washington.edu/" data-astro-cid-sz7xmlte>University of Washington</a> </p> </div> </div> <div class="footer-bottom container" data-astro-cid-sz7xmlte> <small data-astro-cid-sz7xmlte>© 2026 Humanistic GIS Laboratory · Built with Astro · <a href="https://github.com/" data-astro-cid-sz7xmlte>Source</a></small> </div> </footer>  </body></html>   <script>
+  (function () {
+    const root = document.querySelector('.fh-root');
+    if (!root) return;
+    let lang = 'en';
+    try { lang = localStorage.getItem('fh-lang') || 'en'; } catch (e) {}
+    if (lang !== 'en' && lang !== 'zh') lang = 'en';
+    root.setAttribute('data-lang', lang);
+    const btn = root.querySelector('.fh-lang-toggle');
+    if (btn) btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+      root.setAttribute('data-lang', next);
+      try { localStorage.setItem('fh-lang', next); } catch (e) {}
+    });
+
+    // ----- share row -----
+    const url = location.href;
+    const titleEl = root.querySelector('.fh-title');
+    const titleText = titleEl ? titleEl.innerText.trim() : document.title;
+    const u = encodeURIComponent(url);
+    const t = encodeURIComponent(titleText);
+
+    const targets = {
+      x:        'https://x.com/intent/post?text=' + t + '&url=' + u,
+      linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + u,
+      facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
+      email:    'mailto:?subject=' + t + '&body=' + u,
+      weibo:    'https://service.weibo.com/share/share.php?url=' + u + '&title=' + t,
+    };
+
+    function flash(btn) {
+      btn.classList.add('is-flashed');
+      const lang = root.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+      const orig = btn.innerHTML;
+      btn.textContent = lang === 'zh' ? '链接已复制' : 'Link copied';
+      setTimeout(() => { btn.classList.remove('is-flashed'); btn.innerHTML = orig; }, 1600);
+    }
+
+    function copyLink(btn) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => flash(btn)).catch(() => flash(btn));
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = url; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        flash(btn);
+      }
+    }
+
+    const wechat = root.querySelector('#fh-wechat');
+    function openWechat() {
+      if (!wechat) return;
+      wechat.querySelector('.fh-wechat-qr').src =
+        'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + u;
+      wechat.querySelector('.fh-wechat-url').textContent = url;
+      wechat.hidden = false;
+    }
+    function closeWechat() { if (wechat) wechat.hidden = true; }
+    if (wechat) wechat.querySelector('.fh-wechat-x').addEventListener('click', closeWechat);
+    document.addEventListener('click', (e) => {
+      if (wechat && !wechat.hidden && !wechat.contains(e.target)
+          && !e.target.closest('[data-share="wechat"]')) closeWechat();
+    });
+
+    root.querySelectorAll('[data-share]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const k = btn.getAttribute('data-share');
+        if (k === 'copy' || k === 'xhs') {
+          copyLink(btn);
+          return;
+        }
+        if (k === 'wechat') { openWechat(); return; }
+        const href = targets[k];
+        if (!href) return;
+        if (k === 'email') location.href = href;
+        else window.open(href, '_blank', 'noopener,width=640,height=560');
+      });
+    });
+  })();
+</script>  <script type="module">
+  import * as d3 from 'https://esm.sh/d3@7';
+
+  const css = getComputedStyle(document.documentElement);
+  const c = {
+    paper:   css.getPropertyValue('--bg-card').trim()   || '#f5efe2',
+    paper2:  css.getPropertyValue('--bg-deep').trim()   || '#ddd4c2',
+    rule:    css.getPropertyValue('--rule').trim()      || '#d6cdbf',
+    ink:     css.getPropertyValue('--ink').trim()       || '#2c2823',
+    inkSoft: css.getPropertyValue('--ink-soft').trim()  || '#6c6358',
+    inkFaint:css.getPropertyValue('--ink-faint').trim() || '#98907f',
+    purple:  css.getPropertyValue('--uw-purple').trim() || '#6a5a6e',
+    purpleD: css.getPropertyValue('--uw-purple-deep').trim() || '#4a3e4d',
+    sage:    css.getPropertyValue('--sage').trim()      || '#8e9c8a',
+    sageS:   css.getPropertyValue('--sage-soft').trim() || '#b4bdaf',
+    rose:    css.getPropertyValue('--rose').trim()      || '#c2a094',
+    mist:    css.getPropertyValue('--mist').trim()      || '#a8b1b3',
+  };
+  const REAL_FILL   = 'rgba(142, 156, 138, 0.55)';
+  const REAL_STROKE = '#3f4a3e';
+  const CLAUDE_FILL = 'rgba(194, 160, 148, 0.50)';
+  const CLAUDE_STROKE = '#8a3e2e';
+  const SEA = '#cfd5d3';
+
+  // Common bbox / projection so the two panels are directly comparable.
+  const BBOX = [[-122.46, 47.49], [-122.23, 47.74]];
+
+  // Same neighborhoods to label across both panels (so the eye can
+  // track a name from one map to the other).
+  const SHARED_LABELS = [
+    'Downtown', 'Capitol Hill', 'Belltown', 'South Lake Union',
+    'Pioneer Square', 'International District', 'Central District',
+    'Beacon Hill', 'Rainier Valley', 'Columbia City', 'Mount Baker',
+    'Madrona', 'Madison Park', 'Queen Anne', 'Magnolia', 'Fremont',
+    'Wallingford', 'Ballard', 'Phinney Ridge', 'Greenwood', 'Green Lake',
+    'University District', 'Ravenna', 'Roosevelt', 'Northgate',
+    'Lake City', 'Laurelhurst', 'West Seattle', 'Alki', 'Georgetown',
+    'South Park', 'Seward Park'
+  ];
+
+  let _real = null, _claude = null;
+  Promise.all([
+    fetch('/data/seattle-neighborhoods-real.geojson').then(r => r.json()),
+    fetch('/data/seattle-neighborhoods-claude.geojson').then(r => r.json()),
+  ]).then(([realGJ, claudeGJ]) => {
+    _real = realGJ;
+    _claude = claudeGJ;
+    requestAnimationFrame(drawAll);
+  }).catch(err => {
+    document.querySelectorAll('.map-status').forEach(el => {
+      el.textContent = 'Could not load neighborhood data.';
+    });
+  });
+
+  window.addEventListener('resize', () => { if (_real && _claude) drawAll(); });
+  const fhRoot = document.querySelector('.fh-root');
+  if (fhRoot) {
+    new MutationObserver(() => { if (_real && _claude) drawAll(); })
+      .observe(fhRoot, { attributes: true, attributeFilter: ['data-lang'] });
+  }
+  function currentLang() {
+    return fhRoot && fhRoot.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+  }
+
+  function drawAll() {
+    drawPanel('stage-real',   _real,   { fill: REAL_FILL,   stroke: REAL_STROKE,   strokeDash: null });
+    drawPanel('stage-claude', _claude, { fill: CLAUDE_FILL, stroke: CLAUDE_STROKE, strokeDash: '4 3' });
+  }
+
+  function makeProjection(W, H) {
+    const lon0 = (BBOX[0][0] + BBOX[1][0]) / 2;
+    const lat0 = (BBOX[0][1] + BBOX[1][1]) / 2;
+    const proj = d3.geoAlbers()
+      .parallels([47.50, 47.74])
+      .rotate([-lon0, 0])
+      .center([0, lat0]);
+    // fit to bbox manually
+    const bbox = { type: 'Polygon', coordinates: [[
+      [BBOX[0][0], BBOX[0][1]], [BBOX[1][0], BBOX[0][1]],
+      [BBOX[1][0], BBOX[1][1]], [BBOX[0][0], BBOX[1][1]],
+      [BBOX[0][0], BBOX[0][1]],
+    ]]};
+    proj.fitExtent([[6, 6], [W - 6, H - 6]], bbox);
+    return proj;
+  }
+
+  function drawPanel(stageId, data, style) {
+    const stage = document.getElementById(stageId);
+    if (!stage) return;
+    const W = stage.clientWidth | 0;
+    const H = stage.clientHeight | 0;
+    if (W < 50 || H < 50) { requestAnimationFrame(drawAll); return; }
+    stage.innerHTML = '';
+
+    const lang = currentLang();
+    const projection = makeProjection(W, H);
+    const path = d3.geoPath(projection);
+
+    const svg = d3.select(stage).append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('width', W).attr('height', H)
+      .style('display', 'block');
+
+    // Sea
+    svg.append('rect').attr('width', W).attr('height', H).attr('fill', SEA);
+
+    // Subtle bbox frame
+    svg.append('rect').attr('x', 0.5).attr('y', 0.5)
+      .attr('width', W - 1).attr('height', H - 1)
+      .attr('fill', 'none').attr('stroke', c.ink).attr('stroke-opacity', 0.25)
+      .attr('stroke-width', 0.6);
+
+    // Polygons
+    const layer = svg.append('g').attr('class', 'nbhd-layer');
+    layer.selectAll('path')
+      .data(data.features)
+      .join('path')
+      .attr('d', path)
+      .attr('fill', style.fill)
+      .attr('stroke', style.stroke)
+      .attr('stroke-width', 0.9)
+      .attr('stroke-dasharray', style.strokeDash || null)
+      .attr('stroke-linejoin', 'round');
+
+    // Label only the shared set, at polygon centroid.
+    // For the "real" data we may have multiple sub-features per nhood —
+    // pick the largest by path area so the label sits in the body of the
+    // neighborhood, not in some nested sliver.
+    const byName = new Map();
+    data.features.forEach(f => {
+      const key = (f.properties.nhood || f.properties.name || '').trim();
+      if (!key) return;
+      const a = path.area(f);
+      if (!byName.has(key) || byName.get(key)._area < a) {
+        byName.set(key, Object.assign({ _area: a, _feat: f }, f.properties));
+      }
+    });
+
+    const labelG = svg.append('g').attr('class', 'nbhd-labels');
+    SHARED_LABELS.forEach(name => {
+      const rec = byName.get(name);
+      if (!rec) return;
+      const cen = path.centroid(rec._feat);
+      if (!cen || isNaN(cen[0])) return;
+      labelG.append('text')
+        .attr('x', cen[0]).attr('y', cen[1])
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', 9.5)
+        .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
+        .attr('font-weight', 500)
+        .attr('fill', c.ink)
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3)
+        .attr('stroke-linejoin', 'round')
+        .text(name);
+    });
+  }
+</script>
