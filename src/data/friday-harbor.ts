@@ -35,6 +35,11 @@ export const KIND_LABELS: Record<Kind, Bi> = {
   "anti-map":         { en: "anti-map",           zh: "反图" },
 };
 
+export type ThumbBox = {
+  bbox: { west: number; east: number; south: number; north: number };
+  pins?: { lon: number; lat: number }[];
+};
+
 export type Entry = {
   slug: string;
   date: string;
@@ -44,6 +49,8 @@ export type Entry = {
   techniques: Technique[];
   kind: Kind;
   author: string;
+  /** Optional: generates a live mini-map preview on the index card. */
+  thumb?: ThumbBox;
 };
 
 export const entries: Entry[] = [
@@ -65,6 +72,13 @@ export const entries: Entry[] = [
     techniques: ["chokepoint", "field-note"],
     kind: "news-led",
     author: "Bo Zhao",
+    thumb: {
+      bbox: { west: 53.0, east: 58.4, south: 23.0, north: 27.4 },
+      pins: [
+        { lon: 56.20, lat: 26.40 },
+        { lon: 56.55, lat: 26.55 },
+      ],
+    },
   },
 ];
 
