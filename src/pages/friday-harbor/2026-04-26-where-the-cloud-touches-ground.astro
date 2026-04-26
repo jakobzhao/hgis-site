@@ -1,0 +1,510 @@
+---
+import FridayHarborLayout from '../../layouts/FridayHarborLayout.astro';
+import { entries } from '../../data/friday-harbor';
+const entry = entries.find(e => e.slug === '2026-04-26-where-the-cloud-touches-ground')!;
+---
+<FridayHarborLayout entry={entry}>
+  <figure slot="figure" class="cloud-figure">
+    <div class="cloud-stage" id="stage" aria-label="Map of US AI data center clusters">
+      <p class="map-status">
+        <span data-lang="en">Loading map...</span>
+        <span data-lang="zh">地图加载中...</span>
+      </p>
+    </div>
+
+    <figcaption data-lang="en">
+      <b>The cloud is a geography.</b>
+      Most of the AI we use travels through these eleven dots before it reaches a screen.
+      Loudoun County, Virginia carries an estimated 70&nbsp;% of global internet traffic.
+      Around it — Phoenix, Dallas, Hillsboro, Quincy, Des Moines, New Albany — each a quiet
+      American county that has become a planetary node. Circle area approximates operating
+      capacity (MW); the warm wash across the West is the rough footprint of long-term water stress.
+      <span class="legend-line">
+        <span class="legend-swatch swatch-cloud-major"></span>
+        <span><b>Loudoun County, VA</b> — Data Center Alley, the densest concentration on Earth.</span>
+      </span>
+    </figcaption>
+
+    <figcaption data-lang="zh">
+      <b>「云」是一种地理事实。</b>
+      我们日常用的大多数 AI，到达屏幕之前都要经过这十一个点。
+      位于弗吉尼亚州的 Loudoun 县据估承担着全球互联网约 70&nbsp;% 的流量。
+      它的周围——凤凰城、达拉斯、希尔斯伯勒、昆西、得梅因、新奥尔巴尼——每一个
+      都是表面安静、实际是行星级节点的美国县。圆点面积近似运行容量（MW）；
+      西部那层暖色铺底，是长期水资源紧张的大致地理范围。
+      <span class="legend-line">
+        <span class="legend-swatch swatch-cloud-major"></span>
+        <span><b>弗吉尼亚 Loudoun 县</b>——Data Center Alley，地球上最密集的算力聚集点。</span>
+      </span>
+    </figcaption>
+
+    <aside class="cloud-stats" aria-label="key US data-center figures">
+      <div class="stat" data-lang="en">
+        <span class="stat-num">~ 250<small>&nbsp;TWh / yr</small></span>
+        <span class="stat-label">US data-centre electricity (≈ 4&nbsp;% of national grid)</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">约 2,500<small>&nbsp;亿 kWh / 年</small></span>
+        <span class="stat-label">美国数据中心年耗电（约占全国电网 4&nbsp;%）</span>
+      </div>
+
+      <div class="stat" data-lang="en">
+        <span class="stat-num">~ 660<small>&nbsp;B gal / yr</small></span>
+        <span class="stat-label">water for cooling, mostly in already-stressed basins</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">约 6,600<small>&nbsp;亿加仑 / 年</small></span>
+        <span class="stat-label">冷却用水，多数取自已紧张的流域</span>
+      </div>
+
+      <div class="stat" data-lang="en">
+        <span class="stat-num">~ 70<small>&nbsp;%</small></span>
+        <span class="stat-label">of global internet traffic transits Loudoun County</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">约 70<small>&nbsp;%</small></span>
+        <span class="stat-label">全球互联网流量经 Loudoun 县中转</span>
+      </div>
+
+      <div class="stat" data-lang="en">
+        <span class="stat-num">~ 3<small>&nbsp;×</small></span>
+        <span class="stat-label">projected growth in US data-centre power demand by 2030</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">约 3<small>&nbsp;×</small></span>
+        <span class="stat-label">美国数据中心电力需求至 2030 年预计增长</span>
+      </div>
+    </aside>
+  </figure>
+
+  <div slot="notebook-en">
+    <p>
+      "The cloud" is the most successful piece of evasive language of our era.
+      Every time someone says <em>send it to the cloud</em>, a specific concrete building
+      somewhere in a specific American county receives the bytes, runs them across silicon,
+      and sends them back. The cloud is geography — it just isn't a geography most of us are
+      ever asked to look at.
+    </p>
+    <p>
+      That geography is concentrated, and concentrated by design. Counties get chosen for
+      their tax breaks, their cheap electricity, their proximity to the fiber backbones laid
+      down in the 1990s. Loudoun County, Virginia, is denser than the rest by an order of
+      magnitude: its data centers carry roughly seventy percent of global internet traffic.
+      Around it, a handful of secondary clusters: Phoenix, Dallas, Hillsboro, Quincy,
+      Des Moines, New Albany. Together they consume an amount of electricity that would, on
+      its own, rank around the twenty-fifth-largest country in the world.
+    </p>
+    <p>
+      The bill comes due locally. Phoenix data centers compete with cities for the dwindling
+      Colorado River. Loudoun residents have been in transmission-line battles with their
+      utility for two years. Ohio farmers near New Albany lost row crops to Intel's
+      semiconductor expansion and the data centers it pulled in. The job a map can do here
+      is small but specific: take the per-prompt water number that floats around in articles
+      and put it back where it actually lands — on a county, in a basin, beside a transformer.
+    </p>
+    <p>
+      AI demand is going to make this harder. Generative models have already pushed the
+      annual power-demand growth curve away from a flat plateau and onto a near-vertical
+      line. The map you're looking at is a 2026 snapshot; in three years it will need to
+      grow about three times as many dots, and many of those will land on the same handful
+      of counties — because once the substation is built and the fiber is in, the next
+      tenant comes for the same reasons.
+    </p>
+    <p class="aside">
+      <em>A small disclosure.</em> Capacity figures are illustrative. Operators rarely
+      publish exact numbers; the values plotted here are reconstructed from public filings,
+      news coverage, and industry reports. Locations are accurate to within the metropolitan
+      area. The water-stress wash across the western states is a sketched climatological
+      footprint, not a hydrological dataset.
+    </p>
+  </div>
+
+  <div slot="notebook-zh">
+    <p>
+      「云」是这一代最成功的回避词。每次有人说「放到云里就行」，地球上某个具体县的
+      某栋具体建筑就接收了那串字节，让它们在硅上跑一遍，再发回来。云是地理——
+      只是大多数人从来没被邀请看一眼那张图。
+    </p>
+    <p>
+      这片地理是高度集中的，而且是有意为之。一个县被选中，是因为它有税收减免、
+      电力便宜、紧贴 1990 年代铺下的光纤主干。其中弗吉尼亚州的 Loudoun 县密度
+      比其他所有地方高一个数量级：这里的数据中心承载了大约百分之七十的全球
+      互联网流量。围绕 Loudoun，还有几个二级集群：凤凰城、达拉斯、希尔斯伯勒、
+      昆西、得梅因、新奥尔巴尼。这些集群一起消耗的电量，单算下来能在世界国家
+      排名里挤进前二十五。
+    </p>
+    <p>
+      代价是地方承担的。凤凰城的数据中心在和市民争夺日益干涸的科罗拉多河水。
+      Loudoun 县居民已经和电力公司打了两年的输电线官司。俄亥俄新奥尔巴尼的
+      农民为了让 Intel 半导体扩建工厂、以及随之而来的数据中心，失去了大片
+      庄稼地。一张地图能做的事很小但很具体：把那个偶尔被引用的「ChatGPT
+      每条提问耗水多少毫升」的数字，重新放回它真实的落地处——某个县、
+      某条流域、某座变电站旁边。
+    </p>
+    <p>
+      AI 需求会让这件事更难。生成式模型已经把年电力需求增长曲线从一条平的
+      高原推上了几乎直立的斜线。你现在看的这张图是 2026 年的快照；三年之后
+      它需要长出大约三倍的点，而其中很多还会落在这几十个相同的县——
+      因为一旦变电站和光纤已经铺好了，下一家进驻者也是看重了同样的理由。
+    </p>
+    <p class="aside">
+      <em>附注：</em>容量数据为示意性数字。运营方很少公开精确容量；图中数值
+      由公开备案文件、新闻报道与行业报告反推。地理位置精确到大都市区。
+      西部各州那层水资源紧张的暖色铺底，是大致的气候带勾勒，不是水文数据。
+    </p>
+  </div>
+
+  <ul slot="provenance-en">
+    <li>US states geometry: <a href="https://github.com/topojson/us-atlas" rel="noopener"><code>us-atlas@3 states-10m</code></a> via jsDelivr.</li>
+    <li>Cluster locations and approximate capacity: cross-referenced from <a href="https://www.datacentermap.com/" rel="noopener">DataCenterMap</a>, county-level filings (Loudoun BOS, Maricopa, Dallas-Fort Worth COG), and 2024–2025 trade-press coverage. Hyperscaler operators rarely publish exact MW figures; values are reconstructed.</li>
+    <li>Loudoun County share of internet traffic: industry estimate cited by the Northern Virginia Technology Council; the 60–70 % range is commonly reported.</li>
+    <li>US data-centre electricity: <a href="https://www.energy.gov/eere/buildings/articles/energy-efficiency-data-centers" rel="noopener">DOE 2024</a> and <a href="https://www.iea.org/reports/electricity-2024" rel="noopener">IEA Electricity 2024</a>; ≈ 250 TWh, ≈ 4 % of US grid.</li>
+    <li>Water consumption: <a href="https://www.osti.gov/biblio/2476988" rel="noopener">Lawrence Berkeley National Laboratory, 2024 Data Center Energy Report</a>; 660 B gallons/year is direct + indirect.</li>
+    <li>2030 growth projection: McKinsey Global Energy Perspective 2024 / IEA Electricity 2024.</li>
+    <li>Source map &amp; build script: <code>src/pages/friday-harbor/2026-04-26-where-the-cloud-touches-ground.astro</code>.</li>
+  </ul>
+
+  <ul slot="provenance-zh">
+    <li>美国州界几何：<a href="https://github.com/topojson/us-atlas" rel="noopener"><code>us-atlas@3 states-10m</code></a>，经 jsDelivr 加载。</li>
+    <li>集群位置与近似容量：综合 <a href="https://www.datacentermap.com/" rel="noopener">DataCenterMap</a>、县级公开备案（Loudoun 县议会、Maricopa 县、达拉斯-沃斯堡 COG）以及 2024–2025 行业报道反推。运营方很少披露精确 MW 数据。</li>
+    <li>Loudoun 县互联网流量占比：行业估算，常引区间为 60–70 %（北弗吉尼亚科技委员会等机构）。</li>
+    <li>美国数据中心年耗电：<a href="https://www.energy.gov/eere/buildings/articles/energy-efficiency-data-centers" rel="noopener">美国能源部 2024</a> 与 <a href="https://www.iea.org/reports/electricity-2024" rel="noopener">IEA Electricity 2024</a>；约 2,500 亿 kWh，约占全国电网 4 %。</li>
+    <li>用水量：<a href="https://www.osti.gov/biblio/2476988" rel="noopener">劳伦斯伯克利国家实验室 2024 数据中心能耗报告</a>；6,600 亿加仑为直接 + 间接。</li>
+    <li>至 2030 年增长预测：McKinsey Global Energy Perspective 2024 / IEA Electricity 2024。</li>
+    <li>源码与构建脚本：<code>src/pages/friday-harbor/2026-04-26-where-the-cloud-touches-ground.astro</code>。</li>
+  </ul>
+</FridayHarborLayout>
+
+<style>
+  .cloud-figure { margin: 0; }
+  .cloud-stage {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .cloud-stage svg { display: block; width: 100%; height: 100%; }
+  .map-status {
+    margin: 0;
+    color: var(--ink-faint);
+    font-family: var(--serif);
+    font-style: italic;
+  }
+
+  .cloud-figure figcaption {
+    margin: 1.1rem 0.2rem 0;
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+    font-family: var(--serif);
+    line-height: 1.65;
+    max-width: 880px;
+  }
+  .cloud-figure figcaption b { color: var(--ink); font-weight: 500; }
+  .cloud-figure figcaption em { color: var(--uw-purple-deep); font-style: italic; }
+  .cloud-figure figcaption .legend-line {
+    display: flex; align-items: flex-start; gap: 0.55rem;
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+  }
+  .cloud-figure figcaption .legend-swatch {
+    flex: 0 0 auto;
+    width: 14px; height: 14px;
+    margin-top: 4px;
+    border-radius: 50%;
+  }
+  .swatch-cloud-major {
+    background: #8a3e2e;
+    border: 2px solid var(--rose);
+    box-shadow: 0 0 0 3px rgba(194,160,148,0.32);
+  }
+  .aside {
+    border-left: 2px solid var(--rule);
+    padding-left: 0.8rem;
+    color: var(--ink-faint);
+    font-size: 0.88rem !important;
+    font-style: italic;
+  }
+
+  /* Hard-numbers strip — same pattern as the Hormuz entry. */
+  .cloud-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4rem;
+    margin: 1.4rem 0.2rem 0;
+    padding: 1rem 0 0;
+    border-top: 1px solid var(--rule);
+  }
+  .cloud-stats .stat {
+    display: flex; flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+  .cloud-stats .stat-num {
+    font-family: var(--display, "Cormorant Garamond", Georgia, serif);
+    font-size: 1.85rem;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--uw-purple-deep);
+    letter-spacing: -0.005em;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .cloud-stats .stat-num small {
+    font-size: 0.55em;
+    font-weight: 400;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    margin-left: 0.1em;
+  }
+  .cloud-stats .stat-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--ink-faint);
+    max-width: 14em;
+  }
+  @media (max-width: 720px) {
+    .cloud-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  }
+</style>
+
+<script type="module">
+  import * as d3 from 'https://esm.sh/d3@7';
+  import { feature } from 'https://esm.sh/topojson-client@3';
+
+  // Major US AI / hyperscaler data center clusters.
+  // Capacity (MW) is illustrative — operators rarely publish exact figures.
+  const CLUSTERS = [
+    { id: 'loudoun', name: { en: 'Loudoun Co., VA',   zh: 'Loudoun 县' },        lon: -77.55,  lat: 39.05, cap: 3500, anchor: true,  side: 'right' },
+    { id: 'phoenix', name: { en: 'Phoenix metro',     zh: '凤凰城' },             lon: -111.95, lat: 33.45, cap: 1200, side: 'right' },
+    { id: 'dfw',     name: { en: 'Dallas–Fort Worth', zh: '达拉斯' },             lon: -96.80,  lat: 32.78, cap: 1500, side: 'right' },
+    { id: 'atl',     name: { en: 'Atlanta',           zh: '亚特兰大' },           lon: -84.39,  lat: 33.75, cap: 800,  side: 'right' },
+    { id: 'chi',     name: { en: 'Chicago',           zh: '芝加哥' },             lon: -87.65,  lat: 41.85, cap: 600,  side: 'left'  },
+    { id: 'iowa',    name: { en: 'Des Moines, IA',    zh: '得梅因' },             lon: -93.62,  lat: 41.59, cap: 700,  side: 'left'  },
+    { id: 'ohio',    name: { en: 'New Albany, OH',    zh: '新奥尔巴尼' },         lon: -82.81,  lat: 40.08, cap: 400,  side: 'left'  },
+    { id: 'pdx',     name: { en: 'Hillsboro, OR',     zh: '希尔斯伯勒' },         lon: -122.99, lat: 45.52, cap: 600,  side: 'left'  },
+    { id: 'wa',      name: { en: 'Quincy, WA',        zh: '昆西' },               lon: -119.85, lat: 47.23, cap: 700,  side: 'right' },
+    { id: 'reno',    name: { en: 'Reno, NV',          zh: '里诺' },               lon: -119.81, lat: 39.53, cap: 600,  side: 'left'  },
+    { id: 'slc',     name: { en: 'Salt Lake City',    zh: '盐湖城' },             lon: -111.89, lat: 40.76, cap: 300,  side: 'right' }
+  ];
+
+  const css = getComputedStyle(document.documentElement);
+  const c = {
+    paper:   css.getPropertyValue('--bg-card').trim()   || '#f5efe2',
+    paper2:  css.getPropertyValue('--bg-deep').trim()   || '#ddd4c2',
+    rule:    css.getPropertyValue('--rule').trim()      || '#d6cdbf',
+    ink:     css.getPropertyValue('--ink').trim()       || '#2c2823',
+    inkSoft: css.getPropertyValue('--ink-soft').trim()  || '#6c6358',
+    inkFaint:css.getPropertyValue('--ink-faint').trim() || '#98907f',
+    purple:  css.getPropertyValue('--uw-purple').trim() || '#6a5a6e',
+    purpleD: css.getPropertyValue('--uw-purple-deep').trim() || '#4a3e4d',
+    sage:    css.getPropertyValue('--sage').trim()      || '#8e9c8a',
+    sageS:   css.getPropertyValue('--sage-soft').trim() || '#b4bdaf',
+    rose:    css.getPropertyValue('--rose').trim()      || '#c2a094',
+    mist:    css.getPropertyValue('--mist').trim()      || '#a8b1b3',
+  };
+  const EVENT_DEEP = '#8a3e2e';
+
+  let _states = null;
+  fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json')
+    .then(r => r.json())
+    .then(us => {
+      _states = feature(us, us.objects.states);
+      requestAnimationFrame(() => draw());
+    });
+
+  window.addEventListener('resize', () => { if (_states) draw(); });
+
+  const fhRoot = document.querySelector('.fh-root');
+  if (fhRoot) {
+    new MutationObserver(() => { if (_states) draw(); })
+      .observe(fhRoot, { attributes: true, attributeFilter: ['data-lang'] });
+  }
+  function currentLang() {
+    return fhRoot && fhRoot.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+  }
+
+  function draw() {
+    const states = _states;
+    if (!states) return;
+    const stage = document.getElementById('stage');
+    if (!stage) return;
+    const W = stage.clientWidth | 0;
+    const H = stage.clientHeight | 0;
+    if (W < 50 || H < 50) { requestAnimationFrame(() => draw()); return; }
+    stage.innerHTML = '';
+
+    const lang = currentLang();
+    const padL = 14, padR = 14, padT = 16, padB = 60;
+    const mapW = W - padL - padR;
+    const mapH = H - padT - padB;
+
+    const projection = d3.geoAlbersUsa()
+      .fitSize([mapW, mapH], states)
+      .translate([padL + mapW / 2, padT + mapH / 2]);
+    const path = d3.geoPath(projection);
+
+    const svg = d3.select(stage).append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('width', W).attr('height', H)
+      .style('display', 'block')
+      .style('overflow', 'hidden');
+
+    // Background paper
+    svg.append('rect').attr('width', W).attr('height', H).attr('fill', c.paper);
+
+    // ----- Aridity wash (peaks over the Southwest, fades east) -----
+    const aridGradId = 'fh-cloud-arid';
+    const aridGrad = svg.append('defs').append('linearGradient').attr('id', aridGradId)
+      .attr('gradientUnits', 'userSpaceOnUse')
+      .attr('x1', padL).attr('y1', 0).attr('x2', padL + mapW).attr('y2', 0);
+    aridGrad.append('stop').attr('offset', '0%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.18);
+    aridGrad.append('stop').attr('offset', '22%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.55);
+    aridGrad.append('stop').attr('offset', '40%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.32);
+    aridGrad.append('stop').attr('offset', '60%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.10);
+    aridGrad.append('stop').attr('offset', '85%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.0);
+
+    // States base — warm putty
+    svg.append('path').datum(states).attr('d', path)
+      .attr('fill', c.paper2).attr('stroke', 'none');
+
+    // Aridity overlay clipped to land
+    svg.append('path').datum(states).attr('d', path)
+      .attr('fill', `url(#${aridGradId})`).attr('stroke', 'none');
+
+    // State borders
+    svg.append('path').datum(states).attr('d', path)
+      .attr('fill', 'none')
+      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.40)
+      .attr('stroke-width', 0.5);
+    // National outline (slightly heavier)
+    const nation = { type: 'GeometryCollection', geometries: states.features.map(f => f.geometry) };
+    svg.append('path').datum(states).attr('d', path)
+      .attr('fill', 'none')
+      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.85)
+      .attr('stroke-width', 0.8)
+      .attr('stroke-linejoin', 'round');
+
+    // ----- "Arid Southwest" floating label -----
+    const aridLabel = lang === 'zh' ? '干旱的西南' : 'Arid Southwest';
+    const aridP = projection([-110, 36]);
+    if (aridP) {
+      const t = svg.append('text').attr('x', aridP[0]).attr('y', aridP[1])
+        .attr('fill', c.purpleD).attr('fill-opacity', 0.55)
+        .attr('font-style', 'italic')
+        .attr('font-family', lang === 'zh'
+          ? '"Noto Serif SC", "Songti SC", serif'
+          : '"Cormorant Garamond", Georgia, serif')
+        .attr('font-size', 14).attr('letter-spacing', '0.30em')
+        .attr('text-anchor', 'middle')
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(245,239,226,0.85)').attr('stroke-width', 3)
+        .attr('stroke-linejoin', 'round');
+      t.text(aridLabel);
+    }
+
+    // ----- Cluster proportional symbols -----
+    const maxCap = d3.max(CLUSTERS, d => d.cap);
+    const rScale = d3.scaleSqrt().domain([0, maxCap]).range([0, 32]);
+
+    // halos under everything
+    const haloG = svg.append('g').attr('class', 'fh-cloud-halos');
+    CLUSTERS.forEach(d => {
+      const p = projection([d.lon, d.lat]);
+      if (!p) return;
+      const r = rScale(d.cap);
+      haloG.append('circle').attr('cx', p[0]).attr('cy', p[1])
+        .attr('r', r + 4).attr('fill', c.rose).attr('fill-opacity', 0.30);
+    });
+
+    // dots
+    const dotG = svg.append('g').attr('class', 'fh-cloud-dots');
+    CLUSTERS.forEach(d => {
+      const p = projection([d.lon, d.lat]);
+      if (!p) return;
+      const r = rScale(d.cap);
+      const g = dotG.append('g').attr('transform', `translate(${p[0]},${p[1]})`);
+      g.append('circle').attr('r', r).attr('fill', EVENT_DEEP).attr('fill-opacity', 0.78)
+        .attr('stroke', c.paper).attr('stroke-width', 1.2);
+      if (d.anchor) {
+        // Loudoun gets an extra slow pulsing ring
+        const outer = g.append('circle').attr('r', r + 8).attr('fill', 'none')
+          .attr('stroke', EVENT_DEEP).attr('stroke-opacity', 0.55).attr('stroke-width', 1.5);
+        outer.append('animate').attr('attributeName', 'r')
+          .attr('values', `${r + 6};${r + 16};${r + 6}`).attr('dur', '3.2s').attr('repeatCount', 'indefinite');
+        outer.append('animate').attr('attributeName', 'stroke-opacity')
+          .attr('values', '0.65;0.10;0.65').attr('dur', '3.2s').attr('repeatCount', 'indefinite');
+      }
+    });
+
+    // labels — placed left or right of each dot per side hint
+    const labelG = svg.append('g').attr('class', 'fh-cloud-labels');
+    CLUSTERS.forEach(d => {
+      const p = projection([d.lon, d.lat]);
+      if (!p) return;
+      const r = rScale(d.cap);
+      const isRight = d.side !== 'left';
+      const x = p[0] + (isRight ? r + 7 : -r - 7);
+      const y = p[1] + 4;
+      labelG.append('text')
+        .attr('x', x).attr('y', y)
+        .attr('text-anchor', isRight ? 'start' : 'end')
+        .attr('fill', c.ink)
+        .attr('font-size', d.anchor ? 13 : 11)
+        .attr('font-weight', d.anchor ? 700 : 600)
+        .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3.5)
+        .attr('stroke-linejoin', 'round')
+        .text(d.name[lang]);
+    });
+
+    // ----- Capacity legend (bottom-left of map area) -----
+    const legendCaps = [500, 1500, 3500];
+    const legX = padL + 24;
+    const legY = padT + mapH - 8;
+    const legG = svg.append('g').attr('transform', `translate(${legX},${legY})`);
+    legG.append('text').attr('x', 0).attr('y', -54)
+      .attr('font-size', 11).attr('fill', c.inkSoft)
+      .attr('font-style', 'italic')
+      .attr('font-family', lang === 'zh'
+        ? '"Noto Serif SC", "Songti SC", serif'
+        : '"Cormorant Garamond", Georgia, serif')
+      .text(lang === 'zh' ? '估算运行容量（兆瓦）' : 'estimated capacity (MW)');
+    legendCaps.forEach((cap, i) => {
+      const r = rScale(cap);
+      const x = i * 78;
+      legG.append('circle').attr('cx', x).attr('cy', -22).attr('r', r)
+        .attr('fill', 'none').attr('stroke', c.inkSoft).attr('stroke-width', 0.9);
+      legG.append('text').attr('x', x).attr('y', -22 + r + 14)
+        .attr('text-anchor', 'middle').attr('font-size', 10)
+        .attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+        .text(`${cap}`);
+    });
+
+    // ----- Aridity legend swatch -----
+    const aridSwX = padL + mapW - 240;
+    const aridSwY = padT + mapH - 28;
+    const aridSwG = svg.append('g').attr('transform', `translate(${aridSwX},${aridSwY})`);
+    const aridGradHX = 'fh-cloud-arid-h';
+    const aridGradH = svg.append('defs').append('linearGradient').attr('id', aridGradHX)
+      .attr('gradientUnits', 'objectBoundingBox')
+      .attr('x1', 0).attr('y1', 0).attr('x2', 1).attr('y2', 0);
+    aridGradH.append('stop').attr('offset', '0%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.78);
+    aridGradH.append('stop').attr('offset', '100%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.0);
+    aridSwG.append('rect').attr('x', 0).attr('y', 0).attr('width', 100).attr('height', 12)
+      .attr('fill', `url(#${aridGradHX})`)
+      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.4).attr('stroke-width', 0.5);
+    aridSwG.append('text').attr('x', 0).attr('y', 26)
+      .attr('font-size', 9).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .text(lang === 'zh' ? '紧张' : 'water-stressed');
+    aridSwG.append('text').attr('x', 100).attr('y', 26)
+      .attr('text-anchor', 'end')
+      .attr('font-size', 9).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .text(lang === 'zh' ? '湿润' : 'humid');
+  }
+</script>

@@ -55,6 +55,33 @@ export type Entry = {
 
 export const entries: Entry[] = [
   {
+    slug: "2026-04-26-where-the-cloud-touches-ground",
+    date: "2026-04-26",
+    title: {
+      en: "Where the Cloud Touches Ground",
+      zh: "云落在哪里",
+    },
+    subtitle: {
+      en: "Every prompt typed into ChatGPT or Gemini takes a path through specific buildings on specific land. The cloud is geography. These are the dots.",
+      zh: "你在 ChatGPT 或 Gemini 里敲下的每一句话，都要经过具体土地上的一栋具体建筑。「云」是一种地理事实。这些就是它落地的点。",
+    },
+    place: {
+      en: "Continental United States · 11 hyperscaler clusters",
+      zh: "美国本土 · 11 处超大规模数据中心集群",
+    },
+    techniques: ["cartogram", "field-note"],
+    kind: "cartographer-led",
+    author: "Bo Zhao",
+    thumb: {
+      bbox: { west: -125, east: -66, south: 24, north: 50 },
+      pins: [
+        { lon: -77.55,  lat: 39.05 },   // Loudoun, VA
+        { lon: -111.95, lat: 33.45 },   // Phoenix
+        { lon: -96.80,  lat: 32.78 },   // Dallas
+      ],
+    },
+  },
+  {
     slug: "2026-04-25-eye-of-the-needle",
     date: "2026-04-25",
     title: {
