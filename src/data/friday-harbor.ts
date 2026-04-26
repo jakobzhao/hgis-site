@@ -55,6 +55,32 @@ export type Entry = {
 
 export const entries: Entry[] = [
   {
+    slug: "2026-04-28-anacortes-to-friday-harbor",
+    date: "2026-04-28",
+    title: {
+      en: "Anacortes — Friday Harbor",
+      zh: "阿纳科蒂斯 — 周五港",
+    },
+    subtitle: {
+      en: "The route the journal is named for. Live ferry positions, thirty-three years of running, twelve percent of last year's sailings cancelled.",
+      zh: "本栏目命名所自的那条航线。船位实时更新；这条线运行 33 年；去年航次中有约 12% 被取消。",
+    },
+    place: {
+      en: "Salish Sea · Washington State Ferries",
+      zh: "萨利什海 · 华盛顿州渡轮系统",
+    },
+    techniques: ["field-note"],
+    kind: "cartographer-led",
+    author: "Bo Zhao",
+    thumb: {
+      bbox: { west: -123.15, east: -122.45, south: 48.40, north: 48.75 },
+      pins: [
+        { lon: -123.012, lat: 48.535 },   // Friday Harbor
+        { lon: -122.674, lat: 48.506 },   // Anacortes
+      ],
+    },
+  },
+  {
     slug: "2026-04-27-1-23-million-eviction-filings",
     date: "2026-04-27",
     title: {

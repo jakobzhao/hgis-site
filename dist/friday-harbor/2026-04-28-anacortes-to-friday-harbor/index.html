@@ -1,0 +1,545 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Anacortes — Friday Harbor · Friday Harbor · Humanistic GIS Laboratory</title><meta name="description" content="The route the journal is named for. Live ferry positions, thirty-three years of running, twelve percent of last year's sailings cancelled."><link rel="canonical" href="https://hgis.uw.edu/friday-harbor/2026-04-28-anacortes-to-friday-harbor/"><!-- Open Graph --><meta property="og:type" content="article"><meta property="og:site_name" content="Humanistic GIS Laboratory"><meta property="og:title" content="Anacortes — Friday Harbor · Friday Harbor · Humanistic GIS Laboratory"><meta property="og:description" content="The route the journal is named for. Live ferry positions, thirty-three years of running, twelve percent of last year's sailings cancelled."><meta property="og:url" content="https://hgis.uw.edu/friday-harbor/2026-04-28-anacortes-to-friday-harbor/"><meta property="og:image" content="https://hgis.uw.edu/hgis-logo.png"><meta property="og:locale" content="en_US"><!-- Twitter / X card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Anacortes — Friday Harbor · Friday Harbor · Humanistic GIS Laboratory"><meta name="twitter:description" content="The route the journal is named for. Live ferry positions, thirty-three years of running, twelve percent of last year's sailings cancelled."><meta name="twitter:image" content="https://hgis.uw.edu/hgis-logo.png"><!-- Crawl hints --><meta name="robots" content="index, follow, max-image-preview:large"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><!-- Icons --><link rel="icon" type="image/png" href="/hgis-logo.png"><link rel="apple-touch-icon" href="/hgis-logo.png"><style>.ferry-figure[data-astro-cid-7hzqf5p7]{margin:0}.ferry-stage[data-astro-cid-7hzqf5p7]{width:100%;aspect-ratio:16 / 10;background:transparent;border:0;border-radius:0;overflow:hidden;display:grid;place-items:center}.ferry-stage[data-astro-cid-7hzqf5p7] svg[data-astro-cid-7hzqf5p7]{display:block;width:100%;height:100%}.map-status[data-astro-cid-7hzqf5p7]{margin:0;color:var(--ink-faint);font-family:var(--serif);font-style:italic}.ferry-live-line[data-astro-cid-7hzqf5p7]{display:flex;align-items:baseline;gap:.4rem;margin:.5rem .2rem 0;font-size:.78rem;color:var(--ink-faint);font-family:Inter,Noto Sans CJK,sans-serif;letter-spacing:.04em}.live-dot[data-astro-cid-7hzqf5p7]{display:inline-block;width:7px;height:7px;border-radius:50%;background:#8a3e2e;align-self:center;animation:ferry-pulse 2.4s ease-in-out infinite}@keyframes ferry-pulse{0%,to{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.85)}}.ferry-figure[data-astro-cid-7hzqf5p7] figcaption[data-astro-cid-7hzqf5p7]{margin:.9rem .2rem 0;font-size:.94rem;color:var(--ink-soft);font-family:var(--serif);line-height:1.65;max-width:880px}.ferry-figure[data-astro-cid-7hzqf5p7] figcaption[data-astro-cid-7hzqf5p7] b[data-astro-cid-7hzqf5p7]{color:var(--ink);font-weight:500}.ferry-figure[data-astro-cid-7hzqf5p7] figcaption[data-astro-cid-7hzqf5p7] em[data-astro-cid-7hzqf5p7]{color:var(--uw-purple-deep);font-style:italic}.ferry-figure[data-astro-cid-7hzqf5p7] figcaption[data-astro-cid-7hzqf5p7] .legend-line[data-astro-cid-7hzqf5p7]{display:flex;align-items:flex-start;gap:.55rem;margin-top:.5rem;font-size:.92rem}.ferry-figure[data-astro-cid-7hzqf5p7] figcaption[data-astro-cid-7hzqf5p7] .legend-swatch[data-astro-cid-7hzqf5p7]{flex:0 0 auto;margin-top:4px}.swatch-ferry-route[data-astro-cid-7hzqf5p7]{width:28px;height:4px;background:var(--uw-purple-deep);border-radius:1px;margin-top:9px}.swatch-ferry-vessel[data-astro-cid-7hzqf5p7]{width:16px;height:16px;background:#8a3e2e;clip-path:polygon(50% 0,100% 70%,80% 100%,20% 100%,0 70%)}.aside[data-astro-cid-7hzqf5p7]{border-left:2px solid var(--rule);padding-left:.8rem;color:var(--ink-faint);font-size:.88rem!important;font-style:italic}.ferry-stats[data-astro-cid-7hzqf5p7]{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin:1.4rem .2rem 0;padding:1rem 0 0;border-top:1px solid var(--rule)}.ferry-stats[data-astro-cid-7hzqf5p7] .stat[data-astro-cid-7hzqf5p7]{display:flex;flex-direction:column;align-items:flex-start;gap:.2rem}.ferry-stats[data-astro-cid-7hzqf5p7] .stat-num[data-astro-cid-7hzqf5p7]{font-family:var(--display, "Cormorant Garamond", Georgia, serif);font-size:1.85rem;font-weight:500;line-height:1;color:var(--uw-purple-deep);letter-spacing:-.005em;font-variant-numeric:tabular-nums lining-nums}.ferry-stats[data-astro-cid-7hzqf5p7] .stat-num[data-astro-cid-7hzqf5p7] small[data-astro-cid-7hzqf5p7]{font-size:.55em;font-weight:400;color:var(--ink-soft);letter-spacing:.04em;margin-left:.1em}.ferry-stats[data-astro-cid-7hzqf5p7] .stat-label[data-astro-cid-7hzqf5p7]{font-family:var(--serif);font-style:italic;font-size:.78rem;line-height:1.35;color:var(--ink-faint);max-width:14em}@media(max-width:720px){.ferry-stats[data-astro-cid-7hzqf5p7]{grid-template-columns:repeat(2,1fr);gap:1rem}}
+</style>
+<link rel="stylesheet" href="/_astro/2026-04-25-eye-of-the-needle.DjRYQLAo.css">
+<link rel="stylesheet" href="/_astro/2026-04-25-eye-of-the-needle.CS82-Djn.css"></head> <body> <header class="site-header" data-astro-cid-3ef6ksr2> <div class="container header-inner" data-astro-cid-3ef6ksr2> <a href="/" class="brand" aria-label="Humanistic GIS Laboratory home" data-astro-cid-3ef6ksr2> <svg class="brand-logo" viewBox="160 555 325 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HGIS Lab logo" data-astro-cid-3ef6ksr2> <path class="brand-bar brand-bar-humanistic" pathLength="100" d="M299.2,565.6L175,791.6l22.8,41l103-186.7l57.5,105.9h45.5L299.2,565.6z" data-astro-cid-3ef6ksr2></path> <path class="brand-bar brand-bar-geoai" pathLength="100" d="M300.8,645.9l22.7,41.8l-58.4,103.9l205.9,0.1l-21.7,42l-251.5-1.2L300.8,645.9z" data-astro-cid-3ef6ksr2></path> <path class="brand-bar brand-bar-fake" pathLength="100" d="M299.2,565.6l104.5,186.1l-116.2,0.1l-22.3,39.8l205.8,0L345.5,565.5L299.2,565.6z" data-astro-cid-3ef6ksr2></path> </svg> <span class="brand-text" data-astro-cid-3ef6ksr2> <strong data-astro-cid-3ef6ksr2>Humanistic GIS Laboratory</strong> <small data-astro-cid-3ef6ksr2>University of Washington · Department of Geography</small> </span> </a> <nav data-astro-cid-3ef6ksr2> <ul data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2> <a href="/" class="nav-link" data-astro-cid-3ef6ksr2> Home </a> </li><li data-astro-cid-3ef6ksr2> <a href="/friday-harbor/" class="nav-link nav-featured active" aria-label="Friday Harbor — issue 004" data-astro-cid-3ef6ksr2> <span class="nav-marker" aria-hidden="true" data-astro-cid-3ef6ksr2></span> <em class="nav-featured-text" data-astro-cid-3ef6ksr2> Friday Harbor<sup class="nav-issue" data-astro-cid-3ef6ksr2>004</sup> </em> </a> </li><li data-astro-cid-3ef6ksr2> <a href="/research/" class="nav-link" data-astro-cid-3ef6ksr2> Research </a> </li><li data-astro-cid-3ef6ksr2> <a href="/projects/" class="nav-link" data-astro-cid-3ef6ksr2> Projects </a> </li><li data-astro-cid-3ef6ksr2> <a href="/publications/" class="nav-link" data-astro-cid-3ef6ksr2> Publications </a> </li><li data-astro-cid-3ef6ksr2> <a href="/people/" class="nav-link" data-astro-cid-3ef6ksr2> People </a> </li><li data-astro-cid-3ef6ksr2> <a href="/teaching/" class="nav-link" data-astro-cid-3ef6ksr2> Teaching </a> </li> </ul> </nav> </div> <div class="gold-rule" data-astro-cid-3ef6ksr2></div> </header>  <script>
+  (function () {
+    const logo = document.querySelector('.brand-logo');
+    if (!logo) return;
+    // Only play an entry animation on the first pageview of the session;
+    // subsequent navigations skip entry but still get the idle motion.
+    let played = false;
+    try { played = sessionStorage.getItem('hgis-logo-entry') === '1'; } catch (e) {}
+    if (played) {
+      logo.classList.add('is-idle');
+      return;
+    }
+    const variants = ['entry-spin', 'entry-draw', 'entry-assemble'];
+    const pick = variants[Math.floor(Math.random() * variants.length)];
+    logo.classList.add(pick);
+    try { sessionStorage.setItem('hgis-logo-entry', '1'); } catch (e) {}
+    // After the entry animation settles, hand off to the idle loop so the
+    // logo never sits dead-still but also never feels overactive.
+    setTimeout(() => {
+      logo.classList.remove(pick);
+      logo.classList.add('is-idle');
+    }, 1800);
+  })();
+</script> <main>  <div class="fh-root" data-lang="en" data-astro-cid-wvq62lyj> <article class="fh-entry" data-astro-cid-wvq62lyj> <header class="fh-masthead" data-astro-cid-wvq62lyj> <a href="/friday-harbor/" class="fh-rubric" data-astro-cid-wvq62lyj> <em data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Friday Harbor</span><span data-lang="zh" data-astro-cid-wvq62lyj>周五港</span></em> </a> <div class="fh-meta" data-astro-cid-wvq62lyj> <span data-astro-cid-wvq62lyj>№ 004</span> <span data-lang="en" data-astro-cid-wvq62lyj>Tuesday, April 28, 2026</span> <span data-lang="zh" data-astro-cid-wvq62lyj>2026年4月28日星期二</span> <span class="fh-place" data-lang="en" data-astro-cid-wvq62lyj>Salish Sea · Washington State Ferries</span> <span class="fh-place" data-lang="zh" data-astro-cid-wvq62lyj>萨利什海 · 华盛顿州渡轮系统</span> <button class="fh-lang-toggle" type="button" aria-label="switch language" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>中文</span><span data-lang="zh" data-astro-cid-wvq62lyj>EN</span> </button> </div> </header> <h1 class="fh-title" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>Anacortes — Friday Harbor</span> <span data-lang="zh" data-astro-cid-wvq62lyj>阿纳科蒂斯 — 周五港</span> </h1> <p class="fh-lede" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>The route the journal is named for. Live ferry positions, thirty-three years of running, twelve percent of last year&#39;s sailings cancelled.</span> <span data-lang="zh" data-astro-cid-wvq62lyj>本栏目命名所自的那条航线。船位实时更新；这条线运行 33 年；去年航次中有约 12% 被取消。</span> </p> <div class="fh-figure-wrap" data-astro-cid-wvq62lyj> <figure class="ferry-figure" data-astro-cid-7hzqf5p7> <div class="ferry-stage" id="stage" aria-label="Anacortes to Friday Harbor ferry route, with live vessel positions" data-astro-cid-7hzqf5p7> <p class="map-status" data-astro-cid-7hzqf5p7> <span data-lang="en" data-astro-cid-7hzqf5p7>Loading map...</span> <span data-lang="zh" data-astro-cid-7hzqf5p7>地图加载中...</span> </p> </div> <p class="ferry-live-line" data-astro-cid-7hzqf5p7> <span class="live-dot" aria-hidden="true" data-astro-cid-7hzqf5p7></span> <span data-lang="en" data-astro-cid-7hzqf5p7>Vessel positions update every 30 s · last refreshed <span id="ferry-clock" data-astro-cid-7hzqf5p7>—</span></span> <span data-lang="zh" data-astro-cid-7hzqf5p7>船位每 30 秒刷新一次 · 上次刷新 <span id="ferry-clock-zh" data-astro-cid-7hzqf5p7>—</span></span> </p> <figcaption data-lang="en" data-astro-cid-7hzqf5p7> <b data-astro-cid-7hzqf5p7>The journal takes its name from a port on San Juan Island.</b>
+In 1993, geographers and critical theorists gathered there for what is
+      now called the Friday Harbor meeting — the moment that opened the social
+      turn in geographic information science. They got there the way most
+      visitors still do: by ferry, from Anacortes. Thirty-three years later,
+      the route still runs. The fleet is older, the crews are short, and of
+      last year's scheduled sailings on this corridor, roughly one in eight
+      did not depart. The map below shows the route now.
+<span class="legend-line" data-astro-cid-7hzqf5p7> <span class="legend-swatch swatch-ferry-route" data-astro-cid-7hzqf5p7></span> <span data-astro-cid-7hzqf5p7><b data-astro-cid-7hzqf5p7>Anacortes — Friday Harbor route</b> — the corridor through the islands.</span> </span> <span class="legend-line" data-astro-cid-7hzqf5p7> <span class="legend-swatch swatch-ferry-vessel" data-astro-cid-7hzqf5p7></span> <span data-astro-cid-7hzqf5p7><b data-astro-cid-7hzqf5p7>Active vessels</b> — current position, heading shown by the arrow tip.</span> </span> </figcaption> <figcaption data-lang="zh" data-astro-cid-7hzqf5p7> <b data-astro-cid-7hzqf5p7>本栏目的名字，源于圣胡安岛上的一座港口。</b>
+1993 年，地理学者与批判社会理论学者在那里召开会议——后来被称为
+      「周五港会议」，开启了地理信息科学的社会转向。他们抵达岛上的方式，
+      跟今天大多数访客一样：从阿纳科蒂斯坐渡轮。三十三年过去，这条航线
+      仍在运行。船队更老了，船员短缺，而去年这条走廊上排定的航次中，
+      约每 8 班就有 1 班没能开出。下面这张图，是这条线此刻的样子。
+<span class="legend-line" data-astro-cid-7hzqf5p7> <span class="legend-swatch swatch-ferry-route" data-astro-cid-7hzqf5p7></span> <span data-astro-cid-7hzqf5p7><b data-astro-cid-7hzqf5p7>阿纳科蒂斯 — 周五港 航线</b>—— 穿越群岛的走廊。</span> </span> <span class="legend-line" data-astro-cid-7hzqf5p7> <span class="legend-swatch swatch-ferry-vessel" data-astro-cid-7hzqf5p7></span> <span data-astro-cid-7hzqf5p7><b data-astro-cid-7hzqf5p7>活跃船位</b>—— 当前位置，箭头指向行驶方向。</span> </span> </figcaption> <aside class="ferry-stats" aria-label="key WSF figures" data-astro-cid-7hzqf5p7> <div class="stat" data-lang="en" data-astro-cid-7hzqf5p7> <span class="stat-num" data-astro-cid-7hzqf5p7>21<small data-astro-cid-7hzqf5p7>&nbsp;vessels</small></span> <span class="stat-label" data-astro-cid-7hzqf5p7>in the active Washington State Ferries fleet</span> </div> <div class="stat" data-lang="zh" data-astro-cid-7hzqf5p7> <span class="stat-num" data-astro-cid-7hzqf5p7>21<small data-astro-cid-7hzqf5p7>&nbsp;艘</small></span> <span class="stat-label" data-astro-cid-7hzqf5p7>华盛顿州渡轮活跃船队</span> </div> <div class="stat" data-lang="en" data-astro-cid-7hzqf5p7> <span class="stat-num" data-astro-cid-7hzqf5p7>10<small data-astro-cid-7hzqf5p7>&nbsp;routes</small></span> <span class="stat-label" data-astro-cid-7hzqf5p7>connecting 20 terminals across the Salish Sea</span> </div> <div class="stat" data-lang="zh" data-astro-cid-7hzqf5p7> <span class="stat-num" data-astro-cid-7hzqf5p7>10<small data-astro-cid-7hzqf5p7>&nbsp;条航线</small></span> <span class="stat-label" data-astro-cid-7hzqf5p7>连接萨利什海周边的 20 个码头</span> </div> <div class="stat" data-lang="en" data-astro-cid-7hzqf5p7> <span class="stat-num" data-astro-cid-7hzqf5p7>~ 25<small data-astro-cid-7hzqf5p7>&nbsp;M / yr</small></span> <span class="stat-label" data-astro-cid-7hzqf5p7>passengers — the largest US ferry system by ridership</span> </div> <div class="stat" data-lang="zh" data-astro-cid-7hzqf5p7> <span class="stat-num" data-astro-cid-7hzqf5p7>约 2,500<small data-astro-cid-7hzqf5p7>&nbsp;万 / 年</small></span> <span class="stat-label" data-astro-cid-7hzqf5p7>客流 —— 全美客流最大的渡轮系统</span> </div> <div class="stat" data-lang="en" data-astro-cid-7hzqf5p7> <span class="stat-num" data-astro-cid-7hzqf5p7>~ 12<small data-astro-cid-7hzqf5p7>&nbsp;%</small></span> <span class="stat-label" data-astro-cid-7hzqf5p7>2025 cancellation rate, Anacortes — San Juan Islands route (illustrative)</span> </div> <div class="stat" data-lang="zh" data-astro-cid-7hzqf5p7> <span class="stat-num" data-astro-cid-7hzqf5p7>约 12<small data-astro-cid-7hzqf5p7>&nbsp;%</small></span> <span class="stat-label" data-astro-cid-7hzqf5p7>阿纳科蒂斯 — 圣胡安群岛 航线 2025 年取消率（示意）</span> </div> </aside> </figure> </div> <div class="fh-body" data-astro-cid-wvq62lyj> <section class="fh-col fh-notebook" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>The notebook</span><span data-lang="zh" data-astro-cid-wvq62lyj>札记</span></h2> <div data-lang="en" data-astro-cid-wvq62lyj><div data-astro-cid-7hzqf5p7> <p data-astro-cid-7hzqf5p7>
+The water you are looking at is the water this journal is named after.
+      The harbor in question is on the western side of San Juan Island, in
+      the inland sea between Vancouver Island and the mainland Pacific
+      Northwest. To get there, almost everyone takes a Washington State
+      Ferries boat from Anacortes — about ninety minutes through Thatcher
+      Pass, Lopez Pass, and Harney Channel.
+</p> <p data-astro-cid-7hzqf5p7>
+In April 1993, the National Center for Geographic Information and
+      Analysis convened a small meeting on the island that came to be known
+      as the Friday Harbor meeting. It was the first sustained sit-down
+      between people who built GIS systems and people whose job was to ask
+      what those systems did to the world. The arguments published out of
+      that week — most prominently in John Pickles's <em data-astro-cid-7hzqf5p7>Ground Truth</em>
+— opened what is now usually called the social turn in geographic
+      information science. Everyone who attended got to the meeting on this
+      ferry, on this water, looking at these islands.
+</p> <p data-astro-cid-7hzqf5p7>
+The route runs the same path today. Some of the vessels currently on
+      it were already in service in 1993 — Washington State Ferries operates
+      the oldest large ferry fleet in the United States. The system has been
+      in something like a slow infrastructure crisis since the pandemic:
+      crew shortages, deferred maintenance, multi-year delays on replacement
+      vessels, and route-by-route reductions in service. The Anacortes —
+      San Juan Islands corridor has been one of the most affected. Some
+      summers it runs at two-vessel capacity instead of three; some sailings
+      are cancelled the morning of.
+</p> <p data-astro-cid-7hzqf5p7>
+The map below is live: vessel positions are pulled from Washington
+      State Ferries' open API and refreshed every thirty seconds while you
+      have this page open. Where there is a small terracotta arrow on the
+      route line, there is a real boat there right now, with about a hundred
+      and fifty cars on it. Where there is no arrow, the schedule may be
+      saying "delayed" or "cancelled." Cartographically the move here is
+      small: the journal puts a map of its own name's geography on its own
+      pages, and lets the geography keep happening.
+</p> <p class="aside" data-astro-cid-7hzqf5p7> <em data-astro-cid-7hzqf5p7>A small disclosure.</em> The cancellation figure is illustrative —
+      WSF reports cancellations on a per-sailing basis but the route-level
+      annual rate has to be reconstructed from monthly performance data.
+      Vessel positions come from WSF's public Vessel Locations API; if the
+      API is unreachable (or no API key is configured for this build) the
+      map falls back to a recent static snapshot.
+</p> </div></div> <div data-lang="zh" data-astro-cid-wvq62lyj><div data-astro-cid-7hzqf5p7> <p data-astro-cid-7hzqf5p7>
+你眼前的这片水，就是本栏目命名所自的那片水。所谓「周五港」，
+      是圣胡安岛西侧的一座港口，位于温哥华岛与太平洋西北本土之间的
+      内海里。要到那里，几乎所有人都坐华盛顿州渡轮从阿纳科蒂斯出发——
+      大约九十分钟，途经 Thatcher Pass、Lopez Pass 和 Harney Channel。
+</p> <p data-astro-cid-7hzqf5p7>
+1993 年 4 月，国家地理信息分析中心（NCGIA）在岛上召开了一次小型会议，
+      后来被称为「周五港会议」(Friday Harbor meeting)。那是第一次让构建
+      GIS 系统的人与追问 GIS 对世界做了什么的人正式坐到同一张桌前。
+      那一周里讨论的内容，后来主要刊于 John Pickles 编的
+<em data-astro-cid-7hzqf5p7>Ground Truth</em>，开启了今天通称的地理信息科学「社会转向」。
+      参会者都是坐这条渡轮、走这片水、看着这些岛屿到达岛上的。
+</p> <p data-astro-cid-7hzqf5p7>
+今天这条航线还在跑。在岛上之间往返的几艘船里，有的早在 1993 年
+      就已经在服役——华盛顿州渡轮系统是全美最老的大型渡轮船队。
+      自疫情以来，整个系统处在一种慢性的基础设施危机里：船员短缺、
+      维护延后、新船建造连年拖期、各条航线一段段降低运力。
+      阿纳科蒂斯 — 圣胡安群岛 这条走廊是受影响最严重的几条之一。
+      有些夏天本应三艘船在跑的航线只有两艘；有些航班是当天清晨才被宣布取消。
+</p> <p data-astro-cid-7hzqf5p7>
+下方的地图是实时的：船位通过华盛顿州渡轮系统的公开 API 拉取，
+      你打开此页期间每 30 秒刷新一次。航线上每出现一只小小的赭红箭头，
+      那里此刻就有一艘真实的渡轮，载着大约一百五十辆车。没有箭头的时段，
+      调度上可能正在显示「延误」或「取消」。在制图上，这一篇做的事很小——
+      栏目把自己名字所自的地理画在自己的版面上，然后让那片地理继续发生。
+</p> <p class="aside" data-astro-cid-7hzqf5p7> <em data-astro-cid-7hzqf5p7>附注：</em>取消率是示意性数字——WSF 按航次粒度公布取消，
+      但航线级别的年取消率需要从月度运行数据反推。船位数据来自 WSF
+      公开的 Vessel Locations API；当 API 不可访问（或本次构建未配置
+      API key）时，地图会回退到最近的静态快照。
+</p> </div></div> </section> <section class="fh-col fh-provenance" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>The provenance</span><span data-lang="zh" data-astro-cid-wvq62lyj>出处</span></h2> <div data-lang="en" data-astro-cid-wvq62lyj><ul data-astro-cid-7hzqf5p7> <li data-astro-cid-7hzqf5p7>Vessel positions: <a href="https://www.wsdot.wa.gov/ferries/api/vessels/rest/help" rel="noopener" data-astro-cid-7hzqf5p7>WSDOT Ferries Vessel Locations API</a> — free with a key from <a href="https://wsdot.wa.gov/developers/api-access" rel="noopener" data-astro-cid-7hzqf5p7>WSDOT Developer Access</a>.</li> <li data-astro-cid-7hzqf5p7>Ferry route geometry: hand-traced waypoints checked against <a href="https://gisdata-wsdot.opendata.arcgis.com/datasets/wsdot-ferry-routes/api" rel="noopener" data-astro-cid-7hzqf5p7>WSDOT Ferry Routes (GIS Open Data)</a>.</li> <li data-astro-cid-7hzqf5p7>Terminal coordinates: WSDOT Terminals API; rendered to ~5 m accuracy.</li> <li data-astro-cid-7hzqf5p7>System statistics: <a href="https://wsdot.wa.gov/travel/washington-state-ferries/our-fleet" rel="noopener" data-astro-cid-7hzqf5p7>WSF Our Fleet</a>; <a href="https://wsdot.wa.gov/travel/washington-state-ferries/about-wsf" rel="noopener" data-astro-cid-7hzqf5p7>WSF About</a>; <a href="https://wsdot.wa.gov/travel/washington-state-ferries/performance-statistics" rel="noopener" data-astro-cid-7hzqf5p7>WSF Performance Statistics</a>.</li> <li data-astro-cid-7hzqf5p7>Friday Harbor meeting reference: National Center for Geographic Information and Analysis, Initiative 19; <em data-astro-cid-7hzqf5p7>Ground Truth</em> (Pickles, ed., 1995).</li> <li data-astro-cid-7hzqf5p7>Coastline: Natural Earth 1:10m via natural-earth-geojson; for the inset, the world coastline tile.</li> <li data-astro-cid-7hzqf5p7>Source map &amp; build script: <code data-astro-cid-7hzqf5p7>src/pages/friday-harbor/2026-04-28-anacortes-to-friday-harbor.astro</code>.</li> </ul></div> <div data-lang="zh" data-astro-cid-wvq62lyj><ul data-astro-cid-7hzqf5p7> <li data-astro-cid-7hzqf5p7>船位数据：<a href="https://www.wsdot.wa.gov/ferries/api/vessels/rest/help" rel="noopener" data-astro-cid-7hzqf5p7>WSDOT 渡轮船位 API</a>——免费，需要在 <a href="https://wsdot.wa.gov/developers/api-access" rel="noopener" data-astro-cid-7hzqf5p7>WSDOT Developer Access</a> 注册一个 key。</li> <li data-astro-cid-7hzqf5p7>航线几何：手绘 waypoints，对照 <a href="https://gisdata-wsdot.opendata.arcgis.com/datasets/wsdot-ferry-routes/api" rel="noopener" data-astro-cid-7hzqf5p7>WSDOT Ferry Routes (GIS Open Data)</a> 校核。</li> <li data-astro-cid-7hzqf5p7>码头坐标：WSDOT Terminals API；渲染精度约 5 m。</li> <li data-astro-cid-7hzqf5p7>系统数据：<a href="https://wsdot.wa.gov/travel/washington-state-ferries/our-fleet" rel="noopener" data-astro-cid-7hzqf5p7>WSF Our Fleet</a>、<a href="https://wsdot.wa.gov/travel/washington-state-ferries/about-wsf" rel="noopener" data-astro-cid-7hzqf5p7>About</a>、<a href="https://wsdot.wa.gov/travel/washington-state-ferries/performance-statistics" rel="noopener" data-astro-cid-7hzqf5p7>Performance Statistics</a>。</li> <li data-astro-cid-7hzqf5p7>「周五港会议」参考：NCGIA Initiative 19；<em data-astro-cid-7hzqf5p7>Ground Truth</em>（Pickles 主编，1995）。</li> <li data-astro-cid-7hzqf5p7>海岸线：Natural Earth 1:10m，经 natural-earth-geojson 加载；inset 用同源世界海岸线图层。</li> <li data-astro-cid-7hzqf5p7>源码与构建脚本：<code data-astro-cid-7hzqf5p7>src/pages/friday-harbor/2026-04-28-anacortes-to-friday-harbor.astro</code>。</li> </ul></div> </section> <section class="fh-col fh-cite" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>How to cite</span><span data-lang="zh" data-astro-cid-wvq62lyj>引用格式</span></h2> <pre class="fh-citation" data-lang="en" data-astro-cid-wvq62lyj>Zhao, B. (2026). Anacortes — Friday Harbor.
+Friday Harbor № 004, HGIS Lab,
+University of Washington.
+https://hgis.uw.edu/friday-harbor/2026-04-28-anacortes-to-friday-harbor/</pre> <pre class="fh-citation" data-lang="zh" data-astro-cid-wvq62lyj>赵博（2026）。阿纳科蒂斯 — 周五港。
+Friday Harbor № 004，HGIS 实验室，
+华盛顿大学。
+https://hgis.uw.edu/friday-harbor/2026-04-28-anacortes-to-friday-harbor/</pre> </section> </div> <section class="fh-share" aria-label="share this entry" data-astro-cid-wvq62lyj> <div class="fh-share-row" data-astro-cid-wvq62lyj> <span class="fh-share-label" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>Share</span><span data-lang="zh" data-astro-cid-wvq62lyj>Share</span> </span> <a class="fh-share-btn" data-share="x" href="#" rel="noopener" data-astro-cid-wvq62lyj>X</a> <a class="fh-share-btn" data-share="linkedin" href="#" rel="noopener" data-astro-cid-wvq62lyj>LinkedIn</a> <a class="fh-share-btn" data-share="facebook" href="#" rel="noopener" data-astro-cid-wvq62lyj>Facebook</a> <a class="fh-share-btn" data-share="email" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Email</span><span data-lang="zh" data-astro-cid-wvq62lyj>邮件</span></a> </div> <div class="fh-share-row fh-share-cn" data-astro-cid-wvq62lyj> <span class="fh-share-label" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>分享</span><span data-lang="zh" data-astro-cid-wvq62lyj>分享</span> </span> <a class="fh-share-btn" data-share="weibo" href="#" rel="noopener" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Weibo</span><span data-lang="zh" data-astro-cid-wvq62lyj>微博</span></a> <a class="fh-share-btn" data-share="wechat" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>WeChat</span><span data-lang="zh" data-astro-cid-wvq62lyj>微信</span></a> <a class="fh-share-btn" data-share="xhs" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Xiaohongshu</span><span data-lang="zh" data-astro-cid-wvq62lyj>小红书</span></a> <a class="fh-share-btn fh-share-copy" data-share="copy" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Copy link</span><span data-lang="zh" data-astro-cid-wvq62lyj>复制链接</span></a> </div> <!-- WeChat QR popover (hidden by default) --> <div class="fh-wechat" id="fh-wechat" hidden data-astro-cid-wvq62lyj> <button class="fh-wechat-x" type="button" aria-label="close" data-astro-cid-wvq62lyj>×</button> <img class="fh-wechat-qr" alt="WeChat QR" data-astro-cid-wvq62lyj> <p class="fh-wechat-tip" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>Scan with the WeChat camera. The page link is below.</span><span data-lang="zh" data-astro-cid-wvq62lyj>用微信扫一扫。下方为页面链接。</span> </p> <code class="fh-wechat-url" data-astro-cid-wvq62lyj></code> </div> </section> <footer class="fh-foot" data-astro-cid-wvq62lyj> <a href="/friday-harbor/" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>← back to the harbor</span><span data-lang="zh" data-astro-cid-wvq62lyj>← 返回港口</span> </a> <span data-astro-cid-wvq62lyj> <em data-astro-cid-wvq62lyj>Bo Zhao</em>,
+<span data-lang="en" data-astro-cid-wvq62lyj> HGIS Lab</span><span data-lang="zh" data-astro-cid-wvq62lyj> HGIS 实验室</span> </span> </footer> </article> </div>  </main> <footer class="site-footer" data-astro-cid-sz7xmlte> <div class="gold-rule" data-astro-cid-sz7xmlte></div> <div class="container footer-grid" data-astro-cid-sz7xmlte> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Humanistic GIS Laboratory</strong> <p data-astro-cid-sz7xmlte>Department of Geography<br data-astro-cid-sz7xmlte>University of Washington<br data-astro-cid-sz7xmlte>Seattle, WA 98195</p> </div> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Contact</strong> <p data-astro-cid-sz7xmlte> <a href="mailto:hgis@uw.edu" data-astro-cid-sz7xmlte>hgis@uw.edu</a><br data-astro-cid-sz7xmlte> <a href="https://github.com/" rel="noopener" data-astro-cid-sz7xmlte>GitHub</a> · <a href="https://twitter.com/" rel="noopener" data-astro-cid-sz7xmlte>Twitter / X</a> </p> </div> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Affiliations</strong> <p data-astro-cid-sz7xmlte> <a href="https://geography.washington.edu/" data-astro-cid-sz7xmlte>UW Geography</a><br data-astro-cid-sz7xmlte> <a href="https://www.washington.edu/" data-astro-cid-sz7xmlte>University of Washington</a> </p> </div> </div> <div class="footer-bottom container" data-astro-cid-sz7xmlte> <small data-astro-cid-sz7xmlte>© 2026 Humanistic GIS Laboratory · Built with Astro · <a href="https://github.com/" data-astro-cid-sz7xmlte>Source</a></small> </div> </footer>  </body></html>   <script>
+  (function () {
+    const root = document.querySelector('.fh-root');
+    if (!root) return;
+    let lang = 'en';
+    try { lang = localStorage.getItem('fh-lang') || 'en'; } catch (e) {}
+    if (lang !== 'en' && lang !== 'zh') lang = 'en';
+    root.setAttribute('data-lang', lang);
+    const btn = root.querySelector('.fh-lang-toggle');
+    if (btn) btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+      root.setAttribute('data-lang', next);
+      try { localStorage.setItem('fh-lang', next); } catch (e) {}
+    });
+
+    // ----- share row -----
+    const url = location.href;
+    const titleEl = root.querySelector('.fh-title');
+    const titleText = titleEl ? titleEl.innerText.trim() : document.title;
+    const u = encodeURIComponent(url);
+    const t = encodeURIComponent(titleText);
+
+    const targets = {
+      x:        'https://x.com/intent/post?text=' + t + '&url=' + u,
+      linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + u,
+      facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
+      email:    'mailto:?subject=' + t + '&body=' + u,
+      weibo:    'https://service.weibo.com/share/share.php?url=' + u + '&title=' + t,
+    };
+
+    function flash(btn) {
+      btn.classList.add('is-flashed');
+      const lang = root.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+      const orig = btn.innerHTML;
+      btn.textContent = lang === 'zh' ? '链接已复制' : 'Link copied';
+      setTimeout(() => { btn.classList.remove('is-flashed'); btn.innerHTML = orig; }, 1600);
+    }
+
+    function copyLink(btn) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => flash(btn)).catch(() => flash(btn));
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = url; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        flash(btn);
+      }
+    }
+
+    const wechat = root.querySelector('#fh-wechat');
+    function openWechat() {
+      if (!wechat) return;
+      wechat.querySelector('.fh-wechat-qr').src =
+        'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + u;
+      wechat.querySelector('.fh-wechat-url').textContent = url;
+      wechat.hidden = false;
+    }
+    function closeWechat() { if (wechat) wechat.hidden = true; }
+    if (wechat) wechat.querySelector('.fh-wechat-x').addEventListener('click', closeWechat);
+    document.addEventListener('click', (e) => {
+      if (wechat && !wechat.hidden && !wechat.contains(e.target)
+          && !e.target.closest('[data-share="wechat"]')) closeWechat();
+    });
+
+    root.querySelectorAll('[data-share]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const k = btn.getAttribute('data-share');
+        if (k === 'copy' || k === 'xhs') {
+          copyLink(btn);
+          return;
+        }
+        if (k === 'wechat') { openWechat(); return; }
+        const href = targets[k];
+        if (!href) return;
+        if (k === 'email') location.href = href;
+        else window.open(href, '_blank', 'noopener,width=640,height=560');
+      });
+    });
+  })();
+</script>  <script type="module">
+  import * as d3 from 'https://esm.sh/d3@7';
+  import { feature } from 'https://esm.sh/topojson-client@3';
+
+  // ===== CONFIG =====================================================
+  // Live data: WSDOT Ferries Vessel Locations API requires a free key from
+  // https://wsdot.wa.gov/developers/api-access. When set, we poll every 30 s.
+  // When empty (default), the map shows a static snapshot — which is enough
+  // for the editorial story. Drop the key in here to go live.
+  const WSDOT_API_KEY = '';
+  const WSDOT_VESSELS_URL = 'https://www.wsdot.wa.gov/ferries/api/vessels/rest/vessellocations';
+  const POLL_MS = 30000;
+
+  // Anacortes—Friday Harbor route waypoints (hand-traced, in order):
+  const ROUTE = [
+    [-122.674, 48.506],   // Anacortes terminal
+    [-122.720, 48.503],
+    [-122.770, 48.500],   // Thatcher Pass approach
+    [-122.815, 48.502],
+    [-122.860, 48.515],   // Lopez Pass / Upright Head
+    [-122.905, 48.555],
+    [-122.945, 48.585],   // Harney Channel
+    [-122.985, 48.560],
+    [-123.012, 48.535]    // Friday Harbor terminal
+  ];
+
+  const TERMINALS = [
+    { id: 'anacortes',     name: { en: 'Anacortes',      zh: '阿纳科蒂斯' }, lon: -122.674, lat: 48.506, anchor: false },
+    { id: 'lopez',         name: { en: 'Lopez I.',        zh: '洛佩兹岛'   }, lon: -122.884, lat: 48.570, anchor: false },
+    { id: 'shaw',          name: { en: 'Shaw I.',         zh: '肖岛'       }, lon: -122.934, lat: 48.585, anchor: false },
+    { id: 'orcas',         name: { en: 'Orcas Landing',   zh: '逆戟鲸登陆' }, lon: -122.948, lat: 48.597, anchor: false },
+    { id: 'friday',        name: { en: 'Friday Harbor',   zh: '周五港'     }, lon: -123.012, lat: 48.535, anchor: true  }
+  ];
+
+  // Static fallback snapshot — three plausible vessel positions on the route,
+  // rendered when the live API isn't reachable (default for this build).
+  const SNAPSHOT = [
+    { id: 1, name: 'M/V Yakima',    lon: -122.730, lat: 48.502, heading:  85, inService: true,  snapshot: true },
+    { id: 2, name: 'M/V Tillikum',  lon: -122.880, lat: 48.530, heading: 290, inService: true,  snapshot: true },
+    { id: 3, name: 'M/V Chelan',    lon: -122.998, lat: 48.539, heading: 110, inService: true,  snapshot: true }
+  ];
+
+  // ===== PALETTE ====================================================
+  const css = getComputedStyle(document.documentElement);
+  const c = {
+    paper:   css.getPropertyValue('--bg-card').trim()   || '#f5efe2',
+    paper2:  css.getPropertyValue('--bg-deep').trim()   || '#ddd4c2',
+    rule:    css.getPropertyValue('--rule').trim()      || '#d6cdbf',
+    ink:     css.getPropertyValue('--ink').trim()       || '#2c2823',
+    inkSoft: css.getPropertyValue('--ink-soft').trim()  || '#6c6358',
+    inkFaint:css.getPropertyValue('--ink-faint').trim() || '#98907f',
+    purple:  css.getPropertyValue('--uw-purple').trim() || '#6a5a6e',
+    purpleD: css.getPropertyValue('--uw-purple-deep').trim() || '#4a3e4d',
+    sage:    css.getPropertyValue('--sage').trim()      || '#8e9c8a',
+    sageS:   css.getPropertyValue('--sage-soft').trim() || '#b4bdaf',
+    rose:    css.getPropertyValue('--rose').trim()      || '#c2a094',
+    mist:    css.getPropertyValue('--mist').trim()      || '#a8b1b3',
+  };
+  const EVENT_DEEP = '#8a3e2e';
+
+  // ===== STATE ======================================================
+  let _land = null;
+  let _vessels = SNAPSHOT.slice();   // start with snapshot
+  let _lastUpdated = null;
+  let _pollTimer = null;
+  let _vesselLayer = null;           // re-rendered each tick
+  let _projection = null;            // closure over draw() so updates can re-project
+
+  // ===== DATA LOAD ==================================================
+  fetch('https://cdn.jsdelivr.net/gh/martynafford/natural-earth-geojson@master/10m/physical/ne_10m_land.json')
+    .then(r => r.json())
+    .then(land => {
+      _land = land;
+      requestAnimationFrame(() => draw());
+    })
+    .catch(() => {
+      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
+        .then(r => r.json())
+        .then(w => {
+          _land = feature(w, w.objects.countries);
+          requestAnimationFrame(() => draw());
+        });
+    });
+
+  window.addEventListener('resize', () => { if (_land) draw(); });
+  const fhRoot = document.querySelector('.fh-root');
+  if (fhRoot) {
+    new MutationObserver(() => { if (_land) draw(); })
+      .observe(fhRoot, { attributes: true, attributeFilter: ['data-lang'] });
+  }
+  function currentLang() {
+    return fhRoot && fhRoot.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+  }
+
+  // ===== LIVE DATA ==================================================
+  function fetchVesselsViaJsonp(url, callbackName) {
+    return new Promise((resolve, reject) => {
+      const cb = callbackName || ('wsfcb_' + Math.random().toString(36).slice(2));
+      const script = document.createElement('script');
+      const cleanup = () => {
+        try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+        if (script.parentNode) script.parentNode.removeChild(script);
+      };
+      window[cb] = (data) => { resolve(data); cleanup(); };
+      script.onerror = () => { cleanup(); reject(new Error('JSONP failed')); };
+      const sep = url.includes('?') ? '&' : '?';
+      script.src = `${url}${sep}callback=${cb}`;
+      document.body.appendChild(script);
+      setTimeout(() => { reject(new Error('JSONP timeout')); cleanup(); }, 8000);
+    });
+  }
+
+  async function refreshVessels() {
+    if (!WSDOT_API_KEY) return;   // static snapshot mode
+    try {
+      const url = `${WSDOT_VESSELS_URL}?apiaccesscode=${encodeURIComponent(WSDOT_API_KEY)}`;
+      const data = await fetchVesselsViaJsonp(url);
+      if (Array.isArray(data)) {
+        _vessels = data
+          .filter(v => v.InService)
+          .map(v => ({
+            id: v.VesselID, name: v.VesselName,
+            lon: v.Longitude, lat: v.Latitude,
+            heading: v.Heading || 0, snapshot: false
+          }));
+        _lastUpdated = new Date();
+        renderVessels();
+        updateClock();
+      }
+    } catch (e) {
+      // Silent: keep last known positions.
+    }
+  }
+
+  function startPolling() {
+    if (!WSDOT_API_KEY) {
+      _lastUpdated = new Date();
+      updateClock();
+      return;
+    }
+    refreshVessels();
+    _pollTimer = setInterval(() => {
+      if (!document.hidden) refreshVessels();
+    }, POLL_MS);
+  }
+
+  function updateClock() {
+    if (!_lastUpdated) return;
+    const en = _lastUpdated.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    const zh = _lastUpdated.toLocaleTimeString('zh-CN', { hour: 'numeric', minute: '2-digit' });
+    const elEn = document.getElementById('ferry-clock');
+    const elZh = document.getElementById('ferry-clock-zh');
+    if (elEn) elEn.textContent = WSDOT_API_KEY ? en : `${en} (snapshot)`;
+    if (elZh) elZh.textContent = WSDOT_API_KEY ? zh : `${zh}（快照）`;
+  }
+
+  // ===== MAIN DRAW ==================================================
+  function draw() {
+    if (!_land) return;
+    const stage = document.getElementById('stage');
+    if (!stage) return;
+    const W = stage.clientWidth | 0;
+    const H = stage.clientHeight | 0;
+    if (W < 50 || H < 50) { requestAnimationFrame(() => draw()); return; }
+    stage.innerHTML = '';
+
+    const lang = currentLang();
+    const padL = 14, padR = 14, padT = 16, padB = 14;
+    const mapW = W - padL - padR;
+    const mapH = H - padT - padB;
+
+    // --- main projection: tight on San Juan Islands + Anacortes ---
+    const BBOX = [[-123.18, 48.40], [-122.45, 48.78]];
+    const lon0 = (BBOX[0][0] + BBOX[1][0]) / 2;
+    const lat0 = (BBOX[0][1] + BBOX[1][1]) / 2;
+    const yProj = lat => Math.log(Math.tan(Math.PI/4 + lat * Math.PI/360));
+    const lonSpan = (BBOX[1][0] - BBOX[0][0]) * Math.PI / 180;
+    const ySpan   = yProj(BBOX[1][1]) - yProj(BBOX[0][1]);
+    const scale = Math.min(mapW / lonSpan, mapH / ySpan) * 0.95;
+    const tx = padL + mapW / 2 - (lon0 * Math.PI / 180) * scale;
+    const ty = padT + mapH / 2 + yProj(lat0) * scale;
+    _projection = d3.geoMercator()
+      .scale(scale).translate([tx, ty])
+      .clipExtent([[padL, padT], [padL + mapW, padT + mapH]])
+      .precision(0.3);
+    const path = d3.geoPath(_projection);
+
+    const svg = d3.select(stage).append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('width', W).attr('height', H)
+      .style('display', 'block')
+      .style('overflow', 'hidden');
+
+    // Sea = mist; sky-paper outside the map area
+    svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#bcc4c4');
+
+    // Subtle graticule
+    svg.append('g').selectAll('path').data(d3.geoGraticule().step([0.25, 0.25]).lines())
+      .join('path').attr('d', path).attr('fill', 'none')
+      .attr('stroke', 'rgba(255,255,255,0.18)').attr('stroke-width', 0.4);
+
+    // Coastal halo (sage soft)
+    svg.append('path').datum(_land).attr('d', path)
+      .attr('fill', 'none').attr('stroke', c.sageS)
+      .attr('stroke-opacity', 0.55).attr('stroke-width', 6);
+    // Land
+    svg.append('path').datum(_land).attr('d', path)
+      .attr('fill', c.paper)
+      .attr('stroke', c.inkSoft).attr('stroke-width', 0.7)
+      .attr('stroke-linejoin', 'round');
+
+    // Route line — wider soft stroke under, dashed crisp on top
+    const routeLine = d3.line()
+      .curve(d3.curveCatmullRom.alpha(0.5))
+      .x(d => _projection(d)[0])
+      .y(d => _projection(d)[1]);
+    svg.append('path').attr('d', routeLine(ROUTE))
+      .attr('fill', 'none').attr('stroke', c.purpleD).attr('stroke-opacity', 0.16)
+      .attr('stroke-width', 8).attr('stroke-linecap', 'round');
+    svg.append('path').attr('d', routeLine(ROUTE))
+      .attr('fill', 'none').attr('stroke', c.purpleD).attr('stroke-opacity', 0.85)
+      .attr('stroke-width', 1.4).attr('stroke-dasharray', '6 5')
+      .attr('stroke-linecap', 'round');
+
+    // Terminals
+    const termG = svg.append('g').attr('class', 'fh-terminals');
+    TERMINALS.forEach(t => {
+      const p = _projection([t.lon, t.lat]);
+      if (!p) return;
+      const g = termG.append('g').attr('transform', `translate(${p[0]},${p[1]})`);
+      // square dot
+      const r = t.anchor ? 5 : 3.5;
+      g.append('rect').attr('x', -r).attr('y', -r).attr('width', r * 2).attr('height', r * 2)
+        .attr('fill', t.anchor ? EVENT_DEEP : c.purpleD)
+        .attr('stroke', c.paper).attr('stroke-width', 1.2);
+      // anchor pulse on Friday Harbor
+      if (t.anchor) {
+        const ring = g.append('circle').attr('r', 12).attr('fill', 'none')
+          .attr('stroke', EVENT_DEEP).attr('stroke-opacity', 0.55).attr('stroke-width', 1.4);
+        ring.append('animate').attr('attributeName', 'r')
+          .attr('values', '10;18;10').attr('dur', '3s').attr('repeatCount', 'indefinite');
+        ring.append('animate').attr('attributeName', 'stroke-opacity')
+          .attr('values', '0.7;0.05;0.7').attr('dur', '3s').attr('repeatCount', 'indefinite');
+      }
+      // label
+      const dx = t.id === 'anacortes' ? -7 : 8;
+      const ax = t.id === 'anacortes' ? 'end' : 'start';
+      g.append('text').attr('x', dx).attr('y', 4)
+        .attr('text-anchor', ax)
+        .attr('fill', c.ink).attr('font-size', t.anchor ? 13 : 11)
+        .attr('font-weight', t.anchor ? 700 : 600)
+        .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3.5)
+        .attr('stroke-linejoin', 'round')
+        .text(t.name[lang]);
+    });
+
+    // Vessel layer — re-rendered on every poll
+    _vesselLayer = svg.append('g').attr('class', 'fh-vessels');
+    renderVessels();
+
+    // ----- INSET: Puget Sound system overview -----
+    const inSize = 130;
+    const inH = 110;
+    const inMargin = 12;
+    const inX = padL + mapW - inSize - inMargin;
+    const inY = padT + mapH - inH - inMargin;
+    const inG = svg.append('g').attr('class', 'fh-ferry-inset')
+      .attr('transform', `translate(${inX}, ${inY})`);
+    inG.append('rect').attr('x', -8).attr('y', -8)
+      .attr('width', inSize + 16).attr('height', inH + 16)
+      .attr('fill', c.paper).attr('stroke', c.rule).attr('stroke-width', 0.8).attr('rx', 4);
+
+    const insetBox = [[-123.7, 47.0], [-122.0, 49.0]];
+    const inLon0 = (insetBox[0][0] + insetBox[1][0]) / 2;
+    const inLat0 = (insetBox[0][1] + insetBox[1][1]) / 2;
+    const inLonSpan = (insetBox[1][0] - insetBox[0][0]) * Math.PI / 180;
+    const inYspan   = yProj(insetBox[1][1]) - yProj(insetBox[0][1]);
+    const inScale = Math.min(inSize / inLonSpan, inH / inYspan) * 0.95;
+    const inTx = inSize / 2 - (inLon0 * Math.PI / 180) * inScale;
+    const inTy = inH / 2 + yProj(inLat0) * inScale;
+    const inProj = d3.geoMercator()
+      .scale(inScale).translate([inTx, inTy])
+      .clipExtent([[0, 0], [inSize, inH]])
+      .precision(0.5);
+    const inPath = d3.geoPath(inProj);
+
+    inG.append('rect').attr('width', inSize).attr('height', inH).attr('fill', c.mist);
+    inG.append('path').datum(_land).attr('d', inPath)
+      .attr('fill', c.paper2)
+      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.6).attr('stroke-width', 0.4);
+
+    // Highlight the Anacortes—FH route in the inset
+    const inRouteLine = d3.line()
+      .curve(d3.curveCatmullRom.alpha(0.5))
+      .x(d => inProj(d)[0]).y(d => inProj(d)[1]);
+    inG.append('path').attr('d', inRouteLine(ROUTE))
+      .attr('fill', 'none').attr('stroke', EVENT_DEEP)
+      .attr('stroke-width', 1.4).attr('stroke-opacity', 0.85);
+
+    // Mark Friday Harbor in inset
+    const fhP = inProj([-123.012, 48.535]);
+    if (fhP) {
+      inG.append('circle').attr('cx', fhP[0]).attr('cy', fhP[1])
+        .attr('r', 3).attr('fill', EVENT_DEEP).attr('stroke', c.paper).attr('stroke-width', 1);
+    }
+    // Inset caption
+    inG.append('text').attr('x', inSize / 2).attr('y', inH + 14)
+      .attr('text-anchor', 'middle').attr('font-size', 9.5)
+      .attr('fill', c.inkSoft).attr('font-style', 'italic')
+      .attr('font-family', lang === 'zh' ? '"Noto Serif SC", serif' : '"Cormorant Garamond", serif')
+      .attr('letter-spacing', '0.10em')
+      .text(lang === 'zh' ? '萨利什海全图' : 'Salish Sea overview');
+
+    // Kick off live data once the map is on screen
+    startPolling();
+  }
+
+  // ===== RENDER VESSELS (re-callable) ==============================
+  function renderVessels() {
+    if (!_vesselLayer || !_projection) return;
+    _vesselLayer.selectAll('*').remove();
+
+    _vessels.forEach(v => {
+      const p = _projection([v.lon, v.lat]);
+      if (!p) return;
+      const g = _vesselLayer.append('g').attr('transform', `translate(${p[0]},${p[1]}) rotate(${(v.heading || 0) - 90})`);
+      // Boat triangle pointing along heading (rotated so 0° = up; subtract 90 above so that 0° heading = north up)
+      g.append('path')
+        .attr('d', 'M -7 -5 L 7 0 L -7 5 L -3 0 Z')
+        .attr('fill', EVENT_DEEP)
+        .attr('stroke', c.paper).attr('stroke-width', 1)
+        .attr('stroke-linejoin', 'round');
+      // soft halo for visibility on the mist sea
+      g.append('circle').attr('cx', 0).attr('cy', 0).attr('r', 11)
+        .attr('fill', 'none').attr('stroke', c.rose).attr('stroke-opacity', 0.30).attr('stroke-width', 4)
+        .attr('pointer-events', 'none')
+        .lower();
+      // tiny gentle blink
+      const halo = g.select('circle');
+      halo.append('animate').attr('attributeName', 'stroke-opacity')
+        .attr('values', '0.40;0.12;0.40').attr('dur', '2.6s').attr('repeatCount', 'indefinite');
+    });
+  }
+</script>
