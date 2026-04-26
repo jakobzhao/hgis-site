@@ -76,6 +76,23 @@ const total = sorted.length;
   .fh-root[data-lang="zh"] [data-lang="en"] { display: none !important; }
   .fh-root[data-lang="zh"] {
     --serif: "Cormorant Garamond", "Noto Serif SC", "Songti SC", "STSong", Georgia, serif;
+    --zh-display: "Kaiti SC", "STKaiti", "Kaiti", KaiTi, "Noto Serif SC", serif;
+  }
+  /* Index cards: extend the column register used inside each entry
+     to the headings here, so the whole rubric reads as a literary
+     column rather than a journal index. */
+  .fh-root[data-lang="zh"] .fh-row-text h2,
+  .fh-root[data-lang="zh"] .manifesto {
+    font-family: var(--zh-display);
+    font-style: normal;
+    letter-spacing: 0.02em;
+  }
+  .fh-root[data-lang="zh"] .fh-row-lede {
+    font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
   }
 </style>
 

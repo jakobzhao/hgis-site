@@ -126,8 +126,32 @@ Friday Harbor № {issueNo}，HGIS 实验室，
   .fh-root[data-lang="en"] [data-lang="zh"] { display: none !important; }
   .fh-root[data-lang="zh"] [data-lang="en"] { display: none !important; }
   .fh-root[data-lang="zh"] {
-    /* slightly tighter line for CJK */
+    /* Body/serif fallback in Chinese: Noto Serif SC at light weight reads
+       like a literary column, not an academic journal. */
     --serif: "Cormorant Garamond", "Noto Serif SC", "Songti SC", "STSong", Georgia, serif;
+    /* Display register for prominent Chinese text — titles, ledes,
+       section heads. Kaiti's calligraphic slant gives the column a
+       personal editorial voice (like a 三联 / 读书 column header)
+       rather than the institutional register Songti reads as. */
+    --zh-display: "Kaiti SC", "STKaiti", "Kaiti", KaiTi, "Noto Serif SC", serif;
+  }
+  /* Apply the column register to all prominent Chinese text. */
+  .fh-root[data-lang="zh"] .fh-title,
+  .fh-root[data-lang="zh"] .fh-lede,
+  .fh-root[data-lang="zh"] .fh-col h2,
+  .fh-root[data-lang="zh"] .fh-rubric em {
+    font-family: var(--zh-display);
+    font-style: normal;       /* Kaiti has its own slant; faux-italic looks wrong */
+    letter-spacing: 0.02em;
+  }
+  /* Chinese body & captions: Noto Serif SC light weight, slightly more
+     line-height than Latin so the column breathes. */
+  .fh-root[data-lang="zh"] .fh-col :global(p),
+  .fh-root[data-lang="zh"] .fh-col :global(li) {
+    font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+    font-weight: 300;
+    line-height: 1.78;
+    letter-spacing: 0.01em;
   }
 </style>
 
