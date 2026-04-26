@@ -217,16 +217,28 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
   // track a name from one map to the other).
 
   let _real = null, _claude = null;
+  // Cache-bust so a stale browser cache that still references the old
+  // neighborhood files can't keep showing them. v=2 here is just a marker
+  // — the file paths themselves changed, but cdn.jsdelivr / proxy caches
+  // sometimes hold onto old responses. Bumping forces a fresh request.
+  const CACHE_BUST = '?v=council3';
   Promise.all([
-    fetch('/data/seattle-council-real.geojson').then(r => r.json()),
-    fetch('/data/seattle-council-claude.geojson').then(r => r.json()),
+    fetch('/data/seattle-council-real.geojson' + CACHE_BUST).then(r => {
+      if (!r.ok) throw new Error('council-real ' + r.status);
+      return r.json();
+    }),
+    fetch('/data/seattle-council-claude.geojson' + CACHE_BUST).then(r => {
+      if (!r.ok) throw new Error('council-claude ' + r.status);
+      return r.json();
+    }),
   ]).then(([realGJ, claudeGJ]) => {
     _real = realGJ;
     _claude = claudeGJ;
     requestAnimationFrame(drawAll);
   }).catch(err => {
+    console.error('Friday Harbor 005 data load failed:', err);
     document.querySelectorAll('.map-status').forEach(el => {
-      el.textContent = 'Could not load council district data.';
+      el.textContent = 'Could not load council district data: ' + err.message;
     });
   });
 
@@ -241,8 +253,23 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
   }
 
   function drawAll() {
-    drawPanel('stage-real',   _real,   { kind: 'real',   showSilhouette: false });
-    drawPanel('stage-claude', _claude, { kind: 'claude', showSilhouette: true  });
+    // Try/catch around each panel — if one throws, the other still
+    // renders. An error in one panel should not silently leave the
+    // other stuck at "Loading map…".
+    try {
+      drawPanel('stage-real',   _real,   { kind: 'real',   showSilhouette: false });
+    } catch (e) {
+      console.error('drawPanel stage-real failed:', e);
+      const stage = document.getElementById('stage-real');
+      if (stage) stage.innerHTML = '<p class="map-status">render error: ' + e.message + '</p>';
+    }
+    try {
+      drawPanel('stage-claude', _claude, { kind: 'claude', showSilhouette: true  });
+    } catch (e) {
+      console.error('drawPanel stage-claude failed:', e);
+      const stage = document.getElementById('stage-claude');
+      if (stage) stage.innerHTML = '<p class="map-status">render error: ' + e.message + '</p>';
+    }
   }
 
   // Categorical palette: one tint per district number, shared between
