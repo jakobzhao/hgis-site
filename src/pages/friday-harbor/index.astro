@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { entries, UI, TECH_LABELS, KIND_LABELS } from '../../data/friday-harbor';
+import { entries, UI } from '../../data/friday-harbor';
 
 const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
 const total = sorted.length;
@@ -48,6 +48,10 @@ const total = sorted.length;
                       <b data-lang="en">{wdEn}</b><b data-lang="zh">{wdZh}</b>
                       <span data-lang="en"> {dlEn}</span><span data-lang="zh"> {dlZh}</span>
                     </span>
+                    <span class="fh-place">
+                      <span data-lang="en">{e.place.en}</span>
+                      <span data-lang="zh">{e.place.zh}</span>
+                    </span>
                   </div>
                   <h2>
                     <span data-lang="en">{e.title.en}</span>
@@ -57,22 +61,6 @@ const total = sorted.length;
                     <span data-lang="en">{e.subtitle.en}</span>
                     <span data-lang="zh">{e.subtitle.zh}</span>
                   </p>
-                  <div class="fh-row-tags">
-                    <span class={`fh-kind kind-${e.kind}`}>
-                      <span data-lang="en">{KIND_LABELS[e.kind].en}</span>
-                      <span data-lang="zh">{KIND_LABELS[e.kind].zh}</span>
-                    </span>
-                    {e.techniques.map(t => (
-                      <span class="fh-tech">
-                        <span data-lang="en">{TECH_LABELS[t].en}</span>
-                        <span data-lang="zh">{TECH_LABELS[t].zh}</span>
-                      </span>
-                    ))}
-                    <span class="fh-place">
-                      <span data-lang="en">{e.place.en}</span>
-                      <span data-lang="zh">{e.place.zh}</span>
-                    </span>
-                  </div>
                 </div>
               </a>
             </li>
@@ -167,12 +155,14 @@ const total = sorted.length;
   .fh-row-thumb svg { display: block; width: 100%; height: 100%; }
 
   .fh-row-meta {
-    display: flex; gap: 0.9rem; align-items: baseline;
-    margin-bottom: 0.5rem;
+    display: flex; gap: 1rem; align-items: baseline;
+    margin-bottom: 0.55rem;
     font-size: 0.78rem;
     color: var(--ink-faint);
     letter-spacing: 0.06em;
+    flex-wrap: wrap;
   }
+  .fh-row-meta .fh-place { margin-left: auto; }
   .fh-no {
     letter-spacing: 0.1em;
     color: var(--ink-faint);
@@ -201,28 +191,10 @@ const total = sorted.length;
     margin: 0 0 0.7rem;
     max-width: 640px;
   }
-  .fh-row-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
-  .fh-kind, .fh-tech {
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 2px 8px;
-    border-radius: 999px;
-  }
-  .fh-kind { background: var(--uw-purple); color: #fff; }
-  .fh-kind.kind-anti-map      { background: #b22222; }
-  .fh-kind.kind-cartographer-led { background: #2a4d6e; }
-  .fh-kind.kind-news-led      { background: #4a4a4a; }
-  .fh-tech {
-    background: transparent;
-    border: 1px solid var(--rule);
-    color: var(--ink-faint);
-  }
   .fh-place {
     font-size: 0.78rem;
     color: var(--ink-faint);
     font-style: italic;
-    margin-left: auto;
   }
 
   @media (max-width: 720px) {

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { UI, TECH_LABELS, KIND_LABELS, type Entry } from '../data/friday-harbor';
+import { UI, type Entry } from '../data/friday-harbor';
 
 interface Props {
   entry: Entry;
@@ -45,19 +45,6 @@ const year = entry.date.slice(0, 4);
         <span data-lang="en">{entry.subtitle.en}</span>
         <span data-lang="zh">{entry.subtitle.zh}</span>
       </p>
-      <div class="fh-tags">
-        <span class={`fh-kind kind-${entry.kind}`}>
-          <span data-lang="en">{KIND_LABELS[entry.kind].en}</span>
-          <span data-lang="zh">{KIND_LABELS[entry.kind].zh}</span>
-        </span>
-        {entry.techniques.map(t => (
-          <span class="fh-tech">
-            <span data-lang="en">{TECH_LABELS[t].en}</span>
-            <span data-lang="zh">{TECH_LABELS[t].zh}</span>
-          </span>
-        ))}
-      </div>
-
       <div class="fh-figure-wrap">
         <slot name="figure" />
       </div>
@@ -217,30 +204,9 @@ Friday Harbor № {issueNo}，HGIS 实验室，
     font-size: 1.18rem;
     line-height: 1.5;
     color: var(--ink);
-    margin: 0 0 1rem;
+    margin: 0 0 1.6rem;
     max-width: 720px;
   }
-  .fh-tags {
-    display: flex; gap: 0.5rem; flex-wrap: wrap;
-    margin: 0 0 1.6rem;
-  }
-  .fh-kind, .fh-tech {
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 9px;
-    border-radius: 999px;
-  }
-  .fh-kind { background: var(--uw-purple); color: #fff; }
-  .fh-kind.kind-anti-map      { background: #b22222; }
-  .fh-kind.kind-cartographer-led { background: #2a4d6e; }
-  .fh-kind.kind-news-led      { background: #4a4a4a; }
-  .fh-tech {
-    background: transparent;
-    border: 1px solid var(--rule);
-    color: var(--ink-faint);
-  }
-
   .fh-figure-wrap {
     margin: 0 0 2rem;
     padding: 1.4rem 0 0;
