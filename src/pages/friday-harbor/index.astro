@@ -93,7 +93,7 @@ const total = sorted.length;
     align-items: end;
   }
   .fh-index-mast h1 {
-    font-family: var(--serif);
+    font-family: "Cormorant Garamond", "Apple Garamond", Georgia, serif;
     font-weight: 500;
     font-size: 3.2rem;
     line-height: 1;
@@ -103,6 +103,13 @@ const total = sorted.length;
   .fh-index-mast h1 em {
     font-style: italic;
     color: var(--uw-purple);
+  }
+  /* Chinese rubric uses Kaiti, not Songti italic. */
+  .fh-index-mast h1 em :global([data-lang="zh"]) {
+    font-family: "Kaiti SC", "STKaiti", "Kaiti", KaiTi, "Noto Serif SC", serif;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.04em;
   }
   .manifesto-wrap {
     display: flex; flex-direction: column; gap: 0.9rem; align-items: flex-start;

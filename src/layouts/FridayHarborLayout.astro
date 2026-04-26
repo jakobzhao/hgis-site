@@ -152,12 +152,20 @@ Friday Harbor № {issueNo}，HGIS 实验室，
   }
   .fh-rubric:hover { border-bottom: 0; }
   .fh-rubric em {
-    font-family: var(--serif);
+    font-family: "Cormorant Garamond", "Apple Garamond", Georgia, serif;
     font-style: italic;
     font-weight: 500;
     font-size: 1.6rem;
     letter-spacing: -0.005em;
     color: var(--uw-purple);
+  }
+  /* Chinese rubric uses Kaiti — italic Songti is faux-italic and looks
+     wrong; Kaiti's calligraphic slant gives the editorial inscription feel. */
+  .fh-rubric em :global([data-lang="zh"]) {
+    font-family: "Kaiti SC", "STKaiti", "Kaiti", KaiTi, "Noto Serif SC", serif;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.02em;
   }
   .fh-rubric small {
     font-size: 0.68rem;

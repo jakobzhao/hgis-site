@@ -1,7 +1,9 @@
 ---
+import { entries as fhEntries } from '../data/friday-harbor';
+
 const nav = [
   { href: '/', label: 'Home' },
-  { href: '/friday-harbor/', label: 'Friday Harbor' },
+  { href: '/friday-harbor/', label: 'Friday Harbor', featured: true },
   { href: '/research/', label: 'Research' },
   { href: '/projects/', label: 'Projects' },
   { href: '/publications/', label: 'Publications' },
@@ -9,6 +11,9 @@ const nav = [
   { href: '/teaching/', label: 'Teaching' },
 ];
 const path = Astro.url.pathname;
+
+// Live issue number for the Friday Harbor rubric in the nav.
+const fhIssue = String(fhEntries.length).padStart(3, '0');
 ---
 <header class="site-header">
   <div class="container header-inner">
@@ -31,16 +36,34 @@ const path = Astro.url.pathname;
     </a>
     <nav>
       <ul>
-        {nav.map(item => (
-          <li>
-            <a
-              href={item.href}
-              class:list={[ 'nav-link', { active: path === item.href || (item.href !== '/' && path.startsWith(item.href)) } ]}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
+        {nav.map(item => {
+          const isActive = path === item.href || (item.href !== '/' && path.startsWith(item.href));
+          if (item.featured) {
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={[ 'nav-link', 'nav-featured', { active: isActive } ]}
+                  aria-label={`${item.label} — issue ${fhIssue}`}
+                >
+                  <span class="nav-marker" aria-hidden="true"></span>
+                  <em class="nav-featured-text">{item.label}</em>
+                  <span class="nav-issue">№&nbsp;{fhIssue}</span>
+                </a>
+              </li>
+            );
+          }
+          return (
+            <li>
+              <a
+                href={item.href}
+                class:list={[ 'nav-link', { active: isActive } ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   </div>
@@ -233,6 +256,47 @@ const path = Astro.url.pathname;
     color: var(--uw-purple);
     border-bottom-color: var(--uw-gold);
   }
+
+  /* The Friday Harbor item is the running editorial column —
+     marked, italic-serifed, and labelled with its live issue number so
+     the masthead reads more like a magazine flag than a flat menu. */
+  .nav-featured {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+  .nav-marker {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--uw-gold);
+    align-self: center;
+    flex: 0 0 auto;
+    transform: translateY(-1px);
+  }
+  .nav-featured-text {
+    font-family: "Cormorant Garamond", "Apple Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: var(--uw-purple-deep);
+    letter-spacing: -0.005em;
+    line-height: 1;
+  }
+  .nav-issue {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: 0.74rem;
+    color: var(--ink-faint);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .nav-featured:hover .nav-featured-text { color: var(--uw-purple); }
+  .nav-featured:hover .nav-marker        { background: var(--uw-purple); }
+  .nav-featured.active .nav-featured-text { color: var(--uw-purple); }
+  .nav-featured.active .nav-marker        { background: var(--uw-purple); }
 
   @media (max-width: 720px) {
     .header-inner { flex-direction: column; gap: 0.85rem; padding: 0.9rem 1.25rem; }
