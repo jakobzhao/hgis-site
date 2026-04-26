@@ -86,10 +86,13 @@ export const UI: Record<string, Bi> = {
   rubric:     { en: "Friday Harbor",   zh: "周五港" },
   manifesto: {
     en:
-      "Two pieces a week, written from a small port. Every entry is one map plus three things the headlines won't give you next to it: the choices that built the map, the data underneath, and a citation you can carry into a paper or a classroom. The harbor borrows its name from the field station the geographers have kept since 1904 — this is field work too.",
+      "Friday Harbor takes its name twice over. First, the University of Washington's marine field station on San Juan Island, north of Seattle. Second, and more to the point: the 1993 Friday Harbor meeting held there — the first sit-down between GIS scientists and critical social theorists, and the moment that opened the social turn in geographic information science. "
+      + "This journal continues that conversation. Two pieces a week. Each entry is one map plus three things the headlines won't give you next to it: the choices that built it, the data underneath, and a citation you can carry into a paper or a classroom.",
     zh:
-      "每周两篇，写于一座小港。每一篇是一张地图——再加上头版不会顺带给你的三件事：制图时做了哪些选择、地图底下用的是什么数据、以及一段可以直接放进论文或课堂的引用。"
-      + "港的名字借自地理学家从 1904 年守护至今的同名田野站——这里做的也是田野的事。",
+      "「周五港」的名字承袭两层。一：华盛顿大学坐落于圣胡安岛上的同名海洋田野站。二，也更要紧：1993 年在那里召开的"
+      + "「周五港会议」——GIS 科学家与批判社会理论学者第一次正式坐到同一张桌前的对话，自此开启了地理信息科学的"
+      + "「社会转向」。"
+      + "这份札记，是那场对话的延续。每周两篇。每一篇是一张地图——再加上头版不会顺带给你的三件事：制图时做了哪些选择、地图底下用的是什么数据、以及一段可以直接放进论文或课堂的引用。",
   },
   notebook:    { en: "The notebook",        zh: "札记" },
   provenance:  { en: "The provenance",      zh: "出处" },
