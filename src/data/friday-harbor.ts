@@ -55,6 +55,33 @@ export type Entry = {
 
 export const entries: Entry[] = [
   {
+    slug: "2026-04-27-1-23-million-eviction-filings",
+    date: "2026-04-27",
+    title: {
+      en: "1.23 Million Eviction Filings",
+      zh: "123 万次驱逐",
+    },
+    subtitle: {
+      en: "Last year's eviction filings, mapped by the city. The geography is not the geography of housing-market pressure — it is the geography of law.",
+      zh: "去年全美的驱逐起诉，按城市标在地图上。这片分布不是租房市场压力的地理，而是法律的地理。",
+    },
+    place: {
+      en: "United States · 41 cities tracked by the Eviction Lab",
+      zh: "美国 · Eviction Lab 跟踪的 41 个城市",
+    },
+    techniques: ["cartogram", "field-note"],
+    kind: "cartographer-led",
+    author: "Bo Zhao",
+    thumb: {
+      bbox: { west: -125, east: -66, south: 24, north: 50 },
+      pins: [
+        { lon: -84.39, lat: 33.75 },   // Atlanta
+        { lon: -86.16, lat: 39.77 },   // Indianapolis
+        { lon: -77.43, lat: 37.54 },   // Richmond
+      ],
+    },
+  },
+  {
     slug: "2026-04-26-where-the-cloud-touches-ground",
     date: "2026-04-26",
     title: {

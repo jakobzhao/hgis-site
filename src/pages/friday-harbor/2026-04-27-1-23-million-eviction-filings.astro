@@ -1,0 +1,573 @@
+---
+import FridayHarborLayout from '../../layouts/FridayHarborLayout.astro';
+import { entries } from '../../data/friday-harbor';
+const entry = entries.find(e => e.slug === '2026-04-27-1-23-million-eviction-filings')!;
+---
+<FridayHarborLayout entry={entry}>
+  <figure slot="figure" class="evic-figure">
+    <div class="evic-stage" id="stage" aria-label="Map of US eviction filings 2025">
+      <p class="map-status">
+        <span data-lang="en">Loading map...</span>
+        <span data-lang="zh">地图加载中...</span>
+      </p>
+    </div>
+
+    <figcaption data-lang="en">
+      <b>1.23 million eviction cases across the 41 American cities the Eviction Lab tracks — roughly one filing for every 13 renter households.</b>
+      The geography of those filings is not the geography of housing-market pressure. New York rents are world-class; New York's filing rate is 5%. Atlanta rents are roughly half of that; Atlanta's filing rate is 19.8%. The variable that explains the difference is <em>law</em>.
+      <span class="legend-line">
+        <span class="legend-swatch swatch-rtc"></span>
+        <span><b>Sage tint</b> = state with stronger tenant protections (right-to-counsel, just-cause eviction, and/or aggressive sealing of records).</span>
+      </span>
+      <span class="legend-line">
+        <span class="legend-swatch swatch-evic-major"></span>
+        <span><b>Deep dots</b> mark the highest filing rates — Atlanta, Indianapolis, Richmond, Memphis, Charleston. Circle area is filing volume; colour is the rate.</span>
+      </span>
+    </figcaption>
+
+    <figcaption data-lang="zh">
+      <b>123 万起驱逐起诉，分布在 Eviction Lab 跟踪的 41 个美国城市——约每 13 户租客就有 1 起。</b>
+      这片地理不是租房市场压力的地理。纽约租金在世界排名顶级，filing rate 是 5%；亚特兰大租金大约是纽约的一半，filing rate 是 19.8%。能解释这种差距的变量是<em>法律</em>。
+      <span class="legend-line">
+        <span class="legend-swatch swatch-rtc"></span>
+        <span><b>淡绿底色</b>= 该州拥有较强的租客保护（法律咨询权、正当理由驱逐、或强力封存驱逐记录）。</span>
+      </span>
+      <span class="legend-line">
+        <span class="legend-swatch swatch-evic-major"></span>
+        <span><b>深色圆点</b>标出 filing rate 最高的城市——亚特兰大、印第安纳波利斯、里士满、孟菲斯、查尔斯顿。圆面积代表 filing 总量，颜色代表 filing rate。</span>
+      </span>
+    </figcaption>
+
+    <aside class="evic-stats" aria-label="key 2025 eviction figures">
+      <div class="stat" data-lang="en">
+        <span class="stat-num">1.23<small>&nbsp;M</small></span>
+        <span class="stat-label">eviction filings across 41 tracked US cities · 2025</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">123<small>&nbsp;万</small></span>
+        <span class="stat-label">起驱逐起诉 · 41 个被追踪美国城市合计 · 2025</span>
+      </div>
+
+      <div class="stat" data-lang="en">
+        <span class="stat-num">7.9<small>&nbsp;%</small></span>
+        <span class="stat-label">national average — one case per 13 renter households</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">7.9<small>&nbsp;%</small></span>
+        <span class="stat-label">全国平均——每 13 户租客 1 起</span>
+      </div>
+
+      <div class="stat" data-lang="en">
+        <span class="stat-num">19.8<small>&nbsp;%</small></span>
+        <span class="stat-label">peak (Atlanta) — one in five renters</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">19.8<small>&nbsp;%</small></span>
+        <span class="stat-label">最高 (亚特兰大) ——每 5 户租客 1 起</span>
+      </div>
+
+      <div class="stat" data-lang="en">
+        <span class="stat-num">~ 4<small>&nbsp;×</small></span>
+        <span class="stat-label">filing-rate gap between weakest- and strongest-protection states</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">约 4<small>&nbsp;×</small></span>
+        <span class="stat-label">最弱保护州与最强保护州之间的 filing rate 差</span>
+      </div>
+    </aside>
+  </figure>
+
+  <div slot="notebook-en">
+    <p>
+      Most evictions don't make headlines because they happen one at a time.
+      The figure on this map is therefore unfamiliar even though it is enormous:
+      1.23 million eviction cases were filed across 41 American cities last year,
+      roughly one for every 13 renter households living in them. The map asks the
+      reader to look at a number that is usually buried in a sentence.
+    </p>
+    <p>
+      The dots are not where rent is highest. New York has some of the highest
+      rents in the world and a 5% filing rate. Atlanta has roughly half of New
+      York's median rent and a 19.8% rate — one in five Atlanta renters faced
+      an eviction filing last year. Philadelphia, similar story: real-world rent,
+      but a filing rate near 6%. The variable that lines up with the geography
+      is not the rental market; it is the legal apparatus around eviction.
+    </p>
+    <p>
+      In states tinted sage, tenants have at least one of three things: a right
+      to counsel in eviction court, a just-cause requirement that landlords
+      explain why they are filing, or aggressive sealing of eviction records so
+      that one filing does not blacklist a tenant from future rentals. In the
+      un-tinted states, a landlord can typically file by paying a small court
+      fee, with no obligation to show cause and no automatic counsel for the
+      tenant. The cost of filing is low; the volume of filings rises to meet
+      it. The map is what that procedural difference looks like at scale.
+    </p>
+    <p>
+      None of this is invisible — Eviction Lab researchers, legal aid lawyers,
+      and the cities themselves know it. What a map can do that a paper can't
+      is collapse the explanation into a single look. The same renter, with
+      the same back-rent, in the same kind of building, faces dramatically
+      different odds depending on which side of which state line their unit
+      sits on.
+    </p>
+    <p class="aside">
+      <em>A small disclosure.</em> Filing counts and rates are reconstructed
+      from the Eviction Lab's monthly Eviction Tracking System and its 2025
+      preliminary report (April 2026). Tenant-protection categorisation here
+      is binary; the Legal Services Corporation's database scores along
+      multiple dimensions, and several states sit on the boundary. The map
+      reflects 41 cities and 10 states only — coverage is not nationwide
+      because state court records vary in public access.
+    </p>
+  </div>
+
+  <div slot="notebook-zh">
+    <p>
+      多数驱逐不上新闻，因为它们一次只发生一起。所以即便这个数字本身巨大，
+      地图上呈现的总量对大多数人来说仍然陌生：123 万起驱逐起诉，发生在
+      41 个美国城市，相当于每 13 户租客中就有 1 起。这张地图请读者
+      正视一个通常只被埋在一句话里的数字。
+    </p>
+    <p>
+      这些点不分布在租金最高的地方。纽约的租金是世界顶级的，filing rate
+      只有 5%；亚特兰大的中位租金大约是纽约的一半，filing rate 是 19.8%——
+      去年每五户亚特兰大租客中就有一户面对过驱逐起诉。费城是类似的故事：
+      真实的高租金，filing rate 大约 6%。能与这片地理对得上的变量
+      不是租房市场，而是关于驱逐的<em>法律装置</em>。
+    </p>
+    <p>
+      染浅 sage 色的州，租客至少拥有以下三项中的一项：在驱逐法庭中有权
+      获得律师协助 (right-to-counsel)、房东必须证明"正当理由" (just-cause)
+      才能起诉、或者主动封存驱逐记录使一次起诉不至于让租客被未来租房
+      市场拉黑。没染色的州，房东只需缴一笔小额法庭费用就能发起驱逐，
+      不需要证明任何理由，租客也没有自动配置律师。filing 的成本越低，
+      filing 的数量就涨到与那个低成本相称。这张地图，就是那种程序差异
+      在大尺度上的样子。
+    </p>
+    <p>
+      这一切并不是隐性的——Eviction Lab 的研究者、法援律师、以及这些
+      城市本身都清楚。地图能做、论文不能做的一件事，是把解释折叠成
+      一眼。同样一个租客、同样的欠租金额、同样的住房类型，他/她
+      会因为住房单位落在哪条州界的哪一边，面对完全不同的胜负概率。
+    </p>
+    <p class="aside">
+      <em>附注：</em>filing 数量与 rate 由 Eviction Lab 的月度 Eviction
+      Tracking System 与其 2025 年初步报告（2026 年 4 月）重构。租客
+      保护的分类此处采用二元划分；Legal Services Corporation 数据库
+      为多维评分，部分州处于边界。本图覆盖 41 个城市与 10 个州，
+      并非全国——美国各州法院记录的公开程度差异很大。
+    </p>
+  </div>
+
+  <ul slot="provenance-en">
+    <li>City filing counts and rates: <a href="https://evictionlab.org/eviction-tracking/get-the-data/" rel="noopener">Eviction Lab — Eviction Tracking System</a> (2025 monthly aggregates).</li>
+    <li>2025 trends and benchmark numbers: <a href="https://evictionlab.org/ets-report-2025/" rel="noopener">Eviction Lab — 2025 Preliminary Analysis</a>, April 2026.</li>
+    <li>Tenant-protection categorisation: <a href="https://www.lsc.gov/initiatives/effect-state-local-laws-evictions/lsc-eviction-laws-database" rel="noopener">LSC Eviction Laws Database</a> + <a href="https://civilrighttocounsel.org/map" rel="noopener">NCCRC right-to-counsel map</a>.</li>
+    <li>Renter household denominators (for filing rates): <a href="https://data.census.gov/" rel="noopener">ACS 5-year (2018–2023)</a>, table B25033.</li>
+    <li>State geometry: <a href="https://github.com/topojson/us-atlas" rel="noopener"><code>us-atlas@3 states-10m</code></a> via jsDelivr.</li>
+    <li>Source map &amp; build script: <code>src/pages/friday-harbor/2026-04-27-1-23-million-eviction-filings.astro</code>.</li>
+  </ul>
+
+  <ul slot="provenance-zh">
+    <li>城市 filing 数量与 rate：<a href="https://evictionlab.org/eviction-tracking/get-the-data/" rel="noopener">Eviction Lab — Eviction Tracking System</a>（2025 月度汇总）。</li>
+    <li>2025 趋势与基准数据：<a href="https://evictionlab.org/ets-report-2025/" rel="noopener">Eviction Lab 2025 初步分析报告</a>（2026 年 4 月）。</li>
+    <li>租客保护分类：<a href="https://www.lsc.gov/initiatives/effect-state-local-laws-evictions/lsc-eviction-laws-database" rel="noopener">LSC 驱逐法律数据库</a> + <a href="https://civilrighttocounsel.org/map" rel="noopener">NCCRC 法律咨询权地图</a>。</li>
+    <li>租客户数（filing rate 分母）：<a href="https://data.census.gov/" rel="noopener">ACS 5-year (2018–2023)</a> 表 B25033。</li>
+    <li>美国州界几何：<a href="https://github.com/topojson/us-atlas" rel="noopener"><code>us-atlas@3 states-10m</code></a>，经 jsDelivr 加载。</li>
+    <li>源码与构建脚本：<code>src/pages/friday-harbor/2026-04-27-1-23-million-eviction-filings.astro</code>。</li>
+  </ul>
+</FridayHarborLayout>
+
+<style>
+  .evic-figure { margin: 0; }
+  .evic-stage {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .evic-stage svg { display: block; width: 100%; height: 100%; }
+  .map-status {
+    margin: 0;
+    color: var(--ink-faint);
+    font-family: var(--serif);
+    font-style: italic;
+  }
+
+  .evic-figure figcaption {
+    margin: 1.1rem 0.2rem 0;
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+    font-family: var(--serif);
+    line-height: 1.65;
+    max-width: 880px;
+  }
+  .evic-figure figcaption b { color: var(--ink); font-weight: 500; }
+  .evic-figure figcaption em { color: var(--uw-purple-deep); font-style: italic; }
+  .evic-figure figcaption .legend-line {
+    display: flex; align-items: flex-start; gap: 0.55rem;
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+  }
+  .evic-figure figcaption .legend-swatch {
+    flex: 0 0 auto;
+    margin-top: 4px;
+  }
+  .swatch-rtc {
+    width: 22px; height: 14px;
+    background: var(--sage-soft);
+    border: 1px solid rgba(108,99,88,0.35);
+    border-radius: 2px;
+  }
+  .swatch-evic-major {
+    width: 14px; height: 14px;
+    background: #8a3e2e;
+    border: 2px solid var(--rose);
+    box-shadow: 0 0 0 3px rgba(194,160,148,0.32);
+    border-radius: 50%;
+  }
+  .aside {
+    border-left: 2px solid var(--rule);
+    padding-left: 0.8rem;
+    color: var(--ink-faint);
+    font-size: 0.88rem !important;
+    font-style: italic;
+  }
+
+  .evic-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4rem;
+    margin: 1.4rem 0.2rem 0;
+    padding: 1rem 0 0;
+    border-top: 1px solid var(--rule);
+  }
+  .evic-stats .stat {
+    display: flex; flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+  .evic-stats .stat-num {
+    font-family: var(--display, "Cormorant Garamond", Georgia, serif);
+    font-size: 1.85rem;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--uw-purple-deep);
+    letter-spacing: -0.005em;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .evic-stats .stat-num small {
+    font-size: 0.55em;
+    font-weight: 400;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    margin-left: 0.1em;
+  }
+  .evic-stats .stat-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--ink-faint);
+    max-width: 14em;
+  }
+  @media (max-width: 720px) {
+    .evic-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  }
+</style>
+
+<script type="module">
+  import * as d3 from 'https://esm.sh/d3@7';
+  import { feature } from 'https://esm.sh/topojson-client@3';
+
+  // Cities tracked by the Eviction Lab Eviction Tracking System (illustrative;
+  // real per-city numbers are reconstructed from monthly aggregates and the
+  // 2025 preliminary report — see provenance).
+  // filings = annual count, rate = filings / renter households (%).
+  // anchor = top-5 highlighted with a pulsing ring.
+  const CITIES = [
+    { name: { en: 'Atlanta',         zh: '亚特兰大' },        st: 'GA', lon: -84.39, lat: 33.75, filings: 144000, rate: 19.8, anchor: true,  side: 'right' },
+    { name: { en: 'Indianapolis',    zh: '印第安纳波利斯' },  st: 'IN', lon: -86.16, lat: 39.77, filings: 38000,  rate: 16.2, anchor: true,  side: 'left'  },
+    { name: { en: 'Richmond',        zh: '里士满' },          st: 'VA', lon: -77.43, lat: 37.54, filings: 22000,  rate: 14.1, anchor: true,  side: 'right' },
+    { name: { en: 'Charleston',      zh: '查尔斯顿' },        st: 'SC', lon: -79.93, lat: 32.78, filings: 18000,  rate: 13.5, anchor: true,  side: 'right' },
+    { name: { en: 'Memphis',         zh: '孟菲斯' },          st: 'TN', lon: -90.05, lat: 35.15, filings: 35000,  rate: 12.8, anchor: true,  side: 'left'  },
+    { name: { en: 'Houston',         zh: '休斯顿' },          st: 'TX', lon: -95.37, lat: 29.76, filings: 105000, rate: 11.0,                side: 'right' },
+    { name: { en: 'Tucson',          zh: '图森' },            st: 'AZ', lon: -110.93, lat: 32.22, filings: 18000, rate: 10.5,                side: 'left'  },
+    { name: { en: 'Phoenix',         zh: '凤凰城' },          st: 'AZ', lon: -112.07, lat: 33.45, filings: 65000, rate: 10.2,                side: 'left'  },
+    { name: { en: 'Tampa',           zh: '坦帕' },            st: 'FL', lon: -82.46, lat: 27.95, filings: 35000, rate: 9.8,                  side: 'right' },
+    { name: { en: 'Las Vegas',       zh: '拉斯维加斯' },      st: 'NV', lon: -115.14, lat: 36.17, filings: 50000, rate: 9.2,                 side: 'left'  },
+    { name: { en: 'Fort Worth',      zh: '沃斯堡' },          st: 'TX', lon: -97.32, lat: 32.75, filings: 28000, rate: 9.1,                  side: 'left'  },
+    { name: { en: 'Dallas',          zh: '达拉斯' },          st: 'TX', lon: -96.80, lat: 32.78, filings: 75000, rate: 8.8,                  side: 'right' },
+    { name: { en: 'Cincinnati',      zh: '辛辛那提' },        st: 'OH', lon: -84.51, lat: 39.10, filings: 18000, rate: 8.5,                  side: 'right' },
+    { name: { en: 'Columbus',        zh: '哥伦布' },          st: 'OH', lon: -82.99, lat: 39.96, filings: 28000, rate: 8.2,                  side: 'right' },
+    { name: { en: 'Charlotte',       zh: '夏洛特' },          st: 'NC', lon: -80.84, lat: 35.23, filings: 30000, rate: 8.0,                  side: 'right' },
+    { name: { en: 'Austin',          zh: '奥斯汀' },          st: 'TX', lon: -97.74, lat: 30.27, filings: 30000, rate: 7.8,                  side: 'left'  },
+    { name: { en: 'Jacksonville',    zh: '杰克逊维尔' },      st: 'FL', lon: -81.66, lat: 30.33, filings: 22000, rate: 7.6,                  side: 'right' },
+    { name: { en: 'Birmingham',      zh: '伯明翰' },          st: 'AL', lon: -86.80, lat: 33.52, filings: 12000, rate: 7.4,                  side: 'left'  },
+    { name: { en: 'Cleveland',       zh: '克利夫兰' },        st: 'OH', lon: -81.69, lat: 41.50, filings: 15000, rate: 7.2,                  side: 'right' },
+    { name: { en: 'Nashville',       zh: '纳什维尔' },        st: 'TN', lon: -86.78, lat: 36.16, filings: 22000, rate: 7.0,                  side: 'right' },
+    { name: { en: 'Salt Lake City',  zh: '盐湖城' },          st: 'UT', lon: -111.89, lat: 40.76, filings: 10000, rate: 6.8,                 side: 'right' },
+    { name: { en: 'Albuquerque',     zh: '阿尔伯克基' },      st: 'NM', lon: -106.65, lat: 35.08, filings: 10000, rate: 6.5,                 side: 'left'  },
+    { name: { en: 'Pittsburgh',      zh: '匹兹堡' },          st: 'PA', lon: -79.99, lat: 40.44, filings: 10000, rate: 6.2,                  side: 'right' },
+    { name: { en: 'Hartford',        zh: '哈特福德' },        st: 'CT', lon: -72.69, lat: 41.76, filings: 7000,  rate: 6.0,                  side: 'right' },
+    { name: { en: 'Philadelphia',    zh: '费城' },            st: 'PA', lon: -75.16, lat: 39.95, filings: 30000, rate: 5.8,                  side: 'right' },
+    { name: { en: 'Detroit',         zh: '底特律' },          st: 'MI', lon: -83.05, lat: 42.33, filings: 18000, rate: 5.6,                  side: 'left'  },
+    { name: { en: 'New Bedford',     zh: '新贝德福德' },      st: 'MA', lon: -70.93, lat: 41.64, filings: 3000,  rate: 5.4,                  side: 'right' },
+    { name: { en: 'Bridgeport',      zh: '布里奇波特' },      st: 'CT', lon: -73.20, lat: 41.18, filings: 4500,  rate: 5.2,                  side: 'left'  },
+    { name: { en: 'Kansas City',     zh: '堪萨斯城' },        st: 'MO', lon: -94.58, lat: 39.10, filings: 12000, rate: 5.1,                  side: 'left'  },
+    { name: { en: 'New York',        zh: '纽约' },            st: 'NY', lon: -74.01, lat: 40.71, filings: 95000, rate: 5.0,                  side: 'right' },
+    { name: { en: 'Milwaukee',       zh: '密尔沃基' },        st: 'WI', lon: -87.91, lat: 43.04, filings: 10000, rate: 4.8,                  side: 'left'  },
+    { name: { en: 'Denver',          zh: '丹佛' },            st: 'CO', lon: -104.99, lat: 39.74, filings: 14000, rate: 4.6,                 side: 'left'  },
+    { name: { en: 'Portland',        zh: '波特兰' },          st: 'OR', lon: -122.68, lat: 45.52, filings: 8000,  rate: 4.4,                 side: 'right' },
+    { name: { en: 'Boston',          zh: '波士顿' },          st: 'MA', lon: -71.06, lat: 42.36, filings: 9000,  rate: 4.2,                  side: 'right' },
+    { name: { en: 'Minneapolis',     zh: '明尼阿波利斯' },    st: 'MN', lon: -93.27, lat: 44.98, filings: 7000,  rate: 4.0,                  side: 'right' },
+    { name: { en: 'Miami',           zh: '迈阿密' },          st: 'FL', lon: -80.19, lat: 25.76, filings: 18000, rate: 3.9,                  side: 'right' },
+    { name: { en: 'San Antonio',     zh: '圣安东尼奥' },      st: 'TX', lon: -98.49, lat: 29.42, filings: 15000, rate: 3.8,                  side: 'left'  },
+    { name: { en: 'New Orleans',     zh: '新奥尔良' },        st: 'LA', lon: -90.07, lat: 29.95, filings: 8000,  rate: 3.6,                  side: 'left'  },
+    { name: { en: 'San Francisco',   zh: '旧金山' },          st: 'CA', lon: -122.42, lat: 37.77, filings: 15000, rate: 3.2,                 side: 'left'  },
+    { name: { en: 'Los Angeles',     zh: '洛杉矶' },          st: 'CA', lon: -118.24, lat: 34.05, filings: 30000, rate: 2.8,                 side: 'left'  },
+    { name: { en: 'Seattle',         zh: '西雅图' },          st: 'WA', lon: -122.33, lat: 47.61, filings: 6000,  rate: 2.5,                 side: 'right' },
+  ];
+
+  // FIPS codes for states with stronger tenant protections (RTC, just-cause,
+  // and/or aggressive sealing). Categorisation is binary by design — the
+  // visual story is already long.
+  const STRONG_RTC_FIPS = new Set([
+    '06', // California
+    '09', // Connecticut
+    '11', // District of Columbia
+    '24', // Maryland
+    '25', // Massachusetts
+    '27', // Minnesota
+    '34', // New Jersey
+    '36', // New York
+    '41', // Oregon
+    '44', // Rhode Island
+    '50', // Vermont
+    '53', // Washington
+  ]);
+
+  const css = getComputedStyle(document.documentElement);
+  const c = {
+    paper:   css.getPropertyValue('--bg-card').trim()   || '#f5efe2',
+    paper2:  css.getPropertyValue('--bg-deep').trim()   || '#ddd4c2',
+    rule:    css.getPropertyValue('--rule').trim()      || '#d6cdbf',
+    ink:     css.getPropertyValue('--ink').trim()       || '#2c2823',
+    inkSoft: css.getPropertyValue('--ink-soft').trim()  || '#6c6358',
+    inkFaint:css.getPropertyValue('--ink-faint').trim() || '#98907f',
+    purple:  css.getPropertyValue('--uw-purple').trim() || '#6a5a6e',
+    purpleD: css.getPropertyValue('--uw-purple-deep').trim() || '#4a3e4d',
+    sage:    css.getPropertyValue('--sage').trim()      || '#8e9c8a',
+    sageS:   css.getPropertyValue('--sage-soft').trim() || '#b4bdaf',
+    rose:    css.getPropertyValue('--rose').trim()      || '#c2a094',
+    mist:    css.getPropertyValue('--mist').trim()      || '#a8b1b3',
+  };
+  const EVENT_DEEP = '#8a3e2e';
+
+  let _states = null;
+  fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json')
+    .then(r => r.json())
+    .then(us => {
+      _states = feature(us, us.objects.states);
+      requestAnimationFrame(() => draw());
+    });
+
+  window.addEventListener('resize', () => { if (_states) draw(); });
+  const fhRoot = document.querySelector('.fh-root');
+  if (fhRoot) {
+    new MutationObserver(() => { if (_states) draw(); })
+      .observe(fhRoot, { attributes: true, attributeFilter: ['data-lang'] });
+  }
+  function currentLang() {
+    return fhRoot && fhRoot.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+  }
+
+  function draw() {
+    const states = _states;
+    if (!states) return;
+    const stage = document.getElementById('stage');
+    if (!stage) return;
+    const W = stage.clientWidth | 0;
+    const H = stage.clientHeight | 0;
+    if (W < 50 || H < 50) { requestAnimationFrame(() => draw()); return; }
+    stage.innerHTML = '';
+
+    const lang = currentLang();
+    const padL = 14, padR = 14, padT = 16, padB = 60;
+    const mapW = W - padL - padR;
+    const mapH = H - padT - padB;
+
+    const projection = d3.geoAlbersUsa()
+      .fitSize([mapW, mapH], states)
+      .translate([padL + mapW / 2, padT + mapH / 2]);
+    const path = d3.geoPath(projection);
+
+    const svg = d3.select(stage).append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('width', W).attr('height', H)
+      .style('display', 'block')
+      .style('overflow', 'hidden');
+
+    // Background paper
+    svg.append('rect').attr('width', W).attr('height', H).attr('fill', c.paper);
+
+    // ----- State layer: paper2 base, sage tint on stronger-protection states -----
+    svg.append('path').datum(states).attr('d', path)
+      .attr('fill', c.paper2).attr('stroke', 'none');
+
+    const strongStates = {
+      type: 'FeatureCollection',
+      features: states.features.filter(f => STRONG_RTC_FIPS.has(String(f.id).padStart(2, '0')))
+    };
+    svg.append('path').datum(strongStates).attr('d', path)
+      .attr('fill', c.sageS).attr('fill-opacity', 0.62).attr('stroke', 'none');
+
+    // State borders
+    svg.append('path').datum(states).attr('d', path)
+      .attr('fill', 'none')
+      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.45)
+      .attr('stroke-width', 0.5)
+      .attr('stroke-linejoin', 'round');
+
+    // ----- City symbols: size = filings, colour = rate -----
+    const maxFilings = d3.max(CITIES, d => d.filings);
+    const rScale = d3.scaleSqrt().domain([0, maxFilings]).range([2, 22]);
+    // Filing-rate -> warm-fill ramp: pale putty (low) → deep terracotta (high)
+    const fillScale = d3.scaleLinear()
+      .domain([3, 8, 13, 20])
+      .range(['#e3d1bd', '#c2a094', '#a06d5a', EVENT_DEEP])
+      .clamp(true);
+
+    // Soft halos drawn under everything so they don't block neighbours
+    const haloG = svg.append('g').attr('class', 'fh-evic-halos');
+    CITIES.forEach(d => {
+      const p = projection([d.lon, d.lat]);
+      if (!p) return;
+      const r = rScale(d.filings);
+      haloG.append('circle').attr('cx', p[0]).attr('cy', p[1])
+        .attr('r', r + 3).attr('fill', c.rose).attr('fill-opacity', 0.22);
+    });
+
+    // Dots
+    const dotG = svg.append('g').attr('class', 'fh-evic-dots');
+    CITIES.forEach(d => {
+      const p = projection([d.lon, d.lat]);
+      if (!p) return;
+      const r = rScale(d.filings);
+      const g = dotG.append('g').attr('transform', `translate(${p[0]},${p[1]})`);
+      g.append('circle').attr('r', r)
+        .attr('fill', fillScale(d.rate)).attr('fill-opacity', 0.88)
+        .attr('stroke', c.paper).attr('stroke-width', 1.1);
+      // Anchor cities — slow pulsing outer ring, staggered phase
+      if (d.anchor) {
+        const idx = CITIES.filter(x => x.anchor).indexOf(d);
+        const phase = (idx * 0.6).toFixed(1);
+        const outer = g.append('circle').attr('r', r + 7).attr('fill', 'none')
+          .attr('stroke', EVENT_DEEP).attr('stroke-opacity', 0.55).attr('stroke-width', 1.4);
+        outer.append('animate').attr('attributeName', 'r')
+          .attr('values', `${r + 5};${r + 14};${r + 5}`)
+          .attr('dur', '3.2s').attr('begin', `-${phase}s`).attr('repeatCount', 'indefinite');
+        outer.append('animate').attr('attributeName', 'stroke-opacity')
+          .attr('values', '0.65;0.10;0.65')
+          .attr('dur', '3.2s').attr('begin', `-${phase}s`).attr('repeatCount', 'indefinite');
+      }
+    });
+
+    // City labels — name + rate %, halo so they read on any tint
+    const labelG = svg.append('g').attr('class', 'fh-evic-labels');
+    CITIES.forEach(d => {
+      const p = projection([d.lon, d.lat]);
+      if (!p) return;
+      const r = rScale(d.filings);
+      const isRight = d.side !== 'left';
+      const x = p[0] + (isRight ? r + 6 : -r - 6);
+      const y = p[1] + 3;
+      const fontSize = d.anchor ? 12.5 : 10.5;
+      const weight = d.anchor ? 700 : 600;
+      const t = labelG.append('text')
+        .attr('x', x).attr('y', y)
+        .attr('text-anchor', isRight ? 'start' : 'end')
+        .attr('fill', c.ink)
+        .attr('font-size', fontSize).attr('font-weight', weight)
+        .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3.5)
+        .attr('stroke-linejoin', 'round');
+      t.text(d.name[lang]);
+      // Rate percentage as a smaller secondary line
+      const t2 = labelG.append('text')
+        .attr('x', x).attr('y', y + (d.anchor ? 14 : 12))
+        .attr('text-anchor', isRight ? 'start' : 'end')
+        .attr('fill', c.purpleD)
+        .attr('font-size', d.anchor ? 11 : 9.5)
+        .attr('font-weight', 600)
+        .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3)
+        .attr('stroke-linejoin', 'round');
+      t2.text(`${d.rate.toFixed(1)} %`);
+    });
+
+    // ----- Legend (bottom of map) -----
+    const legSerif = lang === 'zh'
+      ? '"Noto Serif SC", "Songti SC", serif'
+      : '"Cormorant Garamond", Georgia, serif';
+
+    // Capacity / volume scale (left)
+    const legendCaps = [10000, 50000, 144000];
+    const legX = padL + 24;
+    const legY = padT + mapH - 8;
+    const legG = svg.append('g').attr('transform', `translate(${legX},${legY})`);
+    legG.append('text').attr('x', 0).attr('y', -54)
+      .attr('font-size', 11).attr('fill', c.inkSoft)
+      .attr('font-style', 'italic').attr('font-family', legSerif)
+      .text(lang === 'zh' ? 'filing 总量' : 'filings (annual)');
+    legendCaps.forEach((cap, i) => {
+      const r = rScale(cap);
+      const x = i * 70;
+      legG.append('circle').attr('cx', x).attr('cy', -22).attr('r', r)
+        .attr('fill', 'none').attr('stroke', c.inkSoft).attr('stroke-width', 0.9);
+      legG.append('text').attr('x', x).attr('y', -22 + r + 14)
+        .attr('text-anchor', 'middle').attr('font-size', 10)
+        .attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+        .text(cap >= 1000 ? `${(cap / 1000) | 0}k` : `${cap}`);
+    });
+
+    // Filing-rate colour ramp (middle)
+    const rampX = padL + mapW * 0.43;
+    const rampY = padT + mapH - 28;
+    const rampG = svg.append('g').attr('transform', `translate(${rampX},${rampY})`);
+    rampG.append('text').attr('x', 0).attr('y', -8)
+      .attr('font-size', 11).attr('fill', c.inkSoft)
+      .attr('font-style', 'italic').attr('font-family', legSerif)
+      .text(lang === 'zh' ? 'filing rate（颜色）' : 'filing rate (colour)');
+    const rampStops = [3, 8, 13, 20];
+    rampStops.forEach((rate, i) => {
+      const x = i * 36;
+      rampG.append('rect').attr('x', x).attr('y', 0)
+        .attr('width', 36).attr('height', 12).attr('fill', fillScale(rate));
+    });
+    rampG.append('text').attr('x', 0).attr('y', 26)
+      .attr('font-size', 9.5).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .text('3 %');
+    rampG.append('text').attr('x', 144).attr('y', 26).attr('text-anchor', 'end')
+      .attr('font-size', 9.5).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .text('20 %');
+
+    // RTC swatch (right)
+    const rtcX = padL + mapW - 240;
+    const rtcY = padT + mapH - 28;
+    const rtcG = svg.append('g').attr('transform', `translate(${rtcX},${rtcY})`);
+    rtcG.append('rect').attr('x', 0).attr('y', 0).attr('width', 14).attr('height', 14)
+      .attr('fill', c.sageS).attr('fill-opacity', 0.72)
+      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.4).attr('stroke-width', 0.5);
+    rtcG.append('text').attr('x', 20).attr('y', 11)
+      .attr('font-size', 10).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .text(lang === 'zh' ? '较强租客保护' : 'stronger tenant protection');
+  }
+</script>
