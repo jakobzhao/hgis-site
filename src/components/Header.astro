@@ -47,8 +47,9 @@ const fhIssue = String(fhEntries.length).padStart(3, '0');
                   aria-label={`${item.label} — issue ${fhIssue}`}
                 >
                   <span class="nav-marker" aria-hidden="true"></span>
-                  <em class="nav-featured-text">{item.label}</em>
-                  <span class="nav-issue">№&nbsp;{fhIssue}</span>
+                  <em class="nav-featured-text">
+                    {item.label}<sup class="nav-issue">{fhIssue}</sup>
+                  </em>
                 </a>
               </li>
             );
@@ -241,7 +242,7 @@ const fhIssue = String(fhEntries.length).padStart(3, '0');
   }
   .nav-link {
     color: var(--ink);
-    padding: 0.4rem 0.85rem;
+    padding: 0.4rem 0.6rem;
     border-radius: 1px;
     font-size: 0.88rem;
     font-weight: 500;
@@ -257,19 +258,19 @@ const fhIssue = String(fhEntries.length).padStart(3, '0');
     border-bottom-color: var(--uw-gold);
   }
 
-  /* The Friday Harbor item is the running editorial column —
-     marked, italic-serifed, and labelled with its live issue number so
-     the masthead reads more like a magazine flag than a flat menu. */
+  /* Friday Harbor — the running editorial column. Marked + italic
+     serif + tiny superscript edition number, so the line reads like
+     a magazine flag without breaking the menu onto two rows. */
   .nav-featured {
     display: inline-flex;
     align-items: baseline;
-    gap: 0.4rem;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
+    gap: 0.32rem;
+    padding-left: 0.45rem;
+    padding-right: 0.45rem;
   }
   .nav-marker {
     display: inline-block;
-    width: 6px; height: 6px;
+    width: 5px; height: 5px;
     background: var(--uw-gold);
     align-self: center;
     flex: 0 0 auto;
@@ -286,17 +287,21 @@ const fhIssue = String(fhEntries.length).padStart(3, '0');
   }
   .nav-issue {
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-style: italic;
-    font-size: 0.74rem;
-    color: var(--ink-faint);
-    font-weight: 400;
-    letter-spacing: 0.06em;
-    white-space: nowrap;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.55em;
+    vertical-align: super;
+    line-height: 0;
+    margin-left: 0.18em;
+    color: var(--uw-gold);
+    letter-spacing: 0.04em;
   }
   .nav-featured:hover .nav-featured-text { color: var(--uw-purple); }
   .nav-featured:hover .nav-marker        { background: var(--uw-purple); }
+  .nav-featured:hover .nav-issue         { color: var(--uw-purple); }
   .nav-featured.active .nav-featured-text { color: var(--uw-purple); }
   .nav-featured.active .nav-marker        { background: var(--uw-purple); }
+  .nav-featured.active .nav-issue         { color: var(--uw-purple); }
 
   @media (max-width: 720px) {
     .header-inner { flex-direction: column; gap: 0.85rem; padding: 0.9rem 1.25rem; }
