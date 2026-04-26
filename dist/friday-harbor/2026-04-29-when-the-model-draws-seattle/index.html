@@ -216,27 +216,11 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
 
   // Same neighborhoods to label across both panels (so the eye can
   // track a name from one map to the other).
-  // A handful of well-known neighborhoods labeled on both panels so the
-  // viewer's eye can find the same name in both maps. With 90 polygons,
-  // labeling every one would be unreadable.
-  const SHARED_LABELS = [
-    'Belltown', 'Pioneer Square', 'International District',
-    'Central Business District', 'First Hill', 'Broadway',
-    'South Lake Union', 'Pike-Market',
-    'Madison Park', 'Madrona', 'Leschi',
-    'Queen Anne', 'Magnolia', 'Interbay',
-    'Fremont', 'Wallingford', 'Ballard', 'Green Lake', 'Greenwood',
-    'University District', 'Ravenna', 'Roosevelt',
-    'Bitter Lake', 'Lake City',
-    'Columbia City', 'Mount Baker', 'Rainier Beach', 'Seward Park',
-    'Georgetown', 'South Park',
-    'Alki', 'Fauntleroy', 'High Point'
-  ];
 
   let _real = null, _claude = null;
   Promise.all([
-    fetch('/data/seattle-neighborhoods-real.geojson').then(r => r.json()),
-    fetch('/data/seattle-neighborhoods-claude-shaped.geojson').then(r => r.json()),
+    fetch('/data/seattle-tracts-real.geojson').then(r => r.json()),
+    fetch('/data/seattle-tracts-claude.geojson').then(r => r.json()),
   ]).then(([realGJ, claudeGJ]) => {
     _real = realGJ;
     _claude = claudeGJ;
@@ -368,38 +352,8 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
       .attr('stroke-width', 1.1)
       .attr('stroke-linejoin', 'round');
 
-    // Label only the shared set, at polygon centroid.
-    // For the "real" data we may have multiple sub-features per nhood —
-    // pick the largest by path area so the label sits in the body of the
-    // neighborhood, not in some nested sliver.
-    const byName = new Map();
-    data.features.forEach(f => {
-      const key = (f.properties.nhood || f.properties.name || '').trim();
-      if (!key) return;
-      const a = path.area(f);
-      if (!byName.has(key) || byName.get(key)._area < a) {
-        byName.set(key, Object.assign({ _area: a, _feat: f }, f.properties));
-      }
-    });
-
-    const labelG = svg.append('g').attr('class', 'nbhd-labels');
-    SHARED_LABELS.forEach(name => {
-      const rec = byName.get(name);
-      if (!rec) return;
-      const cen = path.centroid(rec._feat);
-      if (!cen || isNaN(cen[0])) return;
-      labelG.append('text')
-        .attr('x', cen[0]).attr('y', cen[1])
-        .attr('text-anchor', 'middle')
-        .attr('dominant-baseline', 'middle')
-        .attr('font-size', 9.5)
-        .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
-        .attr('font-weight', 500)
-        .attr('fill', c.ink)
-        .attr('paint-order', 'stroke')
-        .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3)
-        .attr('stroke-linejoin', 'round')
-        .text(name);
-    });
+    // No labels at the tract level — tract numbers aren't legible at this
+    // panel size and aren't meaningful as orientation cues. The patchwork
+    // is the message.
   }
 </script>
