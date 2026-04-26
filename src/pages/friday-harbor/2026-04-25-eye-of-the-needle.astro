@@ -5,20 +5,25 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
 ---
 <FridayHarborLayout entry={entry}>
   <figure slot="figure" class="hormuz-figure">
-    <div class="hormuz-stage" id="stage"></div>
+    <div class="hormuz-stage" id="stage" aria-label="Map of the Strait of Hormuz">
+      <p class="map-status">
+        <span data-lang="en">Loading map...</span>
+        <span data-lang="zh">地图加载中...</span>
+      </p>
+    </div>
     <figcaption data-lang="en">
       <b>How a 39-km strait edits the world's oil.</b>
       Iran on the north shore, Oman's Musandam exclave on the south.
       Every commercial tanker bound for the Indian Ocean threads the same dotted lane.
-      &nbsp;<b style="color:#a85a4a">①</b> M/V Ararat (24 Apr) &nbsp;
-      <b style="color:#a85a4a">②</b> M/V Heron Star (25 Apr) — both seized within visual range of the Iranian-held islands of Qeshm, Larak, and Hormuz.
+      &nbsp;<b class="event-mark">①</b> M/V Ararat (24 Apr) &nbsp;
+      <b class="event-mark">②</b> M/V Heron Star (25 Apr) — both seized within visual range of the Iranian-held islands of Qeshm, Larak, and Hormuz.
     </figcaption>
     <figcaption data-lang="zh">
       <b>一条 39 公里的海峡，如何改写世界石油的命运。</b>
       北岸是伊朗，南岸是阿曼飞地穆桑代姆半岛。
       所有驶向印度洋的商船都顺着同一条虚线航道穿出。
-      &nbsp;<b style="color:#a85a4a">①</b> 阿拉拉特号（4 月 24 日） &nbsp;
-      <b style="color:#a85a4a">②</b> 苍鹭星号（4 月 25 日）—— 两次扣船均发生在伊朗管辖的格什姆、拉腊克、霍尔木兹三岛视野之内。
+      &nbsp;<b class="event-mark">①</b> 阿拉拉特号（4 月 24 日） &nbsp;
+      <b class="event-mark">②</b> 苍鹭星号（4 月 25 日）—— 两次扣船均发生在伊朗管辖的格什姆、拉腊克、霍尔木兹三岛视野之内。
     </figcaption>
   </figure>
 
@@ -101,12 +106,20 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
   .hormuz-stage {
     width: 100%;
     aspect-ratio: 5 / 4;
-    background: var(--bg-card);
-    border: 1px solid var(--rule);
-    border-radius: 4px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
     overflow: hidden;
+    display: grid;
+    place-items: center;
   }
   .hormuz-stage svg { display: block; width: 100%; height: 100%; }
+  .map-status {
+    margin: 0;
+    color: var(--ink-faint);
+    font-family: var(--serif);
+    font-style: italic;
+  }
 
   .hormuz-figure figcaption {
     margin: 1.1rem 0.2rem 0;
@@ -117,6 +130,7 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
     max-width: 880px;
   }
   .hormuz-figure figcaption b { color: var(--ink); font-weight: 500; }
+  .hormuz-figure figcaption .event-mark { color: var(--rose); font-weight: 600; }
   .hormuz-figure figcaption em { color: var(--uw-purple-deep); font-style: italic; }
   .aside {
     border-left: 2px solid var(--rule);
@@ -129,15 +143,22 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
 
 <script type="module">
   import * as d3 from 'https://esm.sh/d3@7';
-  import { geoSatellite } from 'https://esm.sh/d3-geo-projection@4';
   import { feature } from 'https://esm.sh/topojson-client@3';
 
-  // Project the STRAIT itself at the visual centre, so both Iran's coast (north)
-  // and the Musandam peninsula + UAE east coast (south) read clearly.
+  // Keep the map flat and tight: the story is about measurable constraint, not
+  // scenic perspective.
   const STRAIT = [56.30, 26.55];
-  const VIEW   = [-56.30, -26.10, 0];       // rotation centre slightly south of strait
-  const TILT   = 26;
-  const DIST   = 1.018;                     // ~115 km altitude
+  const VIEW_WINDOW = {
+    west: 55.52,
+    east: 57.02,
+    south: 25.90,
+    north: 27.36
+  };
+  const STRAIT_CORRIDOR = [
+    [55.64, 26.50],
+    [56.18, 26.55],
+    [56.92, 26.53]
+  ];
 
   const SEIZURES = [
     { date: '2026-04-24', lon: 56.20, lat: 26.40, label: { en: 'M/V Ararat',     zh: '阿拉拉特号' } },
@@ -146,35 +167,21 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
 
   const CITIES = [
     { name: { en: 'Bandar Abbas',    zh: '阿巴斯港' }, lon: 56.27, lat: 27.18 },
-    { name: { en: 'Bandar Lengeh',   zh: '伦格港'   }, lon: 54.88, lat: 26.55 },
-    { name: { en: 'Sirik',           zh: '锡里克'   }, lon: 57.10, lat: 26.50 },
-    { name: { en: 'Khasab',          zh: '哈萨布'   }, lon: 56.25, lat: 26.21 },
-    { name: { en: 'Ras al-Khaimah',  zh: '哈伊马角' }, lon: 55.94, lat: 25.79 },
-    { name: { en: 'Fujairah',        zh: '富查伊拉' }, lon: 56.34, lat: 25.13 }
+    { name: { en: 'Qeshm',           zh: '格什姆'   }, lon: 56.27, lat: 26.95 },
+    { name: { en: 'Khasab',          zh: '哈萨布'   }, lon: 56.25, lat: 26.21 }
   ];
 
   // Strait islands — small italic labels
   const ISLANDS = [
-    { name: { en: 'Qeshm',  zh: '格什姆岛'   }, lon: 55.90, lat: 26.78 },
-    { name: { en: 'Larak',  zh: '拉腊克岛'   }, lon: 56.38, lat: 26.85 },
-    { name: { en: 'Hormuz', zh: '霍尔木兹岛' }, lon: 56.46, lat: 27.07 },
-    { name: { en: 'Abu Musa', zh: '阿布穆萨' }, lon: 55.03, lat: 25.87 }
+    { name: { en: 'Qeshm I.',   zh: '格什姆岛'   }, lon: 55.95, lat: 26.78 },
+    { name: { en: 'Larak I.',   zh: '拉腊克岛'   }, lon: 56.38, lat: 26.85 },
+    { name: { en: 'Hormuz I.',  zh: '霍尔木兹岛' }, lon: 56.47, lat: 27.07 }
   ];
 
-  // Oil & gas terminals — small rust squares
+  // Oil & gas terminals — small rose squares
   const TERMINALS = [
     { name: 'Bandar Abbas',  lon: 56.20, lat: 27.10 },   // Iran (mainland)
-    { name: 'Hengam',        lon: 55.85, lat: 26.65 },   // Iran offshore island
-    { name: 'Lavan',         lon: 53.30, lat: 26.80 },   // Iran (may be off-frame)
-    { name: 'Sirri',         lon: 54.55, lat: 25.90 },   // Iran offshore
-    { name: 'Khor Fakkan',   lon: 56.35, lat: 25.34 },   // UAE
-    { name: 'Fujairah',      lon: 56.34, lat: 25.13 }    // UAE
-  ];
-
-  const ISLANDS = [
-    { name: { en: 'Qeshm I.',   zh: '格什姆岛'   }, lon: 55.95, lat: 26.78 },
-    { name: { en: 'Hormuz I.',  zh: '霍尔木兹岛' }, lon: 56.47, lat: 27.07 },
-    { name: { en: 'Larak I.',   zh: '拉腊克岛'   }, lon: 56.38, lat: 26.85 }
+    { name: 'Hengam',        lon: 55.85, lat: 26.65 }    // Iran offshore island
   ];
 
   // (Annotation callouts removed — leader lines made the page noisy.
@@ -194,7 +201,6 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
     sageS:   css.getPropertyValue('--sage-soft').trim() || '#b4bdaf',
     rose:    css.getPropertyValue('--rose').trim()      || '#c2a094',
     mist:    css.getPropertyValue('--mist').trim()      || '#a8b1b3',
-    rust:    '#a85a4a'
   };
 
   let _land = null;
@@ -234,9 +240,6 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
     return fhRoot && fhRoot.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
   }
 
-  // Mercator forward: y = ln(tan(π/4 + φ/2)) where φ is in radians.
-  const yProj = (latDeg) => Math.log(Math.tan(Math.PI/4 + latDeg * Math.PI/360));
-
   function draw() {
     const land = _land;
     const borders = _borders;
@@ -256,90 +259,102 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
       .style('overflow', 'hidden');
     const lang = currentLang();
 
-    // No right gutter now — callout leader lines are gone, the map can use the
-    // whole figure width.
-    const padL = 12, padR = 12, padT = 14, padB = 36;
+    const padL = 2, padR = 2, padT = 2, padB = 28;
     const mapW = W - padL - padR;
     const mapH = H - padT - padB;
     if (mapW < 50 || mapH < 50) return;
 
-    // ----- Satellite (perspective) projection — gives the horizon feel -----
-    // The viewer sits south of the strait, looking north toward Iran.
-    // distance = eye distance from earth centre (in earth-radius units)
-    // tilt    = angle from vertical (degrees)
-    // scale   = pixels at the projection's reference distance
-    const projection = geoSatellite()
-      .distance(DIST)
-      .tilt(TILT)
-      .rotate(VIEW)
-      .precision(0.15);
-    // Strait at the visual centre. South coast of Musandam + UAE east coast in lower frame.
-    projection
-      .scale(mapW * 30)
-      .translate([padL + mapW / 2, padT + mapH / 2 + mapH * 0.10])
-      .clipAngle(12);
+    const mercatorY = lat => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+    const lonSpan = (VIEW_WINDOW.east - VIEW_WINDOW.west) * Math.PI / 180;
+    const ySpan = mercatorY(VIEW_WINDOW.north) - mercatorY(VIEW_WINDOW.south);
+    const scale = Math.min(mapW / lonSpan, mapH / ySpan) * 0.98;
+    const centerLon = (VIEW_WINDOW.west + VIEW_WINDOW.east) / 2;
+    const centerLat = (VIEW_WINDOW.south + VIEW_WINDOW.north) / 2;
+    const projection = d3.geoMercator()
+      .center([centerLon, centerLat])
+      .scale(scale)
+      .translate([padL + mapW / 2, padT + mapH / 2])
+      .clipExtent([[padL, padT], [padL + mapW, padT + mapH]])
+      .precision(0.1);
     const path = d3.geoPath(projection);
 
-    // ----- palette: muted, solid, NYT-cartography-style -----
-    // (Previous attempt used gradients & filters but their objectBoundingBox
-    //  was the whole world, so they silently failed. Going back to solid
-    //  colours with strong line work — that's how good maps usually do it.)
-    const SEA       = '#9fb6c4';   // muted ocean blue
-    const SEA_DEEP  = '#7895a7';   // for the horizon ring
-    const LAND      = '#e3cfa3';   // warm sand/desert
-    const COAST_DK  = '#5a4830';   // crisp coastline
-    const COAST_LT  = 'rgba(90,72,48,0.25)';  // soft secondary line for depth
+    // Site-native palette: paper, putty, sage, rose, and dusty purple.
+    const SEA       = c.mist;
+    const SHOAL     = c.sageS;
+    const LAND      = c.paper;
+    const COAST_DK  = c.inkSoft;
+    const COAST_LT  = 'rgba(108,99,88,0.28)';
+    const ROUTE     = 'rgba(245,239,226,0.92)';
+    const ROUTE_DIM = 'rgba(245,239,226,0.62)';
+    const FOCUS     = c.purpleD;
+
+    function addText(g, text, x, y, attrs = {}) {
+      const halo = g.append('text')
+        .attr('x', x).attr('y', y)
+        .attr('stroke', attrs.halo || 'rgba(245,239,226,0.86)')
+        .attr('stroke-width', attrs.haloWidth || 3.5)
+        .attr('stroke-linejoin', 'round')
+        .attr('paint-order', 'stroke')
+        .attr('fill', attrs.fill || c.ink)
+        .attr('font-family', attrs.fontFamily || 'Inter, "Noto Sans CJK", sans-serif')
+        .attr('font-size', attrs.fontSize || 10.5)
+        .attr('font-weight', attrs.fontWeight || 500)
+        .attr('font-style', attrs.fontStyle || 'normal')
+        .attr('letter-spacing', attrs.letterSpacing || 0)
+        .attr('text-anchor', attrs.anchor || 'middle')
+        .text(text);
+      return halo;
+    }
 
     const clipId = 'fh-mapclip';
     const defs = svg.append('defs');
     defs.append('clipPath').attr('id', clipId)
       .append('rect').attr('x', padL).attr('y', padT).attr('width', mapW).attr('height', mapH);
 
-    // background = "sky" outside the sphere
     svg.append('rect').attr('x', padL).attr('y', padT)
-      .attr('width', mapW).attr('height', mapH).attr('fill', '#dfdbd0');
+      .attr('width', mapW).attr('height', mapH).attr('fill', c.paper2);
 
     // All geography clipped to the map area
     const mapG = svg.append('g').attr('clip-path', `url(#${clipId})`);
 
-    // SEA — solid muted blue. Horizon line as a darker stroke around the sphere.
-    mapG.append('path').datum({ type: 'Sphere' }).attr('d', path)
+    // SEA — solid muted blue. A flat rectangle keeps the reader in measuring mode.
+    mapG.append('rect').attr('x', padL).attr('y', padT)
+      .attr('width', mapW).attr('height', mapH)
       .attr('fill', SEA)
-      .attr('stroke', SEA_DEEP)
-      .attr('stroke-width', 1.2);
+      .attr('stroke', 'none');
 
-    // Subtle graticule
+    // Subtle graticule: map ticks, not decoration.
     mapG.append('g').selectAll('path').data(d3.geoGraticule().step([0.5, 0.5]).lines())
       .join('path').attr('d', path).attr('fill', 'none')
-      .attr('stroke', 'rgba(255,255,255,0.18)').attr('stroke-width', 0.4);
+      .attr('stroke', c.rule).attr('stroke-opacity', 0.22).attr('stroke-width', 0.4);
 
     // BATHYMETRY: a wider pale-blue stroke under the land creates a halo of
     // shallow water around all coast — without any filter (those failed earlier
     // because the source path is world-scale).
     mapG.append('path').datum(land).attr('d', path)
       .attr('fill', 'none')
-      .attr('stroke', '#c2d4dc')                  // pale shoal blue
-      .attr('stroke-width', 6)
-      .attr('stroke-opacity', 0.7);
+      .attr('stroke', SHOAL)
+      .attr('stroke-width', 8)
+      .attr('stroke-opacity', 0.55);
     // A second narrower band, slightly darker, gives the halo two-step gradation
     mapG.append('path').datum(land).attr('d', path)
       .attr('fill', 'none')
-      .attr('stroke', '#aac0cc')
-      .attr('stroke-width', 2.5)
-      .attr('stroke-opacity', 0.7);
+      .attr('stroke', c.sage)
+      .attr('stroke-width', 2.2)
+      .attr('stroke-opacity', 0.32);
 
     // LAND fill — drawn AFTER the halo so the halo only shows outside the coast
     mapG.append('path').datum(land).attr('d', path)
       .attr('fill', LAND)
       .attr('stroke', COAST_LT)
-      .attr('stroke-width', 2.4)
+      .attr('stroke-width', 1.8)
       .attr('stroke-linejoin', 'round');
 
     // Crisp dark coastline on top
     mapG.append('path').datum(land).attr('d', path)
       .attr('fill', 'none')
       .attr('stroke', COAST_DK)
-      .attr('stroke-width', 0.75)
+      .attr('stroke-width', 0.8)
       .attr('stroke-linejoin', 'round')
       .attr('stroke-linecap', 'round');
 
@@ -347,36 +362,68 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
     if (borders) {
       mapG.append('path').datum(borders).attr('d', path)
         .attr('fill', 'none')
-        .attr('stroke', 'rgba(90,72,48,0.55)')
-        .attr('stroke-width', 0.55)
+        .attr('stroke', 'rgba(108,99,88,0.42)')
+        .attr('stroke-width', 0.45)
         .attr('stroke-dasharray', '3 2');
     }
 
-    // (Shipping-lane line and "outbound" arrow removed — the strait IS the lane;
-    //  drawing one through it just doubles the visual content.)
+    const projectedLine = d3.line()
+      .curve(d3.curveCatmullRom.alpha(0.5))
+      .x(d => d[0])
+      .y(d => d[1]);
+    mapG.append('path')
+      .attr('d', projectedLine(STRAIT_CORRIDOR.map(point => projection(point)).filter(Boolean)))
+      .attr('fill', 'none')
+      .attr('stroke', ROUTE_DIM)
+      .attr('stroke-width', 10)
+      .attr('stroke-linecap', 'round')
+      .attr('opacity', 0.34);
+    mapG.append('path')
+      .attr('d', projectedLine(STRAIT_CORRIDOR.map(point => projection(point)).filter(Boolean)))
+      .attr('fill', 'none')
+      .attr('stroke', ROUTE)
+      .attr('stroke-width', 1.8)
+      .attr('stroke-linecap', 'round')
+      .attr('stroke-dasharray', '7 6')
+      .attr('opacity', 0.88);
+
+    const notePoint = projection([56.64, 26.34]);
+    if (notePoint) {
+      addText(mapG, lang === 'zh' ? '可通航最窄处约 39 公里' : 'narrowest navigable reach approx. 39 km', notePoint[0], notePoint[1], {
+        fill: FOCUS,
+        fontSize: lang === 'zh' ? 10.5 : 10,
+        fontWeight: 650,
+        anchor: 'middle',
+        haloWidth: 4
+      });
+    }
 
     // Sea labels — water bodies named so the reader is oriented
     const seaSerif = lang === 'zh'
       ? '"Noto Serif SC", "Songti SC", "STSong", serif'
       : '"Cormorant Garamond", Georgia, serif';
     const seaLabels = lang === 'zh'
-      ? [ { t: '波斯湾',         lon: 55.20, lat: 27.30, size: 16, weight: 500, sp: '0.18em' },
-          { t: '阿曼湾',         lon: 57.30, lat: 25.10, size: 16, weight: 500, sp: '0.18em' },
+      ? [ { t: '波斯湾',         lon: 55.68, lat: 26.95, size: 16, weight: 500, sp: '0.18em' },
+          { t: '阿曼湾',         lon: 56.72, lat: 25.96, size: 16, weight: 500, sp: '0.18em' },
           { t: '霍尔木兹海峡',   lon: 56.50, lat: 26.55, size: 12, weight: 400, sp: '0.30em', italic: true } ]
-      : [ { t: 'Persian Gulf',     lon: 55.20, lat: 27.30, size: 14, weight: 500, sp: '0.18em', italic: true },
-          { t: 'Gulf of Oman',     lon: 57.30, lat: 25.10, size: 14, weight: 500, sp: '0.18em', italic: true },
-          { t: 'Strait of Hormuz', lon: 56.55, lat: 26.55, size: 11, weight: 400, sp: '0.30em', italic: true } ];
+      : [ { t: 'Persian Gulf',     lon: 55.68, lat: 26.95, size: 14, weight: 500, sp: '0.18em', italic: true },
+          { t: 'Gulf of Oman',     lon: 56.72, lat: 25.96, size: 14, weight: 500, sp: '0.18em', italic: true },
+          { t: 'Strait of Hormuz', lon: 56.50, lat: 26.55, size: 11, weight: 400, sp: '0.30em', italic: true } ];
     svg.append('g').selectAll('text').data(seaLabels).join('text')
       .each(function (d) {
         const p = projection([d.lon, d.lat]);
         if (!p) { d3.select(this).remove(); return; }
-        d3.select(this).attr('x', p[0]).attr('y', p[1])
-          .attr('fill', '#3d6580').attr('fill-opacity', 0.9)
-          .attr('font-family', seaSerif)
-          .attr('font-style', d.italic ? 'italic' : 'normal')
-          .attr('font-weight', d.weight || 400)
-          .attr('font-size', d.size).attr('letter-spacing', d.sp || '0.08em')
-          .attr('text-anchor', 'middle').text(d.t);
+        addText(d3.select(this.parentNode), d.t, p[0], p[1], {
+          fill: c.purpleD,
+          fontFamily: seaSerif,
+          fontStyle: d.italic ? 'italic' : 'normal',
+          fontWeight: d.weight || 400,
+          fontSize: d.size,
+          letterSpacing: d.sp || '0.08em',
+          halo: 'rgba(168,177,179,0.48)',
+          haloWidth: 3
+        });
+        d3.select(this).remove();
       });
 
     // Island labels — small italic, ink-soft
@@ -385,37 +432,35 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
       .each(function (d) {
         const p = projection([d.lon, d.lat]);
         if (!p) { d3.select(this).remove(); return; }
-        d3.select(this).attr('x', p[0]).attr('y', p[1] - 6)
-          .attr('fill', c.inkSoft)
-          .attr('font-family', islandSerif)
-          .attr('font-style', 'italic')
-          .attr('font-size', 10).attr('letter-spacing', '0.04em')
-          .attr('text-anchor', 'middle').text(d.name[lang]);
+        addText(d3.select(this.parentNode), d.name[lang], p[0], p[1] - 6, {
+          fill: c.inkSoft,
+          fontFamily: islandSerif,
+          fontStyle: 'italic',
+          fontSize: 9.5,
+          letterSpacing: '0.04em',
+          haloWidth: 3
+        });
+        d3.select(this).remove();
       });
 
-    // Oil & gas terminals — rust squares (no legend; they speak for themselves)
+    // Oil & gas terminals — rose squares
     mapG.append('g').selectAll('rect').data(TERMINALS).join('rect')
       .each(function (d) {
         const p = projection([d.lon, d.lat]);
         if (!p) return;
         d3.select(this).attr('x', p[0] - 3.5).attr('y', p[1] - 3.5)
           .attr('width', 7).attr('height', 7)
-          .attr('fill', c.rust).attr('stroke', c.paper).attr('stroke-width', 1);
+          .attr('fill', c.rose).attr('stroke', c.paper).attr('stroke-width', 1);
       });
-
-    // map-area border on top
-    svg.append('rect').attr('x', padL).attr('y', padT)
-      .attr('width', mapW).attr('height', mapH).attr('fill', 'none')
-      .attr('stroke', c.rule).attr('stroke-width', 0.6);
 
     // Country labels — small, restrained
     const countryLabels = lang === 'zh'
-      ? [ { t: '伊朗',  lon: 56.05, lat: 27.55, size: 14 },
-          { t: '阿曼',  lon: 56.45, lat: 26.00, size: 12 },
-          { t: '阿联酋', lon: 55.80, lat: 25.20, size: 10 } ]
-      : [ { t: 'IRAN',  lon: 56.05, lat: 27.55, size: 14 },
-          { t: 'OMAN',  lon: 56.45, lat: 26.00, size: 11 },
-          { t: 'U.A.E.', lon: 55.80, lat: 25.20, size: 10 } ];
+      ? [ { t: '伊朗',  lon: 56.05, lat: 27.18, size: 14 },
+          { t: '阿曼',  lon: 56.43, lat: 26.02, size: 12 },
+          { t: '阿联酋', lon: 55.82, lat: 25.95, size: 10 } ]
+      : [ { t: 'IRAN',  lon: 56.05, lat: 27.18, size: 14 },
+          { t: 'OMAN',  lon: 56.43, lat: 26.02, size: 11 },
+          { t: 'U.A.E.', lon: 55.82, lat: 25.95, size: 10 } ];
     const countrySerif = lang === 'zh'
       ? '"Noto Serif SC", "Songti SC", "STSong", serif'
       : '"Cormorant Garamond", Georgia, serif';
@@ -423,18 +468,17 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
       .each(function (d) {
         const p = projection([d.lon, d.lat]);
         if (!p) { d3.select(this).remove(); return; }
-        d3.select(this).attr('x', p[0]).attr('y', p[1])
-          .attr('fill', c.purpleD)
-          .attr('font-family', countrySerif)
-          .attr('font-style', lang === 'zh' ? 'normal' : 'italic')
-          .attr('font-weight', 500)
-          .attr('font-size', d.size || 14)
-          .attr('letter-spacing', lang === 'zh' ? '0.18em' : '0.16em')
-          .attr('text-anchor', 'middle')
-          .text(d.t);
+        addText(d3.select(this.parentNode), d.t, p[0], p[1], {
+          fill: c.purpleD,
+          fontFamily: countrySerif,
+          fontStyle: lang === 'zh' ? 'normal' : 'italic',
+          fontWeight: 500,
+          fontSize: d.size || 14,
+          letterSpacing: lang === 'zh' ? '0.18em' : '0.16em',
+          haloWidth: 4
+        });
+        d3.select(this).remove();
       });
-
-    // (island labels removed — they were crowding the strait; mention them in callouts instead)
 
     // City dots (small, dark)
     svg.append('g').selectAll('g').data(CITIES).join('g')
@@ -444,9 +488,13 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
         const g = d3.select(this).attr('transform', `translate(${p[0]},${p[1]})`);
         g.append('circle').attr('r', 2.4).attr('fill', c.ink)
           .attr('stroke', c.paper).attr('stroke-width', 1.2);
-        g.append('text').attr('x', 6).attr('y', 3).attr('fill', c.ink)
-          .attr('font-size', 10.5).attr('font-family', 'Inter, sans-serif').attr('font-weight', 500)
-          .text(d.name[lang]);
+        addText(g, d.name[lang], 6, 3, {
+          fill: c.ink,
+          fontSize: 10,
+          fontWeight: 600,
+          anchor: 'start',
+          haloWidth: 3
+        });
       });
 
     // Seizure pins — numbered (① ②). Names live in the figcaption now.
@@ -458,44 +506,31 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
         const g = d3.select(this).attr('transform', `translate(${p[0]},${p[1]})`);
         // outer attention ring
         g.append('circle').attr('r', 16).attr('fill', 'none')
-          .attr('stroke', c.rust).attr('stroke-opacity', 0.45).attr('stroke-width', 1.2);
-        const halo = g.append('circle').attr('r', 9).attr('fill', c.rust).attr('fill-opacity', 0.32)
-          .attr('stroke', c.rust).attr('stroke-width', 1);
-        g.append('circle').attr('r', 4.5).attr('fill', c.rust);
+          .attr('stroke', c.rose).attr('stroke-opacity', 0.52).attr('stroke-width', 1.3);
+        const halo = g.append('circle').attr('r', 9).attr('fill', c.rose).attr('fill-opacity', 0.34)
+          .attr('stroke', c.rose).attr('stroke-width', 1);
+        halo.append('animate')
+          .attr('attributeName', 'r')
+          .attr('values', '7;12;7')
+          .attr('dur', '2.8s')
+          .attr('repeatCount', 'indefinite');
+        halo.append('animate')
+          .attr('attributeName', 'fill-opacity')
+          .attr('values', '0.36;0.16;0.36')
+          .attr('dur', '2.8s')
+          .attr('repeatCount', 'indefinite');
+        g.append('circle').attr('r', 4.5).attr('fill', c.rose)
+          .attr('stroke', c.purpleD).attr('stroke-width', 1);
         // numeral, slightly NE of the pin
         g.append('text').attr('x', 13).attr('y', -10)
-          .attr('fill', '#7a3e30').attr('font-size', 16).attr('font-weight', 600)
+          .attr('fill', c.purpleD).attr('font-size', 16).attr('font-weight', 700)
           .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
+          .attr('paint-order', 'stroke')
+          .attr('stroke', 'rgba(245,239,226,0.9)')
+          .attr('stroke-width', 3)
+          .attr('stroke-linejoin', 'round')
           .text(numerals[i] || (i + 1));
-        let t = i * 0.7;
-        function tick() {
-          t += 0.04;
-          halo.attr('r', 9 + Math.sin(t) * 2.8).attr('fill-opacity', 0.22 + 0.18 * Math.cos(t));
-          requestAnimationFrame(tick);
-        }
-        tick();
       });
-
-    // Locator inset — small orthographic globe bottom-right
-    const insetSize = 96;
-    const insetX = W - padR - insetSize - 8;
-    const insetY = H - padB - insetSize - 8;
-    const inset = svg.append('g').attr('transform', `translate(${insetX}, ${insetY})`);
-    const ip = d3.geoOrthographic().fitExtent([[2, 2], [insetSize - 2, insetSize - 2]], { type: 'Sphere' })
-      .rotate([-56, -26]).clipAngle(90);
-    const ipath = d3.geoPath(ip);
-    inset.append('rect').attr('width', insetSize).attr('height', insetSize)
-      .attr('fill', c.paper2).attr('stroke', c.rule).attr('stroke-width', 1);
-    inset.append('path').datum({ type: 'Sphere' }).attr('d', ipath).attr('fill', c.paper);
-    inset.append('path').datum(land).attr('d', ipath).attr('fill', c.sage).attr('stroke', 'none');
-    // strait location marker
-    inset.append('circle')
-      .attr('cx', ip([56.25, 26.5])[0]).attr('cy', ip([56.25, 26.5])[1])
-      .attr('r', 6).attr('fill', 'none').attr('stroke', c.rust).attr('stroke-width', 1.4);
-    inset.append('circle')
-      .attr('cx', ip([56.25, 26.5])[0]).attr('cy', ip([56.25, 26.5])[1])
-      .attr('r', 1.6).attr('fill', c.rust);
-    // (no caption on the inset — its purpose is self-evident)
 
     // Scale bar — pinned to bottom-left of map area, with 0 / 25 / 50 ticks
     const refLat = STRAIT[1];
@@ -512,27 +547,23 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
       const x0 = padL + 22;
       const y0 = padT + mapH - 28;
       const sg = svg.append('g').attr('transform', `translate(${x0}, ${y0})`);
-      // background tab so it reads on land or sea
-      sg.append('rect').attr('x', -8).attr('y', -16).attr('width', barPx + 16).attr('height', 28)
-        .attr('fill', 'rgba(255,255,253,0.78)').attr('stroke', 'rgba(90,72,48,0.20)').attr('rx', 2);
       // bar
-      sg.append('line').attr('x2', barPx).attr('stroke', c.ink).attr('stroke-width', 1.4);
+      sg.append('line').attr('x2', barPx).attr('stroke', c.inkSoft).attr('stroke-width', 1.1);
       // ticks
       [0, halfPx, barPx].forEach(x => {
         sg.append('line').attr('x1', x).attr('x2', x).attr('y1', -4).attr('y2', 4)
-          .attr('stroke', c.ink).attr('stroke-width', 1.4);
+          .attr('stroke', c.inkSoft).attr('stroke-width', 1.1);
       });
       // labels
       sg.append('text').attr('x', 0).attr('y', -7).attr('text-anchor', 'middle')
-        .attr('fill', c.ink).attr('font-size', 9).attr('font-family', 'Inter, sans-serif').text('0');
+        .attr('fill', c.inkSoft).attr('font-size', 9).attr('font-family', 'Inter, sans-serif').text('0');
       sg.append('text').attr('x', halfPx).attr('y', -7).attr('text-anchor', 'middle')
-        .attr('fill', c.ink).attr('font-size', 9).attr('font-family', 'Inter, sans-serif').text('25');
+        .attr('fill', c.inkSoft).attr('font-size', 9).attr('font-family', 'Inter, sans-serif').text('25');
       sg.append('text').attr('x', barPx).attr('y', -7).attr('text-anchor', 'middle')
-        .attr('fill', c.ink).attr('font-size', 9).attr('font-family', 'Inter, sans-serif').text(`${totalKm} km`);
+        .attr('fill', c.inkSoft).attr('font-size', 9).attr('font-family', 'Inter, sans-serif').text(`${totalKm} km`);
     }
 
-    // (no main north arrow — at this oblique tilt, "north" is genuinely tilted on the
-    //  page; a vertical arrow would be a small lie. The locator inset gives orientation.)
+    // No north arrow: at this scale the coastlines and labels orient the reader.
   }
 
   // (lang re-render is wired up at the top, with a cached `_land`.)
