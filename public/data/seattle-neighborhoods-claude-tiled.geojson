@@ -1,0 +1,2976 @@
+{
+  "type": "FeatureCollection",
+  "_note": "Polygons returned by Claude (claude-opus-4-7) attempting to TILE Seattle from memory — i.e. give all 90 named neighborhoods boundaries that approximately partition the city's land area. No external lookup. Where edges line up cleanly, the model knows the adjacency; where they leave gaps or overlap, the model's mental adjacency was wrong.",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Broadview"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.405,
+              47.7
+            ],
+            [
+              -122.355,
+              47.7
+            ],
+            [
+              -122.355,
+              47.735
+            ],
+            [
+              -122.405,
+              47.735
+            ],
+            [
+              -122.405,
+              47.7
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bitter Lake"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.355,
+              47.705
+            ],
+            [
+              -122.332,
+              47.705
+            ],
+            [
+              -122.332,
+              47.735
+            ],
+            [
+              -122.355,
+              47.735
+            ],
+            [
+              -122.355,
+              47.705
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Haller Lake"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.332,
+              47.705
+            ],
+            [
+              -122.305,
+              47.705
+            ],
+            [
+              -122.305,
+              47.735
+            ],
+            [
+              -122.332,
+              47.735
+            ],
+            [
+              -122.332,
+              47.705
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pinehurst"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.305,
+              47.705
+            ],
+            [
+              -122.29,
+              47.705
+            ],
+            [
+              -122.29,
+              47.735
+            ],
+            [
+              -122.305,
+              47.735
+            ],
+            [
+              -122.305,
+              47.705
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cedar Park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.705
+            ],
+            [
+              -122.26,
+              47.705
+            ],
+            [
+              -122.26,
+              47.72
+            ],
+            [
+              -122.29,
+              47.72
+            ],
+            [
+              -122.29,
+              47.705
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Olympic Hills"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.72
+            ],
+            [
+              -122.26,
+              47.72
+            ],
+            [
+              -122.26,
+              47.735
+            ],
+            [
+              -122.29,
+              47.735
+            ],
+            [
+              -122.29,
+              47.72
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North Beach - Blue Ridge"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.405,
+              47.685
+            ],
+            [
+              -122.375,
+              47.685
+            ],
+            [
+              -122.375,
+              47.7
+            ],
+            [
+              -122.405,
+              47.7
+            ],
+            [
+              -122.405,
+              47.685
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Crown Hill"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.375,
+              47.685
+            ],
+            [
+              -122.355,
+              47.685
+            ],
+            [
+              -122.355,
+              47.7
+            ],
+            [
+              -122.375,
+              47.7
+            ],
+            [
+              -122.375,
+              47.685
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Greenwood"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.355,
+              47.685
+            ],
+            [
+              -122.335,
+              47.685
+            ],
+            [
+              -122.335,
+              47.705
+            ],
+            [
+              -122.355,
+              47.705
+            ],
+            [
+              -122.355,
+              47.685
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North College Park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.335,
+              47.69
+            ],
+            [
+              -122.317,
+              47.69
+            ],
+            [
+              -122.317,
+              47.705
+            ],
+            [
+              -122.335,
+              47.705
+            ],
+            [
+              -122.335,
+              47.69
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Maple Leaf"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.317,
+              47.69
+            ],
+            [
+              -122.3,
+              47.69
+            ],
+            [
+              -122.3,
+              47.705
+            ],
+            [
+              -122.317,
+              47.705
+            ],
+            [
+              -122.317,
+              47.69
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Victory Heights"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.305,
+              47.685
+            ],
+            [
+              -122.29,
+              47.685
+            ],
+            [
+              -122.29,
+              47.705
+            ],
+            [
+              -122.305,
+              47.705
+            ],
+            [
+              -122.305,
+              47.685
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Meadowbrook"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.7
+            ],
+            [
+              -122.27,
+              47.7
+            ],
+            [
+              -122.27,
+              47.715
+            ],
+            [
+              -122.29,
+              47.715
+            ],
+            [
+              -122.29,
+              47.7
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Matthews Beach"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.275,
+              47.685
+            ],
+            [
+              -122.255,
+              47.685
+            ],
+            [
+              -122.255,
+              47.705
+            ],
+            [
+              -122.275,
+              47.705
+            ],
+            [
+              -122.275,
+              47.685
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sunset Hill"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.405,
+              47.665
+            ],
+            [
+              -122.388,
+              47.665
+            ],
+            [
+              -122.388,
+              47.69
+            ],
+            [
+              -122.405,
+              47.69
+            ],
+            [
+              -122.405,
+              47.665
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Loyal Heights"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.388,
+              47.675
+            ],
+            [
+              -122.37,
+              47.675
+            ],
+            [
+              -122.37,
+              47.69
+            ],
+            [
+              -122.388,
+              47.69
+            ],
+            [
+              -122.388,
+              47.675
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Adams"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.388,
+              47.665
+            ],
+            [
+              -122.37,
+              47.665
+            ],
+            [
+              -122.37,
+              47.675
+            ],
+            [
+              -122.388,
+              47.675
+            ],
+            [
+              -122.388,
+              47.665
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Whittier Heights"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.37,
+              47.675
+            ],
+            [
+              -122.355,
+              47.675
+            ],
+            [
+              -122.355,
+              47.69
+            ],
+            [
+              -122.37,
+              47.69
+            ],
+            [
+              -122.37,
+              47.675
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "West Woodland"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.37,
+              47.665
+            ],
+            [
+              -122.355,
+              47.665
+            ],
+            [
+              -122.355,
+              47.675
+            ],
+            [
+              -122.37,
+              47.675
+            ],
+            [
+              -122.37,
+              47.665
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Phinney Ridge"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.355,
+              47.668
+            ],
+            [
+              -122.34,
+              47.668
+            ],
+            [
+              -122.34,
+              47.685
+            ],
+            [
+              -122.355,
+              47.685
+            ],
+            [
+              -122.355,
+              47.668
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Green Lake"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.34,
+              47.67
+            ],
+            [
+              -122.317,
+              47.67
+            ],
+            [
+              -122.317,
+              47.685
+            ],
+            [
+              -122.34,
+              47.685
+            ],
+            [
+              -122.34,
+              47.67
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Roosevelt"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.325,
+              47.67
+            ],
+            [
+              -122.31,
+              47.67
+            ],
+            [
+              -122.31,
+              47.69
+            ],
+            [
+              -122.325,
+              47.69
+            ],
+            [
+              -122.325,
+              47.67
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ravenna"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.31,
+              47.67
+            ],
+            [
+              -122.29,
+              47.67
+            ],
+            [
+              -122.29,
+              47.69
+            ],
+            [
+              -122.31,
+              47.69
+            ],
+            [
+              -122.31,
+              47.67
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bryant"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.67
+            ],
+            [
+              -122.275,
+              47.67
+            ],
+            [
+              -122.275,
+              47.685
+            ],
+            [
+              -122.29,
+              47.685
+            ],
+            [
+              -122.29,
+              47.67
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wedgwood"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.685
+            ],
+            [
+              -122.275,
+              47.685
+            ],
+            [
+              -122.275,
+              47.7
+            ],
+            [
+              -122.29,
+              47.7
+            ],
+            [
+              -122.29,
+              47.685
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "View Ridge"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.275,
+              47.67
+            ],
+            [
+              -122.26,
+              47.67
+            ],
+            [
+              -122.26,
+              47.69
+            ],
+            [
+              -122.275,
+              47.69
+            ],
+            [
+              -122.275,
+              47.67
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Windermere"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.27,
+              47.665
+            ],
+            [
+              -122.25,
+              47.665
+            ],
+            [
+              -122.25,
+              47.675
+            ],
+            [
+              -122.27,
+              47.675
+            ],
+            [
+              -122.27,
+              47.665
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fremont"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.358,
+              47.645
+            ],
+            [
+              -122.34,
+              47.645
+            ],
+            [
+              -122.34,
+              47.668
+            ],
+            [
+              -122.358,
+              47.668
+            ],
+            [
+              -122.358,
+              47.645
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wallingford"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.34,
+              47.645
+            ],
+            [
+              -122.317,
+              47.645
+            ],
+            [
+              -122.317,
+              47.668
+            ],
+            [
+              -122.34,
+              47.668
+            ],
+            [
+              -122.34,
+              47.645
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "University District"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.325,
+              47.65
+            ],
+            [
+              -122.3,
+              47.65
+            ],
+            [
+              -122.3,
+              47.67
+            ],
+            [
+              -122.325,
+              47.67
+            ],
+            [
+              -122.325,
+              47.65
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Laurelhurst"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.65
+            ],
+            [
+              -122.26,
+              47.65
+            ],
+            [
+              -122.26,
+              47.668
+            ],
+            [
+              -122.29,
+              47.668
+            ],
+            [
+              -122.29,
+              47.65
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sand Point"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.265,
+              47.665
+            ],
+            [
+              -122.25,
+              47.665
+            ],
+            [
+              -122.25,
+              47.685
+            ],
+            [
+              -122.265,
+              47.685
+            ],
+            [
+              -122.265,
+              47.665
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Briarcliff"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.418,
+              47.64
+            ],
+            [
+              -122.395,
+              47.64
+            ],
+            [
+              -122.395,
+              47.66
+            ],
+            [
+              -122.418,
+              47.66
+            ],
+            [
+              -122.418,
+              47.64
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lawton Park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.418,
+              47.66
+            ],
+            [
+              -122.39,
+              47.66
+            ],
+            [
+              -122.39,
+              47.685
+            ],
+            [
+              -122.418,
+              47.685
+            ],
+            [
+              -122.418,
+              47.66
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Southeast Magnolia"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.395,
+              47.625
+            ],
+            [
+              -122.378,
+              47.625
+            ],
+            [
+              -122.378,
+              47.65
+            ],
+            [
+              -122.395,
+              47.65
+            ],
+            [
+              -122.395,
+              47.625
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Interbay"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.385,
+              47.625
+            ],
+            [
+              -122.368,
+              47.625
+            ],
+            [
+              -122.368,
+              47.652
+            ],
+            [
+              -122.385,
+              47.652
+            ],
+            [
+              -122.385,
+              47.625
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North Queen Anne"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.368,
+              47.642
+            ],
+            [
+              -122.35,
+              47.642
+            ],
+            [
+              -122.35,
+              47.66
+            ],
+            [
+              -122.368,
+              47.66
+            ],
+            [
+              -122.368,
+              47.642
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "East Queen Anne"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.35,
+              47.64
+            ],
+            [
+              -122.335,
+              47.64
+            ],
+            [
+              -122.335,
+              47.66
+            ],
+            [
+              -122.35,
+              47.66
+            ],
+            [
+              -122.35,
+              47.64
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "West Queen Anne"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.368,
+              47.625
+            ],
+            [
+              -122.355,
+              47.625
+            ],
+            [
+              -122.355,
+              47.642
+            ],
+            [
+              -122.368,
+              47.642
+            ],
+            [
+              -122.368,
+              47.625
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lower Queen Anne"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.358,
+              47.618
+            ],
+            [
+              -122.34,
+              47.618
+            ],
+            [
+              -122.34,
+              47.628
+            ],
+            [
+              -122.358,
+              47.628
+            ],
+            [
+              -122.358,
+              47.618
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eastlake"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.33,
+              47.63
+            ],
+            [
+              -122.318,
+              47.63
+            ],
+            [
+              -122.318,
+              47.652
+            ],
+            [
+              -122.33,
+              47.652
+            ],
+            [
+              -122.33,
+              47.63
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Portage Bay"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.325,
+              47.645
+            ],
+            [
+              -122.305,
+              47.645
+            ],
+            [
+              -122.305,
+              47.66
+            ],
+            [
+              -122.325,
+              47.66
+            ],
+            [
+              -122.325,
+              47.645
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Westlake"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.345,
+              47.63
+            ],
+            [
+              -122.33,
+              47.63
+            ],
+            [
+              -122.33,
+              47.645
+            ],
+            [
+              -122.345,
+              47.645
+            ],
+            [
+              -122.345,
+              47.63
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "South Lake Union"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.34,
+              47.62
+            ],
+            [
+              -122.318,
+              47.62
+            ],
+            [
+              -122.318,
+              47.635
+            ],
+            [
+              -122.34,
+              47.635
+            ],
+            [
+              -122.34,
+              47.62
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Broadway"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.325,
+              47.615
+            ],
+            [
+              -122.31,
+              47.615
+            ],
+            [
+              -122.31,
+              47.64
+            ],
+            [
+              -122.325,
+              47.64
+            ],
+            [
+              -122.325,
+              47.615
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Stevens"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.31,
+              47.62
+            ],
+            [
+              -122.298,
+              47.62
+            ],
+            [
+              -122.298,
+              47.64
+            ],
+            [
+              -122.31,
+              47.64
+            ],
+            [
+              -122.31,
+              47.62
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Montlake"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.31,
+              47.64
+            ],
+            [
+              -122.292,
+              47.64
+            ],
+            [
+              -122.292,
+              47.652
+            ],
+            [
+              -122.31,
+              47.652
+            ],
+            [
+              -122.31,
+              47.64
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Madison Park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.625
+            ],
+            [
+              -122.26,
+              47.625
+            ],
+            [
+              -122.26,
+              47.65
+            ],
+            [
+              -122.29,
+              47.65
+            ],
+            [
+              -122.29,
+              47.625
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Belltown"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.355,
+              47.61
+            ],
+            [
+              -122.336,
+              47.61
+            ],
+            [
+              -122.336,
+              47.625
+            ],
+            [
+              -122.355,
+              47.625
+            ],
+            [
+              -122.355,
+              47.61
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pike-Market"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.345,
+              47.605
+            ],
+            [
+              -122.336,
+              47.605
+            ],
+            [
+              -122.336,
+              47.612
+            ],
+            [
+              -122.345,
+              47.612
+            ],
+            [
+              -122.345,
+              47.605
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Central Business District"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.34,
+              47.602
+            ],
+            [
+              -122.325,
+              47.602
+            ],
+            [
+              -122.325,
+              47.617
+            ],
+            [
+              -122.34,
+              47.617
+            ],
+            [
+              -122.34,
+              47.602
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pioneer Square"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.336,
+              47.598
+            ],
+            [
+              -122.325,
+              47.598
+            ],
+            [
+              -122.325,
+              47.605
+            ],
+            [
+              -122.336,
+              47.605
+            ],
+            [
+              -122.336,
+              47.598
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "International District"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.328,
+              47.595
+            ],
+            [
+              -122.315,
+              47.595
+            ],
+            [
+              -122.315,
+              47.605
+            ],
+            [
+              -122.328,
+              47.605
+            ],
+            [
+              -122.328,
+              47.595
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "First Hill"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.325,
+              47.605
+            ],
+            [
+              -122.31,
+              47.605
+            ],
+            [
+              -122.31,
+              47.618
+            ],
+            [
+              -122.325,
+              47.618
+            ],
+            [
+              -122.325,
+              47.605
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Yesler Terrace"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.318,
+              47.602
+            ],
+            [
+              -122.31,
+              47.602
+            ],
+            [
+              -122.31,
+              47.612
+            ],
+            [
+              -122.318,
+              47.612
+            ],
+            [
+              -122.318,
+              47.602
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Minor"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.318,
+              47.61
+            ],
+            [
+              -122.305,
+              47.61
+            ],
+            [
+              -122.305,
+              47.62
+            ],
+            [
+              -122.318,
+              47.62
+            ],
+            [
+              -122.318,
+              47.61
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Atlantic"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.31,
+              47.595
+            ],
+            [
+              -122.295,
+              47.595
+            ],
+            [
+              -122.295,
+              47.61
+            ],
+            [
+              -122.31,
+              47.61
+            ],
+            [
+              -122.31,
+              47.595
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mann"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.31,
+              47.61
+            ],
+            [
+              -122.295,
+              47.61
+            ],
+            [
+              -122.295,
+              47.62
+            ],
+            [
+              -122.31,
+              47.62
+            ],
+            [
+              -122.31,
+              47.61
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Harrison - Denny-Blaine"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.295,
+              47.615
+            ],
+            [
+              -122.275,
+              47.615
+            ],
+            [
+              -122.275,
+              47.628
+            ],
+            [
+              -122.295,
+              47.628
+            ],
+            [
+              -122.295,
+              47.615
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Madrona"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.295,
+              47.605
+            ],
+            [
+              -122.27,
+              47.605
+            ],
+            [
+              -122.27,
+              47.625
+            ],
+            [
+              -122.295,
+              47.625
+            ],
+            [
+              -122.295,
+              47.605
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Leschi"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.295,
+              47.595
+            ],
+            [
+              -122.265,
+              47.595
+            ],
+            [
+              -122.265,
+              47.61
+            ],
+            [
+              -122.295,
+              47.61
+            ],
+            [
+              -122.295,
+              47.595
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Industrial District"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.345,
+              47.56
+            ],
+            [
+              -122.325,
+              47.56
+            ],
+            [
+              -122.325,
+              47.598
+            ],
+            [
+              -122.345,
+              47.598
+            ],
+            [
+              -122.345,
+              47.56
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Harbor Island"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.355,
+              47.575
+            ],
+            [
+              -122.345,
+              47.575
+            ],
+            [
+              -122.345,
+              47.595
+            ],
+            [
+              -122.355,
+              47.595
+            ],
+            [
+              -122.355,
+              47.575
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North Beacon Hill"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.325,
+              47.575
+            ],
+            [
+              -122.305,
+              47.575
+            ],
+            [
+              -122.305,
+              47.598
+            ],
+            [
+              -122.325,
+              47.598
+            ],
+            [
+              -122.325,
+              47.575
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mid-Beacon Hill"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.325,
+              47.555
+            ],
+            [
+              -122.305,
+              47.555
+            ],
+            [
+              -122.305,
+              47.575
+            ],
+            [
+              -122.325,
+              47.575
+            ],
+            [
+              -122.325,
+              47.555
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mount Baker"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.305,
+              47.575
+            ],
+            [
+              -122.275,
+              47.575
+            ],
+            [
+              -122.275,
+              47.595
+            ],
+            [
+              -122.305,
+              47.595
+            ],
+            [
+              -122.305,
+              47.575
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Genesee"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.298,
+              47.56
+            ],
+            [
+              -122.275,
+              47.56
+            ],
+            [
+              -122.275,
+              47.575
+            ],
+            [
+              -122.298,
+              47.575
+            ],
+            [
+              -122.298,
+              47.56
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Seward Park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.275,
+              47.545
+            ],
+            [
+              -122.245,
+              47.545
+            ],
+            [
+              -122.245,
+              47.575
+            ],
+            [
+              -122.275,
+              47.575
+            ],
+            [
+              -122.275,
+              47.545
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North Admiral"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.405,
+              47.575
+            ],
+            [
+              -122.385,
+              47.575
+            ],
+            [
+              -122.385,
+              47.595
+            ],
+            [
+              -122.405,
+              47.595
+            ],
+            [
+              -122.405,
+              47.575
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Alki"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.422,
+              47.572
+            ],
+            [
+              -122.395,
+              47.572
+            ],
+            [
+              -122.395,
+              47.59
+            ],
+            [
+              -122.422,
+              47.59
+            ],
+            [
+              -122.422,
+              47.572
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Seaview"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.405,
+              47.56
+            ],
+            [
+              -122.388,
+              47.56
+            ],
+            [
+              -122.388,
+              47.575
+            ],
+            [
+              -122.405,
+              47.575
+            ],
+            [
+              -122.405,
+              47.56
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fairmount Park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.388,
+              47.56
+            ],
+            [
+              -122.37,
+              47.56
+            ],
+            [
+              -122.37,
+              47.58
+            ],
+            [
+              -122.388,
+              47.58
+            ],
+            [
+              -122.388,
+              47.56
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North Delridge"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.37,
+              47.56
+            ],
+            [
+              -122.355,
+              47.56
+            ],
+            [
+              -122.355,
+              47.585
+            ],
+            [
+              -122.37,
+              47.585
+            ],
+            [
+              -122.37,
+              47.56
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "High Point"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.388,
+              47.54
+            ],
+            [
+              -122.368,
+              47.54
+            ],
+            [
+              -122.368,
+              47.56
+            ],
+            [
+              -122.388,
+              47.56
+            ],
+            [
+              -122.388,
+              47.54
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gatewood"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.405,
+              47.535
+            ],
+            [
+              -122.385,
+              47.535
+            ],
+            [
+              -122.385,
+              47.555
+            ],
+            [
+              -122.405,
+              47.555
+            ],
+            [
+              -122.405,
+              47.535
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "South Delridge"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.37,
+              47.535
+            ],
+            [
+              -122.355,
+              47.535
+            ],
+            [
+              -122.355,
+              47.56
+            ],
+            [
+              -122.37,
+              47.56
+            ],
+            [
+              -122.37,
+              47.535
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Riverview"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.358,
+              47.535
+            ],
+            [
+              -122.342,
+              47.535
+            ],
+            [
+              -122.342,
+              47.555
+            ],
+            [
+              -122.358,
+              47.555
+            ],
+            [
+              -122.358,
+              47.535
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Highland Park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.345,
+              47.525
+            ],
+            [
+              -122.325,
+              47.525
+            ],
+            [
+              -122.325,
+              47.555
+            ],
+            [
+              -122.345,
+              47.555
+            ],
+            [
+              -122.345,
+              47.525
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Georgetown"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.325,
+              47.54
+            ],
+            [
+              -122.305,
+              47.54
+            ],
+            [
+              -122.305,
+              47.565
+            ],
+            [
+              -122.325,
+              47.565
+            ],
+            [
+              -122.325,
+              47.54
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "South Park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.33,
+              47.52
+            ],
+            [
+              -122.31,
+              47.52
+            ],
+            [
+              -122.31,
+              47.54
+            ],
+            [
+              -122.33,
+              47.54
+            ],
+            [
+              -122.33,
+              47.52
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "South Beacon Hill"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.31,
+              47.53
+            ],
+            [
+              -122.29,
+              47.53
+            ],
+            [
+              -122.29,
+              47.555
+            ],
+            [
+              -122.31,
+              47.555
+            ],
+            [
+              -122.31,
+              47.53
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Columbia City"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.55
+            ],
+            [
+              -122.272,
+              47.55
+            ],
+            [
+              -122.272,
+              47.57
+            ],
+            [
+              -122.29,
+              47.57
+            ],
+            [
+              -122.29,
+              47.55
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Brighton"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.535
+            ],
+            [
+              -122.272,
+              47.535
+            ],
+            [
+              -122.272,
+              47.55
+            ],
+            [
+              -122.29,
+              47.55
+            ],
+            [
+              -122.29,
+              47.535
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dunlap"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.29,
+              47.52
+            ],
+            [
+              -122.27,
+              47.52
+            ],
+            [
+              -122.27,
+              47.535
+            ],
+            [
+              -122.29,
+              47.535
+            ],
+            [
+              -122.29,
+              47.52
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Holly Park"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.305,
+              47.53
+            ],
+            [
+              -122.29,
+              47.53
+            ],
+            [
+              -122.29,
+              47.545
+            ],
+            [
+              -122.305,
+              47.545
+            ],
+            [
+              -122.305,
+              47.53
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rainier Beach"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.275,
+              47.51
+            ],
+            [
+              -122.25,
+              47.51
+            ],
+            [
+              -122.25,
+              47.535
+            ],
+            [
+              -122.275,
+              47.535
+            ],
+            [
+              -122.275,
+              47.51
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rainier View"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.26,
+              47.498
+            ],
+            [
+              -122.24,
+              47.498
+            ],
+            [
+              -122.24,
+              47.515
+            ],
+            [
+              -122.26,
+              47.515
+            ],
+            [
+              -122.26,
+              47.498
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Roxhill"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.378,
+              47.515
+            ],
+            [
+              -122.36,
+              47.515
+            ],
+            [
+              -122.36,
+              47.535
+            ],
+            [
+              -122.378,
+              47.535
+            ],
+            [
+              -122.378,
+              47.515
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fauntleroy"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.405,
+              47.51
+            ],
+            [
+              -122.378,
+              47.51
+            ],
+            [
+              -122.378,
+              47.535
+            ],
+            [
+              -122.405,
+              47.535
+            ],
+            [
+              -122.405,
+              47.51
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Arbor Heights"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -122.405,
+              47.495
+            ],
+            [
+              -122.378,
+              47.495
+            ],
+            [
+              -122.378,
+              47.51
+            ],
+            [
+              -122.405,
+              47.51
+            ],
+            [
+              -122.405,
+              47.495
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

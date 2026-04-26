@@ -232,7 +232,7 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
   let _real = null, _claude = null;
   Promise.all([
     fetch('/data/seattle-neighborhoods-real.geojson').then(r => r.json()),
-    fetch('/data/seattle-neighborhoods-claude.geojson').then(r => r.json()),
+    fetch('/data/seattle-neighborhoods-claude-tiled.geojson').then(r => r.json()),
   ]).then(([realGJ, claudeGJ]) => {
     _real = realGJ;
     _claude = claudeGJ;
@@ -309,6 +309,10 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
     // extent matches the left panel's extent — rectangles that spill into
     // Lake Washington or Puget Sound are visibly cut off at the shoreline.
     if (style.showSilhouette) {
+      // Faint Seattle silhouette as a baseline reference, NOT a clip.
+      // With Claude's tiled output, the most informative thing is to see
+      // where the model's rectangles overshoot the city into water and
+      // where they leave gaps — clipping would hide both.
       svg.append('g').attr('class', 'silhouette')
         .selectAll('path')
         .data(_real.features)
@@ -318,35 +322,18 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
         .attr('stroke', c.inkFaint).attr('stroke-opacity', 0.45)
         .attr('stroke-width', 0.5)
         .attr('stroke-linejoin', 'round');
-
-      const clipId = `seattle-clip-${stageId}`;
-      const cp = svg.append('defs').append('clipPath').attr('id', clipId);
-      cp.selectAll('path').data(_real.features).join('path').attr('d', path);
-
-      const layer = svg.append('g')
-        .attr('class', 'nbhd-layer')
-        .attr('clip-path', `url(#${clipId})`);
-      layer.selectAll('path')
-        .data(data.features)
-        .join('path')
-        .attr('d', path)
-        .attr('fill', style.fill)
-        .attr('stroke', style.stroke)
-        .attr('stroke-width', 0.9)
-        .attr('stroke-dasharray', style.strokeDash || null)
-        .attr('stroke-linejoin', 'round');
-    } else {
-      const layer = svg.append('g').attr('class', 'nbhd-layer');
-      layer.selectAll('path')
-        .data(data.features)
-        .join('path')
-        .attr('d', path)
-        .attr('fill', style.fill)
-        .attr('stroke', style.stroke)
-        .attr('stroke-width', 0.9)
-        .attr('stroke-dasharray', style.strokeDash || null)
-        .attr('stroke-linejoin', 'round');
     }
+
+    const layer = svg.append('g').attr('class', 'nbhd-layer');
+    layer.selectAll('path')
+      .data(data.features)
+      .join('path')
+      .attr('d', path)
+      .attr('fill', style.fill)
+      .attr('stroke', style.stroke)
+      .attr('stroke-width', 0.9)
+      .attr('stroke-dasharray', style.strokeDash || null)
+      .attr('stroke-linejoin', 'round');
 
     // Label only the shared set, at polygon centroid.
     // For the "real" data we may have multiple sub-features per nhood —
