@@ -358,12 +358,13 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     { id: 'friday',        name: { en: 'Friday Harbor',   zh: '周五港'     }, lon: -123.012, lat: 48.535, anchor: true  }
   ];
 
-  // Static fallback snapshot — three plausible vessel positions on the route,
-  // rendered when the live API isn't reachable (default for this build).
+  // Static fallback snapshot — vessel positions placed on actual ROUTE
+  // waypoints (which are guaranteed water by definition of the route), so
+  // they don't accidentally render on top of small islands at this scale.
   const SNAPSHOT = [
-    { id: 1, name: 'M/V Yakima',    lon: -122.730, lat: 48.502, heading:  85, inService: true,  snapshot: true },
-    { id: 2, name: 'M/V Tillikum',  lon: -122.880, lat: 48.530, heading: 290, inService: true,  snapshot: true },
-    { id: 3, name: 'M/V Chelan',    lon: -122.998, lat: 48.539, heading: 110, inService: true,  snapshot: true }
+    { id: 1, name: 'M/V Yakima',    lon: -122.745, lat: 48.502, heading:  85, inService: true, snapshot: true },  // Rosario Strait
+    { id: 2, name: 'M/V Tillikum',  lon: -122.905, lat: 48.555, heading: 280, inService: true, snapshot: true },  // off Shaw / Harney Channel
+    { id: 3, name: 'M/V Chelan',    lon: -122.998, lat: 48.548, heading: 200, inService: true, snapshot: true }   // San Juan Channel approach
   ];
 
   // ===== PALETTE ====================================================
@@ -393,20 +394,28 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
   let _projection = null;            // closure over draw() so updates can re-project
 
   // ===== DATA LOAD ==================================================
-  fetch('https://cdn.jsdelivr.net/gh/martynafford/natural-earth-geojson@master/10m/physical/ne_10m_land.json')
-    .then(r => r.json())
-    .then(land => {
-      _land = land;
-      requestAnimationFrame(() => draw());
-    })
-    .catch(() => {
-      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
-        .then(r => r.json())
-        .then(w => {
-          _land = feature(w, w.objects.countries);
-          requestAnimationFrame(() => draw());
-        });
-    });
+  // Fetch BOTH the main land file and the minor-islands file so that small
+  // islands (San Juan, Lopez, Shaw, Orcas at this zoom) actually have
+  // recognisable coastlines instead of being smoothed out of existence.
+  const NE = 'https://cdn.jsdelivr.net/gh/martynafford/natural-earth-geojson@master/10m/physical';
+  Promise.all([
+    fetch(`${NE}/ne_10m_land.json`).then(r => r.ok ? r.json() : Promise.reject()),
+    fetch(`${NE}/ne_10m_minor_islands.json`).then(r => r.ok ? r.json() : null).catch(() => null)
+  ])
+  .then(([landGJ, minorGJ]) => {
+    const features = [...(landGJ.features || [])];
+    if (minorGJ && minorGJ.features) features.push(...minorGJ.features);
+    _land = { type: 'FeatureCollection', features };
+    requestAnimationFrame(() => draw());
+  })
+  .catch(() => {
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
+      .then(r => r.json())
+      .then(w => {
+        _land = feature(w, w.objects.countries);
+        requestAnimationFrame(() => draw());
+      });
+  });
 
   window.addEventListener('resize', () => { if (_land) draw(); });
   const fhRoot = document.querySelector('.fh-root');
@@ -517,23 +526,90 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
       .style('display', 'block')
       .style('overflow', 'hidden');
 
-    // Sea = mist; sky-paper outside the map area
-    svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#bcc4c4');
+    // ---------- defs: hillshade (land) + bathymetry (sea) ----------
+    const defs = svg.append('defs');
 
-    // Subtle graticule
+    // Land hillshade — fractal noise + diffuse lighting from NW.
+    // userSpaceOnUse + explicit bounds so the filter region is the screen
+    // map area, not the world-scale source path's bounding box.
+    const hill = defs.append('filter').attr('id', 'fh-ferry-hill')
+      .attr('filterUnits', 'userSpaceOnUse')
+      .attr('x', padL).attr('y', padT)
+      .attr('width', mapW).attr('height', mapH)
+      .attr('color-interpolation-filters', 'sRGB');
+    hill.append('feTurbulence')
+      .attr('type', 'fractalNoise')
+      .attr('baseFrequency', '0.045')
+      .attr('numOctaves', '3')
+      .attr('seed', '17')
+      .attr('result', 'hnoise');
+    const hLight = hill.append('feDiffuseLighting')
+      .attr('in', 'hnoise')
+      .attr('surfaceScale', '3')
+      .attr('diffuseConstant', '1.0')
+      .attr('lighting-color', '#dcc89a')
+      .attr('result', 'hshade');
+    hLight.append('feDistantLight').attr('azimuth', '315').attr('elevation', '50');
+    hill.append('feComposite')
+      .attr('in', 'hshade').attr('in2', 'SourceGraphic').attr('operator', 'in');
+
+    // Sea bathymetric relief — same approach, lower contrast, cooler light,
+    // stretched lower-frequency noise so it reads like ocean ridges, not hills.
+    const sea = defs.append('filter').attr('id', 'fh-ferry-sea')
+      .attr('filterUnits', 'userSpaceOnUse')
+      .attr('x', padL).attr('y', padT)
+      .attr('width', mapW).attr('height', mapH)
+      .attr('color-interpolation-filters', 'sRGB');
+    sea.append('feTurbulence')
+      .attr('type', 'fractalNoise')
+      .attr('baseFrequency', '0.022')
+      .attr('numOctaves', '3')
+      .attr('seed', '29')
+      .attr('result', 'snoise');
+    const sLight = sea.append('feDiffuseLighting')
+      .attr('in', 'snoise')
+      .attr('surfaceScale', '1.6')
+      .attr('diffuseConstant', '0.85')
+      .attr('lighting-color', '#c5cdcf')
+      .attr('result', 'sshade');
+    sLight.append('feDistantLight').attr('azimuth', '290').attr('elevation', '28');
+
+    // ---------- sea ----------
+    // Base mist colour fills the whole figure
+    svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#bcc4c4');
+    // Subtle bathymetric relief over the map area
+    svg.append('rect').attr('x', padL).attr('y', padT)
+      .attr('width', mapW).attr('height', mapH)
+      .attr('filter', `url(#fh-ferry-sea)`)
+      .attr('opacity', 0.22)
+      .style('mix-blend-mode', 'multiply');
+
+    // Subtle graticule (slightly denser for the close zoom)
     svg.append('g').selectAll('path').data(d3.geoGraticule().step([0.25, 0.25]).lines())
       .join('path').attr('d', path).attr('fill', 'none')
       .attr('stroke', 'rgba(255,255,255,0.18)').attr('stroke-width', 0.4);
 
-    // Coastal halo (sage soft)
-    svg.append('path').datum(_land).attr('d', path)
-      .attr('fill', 'none').attr('stroke', c.sageS)
-      .attr('stroke-opacity', 0.55).attr('stroke-width', 6);
-    // Land
+    // ---------- land ----------
+    // Solid paper-cream fill (no halo — that "blue edge" is gone)
     svg.append('path').datum(_land).attr('d', path)
       .attr('fill', c.paper)
-      .attr('stroke', c.inkSoft).attr('stroke-width', 0.7)
-      .attr('stroke-linejoin', 'round');
+      .attr('stroke', 'none');
+
+    // Hillshade overlay (multiply blend onto the land base)
+    svg.append('path').datum(_land).attr('d', path)
+      .attr('filter', `url(#fh-ferry-hill)`)
+      .attr('fill', '#ffffff')
+      .attr('opacity', 0.45)
+      .style('mix-blend-mode', 'multiply');
+
+    // Crisp dark coastline ON TOP — the single signal that says "this is shore".
+    // c.ink (warm near-black) + 1.0 px so it actually reads at this zoom.
+    svg.append('path').datum(_land).attr('d', path)
+      .attr('fill', 'none')
+      .attr('stroke', c.ink)
+      .attr('stroke-width', 1.0)
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-linecap', 'round');
 
     // Route line — wider soft stroke under, dashed crisp on top
     const routeLine = d3.line()
@@ -615,7 +691,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     inG.append('rect').attr('width', inSize).attr('height', inH).attr('fill', c.mist);
     inG.append('path').datum(_land).attr('d', inPath)
       .attr('fill', c.paper2)
-      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.6).attr('stroke-width', 0.4);
+      .attr('stroke', c.ink).attr('stroke-opacity', 0.85).attr('stroke-width', 0.5);
 
     // Highlight the Anacortes—FH route in the inset
     const inRouteLine = d3.line()
