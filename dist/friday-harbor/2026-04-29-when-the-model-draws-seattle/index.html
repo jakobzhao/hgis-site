@@ -232,7 +232,7 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
   let _real = null, _claude = null;
   Promise.all([
     fetch('/data/seattle-neighborhoods-real.geojson').then(r => r.json()),
-    fetch('/data/seattle-neighborhoods-claude-tiled.geojson').then(r => r.json()),
+    fetch('/data/seattle-neighborhoods-claude-shaped.geojson').then(r => r.json()),
   ]).then(([realGJ, claudeGJ]) => {
     _real = realGJ;
     _claude = claudeGJ;
