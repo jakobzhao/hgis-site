@@ -573,9 +573,8 @@ https://hgis.uw.edu/friday-harbor/2026-04-28-anacortes-to-friday-harbor/</pre> <
     const inY = H - inH - inMargin;
     const inG = svg.append('g').attr('class', 'fh-ferry-inset')
       .attr('transform', `translate(${inX}, ${inY})`);
-    inG.append('rect').attr('x', -8).attr('y', -8)
-      .attr('width', inSize + 16).attr('height', inH + 16)
-      .attr('fill', c.paper).attr('stroke', c.rule).attr('stroke-width', 0.8).attr('rx', 4);
+    // No cream frame — the inset sits directly on the main map. A thin
+    // dark hairline around its own bounds is enough to mark it off.
 
     const insetBox = [[-123.7, 47.0], [-122.0, 49.0]];
     const inLon0 = (insetBox[0][0] + insetBox[1][0]) / 2;
@@ -595,6 +594,10 @@ https://hgis.uw.edu/friday-harbor/2026-04-28-anacortes-to-friday-harbor/</pre> <
     inG.append('path').datum(_land).attr('d', inPath)
       .attr('fill', c.paper2)
       .attr('stroke', c.ink).attr('stroke-opacity', 0.85).attr('stroke-width', 0.5);
+    // Hairline border, drawn last so route + dot stay clear inside.
+    inG.append('rect').attr('width', inSize).attr('height', inH)
+      .attr('fill', 'none').attr('stroke', c.ink).attr('stroke-opacity', 0.6)
+      .attr('stroke-width', 0.6);
 
     // Highlight the Anacortes—FH route in the inset
     const inRouteLine = d3.line()
@@ -610,12 +613,16 @@ https://hgis.uw.edu/friday-harbor/2026-04-28-anacortes-to-friday-harbor/</pre> <
       inG.append('circle').attr('cx', fhP[0]).attr('cy', fhP[1])
         .attr('r', 3).attr('fill', EVENT_DEEP).attr('stroke', c.paper).attr('stroke-width', 1);
     }
-    // Inset caption
-    inG.append('text').attr('x', inSize / 2).attr('y', inH + 14)
-      .attr('text-anchor', 'middle').attr('font-size', 9.5)
-      .attr('fill', c.inkSoft).attr('font-style', 'italic')
+    // Inset caption — placed above the inset, with a paper halo so it
+    // reads clearly against the bathymetric main-map sea.
+    inG.append('text').attr('x', inSize / 2).attr('y', -7)
+      .attr('text-anchor', 'middle').attr('font-size', 10.5)
+      .attr('fill', c.ink).attr('font-style', 'italic')
       .attr('font-family', lang === 'zh' ? '"Noto Serif SC", serif' : '"Cormorant Garamond", serif')
       .attr('letter-spacing', '0.10em')
+      .attr('paint-order', 'stroke')
+      .attr('stroke', 'rgba(245,239,226,0.95)').attr('stroke-width', 3.5)
+      .attr('stroke-linejoin', 'round')
       .text(lang === 'zh' ? '萨利什海全图' : 'Salish Sea overview');
 
     // Kick off live data once the map is on screen
