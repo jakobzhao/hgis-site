@@ -375,20 +375,21 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
   }
 
   function makeProjection(W, H) {
+    // Plain Mercator with manual scale + translate — Albers' conic
+    // distortion turns into visible arcs at city scale and does not
+    // play well with d3's fitExtent on a small bbox.
     const lon0 = (BBOX[0][0] + BBOX[1][0]) / 2;
     const lat0 = (BBOX[0][1] + BBOX[1][1]) / 2;
-    const proj = d3.geoAlbers()
-      .parallels([47.50, 47.74])
-      .rotate([-lon0, 0])
-      .center([0, lat0]);
-    // fit to bbox manually
-    const bbox = { type: 'Polygon', coordinates: [[
-      [BBOX[0][0], BBOX[0][1]], [BBOX[1][0], BBOX[0][1]],
-      [BBOX[1][0], BBOX[1][1]], [BBOX[0][0], BBOX[1][1]],
-      [BBOX[0][0], BBOX[0][1]],
-    ]]};
-    proj.fitExtent([[6, 6], [W - 6, H - 6]], bbox);
-    return proj;
+    const yProj = lat => Math.log(Math.tan(Math.PI/4 + lat * Math.PI/360));
+    const lonSpan = (BBOX[1][0] - BBOX[0][0]) * Math.PI / 180;
+    const ySpan   = yProj(BBOX[1][1]) - yProj(BBOX[0][1]);
+    const scale = Math.min(W / lonSpan, H / ySpan) * 0.96;
+    const tx = W / 2 - (lon0 * Math.PI / 180) * scale;
+    const ty = H / 2 + yProj(lat0) * scale;
+    return d3.geoMercator()
+      .scale(scale).translate([tx, ty])
+      .clipExtent([[0, 0], [W, H]])
+      .precision(0.3);
   }
 
   function drawPanel(stageId, data, style) {
