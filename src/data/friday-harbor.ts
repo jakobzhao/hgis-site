@@ -62,8 +62,8 @@ export const entries: Entry[] = [
       zh: "当模型来画西雅图",
     },
     subtitle: {
-      en: "The city's GIS office publishes 90 named neighborhoods. Asked to draw them from memory, Claude returned 35 axis-aligned rectangles — and forgot the rest. The map of what the model knows is also a map of what it doesn't.",
-      zh: "市政府公布了 90 个标准命名街区；被要求凭印象画出来，Claude 给了 35 个与经纬线对齐的矩形——其余的它没记起来。模型知道什么的地图，同时也是它不知道什么的地图。",
+      en: "Asked one neighborhood at a time, Claude returned all 90. Every one is an axis-aligned rectangle, median 615 m off, worst case 6.9 km. The map of the model's knowledge is also a map of who has written about Seattle.",
+      zh: "每次只问一个街区，Claude 给了全部 90 个回答；每一个都是与经纬度对齐的矩形，中位偏移 615 米，最差一例 6.9 公里。模型知识的地图，也是「谁写过西雅图」的地图。",
     },
     place: {
       en: "Seattle, WA · 47.6° N, 122.3° W",
