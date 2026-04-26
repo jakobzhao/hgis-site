@@ -349,11 +349,10 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
   // track a name from one map to the other).
 
   let _real = null, _claude = null;
-  // Cache-bust so a stale browser cache that still references the old
-  // neighborhood files can't keep showing them. v=2 here is just a marker
-  // — the file paths themselves changed, but cdn.jsdelivr / proxy caches
-  // sometimes hold onto old responses. Bumping forces a fresh request.
-  const CACHE_BUST = '?v=council3';
+  // Cache-bust with current timestamp so every page load gets fresh
+  // data, immune to browser / CDN caches that hold onto old responses.
+  // For a static editorial page this is fine — the data files are tiny.
+  const CACHE_BUST = '?t=' + Date.now();
   Promise.all([
     fetch('/data/seattle-council-real.geojson' + CACHE_BUST).then(r => {
       if (!r.ok) throw new Error('council-real ' + r.status);
