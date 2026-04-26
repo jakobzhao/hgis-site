@@ -78,7 +78,10 @@ Friday Harbor № {issueNo}，HGIS 实验室，
           <span class="fh-share-label">
             <span data-lang="en">{UI.shareEN.en}</span><span data-lang="zh">{UI.shareEN.zh}</span>
           </span>
+          <a class="fh-share-btn fh-share-native" data-share="native" href="#" hidden
+            ><span data-lang="en">{UI.shareNative.en}</span><span data-lang="zh">{UI.shareNative.zh}</span></a>
           <a class="fh-share-btn" data-share="x"        href="#" rel="noopener">X</a>
+          <a class="fh-share-btn" data-share="bluesky"  href="#" rel="noopener">Bluesky</a>
           <a class="fh-share-btn" data-share="linkedin" href="#" rel="noopener">LinkedIn</a>
           <a class="fh-share-btn" data-share="facebook" href="#" rel="noopener">Facebook</a>
           <a class="fh-share-btn" data-share="email"    href="#"
@@ -94,9 +97,14 @@ Friday Harbor № {issueNo}，HGIS 实验室，
             ><span data-lang="en">{UI.shareWechat.en}</span><span data-lang="zh">{UI.shareWechat.zh}</span></a>
           <a class="fh-share-btn" data-share="xhs" href="#"
             ><span data-lang="en">{UI.shareXhs.en}</span><span data-lang="zh">{UI.shareXhs.zh}</span></a>
+          <a class="fh-share-btn" data-share="douban" href="#" rel="noopener"
+            ><span data-lang="en">{UI.shareDouban.en}</span><span data-lang="zh">{UI.shareDouban.zh}</span></a>
           <a class="fh-share-btn fh-share-copy" data-share="copy" href="#"
             ><span data-lang="en">{UI.shareCopy.en}</span><span data-lang="zh">{UI.shareCopy.zh}</span></a>
         </div>
+
+        <!-- toast for transient share feedback (XHS / errors / etc.) -->
+        <div class="fh-toast" role="status" aria-live="polite"></div>
 
         <!-- WeChat QR popover (hidden by default) -->
         <div class="fh-wechat" id="fh-wechat" hidden>
@@ -105,7 +113,11 @@ Friday Harbor № {issueNo}，HGIS 实验室，
           <p class="fh-wechat-tip">
             <span data-lang="en">{UI.wechatTip.en}</span><span data-lang="zh">{UI.wechatTip.zh}</span>
           </p>
-          <code class="fh-wechat-url"></code>
+          <div class="fh-wechat-urlrow">
+            <code class="fh-wechat-url"></code>
+            <button class="fh-wechat-copy" type="button"
+              ><span data-lang="en">{UI.wechatCopy.en}</span><span data-lang="zh">{UI.wechatCopy.zh}</span></button>
+          </div>
         </div>
       </section>
 
@@ -330,6 +342,46 @@ Friday Harbor № {issueNo}，HGIS 实验室，
     color: #fff;
     border-color: var(--uw-purple);
   }
+  /* Native Web Share button — leads the row when supported.
+     The leading dot mimics a system-share glyph without an icon font. */
+  .fh-share-native {
+    background: var(--uw-purple);
+    color: #fff;
+    border-color: var(--uw-purple);
+  }
+  .fh-share-native:hover {
+    color: #fff;
+    background: #2c1f5b;
+    border-color: #2c1f5b;
+  }
+  .fh-share-native::before {
+    content: "↗";
+    margin-right: 4px;
+    font-size: 0.78em;
+  }
+  .fh-toast {
+    position: absolute;
+    left: 50%;
+    bottom: -3.2rem;
+    transform: translate(-50%, 6px);
+    background: var(--ink, #1a1a1a);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    max-width: min(420px, 86vw);
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 14;
+  }
+  .fh-toast.is-on {
+    opacity: 0.96;
+    transform: translate(-50%, 0);
+  }
   .fh-wechat {
     position: absolute;
     right: 0; top: 100%;
@@ -361,12 +413,39 @@ Friday Harbor № {issueNo}，HGIS 实验室，
     color: var(--ink-soft);
     line-height: 1.4;
   }
+  .fh-wechat-urlrow {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
   .fh-wechat-url {
+    flex: 1;
     display: block;
     font-size: 0.72rem;
     color: var(--ink-faint);
     word-break: break-all;
     line-height: 1.35;
+  }
+  .fh-wechat-copy {
+    flex: 0 0 auto;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .fh-wechat-copy:hover {
+    border-color: var(--uw-purple);
+    color: var(--uw-purple);
+  }
+  .fh-wechat-copy.is-flashed {
+    background: var(--uw-purple);
+    color: #fff;
+    border-color: var(--uw-purple);
   }
 
   @media (max-width: 880px) {
@@ -392,63 +471,128 @@ Friday Harbor № {issueNo}，HGIS 实验室，
     // ----- share row -----
     const url = location.href;
     const titleEl = root.querySelector('.fh-title');
-    const titleText = titleEl ? titleEl.innerText.trim() : document.title;
-    const u = encodeURIComponent(url);
-    const t = encodeURIComponent(titleText);
+    const ledeEl  = root.querySelector('.fh-lede');
 
-    const targets = {
-      x:        'https://x.com/intent/post?text=' + t + '&url=' + u,
-      linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + u,
-      facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
-      email:    'mailto:?subject=' + t + '&body=' + u,
-      weibo:    'https://service.weibo.com/share/share.php?url=' + u + '&title=' + t,
-    };
+    function curLang() {
+      return root.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+    }
+    function pickLangText(el, lang) {
+      if (!el) return '';
+      const span = el.querySelector('[data-lang="' + lang + '"]');
+      return (span ? span.textContent : (el.textContent || '')).trim();
+    }
+    function shareTitle() {
+      return pickLangText(titleEl, curLang()) || document.title;
+    }
+    function shareLede() {
+      return pickLangText(ledeEl, curLang());
+    }
+    function tip(key) {
+      const en = { copied: 'Link copied', xhs: 'Link copied — open Xiaohongshu and paste it.' };
+      const zh = { copied: '链接已复制', xhs: '链接已复制 —— 回到小红书 App 内粘贴即可。' };
+      return (curLang() === 'zh' ? zh : en)[key];
+    }
 
-    function flash(btn) {
+    function buildTargets() {
+      const title  = shareTitle();
+      const lede   = shareLede();
+      const t      = encodeURIComponent(title);
+      const u      = encodeURIComponent(url);
+      const teaser = encodeURIComponent(lede ? title + ' — ' + lede : title);
+      const body   = encodeURIComponent((lede ? lede + '\n\n' : '') + url);
+      return {
+        x:        'https://x.com/intent/post?text=' + teaser + '&url=' + u,
+        bluesky:  'https://bsky.app/intent/compose?text=' + teaser + '%20' + u,
+        linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + u,
+        facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
+        email:    'mailto:?subject=' + t + '&body=' + body,
+        weibo:    'https://service.weibo.com/share/share.php?url=' + u + '&title=' + t,
+        douban:   'https://www.douban.com/share/service?href=' + u + '&name=' + t,
+      };
+    }
+
+    const toast = root.querySelector('.fh-toast');
+    let toastTimer = 0;
+    function showToast(msg) {
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('is-on');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('is-on'), 2600);
+    }
+
+    function flash(btn, msg) {
       btn.classList.add('is-flashed');
-      const lang = root.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
       const orig = btn.innerHTML;
-      btn.textContent = lang === 'zh' ? '链接已复制' : 'Link copied';
+      btn.textContent = msg || tip('copied');
       setTimeout(() => { btn.classList.remove('is-flashed'); btn.innerHTML = orig; }, 1600);
     }
 
-    function copyLink(btn) {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(url).then(() => flash(btn)).catch(() => flash(btn));
-      } else {
-        const ta = document.createElement('textarea');
-        ta.value = url; document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); } catch (e) {}
-        document.body.removeChild(ta);
-        flash(btn);
-      }
+    function copyLink() {
+      return new Promise((resolve) => {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(resolve, resolve);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = url; document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+          resolve();
+        }
+      });
     }
 
     const wechat = root.querySelector('#fh-wechat');
     function openWechat() {
       if (!wechat) return;
       wechat.querySelector('.fh-wechat-qr').src =
-        'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + u;
+        'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(url);
       wechat.querySelector('.fh-wechat-url').textContent = url;
       wechat.hidden = false;
     }
     function closeWechat() { if (wechat) wechat.hidden = true; }
-    if (wechat) wechat.querySelector('.fh-wechat-x').addEventListener('click', closeWechat);
+    if (wechat) {
+      wechat.querySelector('.fh-wechat-x').addEventListener('click', closeWechat);
+      const wechatCopy = wechat.querySelector('.fh-wechat-copy');
+      if (wechatCopy) wechatCopy.addEventListener('click', () => {
+        copyLink().then(() => flash(wechatCopy));
+      });
+    }
     document.addEventListener('click', (e) => {
       if (wechat && !wechat.hidden && !wechat.contains(e.target)
           && !e.target.closest('[data-share="wechat"]')) closeWechat();
     });
 
-    root.querySelectorAll('[data-share]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+    // Native Web Share API — only revealed when supported (mobile, Safari, Chrome).
+    // When available it gives the user every share target their device knows about.
+    const nativeBtn = root.querySelector('[data-share="native"]');
+    if (nativeBtn && typeof navigator.share === 'function') {
+      nativeBtn.hidden = false;
+      nativeBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        const k = btn.getAttribute('data-share');
-        if (k === 'copy' || k === 'xhs') {
-          copyLink(btn);
+        navigator.share({
+          title: shareTitle(),
+          text:  shareLede() || shareTitle(),
+          url:   url,
+        }).catch(() => { /* user cancelled or unsupported scheme — ignore */ });
+      });
+    }
+
+    root.querySelectorAll('[data-share]').forEach(b => {
+      const k = b.getAttribute('data-share');
+      if (k === 'native') return; // handled above
+      b.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (k === 'copy') {
+          copyLink().then(() => flash(b));
+          return;
+        }
+        if (k === 'xhs') {
+          copyLink().then(() => { flash(b); showToast(tip('xhs')); });
           return;
         }
         if (k === 'wechat') { openWechat(); return; }
-        const href = targets[k];
+        const href = buildTargets()[k];
         if (!href) return;
         if (k === 'email') location.href = href;
         else window.open(href, '_blank', 'noopener,width=640,height=560');
