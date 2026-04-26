@@ -72,8 +72,68 @@ ER  - `,
   gbt:
 `赵博. ${entry.title.zh}[EB/OL]. Friday Harbor (HGIS 实验室专栏), 第 ${issueNo} 期, ${entry.date}. ${url}`,
 };
+
+// ---- JSON-LD: Article schema per piece ----
+// Each FH page is one self-contained article — schema.org/Article gives
+// search engines + reference managers a clean record (author, date,
+// keywords, canonical URL, description). One canonical headline per
+// page; the Chinese version of the title lives inside the page DOM
+// (same article, lang-toggled), so we don't double-list it here.
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': url,
+  url,
+  headline: entry.title.en,
+  description: entry.subtitle.en,
+  datePublished: entry.date,
+  dateModified: entry.date,
+  isAccessibleForFree: true,
+  keywords: [
+    ...entry.techniques,
+    'cartography',
+    'humanistic GIS',
+    'Friday Harbor',
+  ].join(', '),
+  author: {
+    '@type': 'Person',
+    name: entry.author,
+    url: 'https://hgis.uw.edu/',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Humanistic GIS Laboratory',
+    url: 'https://hgis.uw.edu/',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://hgis.uw.edu/hgis-logo.png',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': url,
+  },
+  isPartOf: {
+    '@type': 'CreativeWorkSeries',
+    name: 'Friday Harbor',
+    url: 'https://hgis.uw.edu/friday-harbor/',
+  },
+  // Place-of-interest carried as a contentLocation hint when the
+  // article is anchored to a specific bbox (most are).
+  ...(entry.thumb ? {
+    contentLocation: {
+      '@type': 'Place',
+      name: entry.place.en,
+      geo: {
+        '@type': 'GeoShape',
+        box: `${entry.thumb.bbox.south} ${entry.thumb.bbox.west} ${entry.thumb.bbox.north} ${entry.thumb.bbox.east}`,
+      },
+    },
+  } : {}),
+};
 ---
 <BaseLayout title={`${entry.title.en} · Friday Harbor`} description={entry.subtitle.en}>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <div class="fh-root" data-lang="en">
     <article class="fh-entry">
       <header class="fh-masthead">
@@ -86,9 +146,10 @@ ER  - `,
           <span data-lang="zh">{dateLong.zh}</span>
           <span class="fh-place" data-lang="en">{entry.place.en}</span>
           <span class="fh-place" data-lang="zh">{entry.place.zh}</span>
-          <button class="fh-lang-toggle" type="button" aria-label="switch language">
-            <span data-lang="en">中文</span><span data-lang="zh">EN</span>
-          </button>
+          <div class="fh-lang-switch" role="group" aria-label="language">
+            <button type="button" class="fh-lang-btn" data-lang-set="en" aria-label="English">EN</button>
+            <button type="button" class="fh-lang-btn" data-lang-set="zh" aria-label="中文">中</button>
+          </div>
         </div>
       </header>
 
@@ -290,20 +351,34 @@ ER  - `,
     text-transform: uppercase;
   }
   .fh-place { color: var(--ink); font-style: italic; text-transform: none; letter-spacing: 0; }
-  .fh-lang-toggle {
-    background: transparent;
+  /* Same EN/中 segmented switch as the FH index — both options
+     visible, the active one highlighted, so the reader sees this
+     is a choice, not a riddle. */
+  .fh-lang-switch {
+    display: inline-flex;
+    align-items: center;
     border: 1px solid var(--rule);
-    color: var(--ink);
-    padding: 3px 10px;
     border-radius: 999px;
-    font-size: 0.72rem;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    font-family: inherit;
+    padding: 2px;
+    background: var(--bg-card, #f6f3ed);
   }
-  .fh-lang-toggle:hover {
-    border-color: var(--uw-purple);
-    color: var(--uw-purple);
+  .fh-lang-btn {
+    background: transparent;
+    border: 0;
+    padding: 3px 10px;
+    font-family: inherit;
+    font-size: 0.72rem;
+    color: var(--ink-soft, #6c6358);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  .fh-lang-btn:hover:not(.is-active) { color: var(--uw-purple); }
+  .fh-lang-btn.is-active {
+    background: var(--uw-purple);
+    color: #fffdf7;
   }
 
   .fh-title {
@@ -601,12 +676,26 @@ ER  - `,
     try { lang = localStorage.getItem('fh-lang') || 'en'; } catch (e) {}
     if (lang !== 'en' && lang !== 'zh') lang = 'en';
     root.setAttribute('data-lang', lang);
-    const btn = root.querySelector('.fh-lang-toggle');
-    if (btn) btn.addEventListener('click', () => {
-      const next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+    // Segmented EN / 中 switch — clicking a button sets the language
+    // explicitly (no toggle ambiguity). Active state painted on each
+    // change so the highlighted pill always tracks the current lang.
+    const langBtns = root.querySelectorAll('.fh-lang-btn');
+    function paintLangBtns() {
+      const cur = root.getAttribute('data-lang') || 'en';
+      langBtns.forEach(b => {
+        const on = b.getAttribute('data-lang-set') === cur;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+    langBtns.forEach(b => b.addEventListener('click', () => {
+      const next = b.getAttribute('data-lang-set') || 'en';
+      if (root.getAttribute('data-lang') === next) return;
       root.setAttribute('data-lang', next);
       try { localStorage.setItem('fh-lang', next); } catch (e) {}
-    });
+      paintLangBtns();
+    }));
+    paintLangBtns();
 
     // ----- share row -----
     const url = location.href;

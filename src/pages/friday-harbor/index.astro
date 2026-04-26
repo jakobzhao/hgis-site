@@ -5,13 +5,9 @@ import { entries, UI } from '../../data/friday-harbor';
 const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
 const total = sorted.length;
 
-// Both manifesto blocks carry multiple paragraphs (what + why-the-name
-// at the top, cadence + authorship disclosure at the bottom). Split on
-// a blank line so each data string stays one logical entry.
-const topEn = UI.manifestoTop.en.split(/\n{2,}/);
-const topZh = UI.manifestoTop.zh.split(/\n{2,}/);
-const botEn = UI.manifestoBottom.en.split(/\n{2,}/);
-const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
+// Both manifesto blocks are single paragraphs now — the previous
+// "two paragraphs" treatment created an awkward asymmetry between the
+// taller top and the shorter bottom. One paragraph each balances them.
 ---
 <BaseLayout
   title="Friday Harbor"
@@ -24,19 +20,12 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
           <em><span data-lang="en">{UI.rubric.en}</span><span data-lang="zh">{UI.rubric.zh}</span></em>
         </h1>
         <div class="manifesto-wrap">
-          <div class="manifesto" data-lang="en">
-            {topEn.map(para => <p>{para}</p>)}
-          </div>
-          <div class="manifesto" data-lang="zh">
-            {topZh.map(para => <p>{para}</p>)}
-          </div>
-          <button class="fh-lang-toggle" type="button" aria-label="switch language">
-            <span data-lang="en">中文</span><span data-lang="zh">EN</span>
-          </button>
+          <p class="manifesto" data-lang="en">{UI.manifestoTop.en}</p>
+          <p class="manifesto" data-lang="zh">{UI.manifestoTop.zh}</p>
         </div>
       </header>
 
-      <div class="fh-toolbar" role="search" aria-label="search and sort articles">
+      <div class="fh-toolbar" role="search" aria-label="search, sort, and language">
         <label class="fh-search">
           <span class="fh-search-icon" aria-hidden="true">⌕</span>
           <input
@@ -54,15 +43,19 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
           <span class="fh-sort-label">
             <span data-lang="en">{UI.sortLabel.en}</span><span data-lang="zh">{UI.sortLabel.zh}</span>
           </span>
-          <button type="button" class="fh-sort-btn is-active" data-sort="newest">
+          <button type="button" class="fh-sort-btn is-active" data-sort="newest" aria-pressed="true">
             <span data-lang="en">{UI.sortNewest.en}</span><span data-lang="zh">{UI.sortNewest.zh}</span>
           </button>
-          <button type="button" class="fh-sort-btn" data-sort="oldest">
+          <button type="button" class="fh-sort-btn" data-sort="oldest" aria-pressed="false">
             <span data-lang="en">{UI.sortOldest.en}</span><span data-lang="zh">{UI.sortOldest.zh}</span>
           </button>
-          <button type="button" class="fh-sort-btn" data-sort="az">
+          <button type="button" class="fh-sort-btn" data-sort="az" aria-pressed="false">
             <span data-lang="en">{UI.sortAZ.en}</span><span data-lang="zh">{UI.sortAZ.zh}</span>
           </button>
+        </div>
+        <div class="fh-lang-switch" role="group" aria-label="language">
+          <button type="button" class="fh-lang-btn" data-lang-set="en" aria-label="English">EN</button>
+          <button type="button" class="fh-lang-btn" data-lang-set="zh" aria-label="中文">中</button>
         </div>
         <p class="fh-search-status" id="fh-status" aria-live="polite"></p>
       </div>
@@ -136,12 +129,8 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
       </p>
 
       <footer class="fh-index-foot">
-        <div class="fh-foot-explainer" data-lang="en">
-          {botEn.map(para => <p>{para}</p>)}
-        </div>
-        <div class="fh-foot-explainer" data-lang="zh">
-          {botZh.map(para => <p>{para}</p>)}
-        </div>
+        <p class="fh-foot-explainer" data-lang="en">{UI.manifestoBottom.en}</p>
+        <p class="fh-foot-explainer" data-lang="zh">{UI.manifestoBottom.zh}</p>
       </footer>
     </section>
   </div>
@@ -205,7 +194,8 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
     letter-spacing: 0.04em;
   }
   .manifesto-wrap {
-    display: flex; flex-direction: column; gap: 0.9rem; align-items: flex-start;
+    /* Manifesto is now a single paragraph; lang-toggle has moved to
+       the toolbar below, so this wrap no longer needs to stack. */
   }
   .manifesto {
     font-family: var(--serif);
@@ -213,28 +203,14 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
     line-height: 1.65;
     color: var(--ink);
     font-size: 1.02rem;
+    margin: 0;
   }
-  .manifesto p { margin: 0 0 0.85rem; }
-  .manifesto p:last-child { margin-bottom: 0; }
-  .fh-lang-toggle {
-    background: transparent;
-    border: 1px solid var(--rule);
-    color: var(--ink);
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-size: 0.72rem;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    font-family: inherit;
-    align-self: flex-end;
-  }
-  .fh-lang-toggle:hover { border-color: var(--uw-purple); color: var(--uw-purple); }
 
-  /* ---- Toolbar: search + sort -------------------------------------- */
+  /* ---- Toolbar: search + sort + language --------------------------- */
   .fh-toolbar {
     display: grid;
-    grid-template-columns: minmax(220px, 1fr) auto;
-    gap: 0.9rem 1.4rem;
+    grid-template-columns: minmax(220px, 1fr) auto auto;
+    gap: 0.9rem 1.2rem;
     align-items: center;
     margin: 1.6rem 0 0.4rem;
     padding-bottom: 0.9rem;
@@ -268,6 +244,19 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
     outline: none;
     border-color: var(--uw-purple);
     background: #fffdf7;
+  }
+  /* Keyboard-only visible focus ring (mouse click won't trigger it). */
+  .fh-search-input:focus-visible {
+    outline: 2px solid var(--uw-purple);
+    outline-offset: 2px;
+  }
+  .fh-sort-btn:focus-visible,
+  .fh-lang-btn:focus-visible,
+  .hkg-step:focus-visible,
+  .fh-show-all:focus-visible,
+  .fh-show-fewer:focus-visible {
+    outline: 2px solid var(--uw-purple);
+    outline-offset: 2px;
   }
   .fh-sort {
     display: flex;
@@ -308,6 +297,38 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
     min-height: 1em;
   }
   .fh-search-status:empty { display: none; }
+
+  /* ---- EN/中 segmented language switch ----------------------------
+     Both options visible at once + active one highlighted = the
+     reader knows it's a choice without having to interpret a single
+     mystery label. */
+  .fh-lang-switch {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 2px;
+    background: var(--bg-card, #f6f3ed);
+  }
+  .fh-lang-btn {
+    background: transparent;
+    border: 0;
+    padding: 4px 11px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    color: var(--ink-soft, #6c6358);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    line-height: 1;
+  }
+  .fh-lang-btn:hover:not(.is-active) {
+    color: var(--uw-purple);
+  }
+  .fh-lang-btn.is-active {
+    background: var(--uw-purple);
+    color: #fffdf7;
+  }
 
   /* ---- "Show all / Show fewer" + empty state ----------------------- */
   .fh-list-more {
@@ -432,8 +453,6 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
     color: var(--ink);
     font-size: 1.02rem;
   }
-  .fh-foot-explainer p { margin: 0 0 0.85rem; }
-  .fh-foot-explainer p:last-child { margin-bottom: 0; }
 
   @media (max-width: 720px) {
     .fh-index-mast { grid-template-columns: 1fr; gap: 1rem; }
@@ -526,11 +545,20 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
     const root = document.querySelector('.fh-root');
     if (!root) return;
 
-    // ----- language toggle (existing) ---------------------------------
+    // ----- language switch (segmented EN / 中) -------------------------
     var lang = 'en';
     try { lang = localStorage.getItem('fh-lang') || 'en'; } catch (e) {}
     if (lang !== 'en' && lang !== 'zh') lang = 'en';
     root.setAttribute('data-lang', lang);
+    var langBtns = root.querySelectorAll('.fh-lang-btn');
+    function paintLangButtons() {
+      var cur = root.getAttribute('data-lang') || 'en';
+      langBtns.forEach(function (b) {
+        var on = b.getAttribute('data-lang-set') === cur;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
     function applyLangToToolbar() {
       var cur = root.getAttribute('data-lang') || 'en';
       var input = document.getElementById('fh-q');
@@ -538,15 +566,18 @@ const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
         var ph = input.getAttribute('data-ph-' + cur) || '';
         input.placeholder = ph;
       }
+      paintLangButtons();
       // show-all button: render its template with current visible-hidden count
       renderToolbarStatus();
     }
-    var langBtn = root.querySelector('.fh-lang-toggle');
-    if (langBtn) langBtn.addEventListener('click', function () {
-      var next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
-      root.setAttribute('data-lang', next);
-      try { localStorage.setItem('fh-lang', next); } catch (e) {}
-      applyLangToToolbar();
+    langBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var next = b.getAttribute('data-lang-set') || 'en';
+        if (root.getAttribute('data-lang') === next) return;
+        root.setAttribute('data-lang', next);
+        try { localStorage.setItem('fh-lang', next); } catch (e) {}
+        applyLangToToolbar();
+      });
     });
 
     // ----- search + sort + default-5 limit -----------------------------

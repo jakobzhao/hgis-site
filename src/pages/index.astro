@@ -172,7 +172,11 @@ function fhDateLabel(iso: string) {
     display: grid;
     grid-template-columns: minmax(320px, 1fr) minmax(360px, 1.15fr);
     gap: 2.8rem;
-    align-items: center;
+    /* Align *bottoms* (CTA row on the left ↔ globe foot on the right)
+       instead of vertical centring — the left column is taller than
+       the globe, and centring left a visible mismatch where the
+       globe floated above the CTAs. */
+    align-items: end;
   }
   .hero-text {
     min-width: 0;

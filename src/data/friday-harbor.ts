@@ -198,21 +198,21 @@ export const entries: Entry[] = [
 
 export const UI: Record<string, Bi> = {
   rubric:     { en: "Friday Harbor",   zh: "周五港" },
-  // Top of the index page — two paragraphs: a one-line statement of
-  // what the column is and who edits it, then where the name comes from.
+  // Top of the index page — a single paragraph: what the column is +
+  // who edits it + where the name comes from, all in one breath.
   manifestoTop: {
     en:
-      "Friday Harbor is a column from the Humanistic GIS Laboratory, edited by Bo Zhao.\n\nThe name takes two layers. First, the University of Washington's marine field station on San Juan Island, north of Seattle. Second, and more to the point: the 1993 Friday Harbor meeting held there — the first sit-down between GIS scientists and critical social theorists, and the moment that opened the social turn in geographic information science. This column continues that conversation.",
+      "Friday Harbor is a column from the Humanistic GIS Laboratory, edited by Bo Zhao. The name takes two layers — first, the University of Washington's marine field station on San Juan Island, north of Seattle; second, and more to the point: the 1993 Friday Harbor meeting held there, the first sit-down between GIS scientists and critical social theorists, the moment that opened the social turn in geographic information science. This column continues that conversation.",
     zh:
-      "「周五港」是 HGIS 实验室的一个专栏，由赵博主编。\n\n名字承袭两层。一：华盛顿大学坐落于圣胡安岛上的同名海洋田野站。二，也更要紧：1993 年在那里召开的「周五港会议」——GIS 科学家与批判社会理论学者第一次正式坐到同一张桌前的对话，自此开启了地理信息科学的「社会转向」。这份札记，是那场对话的延续。",
+      "「周五港」是 HGIS 实验室的一个专栏，由赵博主编。名字承袭两层——一是华盛顿大学坐落于圣胡安岛上的同名海洋田野站；二，也更要紧：1993 年在那里召开的「周五港会议」，GIS 科学家与批判社会理论学者第一次正式坐到同一张桌前的对话，自此开启了地理信息科学的「社会转向」。这份札记，是那场对话的延续。",
   },
-  // Footer of the index page — two paragraphs: the publication cadence
-  // and the authorship / vibe-coding disclosure.
+  // Footer of the index page — a single paragraph: cadence + authorship
+  // disclosure folded together.
   manifestoBottom: {
     en:
-      "The column updates roughly two to three times a week.\n\nEach article is selected, researched, and authored by Bo Zhao; vibe coding assists with editorial polishing and cartographic refinement, but the argument — and what the map is willing to claim — remains the cartographer's.",
+      "The column updates roughly two to three times a week. Each article is selected, researched, and authored by Bo Zhao; vibe coding assists with editorial polishing and cartographic refinement, but the argument — and what the map is willing to claim — remains the cartographer's.",
     zh:
-      "本专栏每周更新约两到三篇。\n\n每一篇均由赵博选题、调研与撰写，vibe coding 仅用于辅助文字润色与制图优化；每一篇的论点、以及一张地图愿意做出哪些主张，最终都归制图者。",
+      "本专栏每周更新约两到三篇。每一篇均由赵博选题、调研与撰写，vibe coding 仅用于辅助文字润色与制图优化；每一篇的论点、以及一张地图愿意做出哪些主张，最终都归制图者。",
   },
   // Index toolbar: search + sort + collapse/expand
   searchPlaceholder: { en: "Search title, place, or theme…", zh: "搜索标题、地点或主题…" },
