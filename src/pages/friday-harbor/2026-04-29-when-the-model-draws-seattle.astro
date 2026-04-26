@@ -438,7 +438,10 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
 
     // On the Claude panel, draw the actual Seattle silhouette underneath
     // (very faint paper fill, thin stroke) so the viewer can SEE how the
-    // model's rectangles relate to where the city actually is.
+    // model's rectangles relate to where the city actually is. Then clip
+    // Claude's rectangles to that silhouette so the right panel's filled
+    // extent matches the left panel's extent — rectangles that spill into
+    // Lake Washington or Puget Sound are visibly cut off at the shoreline.
     if (style.showSilhouette) {
       svg.append('g').attr('class', 'silhouette')
         .selectAll('path')
@@ -449,19 +452,35 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
         .attr('stroke', c.inkFaint).attr('stroke-opacity', 0.45)
         .attr('stroke-width', 0.5)
         .attr('stroke-linejoin', 'round');
-    }
 
-    // Polygons
-    const layer = svg.append('g').attr('class', 'nbhd-layer');
-    layer.selectAll('path')
-      .data(data.features)
-      .join('path')
-      .attr('d', path)
-      .attr('fill', style.fill)
-      .attr('stroke', style.stroke)
-      .attr('stroke-width', 0.9)
-      .attr('stroke-dasharray', style.strokeDash || null)
-      .attr('stroke-linejoin', 'round');
+      const clipId = `seattle-clip-${stageId}`;
+      const cp = svg.append('defs').append('clipPath').attr('id', clipId);
+      cp.selectAll('path').data(_real.features).join('path').attr('d', path);
+
+      const layer = svg.append('g')
+        .attr('class', 'nbhd-layer')
+        .attr('clip-path', `url(#${clipId})`);
+      layer.selectAll('path')
+        .data(data.features)
+        .join('path')
+        .attr('d', path)
+        .attr('fill', style.fill)
+        .attr('stroke', style.stroke)
+        .attr('stroke-width', 0.9)
+        .attr('stroke-dasharray', style.strokeDash || null)
+        .attr('stroke-linejoin', 'round');
+    } else {
+      const layer = svg.append('g').attr('class', 'nbhd-layer');
+      layer.selectAll('path')
+        .data(data.features)
+        .join('path')
+        .attr('d', path)
+        .attr('fill', style.fill)
+        .attr('stroke', style.stroke)
+        .attr('stroke-width', 0.9)
+        .attr('stroke-dasharray', style.strokeDash || null)
+        .attr('stroke-linejoin', 'round');
+    }
 
     // Label only the shared set, at polygon centroid.
     // For the "real" data we may have multiple sub-features per nhood —
