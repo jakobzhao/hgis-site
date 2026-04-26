@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { entries, UI, TECH_LABELS, KIND_LABELS } from '../../data/friday-harbor';
+
+const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
+const total = sorted.length;
+---
+<BaseLayout
+  title="Friday Harbor"
+  description="A cartographer's notebook from the Humanistic GIS Lab."
+>
+  <div class="fh-root" data-lang="en">
+    <section class="fh-index">
+      <header class="fh-index-mast">
+        <h1>
+          <em><span data-lang="en">{UI.rubric.en}</span><span data-lang="zh">{UI.rubric.zh}</span></em>
+        </h1>
+        <div class="manifesto-wrap">
+          <p class="manifesto">
+            <span data-lang="en">{UI.manifesto.en}</span>
+            <span data-lang="zh">{UI.manifesto.zh}</span>
+          </p>
+          <button class="fh-lang-toggle" type="button" aria-label="switch language">
+            <span data-lang="en">中文</span><span data-lang="zh">EN</span>
+          </button>
+        </div>
+      </header>
+
+      <ol class="fh-list">
+        {sorted.map((e, i) => {
+          const dt = new Date(e.date + 'T00:00:00');
+          const dlEn = dt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+          const dlZh = dt.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric', year: 'numeric' });
+          const wdEn = dt.toLocaleDateString('en-US', { weekday: 'short' });
+          const wdZh = dt.toLocaleDateString('zh-CN', { weekday: 'short' });
+          const num = String(total - i).padStart(3, '0');
+          return (
+            <li class="fh-row">
+              <a href={`/friday-harbor/${e.slug}/`} class="fh-row-link">
+                <span class="fh-no">№ {num}</span>
+                <span class="fh-date">
+                  <b data-lang="en">{wdEn}</b><b data-lang="zh">{wdZh}</b>
+                  <span data-lang="en"> {dlEn}</span><span data-lang="zh"> {dlZh}</span>
+                </span>
+                <div class="fh-row-body">
+                  <h2>
+                    <span data-lang="en">{e.title.en}</span>
+                    <span data-lang="zh">{e.title.zh}</span>
+                  </h2>
+                  <p class="fh-row-lede">
+                    <span data-lang="en">{e.subtitle.en}</span>
+                    <span data-lang="zh">{e.subtitle.zh}</span>
+                  </p>
+                  <div class="fh-row-tags">
+                    <span class={`fh-kind kind-${e.kind}`}>
+                      <span data-lang="en">{KIND_LABELS[e.kind].en}</span>
+                      <span data-lang="zh">{KIND_LABELS[e.kind].zh}</span>
+                    </span>
+                    {e.techniques.map(t => (
+                      <span class="fh-tech">
+                        <span data-lang="en">{TECH_LABELS[t].en}</span>
+                        <span data-lang="zh">{TECH_LABELS[t].zh}</span>
+                      </span>
+                    ))}
+                    <span class="fh-place">
+                      <span data-lang="en">{e.place.en}</span>
+                      <span data-lang="zh">{e.place.zh}</span>
+                    </span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .fh-root[data-lang="en"] [data-lang="zh"] { display: none !important; }
+  .fh-root[data-lang="zh"] [data-lang="en"] { display: none !important; }
+  .fh-root[data-lang="zh"] {
+    --serif: "Cormorant Garamond", "Noto Serif SC", "Songti SC", "STSong", Georgia, serif;
+  }
+</style>
+
+<style>
+  .fh-index {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.75rem 5rem;
+  }
+  .fh-index-mast {
+    padding: 0.4rem 0 1.4rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 2rem;
+    align-items: end;
+  }
+  .fh-index-mast h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 3.2rem;
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.012em;
+  }
+  .fh-index-mast h1 em {
+    font-style: italic;
+    color: var(--uw-purple);
+  }
+  .manifesto-wrap {
+    display: flex; flex-direction: column; gap: 0.9rem; align-items: flex-start;
+  }
+  .manifesto {
+    font-family: var(--serif);
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink);
+    margin: 0;
+    font-size: 1.02rem;
+  }
+  .fh-lang-toggle {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    font-family: inherit;
+    align-self: flex-end;
+  }
+  .fh-lang-toggle:hover { border-color: var(--uw-purple); color: var(--uw-purple); }
+
+  .fh-list { list-style: none; padding: 0; margin: 1.6rem 0 0; }
+  .fh-row { border-bottom: 1px solid var(--rule); }
+  .fh-row-link {
+    display: grid;
+    grid-template-columns: 80px 180px 1fr;
+    gap: 1.4rem;
+    padding: 1.4rem 0;
+    color: var(--ink);
+    border-bottom: 0;
+    align-items: start;
+  }
+  .fh-row-link:hover { background: var(--bg-card, #f6f3ed); border-bottom: 0; }
+  .fh-row-link:hover h2 { color: var(--uw-purple); }
+  .fh-no {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    font-family: var(--serif);
+  }
+  .fh-date {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+  }
+  .fh-date b { display: block; font-weight: 600; color: var(--ink); font-size: 0.95rem; }
+  .fh-row-body h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.6rem;
+    margin: 0 0 0.4rem;
+    line-height: 1.18;
+    letter-spacing: -0.005em;
+  }
+  .fh-row-lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-faint);
+    margin: 0 0 0.7rem;
+    max-width: 640px;
+  }
+  .fh-row-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
+  .fh-kind, .fh-tech {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .fh-kind { background: var(--uw-purple); color: #fff; }
+  .fh-kind.kind-anti-map      { background: #b22222; }
+  .fh-kind.kind-cartographer-led { background: #2a4d6e; }
+  .fh-kind.kind-news-led      { background: #4a4a4a; }
+  .fh-tech {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-faint);
+  }
+  .fh-place {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-left: auto;
+  }
+
+  @media (max-width: 720px) {
+    .fh-index-mast { grid-template-columns: 1fr; gap: 1rem; }
+    .fh-row-link { grid-template-columns: 1fr; gap: 0.4rem; }
+    .fh-place { margin-left: 0; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const root = document.querySelector('.fh-root');
+    if (!root) return;
+    let lang = 'en';
+    try { lang = localStorage.getItem('fh-lang') || 'en'; } catch (e) {}
+    if (lang !== 'en' && lang !== 'zh') lang = 'en';
+    root.setAttribute('data-lang', lang);
+    const btn = root.querySelector('.fh-lang-toggle');
+    if (btn) btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+      root.setAttribute('data-lang', next);
+      try { localStorage.setItem('fh-lang', next); } catch (e) {}
+    });
+  })();
+</script>

@@ -1,0 +1,459 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { UI, TECH_LABELS, KIND_LABELS, type Entry } from '../data/friday-harbor';
+
+interface Props {
+  entry: Entry;
+}
+const { entry } = Astro.props;
+const dt = new Date(entry.date + 'T00:00:00');
+const dateLong = {
+  en: dt.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+  zh: dt.toLocaleDateString('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+};
+const issueNo = (() => {
+  const launch = new Date('2026-04-25T00:00:00');
+  const days = Math.max(0, Math.round((dt.getTime() - launch.getTime()) / 86400000));
+  return String(days + 1).padStart(3, '0');
+})();
+const year = entry.date.slice(0, 4);
+---
+<BaseLayout title={`${entry.title.en} · Friday Harbor`} description={entry.subtitle.en}>
+  <div class="fh-root" data-lang="en">
+    <article class="fh-entry">
+      <header class="fh-masthead">
+        <a href="/friday-harbor/" class="fh-rubric">
+          <em><span data-lang="en">{UI.rubric.en}</span><span data-lang="zh">{UI.rubric.zh}</span></em>
+        </a>
+        <div class="fh-meta">
+          <span>№ {issueNo}</span>
+          <span data-lang="en">{dateLong.en}</span>
+          <span data-lang="zh">{dateLong.zh}</span>
+          <span class="fh-place" data-lang="en">{entry.place.en}</span>
+          <span class="fh-place" data-lang="zh">{entry.place.zh}</span>
+          <button class="fh-lang-toggle" type="button" aria-label="switch language">
+            <span data-lang="en">中文</span><span data-lang="zh">EN</span>
+          </button>
+        </div>
+      </header>
+
+      <h1 class="fh-title">
+        <span data-lang="en">{entry.title.en}</span>
+        <span data-lang="zh">{entry.title.zh}</span>
+      </h1>
+      <p class="fh-lede">
+        <span data-lang="en">{entry.subtitle.en}</span>
+        <span data-lang="zh">{entry.subtitle.zh}</span>
+      </p>
+      <div class="fh-tags">
+        <span class={`fh-kind kind-${entry.kind}`}>
+          <span data-lang="en">{KIND_LABELS[entry.kind].en}</span>
+          <span data-lang="zh">{KIND_LABELS[entry.kind].zh}</span>
+        </span>
+        {entry.techniques.map(t => (
+          <span class="fh-tech">
+            <span data-lang="en">{TECH_LABELS[t].en}</span>
+            <span data-lang="zh">{TECH_LABELS[t].zh}</span>
+          </span>
+        ))}
+      </div>
+
+      <div class="fh-figure-wrap">
+        <slot name="figure" />
+      </div>
+
+      <div class="fh-body">
+        <section class="fh-col fh-notebook">
+          <h2><span data-lang="en">{UI.notebook.en}</span><span data-lang="zh">{UI.notebook.zh}</span></h2>
+          <div data-lang="en"><slot name="notebook-en" /></div>
+          <div data-lang="zh"><slot name="notebook-zh" /></div>
+        </section>
+        <section class="fh-col fh-provenance">
+          <h2><span data-lang="en">{UI.provenance.en}</span><span data-lang="zh">{UI.provenance.zh}</span></h2>
+          <div data-lang="en"><slot name="provenance-en" /></div>
+          <div data-lang="zh"><slot name="provenance-zh" /></div>
+        </section>
+        <section class="fh-col fh-cite">
+          <h2><span data-lang="en">{UI.howToCite.en}</span><span data-lang="zh">{UI.howToCite.zh}</span></h2>
+          <pre class="fh-citation" data-lang="en">Zhao, B. ({year}). {entry.title.en}.
+Friday Harbor № {issueNo}, HGIS Lab,
+University of Washington.
+{`https://hgis.uw.edu/friday-harbor/${entry.slug}/`}</pre>
+          <pre class="fh-citation" data-lang="zh">赵博（{year}）。{entry.title.zh}。
+Friday Harbor № {issueNo}，HGIS 实验室，
+华盛顿大学。
+{`https://hgis.uw.edu/friday-harbor/${entry.slug}/`}</pre>
+        </section>
+      </div>
+
+      <section class="fh-share" aria-label="share this entry">
+        <div class="fh-share-row">
+          <span class="fh-share-label">
+            <span data-lang="en">{UI.shareEN.en}</span><span data-lang="zh">{UI.shareEN.zh}</span>
+          </span>
+          <a class="fh-share-btn" data-share="x"        href="#" rel="noopener">X</a>
+          <a class="fh-share-btn" data-share="linkedin" href="#" rel="noopener">LinkedIn</a>
+          <a class="fh-share-btn" data-share="facebook" href="#" rel="noopener">Facebook</a>
+          <a class="fh-share-btn" data-share="email"    href="#"
+            ><span data-lang="en">{UI.shareEmail.en}</span><span data-lang="zh">{UI.shareEmail.zh}</span></a>
+        </div>
+        <div class="fh-share-row fh-share-cn">
+          <span class="fh-share-label">
+            <span data-lang="en">{UI.shareZH.en}</span><span data-lang="zh">{UI.shareZH.zh}</span>
+          </span>
+          <a class="fh-share-btn" data-share="weibo" href="#" rel="noopener"
+            ><span data-lang="en">{UI.shareWeibo.en}</span><span data-lang="zh">{UI.shareWeibo.zh}</span></a>
+          <a class="fh-share-btn" data-share="wechat" href="#"
+            ><span data-lang="en">{UI.shareWechat.en}</span><span data-lang="zh">{UI.shareWechat.zh}</span></a>
+          <a class="fh-share-btn" data-share="xhs" href="#"
+            ><span data-lang="en">{UI.shareXhs.en}</span><span data-lang="zh">{UI.shareXhs.zh}</span></a>
+          <a class="fh-share-btn fh-share-copy" data-share="copy" href="#"
+            ><span data-lang="en">{UI.shareCopy.en}</span><span data-lang="zh">{UI.shareCopy.zh}</span></a>
+        </div>
+
+        <!-- WeChat QR popover (hidden by default) -->
+        <div class="fh-wechat" id="fh-wechat" hidden>
+          <button class="fh-wechat-x" type="button" aria-label="close">×</button>
+          <img class="fh-wechat-qr" alt="WeChat QR" />
+          <p class="fh-wechat-tip">
+            <span data-lang="en">{UI.wechatTip.en}</span><span data-lang="zh">{UI.wechatTip.zh}</span>
+          </p>
+          <code class="fh-wechat-url"></code>
+        </div>
+      </section>
+
+      <footer class="fh-foot">
+        <a href="/friday-harbor/">
+          <span data-lang="en">{UI.back.en}</span><span data-lang="zh">{UI.back.zh}</span>
+        </a>
+        <span>
+          <em>{entry.author}</em>,
+          <span data-lang="en"> {UI.byline.en}</span><span data-lang="zh"> {UI.byline.zh}</span>
+        </span>
+      </footer>
+    </article>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .fh-root[data-lang="en"] [data-lang="zh"] { display: none !important; }
+  .fh-root[data-lang="zh"] [data-lang="en"] { display: none !important; }
+  .fh-root[data-lang="zh"] {
+    /* slightly tighter line for CJK */
+    --serif: "Cormorant Garamond", "Noto Serif SC", "Songti SC", "STSong", Georgia, serif;
+  }
+</style>
+
+<style>
+  .fh-entry {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.75rem 5rem;
+    color: var(--ink);
+  }
+  .fh-masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0.4rem 0 0.5rem;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .fh-rubric {
+    display: flex; flex-direction: column; line-height: 1.05;
+    color: var(--ink); border-bottom: 0;
+  }
+  .fh-rubric:hover { border-bottom: 0; }
+  .fh-rubric em {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.6rem;
+    letter-spacing: -0.005em;
+    color: var(--uw-purple);
+  }
+  .fh-rubric small {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 2px;
+  }
+  .fh-meta {
+    display: flex; gap: 1.1rem; align-items: center;
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .fh-place { color: var(--ink); font-style: italic; text-transform: none; letter-spacing: 0; }
+  .fh-lang-toggle {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .fh-lang-toggle:hover {
+    border-color: var(--uw-purple);
+    color: var(--uw-purple);
+  }
+
+  .fh-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 4.4vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.012em;
+    margin: 1.6rem 0 0.6rem;
+  }
+  .fh-lede {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.18rem;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0 0 1rem;
+    max-width: 720px;
+  }
+  .fh-tags {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    margin: 0 0 1.6rem;
+  }
+  .fh-kind, .fh-tech {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .fh-kind { background: var(--uw-purple); color: #fff; }
+  .fh-kind.kind-anti-map      { background: #b22222; }
+  .fh-kind.kind-cartographer-led { background: #2a4d6e; }
+  .fh-kind.kind-news-led      { background: #4a4a4a; }
+  .fh-tech {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-faint);
+  }
+
+  .fh-figure-wrap {
+    margin: 0 0 2rem;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 1.4rem 0;
+  }
+
+  .fh-body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 2rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.6rem;
+  }
+  .fh-col h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--uw-purple);
+    margin: 0 0 0.6rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.4rem;
+  }
+  .fh-col :global(p) { font-size: 0.92rem; line-height: 1.6; margin: 0 0 0.7rem; }
+  .fh-col :global(ul) { font-size: 0.88rem; line-height: 1.55; padding-left: 1.1rem; margin: 0; }
+  .fh-col :global(li) { margin-bottom: 0.4rem; }
+  .fh-col :global(a)  { color: var(--uw-purple); border-bottom: 1px dotted var(--uw-purple); }
+  .fh-citation {
+    background: var(--bg-card, #f6f3ed);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 0.7rem 0.8rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--ink);
+  }
+
+  .fh-foot {
+    display: flex; justify-content: space-between;
+    margin-top: 1.4rem; padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+  .fh-foot a { color: var(--uw-purple); }
+
+  /* share row */
+  .fh-share {
+    margin-top: 2.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--rule);
+    position: relative;
+  }
+  .fh-share-row {
+    display: flex; align-items: center; gap: 0.55rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+    font-size: 0.84rem;
+  }
+  .fh-share-label {
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    margin-right: 0.4rem;
+    min-width: 56px;
+  }
+  .fh-share-btn {
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 4px 12px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .fh-share-btn:hover {
+    border-color: var(--uw-purple);
+    color: var(--uw-purple);
+    border-bottom-color: var(--uw-purple);
+  }
+  .fh-share-btn.is-flashed {
+    background: var(--uw-purple);
+    color: #fff;
+    border-color: var(--uw-purple);
+  }
+  .fh-wechat {
+    position: absolute;
+    right: 0; top: 100%;
+    margin-top: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 14px 16px 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    width: 280px;
+    z-index: 12;
+  }
+  .fh-wechat-x {
+    position: absolute; right: 6px; top: 4px;
+    background: transparent; border: 0; font-size: 18px; cursor: pointer;
+    color: var(--ink-faint); line-height: 1;
+  }
+  .fh-wechat-qr {
+    display: block; margin: 0 auto 8px;
+    width: 200px; height: 200px;
+    border: 1px solid var(--rule);
+    background: #fff;
+  }
+  .fh-wechat-tip {
+    margin: 0 0 6px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .fh-wechat-url {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    word-break: break-all;
+    line-height: 1.35;
+  }
+
+  @media (max-width: 880px) {
+    .fh-body { grid-template-columns: 1fr; gap: 1.4rem; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const root = document.querySelector('.fh-root');
+    if (!root) return;
+    let lang = 'en';
+    try { lang = localStorage.getItem('fh-lang') || 'en'; } catch (e) {}
+    if (lang !== 'en' && lang !== 'zh') lang = 'en';
+    root.setAttribute('data-lang', lang);
+    const btn = root.querySelector('.fh-lang-toggle');
+    if (btn) btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+      root.setAttribute('data-lang', next);
+      try { localStorage.setItem('fh-lang', next); } catch (e) {}
+    });
+
+    // ----- share row -----
+    const url = location.href;
+    const titleEl = root.querySelector('.fh-title');
+    const titleText = titleEl ? titleEl.innerText.trim() : document.title;
+    const u = encodeURIComponent(url);
+    const t = encodeURIComponent(titleText);
+
+    const targets = {
+      x:        'https://x.com/intent/post?text=' + t + '&url=' + u,
+      linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + u,
+      facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
+      email:    'mailto:?subject=' + t + '&body=' + u,
+      weibo:    'https://service.weibo.com/share/share.php?url=' + u + '&title=' + t,
+    };
+
+    function flash(btn) {
+      btn.classList.add('is-flashed');
+      const lang = root.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+      const orig = btn.innerHTML;
+      btn.textContent = lang === 'zh' ? '链接已复制' : 'Link copied';
+      setTimeout(() => { btn.classList.remove('is-flashed'); btn.innerHTML = orig; }, 1600);
+    }
+
+    function copyLink(btn) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => flash(btn)).catch(() => flash(btn));
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = url; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        flash(btn);
+      }
+    }
+
+    const wechat = root.querySelector('#fh-wechat');
+    function openWechat() {
+      if (!wechat) return;
+      wechat.querySelector('.fh-wechat-qr').src =
+        'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + u;
+      wechat.querySelector('.fh-wechat-url').textContent = url;
+      wechat.hidden = false;
+    }
+    function closeWechat() { if (wechat) wechat.hidden = true; }
+    if (wechat) wechat.querySelector('.fh-wechat-x').addEventListener('click', closeWechat);
+    document.addEventListener('click', (e) => {
+      if (wechat && !wechat.hidden && !wechat.contains(e.target)
+          && !e.target.closest('[data-share="wechat"]')) closeWechat();
+    });
+
+    root.querySelectorAll('[data-share]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const k = btn.getAttribute('data-share');
+        if (k === 'copy' || k === 'xhs') {
+          copyLink(btn);
+          return;
+        }
+        if (k === 'wechat') { openWechat(); return; }
+        const href = targets[k];
+        if (!href) return;
+        if (k === 'email') location.href = href;
+        else window.open(href, '_blank', 'noopener,width=640,height=560');
+      });
+    });
+  })();
+</script>
