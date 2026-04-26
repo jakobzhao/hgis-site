@@ -268,55 +268,74 @@ https://hgis.uw.edu/friday-harbor/2026-04-26-where-the-cloud-touches-ground/</pr
     // Background paper
     svg.append('rect').attr('width', W).attr('height', H).attr('fill', c.paper);
 
-    // ----- Aridity wash (peaks over the Southwest, fades east) -----
-    const aridGradId = 'fh-cloud-arid';
-    const aridGrad = svg.append('defs').append('linearGradient').attr('id', aridGradId)
-      .attr('gradientUnits', 'userSpaceOnUse')
-      .attr('x1', padL).attr('y1', 0).attr('x2', padL + mapW).attr('y2', 0);
-    aridGrad.append('stop').attr('offset', '0%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.18);
-    aridGrad.append('stop').attr('offset', '22%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.55);
-    aridGrad.append('stop').attr('offset', '40%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.32);
-    aridGrad.append('stop').attr('offset', '60%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.10);
-    aridGrad.append('stop').attr('offset', '85%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.0);
-
     // States base — warm putty
     svg.append('path').datum(states).attr('d', path)
       .attr('fill', c.paper2).attr('stroke', 'none');
 
-    // Aridity overlay clipped to land
-    svg.append('path').datum(states).attr('d', path)
-      .attr('fill', `url(#${aridGradId})`).attr('stroke', 'none');
+    // ----- Climate zones (two polygons clipped to US states) -----
+    // The previous single-gradient wash didn't read clearly because warm-on-
+    // warm has limited contrast. Now: a chestnut polygon over the arid West
+    // AND a sage polygon over the humid East, so the page actually splits
+    // into two climate halves.
+    svg.append('defs').append('clipPath').attr('id', 'us-states-clip')
+      .append('path').datum(states).attr('d', path);
+    const climateG = svg.append('g').attr('clip-path', 'url(#us-states-clip)');
 
-    // State borders
+    // Arid Southwest polygon — coast of SoCal up the eastern slope of the
+    // Cascades, across MT/WY, down through the Plains/TX panhandle to S NM
+    // and back along the AZ/CA border.
+    const aridZone = {
+      type: 'Polygon',
+      coordinates: [[
+        [-124, 32], [-124, 38], [-122, 42], [-120, 49],
+        [-104, 49], [-104, 36], [-103, 31], [-110, 28],
+        [-115, 31], [-122, 32], [-124, 32]
+      ]]
+    };
+    climateG.append('path').datum(aridZone).attr('d', path)
+      .attr('fill', '#c9a874').attr('fill-opacity', 0.55)
+      .attr('stroke', 'none');
+
+    // Humid East polygon — rough Mississippi-east-coast box.
+    const humidZone = {
+      type: 'Polygon',
+      coordinates: [[
+        [-95, 25], [-95, 49], [-67, 49], [-67, 25], [-95, 25]
+      ]]
+    };
+    climateG.append('path').datum(humidZone).attr('d', path)
+      .attr('fill', '#9bb098').attr('fill-opacity', 0.42)
+      .attr('stroke', 'none');
+
+    // State borders on top of climate zones
     svg.append('path').datum(states).attr('d', path)
       .attr('fill', 'none')
-      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.40)
-      .attr('stroke-width', 0.5);
-    // National outline (slightly heavier)
-    const nation = { type: 'GeometryCollection', geometries: states.features.map(f => f.geometry) };
-    svg.append('path').datum(states).attr('d', path)
-      .attr('fill', 'none')
-      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.85)
-      .attr('stroke-width', 0.8)
+      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.45)
+      .attr('stroke-width', 0.5)
       .attr('stroke-linejoin', 'round');
 
-    // ----- "Arid Southwest" floating label -----
-    const aridLabel = lang === 'zh' ? '干旱的西南' : 'Arid Southwest';
-    const aridP = projection([-110, 36]);
-    if (aridP) {
-      const t = svg.append('text').attr('x', aridP[0]).attr('y', aridP[1])
-        .attr('fill', c.purpleD).attr('fill-opacity', 0.55)
+    // ----- Climate-zone floating labels -----
+    const climateSerif = lang === 'zh'
+      ? '"Noto Serif SC", "Songti SC", serif'
+      : '"Cormorant Garamond", Georgia, serif';
+    const climateLabels = [
+      { lonLat: [-110, 36],  text: lang === 'zh' ? '干旱的西南' : 'Arid Southwest' },
+      { lonLat: [-86,  37],  text: lang === 'zh' ? '湿润的东部' : 'Humid East' }
+    ];
+    climateLabels.forEach(({ lonLat, text }) => {
+      const p = projection(lonLat);
+      if (!p) return;
+      svg.append('text').attr('x', p[0]).attr('y', p[1])
+        .attr('fill', c.purpleD).attr('fill-opacity', 0.6)
         .attr('font-style', 'italic')
-        .attr('font-family', lang === 'zh'
-          ? '"Noto Serif SC", "Songti SC", serif'
-          : '"Cormorant Garamond", Georgia, serif')
+        .attr('font-family', climateSerif)
         .attr('font-size', 14).attr('letter-spacing', '0.30em')
         .attr('text-anchor', 'middle')
         .attr('paint-order', 'stroke')
         .attr('stroke', 'rgba(245,239,226,0.85)').attr('stroke-width', 3)
-        .attr('stroke-linejoin', 'round');
-      t.text(aridLabel);
-    }
+        .attr('stroke-linejoin', 'round')
+        .text(text);
+    });
 
     // ----- Cluster proportional symbols -----
     const maxCap = d3.max(CLUSTERS, d => d.cap);
@@ -397,25 +416,24 @@ https://hgis.uw.edu/friday-harbor/2026-04-26-where-the-cloud-touches-ground/</pr
         .text(`${cap}`);
     });
 
-    // ----- Aridity legend swatch -----
+    // ----- Climate legend (two squares matching the polygon colours) -----
     const aridSwX = padL + mapW - 240;
     const aridSwY = padT + mapH - 28;
     const aridSwG = svg.append('g').attr('transform', `translate(${aridSwX},${aridSwY})`);
-    const aridGradHX = 'fh-cloud-arid-h';
-    const aridGradH = svg.append('defs').append('linearGradient').attr('id', aridGradHX)
-      .attr('gradientUnits', 'objectBoundingBox')
-      .attr('x1', 0).attr('y1', 0).attr('x2', 1).attr('y2', 0);
-    aridGradH.append('stop').attr('offset', '0%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.78);
-    aridGradH.append('stop').attr('offset', '100%').attr('stop-color', '#e6cf9c').attr('stop-opacity', 0.0);
-    aridSwG.append('rect').attr('x', 0).attr('y', 0).attr('width', 100).attr('height', 12)
-      .attr('fill', `url(#${aridGradHX})`)
+    // Arid swatch
+    aridSwG.append('rect').attr('x', 0).attr('y', 0).attr('width', 14).attr('height', 14)
+      .attr('fill', '#c9a874').attr('fill-opacity', 0.78)
       .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.4).attr('stroke-width', 0.5);
-    aridSwG.append('text').attr('x', 0).attr('y', 26)
-      .attr('font-size', 9).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
-      .text(lang === 'zh' ? '紧张' : 'water-stressed');
-    aridSwG.append('text').attr('x', 100).attr('y', 26)
-      .attr('text-anchor', 'end')
-      .attr('font-size', 9).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+    aridSwG.append('text').attr('x', 20).attr('y', 11)
+      .attr('font-size', 10).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .text(lang === 'zh' ? '干旱 / 水资源紧张' : 'arid · water-stressed');
+    // Humid swatch (next to arid)
+    const humidOffsetX = lang === 'zh' ? 138 : 152;
+    aridSwG.append('rect').attr('x', humidOffsetX).attr('y', 0).attr('width', 14).attr('height', 14)
+      .attr('fill', '#9bb098').attr('fill-opacity', 0.78)
+      .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.4).attr('stroke-width', 0.5);
+    aridSwG.append('text').attr('x', humidOffsetX + 20).attr('y', 11)
+      .attr('font-size', 10).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
       .text(lang === 'zh' ? '湿润' : 'humid');
   }
 </script>
