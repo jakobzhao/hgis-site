@@ -55,34 +55,6 @@ export type Entry = {
 
 export const entries: Entry[] = [
   {
-    slug: "2026-04-29-when-the-model-draws-seattle",
-    date: "2026-04-29",
-    title: {
-      en: "When the Model Draws Seattle",
-      zh: "当模型来画西雅图",
-    },
-    subtitle: {
-      en: "One line to Claude: 'directly generate City Council in Seattle data, output as GeoJSON.' No list, no example. The model returned 7 district polygons (D1–D7), median 457 m off, worst case D4 at 1.7 km. Where its dividing lines match the city's, you see what it knows. Where they don't, you see exactly what it's guessing.",
-      zh: "一句话给 Claude：「直接生成西雅图市议会选区数据，输出为 GeoJSON」。没有清单，没有样例。模型返回了 7 个选区多边形（D1–D7），中位偏移 457 米，最大 D4 偏 1.7 公里。它画对的分界线，是它真知道的；画错的，就是它在猜的。",
-    },
-    place: {
-      en: "Seattle, WA · 47.6° N, 122.3° W",
-      zh: "西雅图 · 北纬 47.6°，西经 122.3°",
-    },
-    techniques: ["anti-map", "palimpsest", "projection-critique"],
-    kind: "anti-map",
-    author: "Bo Zhao",
-    thumb: {
-      bbox: { west: -122.46, east: -122.23, south: 47.49, north: 47.74 },
-      pins: [
-        { lon: -122.335, lat: 47.608 },   // Downtown
-        { lon: -122.317, lat: 47.625 },   // Capitol Hill
-        { lon: -122.380, lat: 47.668 },   // Ballard
-        { lon: -122.285, lat: 47.555 },   // Columbia City
-      ],
-    },
-  },
-  {
     slug: "2026-04-28-anacortes-to-friday-harbor",
     date: "2026-04-28",
     title: {
