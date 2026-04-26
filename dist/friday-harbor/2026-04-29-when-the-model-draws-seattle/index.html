@@ -219,8 +219,8 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
 
   let _real = null, _claude = null;
   Promise.all([
-    fetch('/data/seattle-tracts-real.geojson').then(r => r.json()),
-    fetch('/data/seattle-tracts-claude.geojson').then(r => r.json()),
+    fetch('/data/seattle-council-real.geojson').then(r => r.json()),
+    fetch('/data/seattle-council-claude.geojson').then(r => r.json()),
   ]).then(([realGJ, claudeGJ]) => {
     _real = realGJ;
     _claude = claudeGJ;
@@ -246,29 +246,23 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
     drawPanel('stage-claude', _claude, { kind: 'claude', showSilhouette: true  });
   }
 
-  // Latitude-banded tint so 90 adjacent rectangles read as 90 cells.
-  // Northern bands: cooler/paler. Southern: warmer/deeper. Same hue family
-  // (terracotta/rose) so the panel still reads as one editorial colour.
-  function claudeFill(feature) {
-    const ring = feature.geometry.coordinates[0];
-    const lat = (ring[0][1] + ring[2][1]) / 2;
-    const t = Math.max(0, Math.min(1, (47.74 - lat) / (47.74 - 47.49)));
-    const lerp = (a, b) => Math.round(a + (b - a) * t);
-    const r = lerp(214, 174);
-    const g = lerp(186, 110);
-    const b = lerp(170,  90);
-    return `rgba(${r},${g},${b},0.62)`;
+  // Categorical palette: one tint per district number, shared between
+  // both panels so D3-real and D3-claude carry the same colour and the
+  // viewer can match them by eye.
+  const D_PALETTE = {
+    1: 'rgba(186, 154, 142, 0.78)',  // rose
+    2: 'rgba(170, 132, 116, 0.78)',  // deeper rose
+    3: 'rgba(160, 168, 142, 0.78)',  // sage
+    4: 'rgba(178, 188, 168, 0.78)',  // pale sage
+    5: 'rgba(196, 178, 142, 0.78)',  // sand
+    6: 'rgba(150, 168, 174, 0.78)',  // mist blue
+    7: 'rgba(178, 158, 178, 0.78)',  // muted purple
+  };
+  function districtFill(feature) {
+    return D_PALETTE[feature.properties.num] || 'rgba(160,160,160,0.5)';
   }
-  function realFill(feature) {
-    const ring = feature.geometry.coordinates[0];
-    const ys = ring.map(p => p[1]);
-    const lat = (Math.min(...ys) + Math.max(...ys)) / 2;
-    const t = Math.max(0, Math.min(1, (47.74 - lat) / (47.74 - 47.49)));
-    const lerp = (a, b) => Math.round(a + (b - a) * t);
-    const r = lerp(178, 122);
-    const g = lerp(202, 162);
-    const b = lerp(170, 122);
-    return `rgba(${r},${g},${b},0.78)`;
+  function districtLabel(feature) {
+    return feature.properties.district || ('D' + feature.properties.num);
   }
 
   function makeProjection(W, H) {
@@ -337,23 +331,34 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
         .attr('stroke-linejoin', 'round');
     }
 
-    const isClaude = style.kind === 'claude';
-    const fillFn   = isClaude ? claudeFill : realFill;
-    const strokeC  = isClaude ? CLAUDE_STROKE : REAL_STROKE;
-
     const layer = svg.append('g').attr('class', 'nbhd-layer');
     layer.selectAll('path')
       .data(data.features)
       .join('path')
       .attr('d', path)
-      .attr('fill', d => fillFn(d))
-      .attr('stroke', strokeC)
-      .attr('stroke-opacity', 0.85)
-      .attr('stroke-width', 1.1)
+      .attr('fill', d => districtFill(d))
+      .attr('stroke', '#3a3530')
+      .attr('stroke-opacity', 0.75)
+      .attr('stroke-width', 1.4)
       .attr('stroke-linejoin', 'round');
 
-    // No labels at the tract level — tract numbers aren't legible at this
-    // panel size and aren't meaningful as orientation cues. The patchwork
-    // is the message.
+    // District labels at polygon centroid, with paper halo
+    const labelG = svg.append('g').attr('class', 'district-labels');
+    data.features.forEach(f => {
+      const cen = path.centroid(f);
+      if (!cen || isNaN(cen[0])) return;
+      labelG.append('text')
+        .attr('x', cen[0]).attr('y', cen[1])
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', 16)
+        .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
+        .attr('font-weight', 700)
+        .attr('fill', c.ink)
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(245,239,226,0.95)').attr('stroke-width', 4)
+        .attr('stroke-linejoin', 'round')
+        .text(districtLabel(f));
+    });
   }
 </script>
