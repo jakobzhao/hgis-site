@@ -11,12 +11,12 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
           <span data-lang="en">As the city publishes it</span>
           <span data-lang="zh">城市公布的版本</span>
         </div>
-        <div class="seamap-stage" id="stage-real" data-source="real" aria-label="Seattle neighborhoods, City of Seattle GIS">
+        <div class="seamap-stage" id="stage-real" data-source="real" aria-label="Seattle City Council districts, City of Seattle GIS">
           <p class="map-status"><span data-lang="en">Loading map…</span><span data-lang="zh">地图加载中…</span></p>
         </div>
         <p class="seamap-source">
-          <span data-lang="en">Source: City of Seattle Neighborhood Map Atlas (90 named neighborhoods)</span>
-          <span data-lang="zh">数据：西雅图市政府《Neighborhood Map Atlas》（共 90 个标准命名街区）</span>
+          <span data-lang="en">Source: City of Seattle Open Data — the 7 City Council districts (D1–D7), shore-clipped.</span>
+          <span data-lang="zh">数据：西雅图市政府开放数据 —— 7 个市议会选区（D1–D7），沿海岸裁切。</span>
         </p>
       </div>
 
@@ -25,180 +25,179 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
           <span data-lang="en">As Claude draws it from memory</span>
           <span data-lang="zh">Claude 凭印象画出的版本</span>
         </div>
-        <div class="seamap-stage" id="stage-claude" data-source="claude" aria-label="Seattle neighborhoods, AI from memory">
+        <div class="seamap-stage" id="stage-claude" data-source="claude" aria-label="Seattle City Council districts, AI from memory">
           <p class="map-status"><span data-lang="en">Loading map…</span><span data-lang="zh">地图加载中…</span></p>
         </div>
         <p class="seamap-source">
-          <span data-lang="en">Source: Claude (claude-opus-4-7) asked for GeoJSON polygons of named Seattle neighborhoods, no map allowed.</span>
-          <span data-lang="zh">数据：Claude（claude-opus-4-7）被请求按记忆给出西雅图街区 GeoJSON 多边形，未查询任何地图。</span>
+          <span data-lang="en">Source: Claude (claude-opus-4-7), single prompt — "directly generate City Council in Seattle data, output as GeoJSON." No external lookup.</span>
+          <span data-lang="zh">数据：Claude（claude-opus-4-7），一个完整提问——「直接生成西雅图市议会选区数据，输出为 GeoJSON」。未查询任何外部资料。</span>
         </p>
       </div>
     </div>
 
     <figcaption data-lang="en">
-      <b>The city has 90 named neighborhoods. Asked to draw all 90 boundaries — one task, real polygons, vertices following streets and water — Claude returned the patchwork on the right.</b>
-      The two maps above use the same projection, the same scale, and the same Seattle silhouette as a baseline. The left panel is what the City of Seattle GIS office publishes. The right panel is what the model produces when asked to think the boundaries through. Where two adjacent neighborhoods' edges line up cleanly, the model has the adjacency right. Where they leave gaps, overlap, or spill into water, it doesn't. Median centroid drift from the real boundary: 650 m. Worst single case: Genesee at 7.1 km.
+      <b>Seattle has 7 City Council districts (D1–D7) plus 2 at-large seats. Asked in a single line — "directly generate City Council in Seattle data, output as GeoJSON" — Claude returned the seven polygons on the right.</b>
+      Both panels use the same projection, scale, and Seattle silhouette as a baseline. Each district carries the same colour on both panels (D1 rose, D2 deeper rose, D3 sage, D4 pale sage, D5 sand, D6 mist blue, D7 muted purple) so you can match a district by eye. Median centroid drift from the real boundary: 457 m. Largest single miss: D4 (Northeast — UDist, Ravenna, Sand Point) at 1.7 km.
       <span class="legend-line">
         <span class="legend-swatch swatch-real"></span>
-        <span><b>Sage tints</b> — neighborhood polygons as the city publishes them. Edges follow streets, water, and topography. Tint deepens going south.</span>
+        <span><b>Left</b> — the city's 7 districts as the City of Seattle Open Data portal publishes them. Boundaries are precisely drawn to follow the I-5 trench, the Ship Canal, the Duwamish, MLK Way, the Lake Washington shore.</span>
       </span>
       <span class="legend-line">
         <span class="legend-swatch swatch-claude"></span>
-        <span><b>Terracotta tints</b> — what Claude drew. Same north→south depth ramp, so the patchworks are visually comparable. Where the patches don't fit, you can see exactly what the model doesn't know.</span>
+        <span><b>Right</b> — what Claude returned. Same colour key, same projection, same silhouette underneath. Where the model gets a dividing line right, the polygons line up between the two panels. Where it doesn't, you can see exactly which boundary the model has wrong.</span>
       </span>
     </figcaption>
 
     <figcaption data-lang="zh">
-      <b>这座城市有 90 个标准命名街区。请 Claude 把全部 90 条边界一并画出来——一个任务，真实多边形，顶点沿街道和水岸走——它返回的就是右边那张拼图。</b>
-      上面两张图共享同一个投影、同一个比例尺、同一份西雅图轮廓作为参照。左图是西雅图市 GIS 办公室公布的版本。右图是模型被要求自己把这些边界想清楚之后产出的结果。相邻两个街区的边线对得齐的地方，模型的「邻接关系」记对了；留下缝、相互叠、或者突进水里的地方，它没记对。质心相对真实边界的中位偏移：650 米；最离谱的一例（Genesee）偏离 7.1 公里。
+      <b>西雅图市议会有 7 个选区（D1–D7），外加 2 个 at-large 议席。用一句话提问——「直接生成西雅图市议会选区数据，输出为 GeoJSON」——Claude 返回的就是右边这 7 个多边形。</b>
+      两张图共享同一个投影、同一个比例尺、同一份西雅图轮廓作为参照。每个选区在两张图里使用同一种颜色（D1 玫瑰色，D2 深玫瑰，D3 鼠尾草，D4 浅鼠尾草，D5 沙色，D6 薄雾蓝，D7 灰紫），可以直接用眼睛对位。质心相对真实边界的中位偏移：457 米；最离谱的一例 D4（东北区——大学区、Ravenna、Sand Point）偏 1.7 公里。
       <span class="legend-line">
         <span class="legend-swatch swatch-real"></span>
-        <span><b>鼠尾草色系</b>—— 市政府公布的街区多边形。边界沿街道、水岸与地形走；越往南色调越深。</span>
+        <span><b>左图</b>—— 市政府开放数据公布的 7 个选区。边界精准地沿 I-5 高速、船运河、Duwamish 河、MLK Way、华盛顿湖湖岸走。</span>
       </span>
       <span class="legend-line">
         <span class="legend-swatch swatch-claude"></span>
-        <span><b>赭红色系</b>—— Claude 画的版本。同样的「北→南越来越深」配色，让两张拼图视觉上可以直接对比。拼不上的位置，就是模型不知道的那一部分。</span>
+        <span><b>右图</b>—— Claude 返回的版本。同一套色板、同一个投影、底下垫着同一份西雅图轮廓。模型记对了的分界线，两张图上多边形会对得齐；记错了的，你就能看到具体是哪条边走偏了。</span>
       </span>
     </figcaption>
 
     <aside class="seamap-stats" aria-label="key comparison figures">
       <div class="stat" data-lang="en">
-        <span class="stat-num">90</span>
-        <span class="stat-label">neighborhoods in the city's official atlas</span>
+        <span class="stat-num">7 + 2</span>
+        <span class="stat-label">district seats + at-large seats on the Seattle City Council</span>
       </div>
       <div class="stat" data-lang="zh">
-        <span class="stat-num">90</span>
-        <span class="stat-label">市政府官方街区图册中的街区数</span>
+        <span class="stat-num">7 + 2</span>
+        <span class="stat-label">市议会选区议席 + at-large 议席</span>
       </div>
 
       <div class="stat" data-lang="en">
-        <span class="stat-num">90 / 90</span>
-        <span class="stat-label">neighborhoods drawn (one task, all in one pass)</span>
+        <span class="stat-num">7 / 7</span>
+        <span class="stat-label">districts Claude drew in a single pass</span>
       </div>
       <div class="stat" data-lang="zh">
-        <span class="stat-num">90 / 90</span>
-        <span class="stat-label">Claude 一次性画出的街区数</span>
+        <span class="stat-num">7 / 7</span>
+        <span class="stat-label">Claude 一次性画出的选区数</span>
       </div>
 
       <div class="stat" data-lang="en">
-        <span class="stat-num">650<small>&nbsp;m</small></span>
-        <span class="stat-label">median centroid drift · mean 789 m · worst 7.1 km</span>
+        <span class="stat-num">457<small>&nbsp;m</small></span>
+        <span class="stat-label">median centroid drift · mean 733 m · worst D4 at 1.7 km</span>
       </div>
       <div class="stat" data-lang="zh">
-        <span class="stat-num">650<small>&nbsp;m</small></span>
-        <span class="stat-label">质心中位偏移 · 均值 789 米 · 最大 7.1 公里</span>
+        <span class="stat-num">457<small>&nbsp;m</small></span>
+        <span class="stat-label">质心中位偏移 · 均值 733 米 · 最大 D4 偏 1.7 公里</span>
       </div>
 
       <div class="stat" data-lang="en">
-        <span class="stat-num">36<small>&nbsp;m</small></span>
-        <span class="stat-label">best answer (Green Lake) — a famous landmark with strong text presence</span>
+        <span class="stat-num">296<small>&nbsp;m</small></span>
+        <span class="stat-label">best — D2 (Southeast Seattle, MLK spine through Rainier Valley)</span>
       </div>
       <div class="stat" data-lang="zh">
-        <span class="stat-num">36<small>&nbsp;m</small></span>
-        <span class="stat-label">最准的一例（Green Lake）——文本曝光极高的知名地标</span>
+        <span class="stat-num">296<small>&nbsp;m</small></span>
+        <span class="stat-label">最准 —— D2（东南西雅图，MLK 从北到南贯穿 Rainier Valley）</span>
       </div>
     </aside>
   </figure>
 
   <div slot="notebook-en">
     <p>
-      The exercise here is the simplest version of the question. Take the
-      City of Seattle's official list of 90 named neighborhoods. Hand the
-      whole list to Claude (Opus 4.7) as a single task: <em>draw all 90
-      boundaries</em>, with vertices that follow what you actually believe
-      the edge of each neighborhood follows — an arterial, a freeway, a
-      shoreline, a ridge. Return one GeoJSON file with all of them. No
-      external lookup. Render the result on the same projection and scale
-      as the city's data, with the city's silhouette underneath.
+      The prompt here was a single line. <em>"Directly generate City Council
+      in Seattle data, output as GeoJSON."</em> No list of districts, no
+      example, no map. The model decides on its own how many districts there
+      are, what they're called, where they sit. The result is rendered on
+      the right, against the city's actual published district boundaries on
+      the left, both panels using the same projection and the same Seattle
+      silhouette as a baseline.
     </p>
     <p>
-      The right panel is what came back. The polygons have shape — vertices
-      placed where the model thinks the edge should turn. Pike-Pine's
-      diagonal shows up. The Duwamish gets a notch. The Beacon Hill triplet
-      shares its long N–S spine. The Ballard sub-neighborhoods tile across
-      a single rectangle of north-of-the-canal city. The Rainier Valley
-      chain — Mt Baker, Genesee, Columbia City, Brighton, Dunlap, Holly
-      Park, Rainier Beach, Rainier View — runs as a single column down the
-      eastern half of South Seattle. This is no longer a checklist with
-      bounding boxes. It is the model attempting to render the city.
+      The model returned 7 polygons named D1 through D7 — which is correct.
+      Seattle has 7 district seats elected by district plus 2 at-large
+      seats, and the model knew that. Each polygon was drawn with 17 to 26
+      vertices, attempting to follow what the model believes are the major
+      dividing lines: the I-5 trench separating D6 from D5 in the north
+      and D3 from the rest of the central city, the Ship Canal cutting
+      D6 / D5 / D4 off from D7 / D3 / D2, the Duwamish River separating
+      D1 (West Seattle and South Park) from the rest, MLK Way running
+      down the spine of D2 through Rainier Valley, the Lake Washington
+      shore on the east side of D2, D3, D4.
     </p>
     <p>
-      What it gets right and what it doesn't is patterned. Green Lake lands
-      36 m off — Green Lake is a small ring around a small lake, and the
-      model has a lot of text about it. Portage Bay, Interbay, Pike Place,
-      and the International District all land within 200 m. These are
-      neighborhoods whose names are tied to legible features. The misses
-      are larger and patterned the other way. Genesee — a small Rainier
-      Valley neighborhood with almost no English-language internet presence
-      — lands 7.1 km from where it is. South Beacon Hill is 2.8 km off.
-      Pinehurst, Olympic Hills, North Beach–Blue Ridge — all in the far
-      north strip, all over 1.5 km away from where they actually sit.
-      Median drift across all 90: 650 m. Mean: 789 m.
+      The misses are uneven. D2 lands within 296 m of its real centroid —
+      the model has the Rainier Valley spine in clear focus. D6 is within
+      378 m, D1 within 445 m, D7 within 457 m. The biggest misses are
+      D5 (1.25 km) and D4 (1.7 km) — the two most-northern districts,
+      where the dividing lines are subtler and the underlying neighborhoods
+      (Lake City, Northgate, Pinehurst, Wedgwood, View Ridge) generate
+      little internet text the model could anchor against. Median drift
+      across the 7: 457 m. Mean: 733 m.
     </p>
     <p>
-      The visual evidence is even stronger than the numbers. Look along the
-      east shoreline: Madrona, Madison Park, Leschi, Mt Baker, Seward Park,
-      Rainier Beach all spill east into Lake Washington. The model knows
-      these neighborhoods touch the lake but cannot reproduce the actual
-      coastline, so its polygons cross water. Look at Magnolia: the model
-      remembers three sub-neighborhoods (Briarcliff, Lawton Park, Southeast
-      Magnolia) and three rectangles, but cannot recover the peninsula's
-      actual shape, so its three pieces overshoot into Puget Sound. Look at
-      the joins between Capitol Hill, the Central District, and Madrona:
-      gaps where the model didn't keep track of which streets divide them.
-      Each of those failures is the model showing you what it doesn't know.
+      Visually, the polygons themselves carry the information about where
+      the model is uncertain. D7 is the most over-confident — the model
+      gives it a clean Magnolia peninsula even though it doesn't really
+      know the Discovery Park bluff line. D4 reaches too far east into
+      Lake Washington at Sand Point because the model knows the district
+      includes Sand Point but doesn't know where the Magnuson Park edge
+      actually falls. D5's southern boundary is a straight line where the
+      real district has small staircase notches at every arterial. The
+      city's boundary draftspeople had a survey department and forty years
+      of redistricting practice to lean on. The model has only what has
+      been written about Seattle, and that material almost never describes
+      where one council district ends and the next begins.
     </p>
   </div>
 
   <div slot="notebook-zh">
     <p>
-      这一题问得很直接：拿西雅图市政府公布的 90 个标准命名街区列表，作为一个完整任务交给
-      Claude（Opus 4.7）——请它<em>把全部 90 条边界画出来</em>，顶点要落在它认为该街区边界实际所在的地方：
-      一条主干道、一段高速、一条湖岸、一道山脊。返回一个 GeoJSON 文件，里面是全部 90 个。
-      不允许查阅任何外部资料。把结果用同一个投影和比例尺放回去，把市政府的西雅图轮廓垫在底下作参照。
+      这一次的提问只有一句话：<em>「直接生成西雅图市议会选区数据，输出为 GeoJSON。」</em>
+      没有给选区清单，没有给样例，没有给地图。模型自己决定有几个选区、叫什么、在哪里。
+      返回的结果显示在右边，左边是市政府公布的真实选区边界。两张图共用同一个投影、同一份西雅图轮廓作底。
     </p>
     <p>
-      右图就是模型交出来的答卷。这一次，多边形是有形状的——
-      顶点放在了模型认为「边界该转折」的地方。Pike-Pine 的斜线出现了，
-      Duwamish 河有了一个缺口，三个 Beacon Hill 子街区共享了那条南北向的脊背，
-      Ballard 内部的几个子街区拼成了运河以北那块矩形城区，
-      Rainier Valley 的链条——Mt Baker、Genesee、Columbia City、Brighton、Dunlap、Holly Park、Rainier Beach、Rainier View——
-      从北到南串成了南西雅图东半部的一列。这不再是「清单加外接矩形」，这是模型在<em>真的尝试画一座城市</em>。
+      模型返回了 7 个多边形，命名 D1 到 D7——这一项是对的。
+      西雅图市议会确有 7 个选区议席外加 2 个 at-large 议席，模型知道这件事。
+      每个多边形包含 17 至 26 个顶点，试图沿着模型认为是真实分界的几条线走：
+      把 D6 与 D5、D3 与中央其他选区分开的 I-5 高速；把 D6 / D5 / D4 与 D7 / D3 / D2 分开的船运河；
+      把 D1（西雅图西区与 South Park）与其他区域分开的 Duwamish 河；
+      贯穿 D2 整个 Rainier Valley 的 MLK 大道；
+      D2、D3、D4 东侧的华盛顿湖湖岸。
     </p>
     <p>
-      它画对的和画不对的，分布是有规律的。Green Lake 的偏差只有 36 米——
-      Green Lake 是围着一个小湖的一圈，模型读到过它的文本极多。
-      Portage Bay、Interbay、Pike Place、International District 也都在 200 米以内。
-      这些街区的名字直接对应可识别的地理特征。偏得最离谱的那几例方向反过来：
-      Genesee——Rainier Valley 内一个英文互联网上几乎没人写过的小街区——偏离了 7.1 公里；
-      South Beacon Hill 偏 2.8 公里；Pinehurst、Olympic Hills、North Beach–Blue Ridge 都在最北边那条带上，
-      也都偏 1.5 公里以上。全部 90 个的中位偏移：650 米，均值 789 米。
+      偏差的分布并不均匀。D2 的中位偏移只有 296 米——
+      这一区的 Rainier Valley 主轴在模型眼里很清晰。
+      D6 偏 378 米，D1 偏 445 米，D7 偏 457 米。
+      偏得最大的是 D5（1.25 公里）和 D4（1.7 公里）——两个最北端的选区。
+      这两个区的内部分界更微妙，背后的街区（Lake City、Northgate、Pinehurst、Wedgwood、View Ridge）
+      在英文互联网上能产出的文本极少，模型基本无锚点可依。
+      7 个选区整体的中位偏移：457 米，均值 733 米。
     </p>
     <p>
-      但视觉上的证据比数字还要直接。沿着东岸看：Madrona、Madison Park、Leschi、Mt Baker、Seward Park、Rainier Beach
-      全都向东突进了华盛顿湖。模型知道这些街区临湖，但画不出真正的湖岸线，所以多边形直接踏进水里。
-      看 Magnolia：模型记住了三个子街区（Briarcliff、Lawton Park、Southeast Magnolia），
-      但记不出半岛的真实形状，于是三个矩形都越过悬崖突进了普吉特海湾。
-      再看 Capitol Hill、Central District、Madrona 三者交界的地方：
-      出现了一些缝隙——模型没记住到底是哪几条街把它们分开的。
-      每一处这样的失败，都是模型在直接告诉你它不知道什么。
+      视觉上，多边形本身就在告诉你模型在哪里没把握。D7 是最「过度自信」的——
+      模型给了它一个干净利落的 Magnolia 半岛，尽管它并不真的知道 Discovery Park 那道悬崖在哪里。
+      D4 在 Sand Point 处向东深入华盛顿湖太远——模型知道这一区包含 Sand Point，
+      但不知道 Magnuson 公园那条岸线具体怎么走。
+      D5 的南界是一条直线，而真实的 D5 南界沿每一条干线都有小阶梯状的凹凸。
+      市政府的边界绘制者背后有一支测绘队和四十年的重划经验。
+      模型背后只有「关于西雅图被写下来的那些东西」，
+      而那些材料里几乎从不告诉你某个市议会选区究竟在哪里结束、下一个在哪里开始。
     </p>
   </div>
 
   <ul slot="provenance-en">
-    <li>Real boundaries: City of Seattle Neighborhood Map Atlas via the <a href="https://github.com/seattleio/seattle-boundaries-data" rel="noopener">seattleio/seattle-boundaries-data</a> repository, filtered to <code>city == "Seattle"</code>; coordinates rounded to 4 decimal places (~11 m precision).</li>
-    <li>AI boundaries: single task issued to Claude Opus 4.7 within this writing session — "draw all 90 Seattle neighborhood boundaries, vertices following streets, freeways, shorelines, ridges; return one GeoJSON file." No external lookups. The returned polygons are stored verbatim — not reshaped, not snapped, not cleaned. The model's output is the data. File: <code>seattle-neighborhoods-claude-shaped.geojson</code>.</li>
-    <li>Both layers projected with d3-geo's Albers projection, parallels at 47.5° and 47.75°, centred on Seattle.</li>
-    <li>Centroid drift figure computed locally as the median Haversine distance between the centroid of each Claude polygon and the centroid of the same-named real polygon (35 pairs).</li>
-    <li>Source map &amp; build script: <code>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>; data files in <code>public/data/seattle-neighborhoods-real.geojson</code> and <code>seattle-neighborhoods-claude.geojson</code>.</li>
+    <li>Real boundaries: City of Seattle Open Data — the 7 City Council districts (D1–D7), shore-clipped layer from the Seattle Tree Canopy 2016/2021 dataset (which co-publishes the same official council district boundaries). Coordinates rounded to 3 decimal places (~110 m precision) for compactness; geometry preserved.</li>
+    <li>AI boundaries: single line issued to Claude Opus 4.7 within this writing session — <em>"directly generate City Council in Seattle data, output as GeoJSON."</em> No external lookups, no list of districts, no example. The returned polygons are stored verbatim — not reshaped, not snapped, not cleaned. The model's output is the data. File: <code>seattle-council-claude.geojson</code>.</li>
+    <li>Both layers projected with d3-geo's Mercator with manual scale + translate, centred on Seattle's bbox <code>[-122.46, 47.49] → [-122.23, 47.74]</code>. (Albers' conic distortion warps at city scale.)</li>
+    <li>Centroid drift figure computed locally as the Haversine distance between the centroid of each Claude polygon (D1..D7) and the centroid of the matching real polygon by district number; statistics across the 7 pairs.</li>
+    <li>Source map &amp; build script: <code>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>; data files: <code>public/data/seattle-council-real.geojson</code> and <code>seattle-council-claude.geojson</code>.</li>
   </ul>
 
   <ul slot="provenance-zh">
-    <li>真实边界：西雅图市《Neighborhood Map Atlas》，经 <a href="https://github.com/seattleio/seattle-boundaries-data" rel="noopener">seattleio/seattle-boundaries-data</a> 仓库加载，筛选 <code>city == "Seattle"</code>；坐标保留 4 位小数（约 11 m 精度）。</li>
-    <li>AI 边界：在本次写作会话中，向 Claude Opus 4.7 提交一个完整任务——「请把 90 个西雅图街区边界都画出来，顶点沿主干道、高速、湖岸、山脊走，返回一个 GeoJSON 文件」。禁止查阅外部资料。返回的多边形原样保存——未做整形、未对齐网格、未清洗。模型输出本身就是数据。文件：<code>seattle-neighborhoods-claude-shaped.geojson</code>。</li>
-    <li>两层数据均用 d3-geo 的 Albers 投影渲染，标准纬线 47.5°、47.75°，中心点设在西雅图。</li>
-    <li>质心偏移：本地计算，每对同名街区（共 35 对）的多边形质心间的 Haversine 距离，取其中位数。</li>
-    <li>源码与构建脚本：<code>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>；数据文件：<code>public/data/seattle-neighborhoods-real.geojson</code> 与 <code>seattle-neighborhoods-claude.geojson</code>。</li>
+    <li>真实边界：西雅图市政府开放数据——7 个市议会选区（D1–D7），沿海岸裁切的图层（来自市府的 Seattle Tree Canopy 2016/2021 数据集，附带的边界图层与官方选区一致）。坐标保留 3 位小数（约 110 米精度）以减小文件体积；几何形状保留完整。</li>
+    <li>AI 边界：在本次写作会话中，向 Claude Opus 4.7 发送一句提问——<em>「直接生成西雅图市议会选区数据，输出为 GeoJSON。」</em>不允许查阅外部资料，不给选区清单，不给样例。返回的多边形原样保存——未做整形、未对齐网格、未清洗。模型输出本身就是数据。文件：<code>seattle-council-claude.geojson</code>。</li>
+    <li>两层数据均用 d3-geo 的墨卡托投影 + 手动 scale/translate 渲染，中心定在西雅图的 bbox <code>[-122.46, 47.49] → [-122.23, 47.74]</code>。（Albers 圆锥投影在城市尺度下会扭曲。）</li>
+    <li>质心偏移：本地计算，每个 D1..D7 选区的 Claude 多边形质心 vs 同号实际选区多边形质心的 Haversine 距离，对 7 对取统计量。</li>
+    <li>源码与构建脚本：<code>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>；数据文件：<code>public/data/seattle-council-real.geojson</code> 与 <code>seattle-council-claude.geojson</code>。</li>
   </ul>
 </FridayHarborLayout>
 
@@ -359,7 +358,7 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
     requestAnimationFrame(drawAll);
   }).catch(err => {
     document.querySelectorAll('.map-status').forEach(el => {
-      el.textContent = 'Could not load neighborhood data.';
+      el.textContent = 'Could not load council district data.';
     });
   });
 

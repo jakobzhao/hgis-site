@@ -62,8 +62,8 @@ export const entries: Entry[] = [
       zh: "当模型来画西雅图",
     },
     subtitle: {
-      en: "Asked to draw all 90 Seattle neighborhood boundaries one by one, Claude returned 90 real polygons — vertices following arterials, freeways, shorelines. Where adjacent neighborhoods' edges meet, the model's mental adjacency is correct. Where they don't, you can see what the model doesn't actually know.",
-      zh: "请 Claude 把西雅图 90 个街区的边界一个一个画出来——它返回了 90 个真实多边形，顶点沿着主干道、高速、湖岸线走。相邻街区的边界对齐的地方，是模型记对了的部分；对不上的地方，是模型其实并不知道的那部分。",
+      en: "One line to Claude: 'directly generate City Council in Seattle data, output as GeoJSON.' No list, no example. The model returned 7 district polygons (D1–D7), median 457 m off, worst case D4 at 1.7 km. Where its dividing lines match the city's, you see what it knows. Where they don't, you see exactly what it's guessing.",
+      zh: "一句话给 Claude：「直接生成西雅图市议会选区数据，输出为 GeoJSON」。没有清单，没有样例。模型返回了 7 个选区多边形（D1–D7），中位偏移 457 米，最大 D4 偏 1.7 公里。它画对的分界线，是它真知道的；画错的，就是它在猜的。",
     },
     place: {
       en: "Seattle, WA · 47.6° N, 122.3° W",
