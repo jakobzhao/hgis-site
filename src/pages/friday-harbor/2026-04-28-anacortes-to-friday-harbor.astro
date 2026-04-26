@@ -28,12 +28,8 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
       last year's scheduled sailings on this corridor, roughly one in eight
       did not depart. The map below shows the route now.
       <span class="legend-line">
-        <span class="legend-swatch swatch-ferry-route"></span>
-        <span><b>Anacortes — Friday Harbor route</b> — the corridor through the islands.</span>
-      </span>
-      <span class="legend-line">
         <span class="legend-swatch swatch-ferry-vessel"></span>
-        <span><b>Active vessels</b> — current position, heading shown by the arrow tip.</span>
+        <span><b>Active vessels</b> — current position, heading shown by the arrow tip. The route line is shown only in the small overview at the bottom-right; on the main map, drawing it at this zoom would have to either cross small islands or run inside their coastlines, both of which would mislead more than they explain.</span>
       </span>
     </figcaption>
 
@@ -45,12 +41,8 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
       仍在运行。船队更老了，船员短缺，而去年这条走廊上排定的航次中，
       约每 8 班就有 1 班没能开出。下面这张图，是这条线此刻的样子。
       <span class="legend-line">
-        <span class="legend-swatch swatch-ferry-route"></span>
-        <span><b>阿纳科蒂斯 — 周五港 航线</b>—— 穿越群岛的走廊。</span>
-      </span>
-      <span class="legend-line">
         <span class="legend-swatch swatch-ferry-vessel"></span>
-        <span><b>活跃船位</b>—— 当前位置，箭头指向行驶方向。</span>
+        <span><b>活跃船位</b>—— 当前位置，箭头指向行驶方向。航线只在右下角的小图里画出；主图这一级缩放上，可拿到的最细海岸线数据已经把那些窄水道平滑掉了，硬画一条线要么会切过小岛、要么会跑到岛的轮廓内部，都比不画更误导。</span>
       </span>
     </figcaption>
 
@@ -188,7 +180,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     <li>Terminal coordinates: WSDOT Terminals API; rendered to ~5 m accuracy.</li>
     <li>System statistics: <a href="https://wsdot.wa.gov/travel/washington-state-ferries/our-fleet" rel="noopener">WSF Our Fleet</a>; <a href="https://wsdot.wa.gov/travel/washington-state-ferries/about-wsf" rel="noopener">WSF About</a>; <a href="https://wsdot.wa.gov/travel/washington-state-ferries/performance-statistics" rel="noopener">WSF Performance Statistics</a>.</li>
     <li>Friday Harbor meeting reference: National Center for Geographic Information and Analysis, Initiative 19; <em>Ground Truth</em> (Pickles, ed., 1995).</li>
-    <li>Coastline: Natural Earth 1:10m via natural-earth-geojson; for the inset, the world coastline tile.</li>
+    <li>Coastline: Natural Earth 1:10m (the finest tier Natural Earth ships) via natural-earth-geojson, augmented with the matching <code>ne_10m_coastline</code> and <code>ne_10m_minor_islands_coastline</code> line layers. Even at 1:10m, narrow channels in the San Juan archipelago (Thatcher Pass, Upright Channel) sit below the data's effective resolution; for that reason the route corridor is intentionally not drawn on the main map. Going finer would require an OSM-derived shoreline pipeline (osmcoastline / GSHHG full-resolution), which is a build-time data step rather than a runtime fetch.</li>
     <li>Source map &amp; build script: <code>src/pages/friday-harbor/2026-04-28-anacortes-to-friday-harbor.astro</code>.</li>
   </ul>
 
@@ -198,7 +190,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     <li>码头坐标：WSDOT Terminals API；渲染精度约 5 m。</li>
     <li>系统数据：<a href="https://wsdot.wa.gov/travel/washington-state-ferries/our-fleet" rel="noopener">WSF Our Fleet</a>、<a href="https://wsdot.wa.gov/travel/washington-state-ferries/about-wsf" rel="noopener">About</a>、<a href="https://wsdot.wa.gov/travel/washington-state-ferries/performance-statistics" rel="noopener">Performance Statistics</a>。</li>
     <li>「周五港会议」参考：NCGIA Initiative 19；<em>Ground Truth</em>（Pickles 主编，1995）。</li>
-    <li>海岸线：Natural Earth 1:10m，经 natural-earth-geojson 加载；inset 用同源世界海岸线图层。</li>
+    <li>海岸线：Natural Earth 1:10m（Natural Earth 提供的最细一档），经 natural-earth-geojson 加载，并叠加同源的 <code>ne_10m_coastline</code> 与 <code>ne_10m_minor_islands_coastline</code> 线图层。即便如此，圣胡安群岛之间的窄水道（Thatcher Pass、Upright Channel 等）已经在该数据的有效分辨率之下；因此主图刻意不画航线走廊。要再细一档，必须使用 OSM 派生的海岸线数据（osmcoastline / GSHHG 全分辨率），那属于构建时的数据流水线，不是运行时拉取能解决的。</li>
     <li>源码与构建脚本：<code>src/pages/friday-harbor/2026-04-28-anacortes-to-friday-harbor.astro</code>。</li>
   </ul>
 </FridayHarborLayout>
@@ -262,12 +254,6 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
   .ferry-figure figcaption .legend-swatch {
     flex: 0 0 auto;
     margin-top: 4px;
-  }
-  .swatch-ferry-route {
-    width: 28px; height: 4px;
-    background: var(--uw-purple-deep);
-    border-radius: 1px;
-    margin-top: 9px;
   }
   .swatch-ferry-vessel {
     width: 16px; height: 16px;
@@ -645,18 +631,14 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
         .attr('stroke-linecap', 'round');
     }
 
-    // Route line — wider soft stroke under, dashed crisp on top
-    const routeLine = d3.line()
-      .curve(d3.curveCatmullRom.alpha(0.5))
-      .x(d => _projection(d)[0])
-      .y(d => _projection(d)[1]);
-    svg.append('path').attr('d', routeLine(ROUTE))
-      .attr('fill', 'none').attr('stroke', c.purpleD).attr('stroke-opacity', 0.16)
-      .attr('stroke-width', 8).attr('stroke-linecap', 'round');
-    svg.append('path').attr('d', routeLine(ROUTE))
-      .attr('fill', 'none').attr('stroke', c.purpleD).attr('stroke-opacity', 0.85)
-      .attr('stroke-width', 1.4).attr('stroke-dasharray', '6 5')
-      .attr('stroke-linecap', 'round');
+    // The literal route line is intentionally NOT drawn on the main map.
+    // Reason: at 1:10m coastline resolution (the finest free hosted layer),
+    // small channels like Thatcher Pass and Upright Channel are smoothed
+    // beyond the width any honest route line would have to thread. Drawing
+    // a synthetic curve inevitably appears to cut across land. The two
+    // terminal markers and the live vessel positions tell the route
+    // without that visual lie. The inset still shows a stylised highlight
+    // for system-wide context. Geometry kept in ROUTE for the inset.
 
     // Terminals
     const termG = svg.append('g').attr('class', 'fh-terminals');
@@ -762,21 +744,22 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
       const p = _projection([v.lon, v.lat]);
       if (!p) return;
       const g = _vesselLayer.append('g').attr('transform', `translate(${p[0]},${p[1]}) rotate(${(v.heading || 0) - 90})`);
-      // Boat triangle pointing along heading (rotated so 0° = up; subtract 90 above so that 0° heading = north up)
-      g.append('path')
-        .attr('d', 'M -7 -5 L 7 0 L -7 5 L -3 0 Z')
-        .attr('fill', EVENT_DEEP)
-        .attr('stroke', c.paper).attr('stroke-width', 1)
-        .attr('stroke-linejoin', 'round');
-      // soft halo for visibility on the mist sea
-      g.append('circle').attr('cx', 0).attr('cy', 0).attr('r', 11)
-        .attr('fill', 'none').attr('stroke', c.rose).attr('stroke-opacity', 0.30).attr('stroke-width', 4)
-        .attr('pointer-events', 'none')
-        .lower();
-      // tiny gentle blink
-      const halo = g.select('circle');
+      // Soft outer halo first so it sits BEHIND the boat triangle
+      const halo = g.append('circle').attr('cx', 0).attr('cy', 0).attr('r', 9)
+        .attr('fill', 'none').attr('stroke', c.rose)
+        .attr('stroke-opacity', 0.55).attr('stroke-width', 2.2)
+        .attr('pointer-events', 'none');
+      halo.append('animate').attr('attributeName', 'r')
+        .attr('values', '7;13;7').attr('dur', '2.6s').attr('repeatCount', 'indefinite');
       halo.append('animate').attr('attributeName', 'stroke-opacity')
-        .attr('values', '0.40;0.12;0.40').attr('dur', '2.6s').attr('repeatCount', 'indefinite');
+        .attr('values', '0.65;0.05;0.65').attr('dur', '2.6s').attr('repeatCount', 'indefinite');
+      // Boat arrow — sized to read at full-bleed zoom; rotation already
+      // applied at the group, so 0° = up and the heading offset is in transform.
+      g.append('path')
+        .attr('d', 'M -8 -6 L 10 0 L -8 6 L -3 0 Z')
+        .attr('fill', EVENT_DEEP)
+        .attr('stroke', c.paper).attr('stroke-width', 1.4)
+        .attr('stroke-linejoin', 'round');
     });
   }
 </script>
