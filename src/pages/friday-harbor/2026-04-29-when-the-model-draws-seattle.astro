@@ -36,28 +36,28 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
     </div>
 
     <figcaption data-lang="en">
-      <b>The city has 90 named neighborhoods. Prompted one at a time as "[name] neighborhood, Seattle," Claude returned all 90 — and every single one is an axis-aligned rectangle.</b>
-      The two maps above use the same projection, the same scale, and the same Seattle silhouette as a baseline. The left panel is what the City of Seattle GIS office publishes. The right panel is what the model holds — 90 rectangles whose corners snap to lat/lon grid lines rounded at three decimal places. Median centroid drift from the real boundary: 615 m. The worst single answer (Genesee) lands 6.9 km away.
+      <b>The city has 90 named neighborhoods. Asked to draw all 90 boundaries — one task, real polygons, vertices following streets and water — Claude returned the patchwork on the right.</b>
+      The two maps above use the same projection, the same scale, and the same Seattle silhouette as a baseline. The left panel is what the City of Seattle GIS office publishes. The right panel is what the model produces when asked to think the boundaries through. Where two adjacent neighborhoods' edges line up cleanly, the model has the adjacency right. Where they leave gaps, overlap, or spill into water, it doesn't. Median centroid drift from the real boundary: 650 m. Worst single case: Genesee at 7.1 km.
       <span class="legend-line">
         <span class="legend-swatch swatch-real"></span>
-        <span><b>Sage</b> — neighborhood polygons as the city publishes them. Edges follow streets, water, and topography.</span>
+        <span><b>Sage tints</b> — neighborhood polygons as the city publishes them. Edges follow streets, water, and topography. Tint deepens going south.</span>
       </span>
       <span class="legend-line">
         <span class="legend-swatch swatch-claude"></span>
-        <span><b>Terracotta</b> — what Claude returned. Edges are straight lines between rounded coordinates because the model does not really have a coastline; it has a list.</span>
+        <span><b>Terracotta tints</b> — what Claude drew. Same north→south depth ramp, so the patchworks are visually comparable. Where the patches don't fit, you can see exactly what the model doesn't know.</span>
       </span>
     </figcaption>
 
     <figcaption data-lang="zh">
-      <b>这座城市有 90 个标准命名街区。每个街区按"[名字] neighborhood, Seattle"的格式被逐一询问，Claude 全部 90 个都返回了——每一个，都是与经纬度对齐的矩形。</b>
-      上面两张图共享同一个投影、同一个比例尺、同一份西雅图轮廓作为参照。左图是西雅图市 GIS 办公室公布的版本。右图是这个语言模型大脑里的版本——90 个矩形，所有顶点取整到三位小数后的经纬度。质心相对真实边界的中位偏移为 615 米；最离谱的一例（Genesee）偏离了 6.9 公里。
+      <b>这座城市有 90 个标准命名街区。请 Claude 把全部 90 条边界一并画出来——一个任务，真实多边形，顶点沿街道和水岸走——它返回的就是右边那张拼图。</b>
+      上面两张图共享同一个投影、同一个比例尺、同一份西雅图轮廓作为参照。左图是西雅图市 GIS 办公室公布的版本。右图是模型被要求自己把这些边界想清楚之后产出的结果。相邻两个街区的边线对得齐的地方，模型的「邻接关系」记对了；留下缝、相互叠、或者突进水里的地方，它没记对。质心相对真实边界的中位偏移：650 米；最离谱的一例（Genesee）偏离 7.1 公里。
       <span class="legend-line">
         <span class="legend-swatch swatch-real"></span>
-        <span><b>鼠尾草色</b>—— 市政府公布的街区多边形。边界沿街道、水岸与地形走。</span>
+        <span><b>鼠尾草色系</b>—— 市政府公布的街区多边形。边界沿街道、水岸与地形走；越往南色调越深。</span>
       </span>
       <span class="legend-line">
         <span class="legend-swatch swatch-claude"></span>
-        <span><b>赭红色</b>—— Claude 返回的多边形。边界是取整经纬度之间的直线段——因为模型并没有海岸线，它只有一份列表。</span>
+        <span><b>赭红色系</b>—— Claude 画的版本。同样的「北→南越来越深」配色，让两张拼图视觉上可以直接对比。拼不上的位置，就是模型不知道的那一部分。</span>
       </span>
     </figcaption>
 
@@ -73,119 +73,134 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
 
       <div class="stat" data-lang="en">
         <span class="stat-num">90 / 90</span>
-        <span class="stat-label">neighborhoods Claude attempted (one prompt per neighborhood)</span>
+        <span class="stat-label">neighborhoods drawn (one task, all in one pass)</span>
       </div>
       <div class="stat" data-lang="zh">
         <span class="stat-num">90 / 90</span>
-        <span class="stat-label">Claude 尝试画出的街区数（每个街区一次提问）</span>
+        <span class="stat-label">Claude 一次性画出的街区数</span>
       </div>
 
       <div class="stat" data-lang="en">
-        <span class="stat-num">100<small>&nbsp;%</small></span>
-        <span class="stat-label">of Claude's polygons are axis-aligned rectangles</span>
+        <span class="stat-num">650<small>&nbsp;m</small></span>
+        <span class="stat-label">median centroid drift · mean 789 m · worst 7.1 km</span>
       </div>
       <div class="stat" data-lang="zh">
-        <span class="stat-num">100<small>&nbsp;%</small></span>
-        <span class="stat-label">Claude 的多边形——全部都是与经纬度对齐的矩形</span>
+        <span class="stat-num">650<small>&nbsp;m</small></span>
+        <span class="stat-label">质心中位偏移 · 均值 789 米 · 最大 7.1 公里</span>
       </div>
 
       <div class="stat" data-lang="en">
-        <span class="stat-num">615<small>&nbsp;m</small></span>
-        <span class="stat-label">median centroid drift from the real boundary · worst 6.9 km</span>
+        <span class="stat-num">36<small>&nbsp;m</small></span>
+        <span class="stat-label">best answer (Green Lake) — a famous landmark with strong text presence</span>
       </div>
       <div class="stat" data-lang="zh">
-        <span class="stat-num">615<small>&nbsp;m</small></span>
-        <span class="stat-label">质心相对真实边界的中位偏移 · 最大 6.9 公里</span>
+        <span class="stat-num">36<small>&nbsp;m</small></span>
+        <span class="stat-label">最准的一例（Green Lake）——文本曝光极高的知名地标</span>
       </div>
     </aside>
   </figure>
 
   <div slot="notebook-en">
     <p>
-      The exercise is small. Take the City of Seattle's official list of 90
-      named neighborhoods. Prompt Claude (Opus 4.7) ninety times — once per
-      neighborhood, formatted as <em>"[name] neighborhood, Seattle"</em>.
-      For each prompt, ask for a single GeoJSON polygon: the model's best
-      recall of where that neighborhood sits. No external lookups. Render
-      what comes back at the same scale and projection as the city's data,
-      with the city's actual silhouette underneath as a baseline.
+      The exercise here is the simplest version of the question. Take the
+      City of Seattle's official list of 90 named neighborhoods. Hand the
+      whole list to Claude (Opus 4.7) as a single task: <em>draw all 90
+      boundaries</em>, with vertices that follow what you actually believe
+      the edge of each neighborhood follows — an arterial, a freeway, a
+      shoreline, a ridge. Return one GeoJSON file with all of them. No
+      external lookup. Render the result on the same projection and scale
+      as the city's data, with the city's silhouette underneath.
     </p>
     <p>
-      The answer is on the right. Claude returned ninety polygons — one for
-      each prompt. Every single one is a rectangle whose sides are aligned
-      to lines of latitude and longitude, and whose corners are coordinates
-      rounded to three decimal places. The model did not draw a city; it
-      drew a checklist with bounding boxes attached. Lake Washington,
-      Puget Sound, Lake Union, the Ship Canal, the Duwamish, I-5, the
-      diagonal of East Madison — none of these enter the geometry, because
-      the model does not have geometry. It has centroids it can recite, with
-      arbitrary rectangular skirts thrown over them.
+      The right panel is what came back. The polygons have shape — vertices
+      placed where the model thinks the edge should turn. Pike-Pine's
+      diagonal shows up. The Duwamish gets a notch. The Beacon Hill triplet
+      shares its long N–S spine. The Ballard sub-neighborhoods tile across
+      a single rectangle of north-of-the-canal city. The Rainier Valley
+      chain — Mt Baker, Genesee, Columbia City, Brighton, Dunlap, Holly
+      Park, Rainier Beach, Rainier View — runs as a single column down the
+      eastern half of South Seattle. This is no longer a checklist with
+      bounding boxes. It is the model attempting to render the city.
     </p>
     <p>
-      The error is unevenly distributed. Pike Place lands within 71 m of its
-      true location — it is a famous landmark with strong text presence.
-      Portage Bay, Interbay, Gatewood, Green Lake all land inside 200 m.
-      The misses are striking and patterned. Genesee — a small Rainier
-      Valley neighborhood with little online presence — lands 6.9 km away.
-      South Beacon Hill is 3.6 km off. Windermere, Mid-Beacon Hill,
-      Rainier Beach: all over a kilometre out of place. Median drift across
-      all 90 is 615 m. Mean is 805 m, dragged up by the long tail of
-      neighborhoods that Claude has read about only barely.
+      What it gets right and what it doesn't is patterned. Green Lake lands
+      36 m off — Green Lake is a small ring around a small lake, and the
+      model has a lot of text about it. Portage Bay, Interbay, Pike Place,
+      and the International District all land within 200 m. These are
+      neighborhoods whose names are tied to legible features. The misses
+      are larger and patterned the other way. Genesee — a small Rainier
+      Valley neighborhood with almost no English-language internet presence
+      — lands 7.1 km from where it is. South Beacon Hill is 2.8 km off.
+      Pinehurst, Olympic Hills, North Beach–Blue Ridge — all in the far
+      north strip, all over 1.5 km away from where they actually sit.
+      Median drift across all 90: 650 m. Mean: 789 m.
     </p>
     <p>
-      What this exposes is not stupidity. It is the shape of the model's
-      knowledge. The model has read about Seattle from the parts of the
-      internet that talk about Seattle most: real-estate listings, restaurant
-      reviews, news about Capitol Hill, the U District, Ballard, Fremont,
-      tourist material about Pike Place. It has read less about Genesee,
-      Atlantic, Holly Park, Riverview, Roxhill, Olympic Hills. The further a
-      neighborhood sits from the centre of English-language internet
-      attention, the further the model's rectangle drifts from where it
-      actually is.
+      The visual evidence is even stronger than the numbers. Look along the
+      east shoreline: Madrona, Madison Park, Leschi, Mt Baker, Seward Park,
+      Rainier Beach all spill east into Lake Washington. The model knows
+      these neighborhoods touch the lake but cannot reproduce the actual
+      coastline, so its polygons cross water. Look at Magnolia: the model
+      remembers three sub-neighborhoods (Briarcliff, Lawton Park, Southeast
+      Magnolia) and three rectangles, but cannot recover the peninsula's
+      actual shape, so its three pieces overshoot into Puget Sound. Look at
+      the joins between Capitol Hill, the Central District, and Madrona:
+      gaps where the model didn't keep track of which streets divide them.
+      Each of those failures is the model showing you what it doesn't know.
     </p>
     <p>
       This is therefore a small anti-map of the kind the Friday Harbor
       project argues for. It does not show the city. It shows the
-      <em>shape of attention</em> that produced the model — and a city that
-      would be unrecognisable to anyone who lives south of I-90.
+      <em>shape of attention</em> that produced the model. The places that
+      get drawn well are the places the English-language internet has
+      written about — landmarks, tourist sites, gentrification stories,
+      real-estate beats. The places that get drawn badly are the rest.
     </p>
   </div>
 
   <div slot="notebook-zh">
     <p>
-      这一页做的事情很简单：拿西雅图市政府公布的 90 个标准命名街区，每个街区作为一个独立提问，按
-      <em>"[name] neighborhood, Seattle"</em> 的格式问 Claude（Opus 4.7）一次，请它返回该街区的 GeoJSON 多边形。
-      不允许查阅任何外部资料。把 90 个回答放回同一张图，用同一个投影、同一个比例尺，把市政府的真实西雅图轮廓垫在底下作为参照。
+      这一题问得很直接：拿西雅图市政府公布的 90 个标准命名街区列表，作为一个完整任务交给
+      Claude（Opus 4.7）——请它<em>把全部 90 条边界画出来</em>，顶点要落在它认为该街区边界实际所在的地方：
+      一条主干道、一段高速、一条湖岸、一道山脊。返回一个 GeoJSON 文件，里面是全部 90 个。
+      不允许查阅任何外部资料。把结果用同一个投影和比例尺放回去，把市政府的西雅图轮廓垫在底下作参照。
     </p>
     <p>
-      右图就是答案。Claude 返回了 90 个多边形——每个提问对应一个。每一个，都是一组与经纬线对齐的矩形，所有顶点都是保留三位小数的取整坐标。这不是一座城市的地图，这是一份「清单 + 外接矩形」。
-      华盛顿湖、普吉特海湾、联合湖、船运河、Duwamish 河、I-5 高速、E Madison 的斜街——
-      全都不进入这套几何，因为模型没有几何。它只有一些可以背诵出来的中心点坐标，外加任意尺寸的矩形外套。
+      右图就是模型交出来的答卷。这一次，多边形是有形状的——
+      顶点放在了模型认为「边界该转折」的地方。Pike-Pine 的斜线出现了，
+      Duwamish 河有了一个缺口，三个 Beacon Hill 子街区共享了那条南北向的脊背，
+      Ballard 内部的几个子街区拼成了运河以北那块矩形城区，
+      Rainier Valley 的链条——Mt Baker、Genesee、Columbia City、Brighton、Dunlap、Holly Park、Rainier Beach、Rainier View——
+      从北到南串成了南西雅图东半部的一列。这不再是「清单加外接矩形」，这是模型在<em>真的尝试画一座城市</em>。
     </p>
     <p>
-      错误的分布并不均匀。Pike Place（派克市场）的偏差只有 71 米——它是知名地标，文本曝光极高。
-      Portage Bay、Interbay、Gatewood、Green Lake 也都在 200 米以内。但偏离最大的几例非常有特征：
-      Genesee——一个 Rainier Valley 内的小街区，互联网上几乎没人写过它——偏离了 6.9 公里；South Beacon Hill 偏 3.6 公里；
-      Windermere、Mid-Beacon Hill、Rainier Beach——都超过 1 公里。全部 90 个的中位偏移是 615 米，
-      均值 805 米，被那条「长尾上模型几乎没读过」的街区拉高。
+      它画对的和画不对的，分布是有规律的。Green Lake 的偏差只有 36 米——
+      Green Lake 是围着一个小湖的一圈，模型读到过它的文本极多。
+      Portage Bay、Interbay、Pike Place、International District 也都在 200 米以内。
+      这些街区的名字直接对应可识别的地理特征。偏得最离谱的那几例方向反过来：
+      Genesee——Rainier Valley 内一个英文互联网上几乎没人写过的小街区——偏离了 7.1 公里；
+      South Beacon Hill 偏 2.8 公里；Pinehurst、Olympic Hills、North Beach–Blue Ridge 都在最北边那条带上，
+      也都偏 1.5 公里以上。全部 90 个的中位偏移：650 米，均值 789 米。
     </p>
     <p>
-      这暴露的不是模型的「笨」。它暴露的是这个模型的知识本身的形状——
-      它从互联网上谈论西雅图最多的那些角落读到了西雅图：房产挂牌、餐评、关于
-      Capitol Hill / U District / Ballard / Fremont 的新闻、关于 Pike Place 的旅游材料。
-      它没怎么读到过 Genesee、Atlantic、Holly Park、Riverview、Roxhill、Olympic Hills。
-      一个街区离「英文互联网注意力中心」越远，模型给它的矩形也就离它本来的位置越远。
+      但视觉上的证据比数字还要直接。沿着东岸看：Madrona、Madison Park、Leschi、Mt Baker、Seward Park、Rainier Beach
+      全都向东突进了华盛顿湖。模型知道这些街区临湖，但画不出真正的湖岸线，所以多边形直接踏进水里。
+      看 Magnolia：模型记住了三个子街区（Briarcliff、Lawton Park、Southeast Magnolia），
+      但记不出半岛的真实形状，于是三个矩形都越过悬崖突进了普吉特海湾。
+      再看 Capitol Hill、Central District、Madrona 三者交界的地方：
+      出现了一些缝隙——模型没记住到底是哪几条街把它们分开的。
+      每一处这样的失败，都是模型在直接告诉你它不知道什么。
     </p>
     <p>
-      所以这是 Friday Harbor 这条脉络所主张的那种「反图」（anti-map）——它呈现的不是城市，
-      而是<em>生产这个模型的那份注意力的形状</em>。对一个住在 I-90 以南的人来说，
-      右图里的西雅图是认不出来的。
+      所以这是 Friday Harbor 脉络所主张的那种「反图」（anti-map）——它呈现的不是城市，
+      而是<em>生产这个模型的那份注意力的形状</em>。被画好的街区，是英文互联网写过最多的那些——
+      地标、旅游点、士绅化新闻、房产报道。被画坏的街区，是其余那些。
     </p>
   </div>
 
   <ul slot="provenance-en">
     <li>Real boundaries: City of Seattle Neighborhood Map Atlas via the <a href="https://github.com/seattleio/seattle-boundaries-data" rel="noopener">seattleio/seattle-boundaries-data</a> repository, filtered to <code>city == "Seattle"</code>; coordinates rounded to 4 decimal places (~11 m precision).</li>
-    <li>AI boundaries: prompt issued to Claude Opus 4.7 within this writing session, asking for GeoJSON polygons of named Seattle neighborhoods with no external lookups. The returned polygons are stored verbatim — not reshaped, not cleaned. The model's output is the data.</li>
+    <li>AI boundaries: single task issued to Claude Opus 4.7 within this writing session — "draw all 90 Seattle neighborhood boundaries, vertices following streets, freeways, shorelines, ridges; return one GeoJSON file." No external lookups. The returned polygons are stored verbatim — not reshaped, not snapped, not cleaned. The model's output is the data. File: <code>seattle-neighborhoods-claude-shaped.geojson</code>.</li>
     <li>Both layers projected with d3-geo's Albers projection, parallels at 47.5° and 47.75°, centred on Seattle.</li>
     <li>Centroid drift figure computed locally as the median Haversine distance between the centroid of each Claude polygon and the centroid of the same-named real polygon (35 pairs).</li>
     <li>Source map &amp; build script: <code>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>; data files in <code>public/data/seattle-neighborhoods-real.geojson</code> and <code>seattle-neighborhoods-claude.geojson</code>.</li>
@@ -193,7 +208,7 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
 
   <ul slot="provenance-zh">
     <li>真实边界：西雅图市《Neighborhood Map Atlas》，经 <a href="https://github.com/seattleio/seattle-boundaries-data" rel="noopener">seattleio/seattle-boundaries-data</a> 仓库加载，筛选 <code>city == "Seattle"</code>；坐标保留 4 位小数（约 11 m 精度）。</li>
-    <li>AI 边界：在本次写作会话中，向 Claude Opus 4.7 发出请求，要求返回西雅图街区的 GeoJSON 多边形，禁止查阅外部资料。返回的多边形原样保存——未做任何整形、对齐或清洗。模型输出本身就是数据。</li>
+    <li>AI 边界：在本次写作会话中，向 Claude Opus 4.7 提交一个完整任务——「请把 90 个西雅图街区边界都画出来，顶点沿主干道、高速、湖岸、山脊走，返回一个 GeoJSON 文件」。禁止查阅外部资料。返回的多边形原样保存——未做整形、未对齐网格、未清洗。模型输出本身就是数据。文件：<code>seattle-neighborhoods-claude-shaped.geojson</code>。</li>
     <li>两层数据均用 d3-geo 的 Albers 投影渲染，标准纬线 47.5°、47.75°，中心点设在西雅图。</li>
     <li>质心偏移：本地计算，每对同名街区（共 35 对）的多边形质心间的 Haversine 距离，取其中位数。</li>
     <li>源码与构建脚本：<code>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>；数据文件：<code>public/data/seattle-neighborhoods-real.geojson</code> 与 <code>seattle-neighborhoods-claude.geojson</code>。</li>

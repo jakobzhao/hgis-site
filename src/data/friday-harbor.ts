@@ -62,8 +62,8 @@ export const entries: Entry[] = [
       zh: "当模型来画西雅图",
     },
     subtitle: {
-      en: "Asked one neighborhood at a time, Claude returned all 90. Every one is an axis-aligned rectangle, median 615 m off, worst case 6.9 km. The map of the model's knowledge is also a map of who has written about Seattle.",
-      zh: "每次只问一个街区，Claude 给了全部 90 个回答；每一个都是与经纬度对齐的矩形，中位偏移 615 米，最差一例 6.9 公里。模型知识的地图，也是「谁写过西雅图」的地图。",
+      en: "Asked to draw all 90 Seattle neighborhood boundaries one by one, Claude returned 90 real polygons — vertices following arterials, freeways, shorelines. Where adjacent neighborhoods' edges meet, the model's mental adjacency is correct. Where they don't, you can see what the model doesn't actually know.",
+      zh: "请 Claude 把西雅图 90 个街区的边界一个一个画出来——它返回了 90 个真实多边形，顶点沿着主干道、高速、湖岸线走。相邻街区的边界对齐的地方，是模型记对了的部分；对不上的地方，是模型其实并不知道的那部分。",
     },
     place: {
       en: "Seattle, WA · 47.6° N, 122.3° W",
