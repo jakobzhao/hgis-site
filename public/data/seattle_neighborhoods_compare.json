@@ -1,0 +1,1708 @@
+{
+  "summary": {
+    "ai_features": 73,
+    "real_features": 94,
+    "matched_pairs": 64,
+    "unmatched_ai": [
+      "Northgate",
+      "Lake City",
+      "Magnolia",
+      "Queen Anne",
+      "Cascade",
+      "Capitol Hill",
+      "Downtown",
+      "Beacon Hill",
+      "Delridge"
+    ],
+    "real_missing_from_ai": [
+      "Briarcliff",
+      "Broadway",
+      "Central Business District",
+      "Dunlap",
+      "East Queen Anne",
+      "Fairmount Park",
+      "Gatewood",
+      "Holly Park",
+      "Industrial District",
+      "Lawton Park",
+      "Licton Springs",
+      "Loyal Heights",
+      "Mann",
+      "Mid-Beacon Hill",
+      "Montlake",
+      "North Queen Anne",
+      "Pike-Market",
+      "Portage Bay",
+      "Rainier View",
+      "Roxhill",
+      "Seaview",
+      "South Beacon Hill",
+      "South Delridge",
+      "Southeast Magnolia",
+      "Stevens",
+      "Sunset Hill",
+      "University Heights",
+      "University of Washington",
+      "Victory Heights",
+      "West Queen Anne",
+      "West Woodland",
+      "Westlake",
+      "Windermere",
+      "Yesler Terrace"
+    ],
+    "ai_union_area_km2": 407.98,
+    "real_union_area_km2": 216.43,
+    "ai_covers_real_fraction": 0.979,
+    "ai_overlap_inside_real_fraction": 0.519,
+    "median_centroid_shift_km": 3.654,
+    "median_iou": 0.0,
+    "top_centroid_shift": [
+      {
+        "ai_name": "Olympic Hills",
+        "real_match": "Olympic Hills",
+        "ai_area_km2": 5.151,
+        "ai_centroid_lonlat": [
+          -122.2594,
+          47.67862
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 2.399,
+        "area_ratio_ai_over_real": 2.148,
+        "iou": 0.0,
+        "centroid_shift_km": 6.259,
+        "real_centroid_lonlat": [
+          -122.30276,
+          47.72673
+        ]
+      },
+      {
+        "ai_name": "Ravenna",
+        "real_match": "Ravenna",
+        "ai_area_km2": 3.42,
+        "ai_centroid_lonlat": [
+          -122.27812,
+          47.62224
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 3.415,
+        "area_ratio_ai_over_real": 1.001,
+        "iou": 0.0,
+        "centroid_shift_km": 6.103,
+        "real_centroid_lonlat": [
+          -122.29998,
+          47.67513
+        ]
+      },
+      {
+        "ai_name": "Roosevelt",
+        "real_match": "Roosevelt",
+        "ai_area_km2": 4.935,
+        "ai_centroid_lonlat": [
+          -122.30183,
+          47.63016
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.995,
+        "area_ratio_ai_over_real": 2.473,
+        "iou": 0.0,
+        "centroid_shift_km": 5.982,
+        "real_centroid_lonlat": [
+          -122.31642,
+          47.68307
+        ]
+      },
+      {
+        "ai_name": "Maple Leaf",
+        "real_match": "Maple Leaf",
+        "ai_area_km2": 9.299,
+        "ai_centroid_lonlat": [
+          -122.29624,
+          47.65025
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 3.192,
+        "area_ratio_ai_over_real": 2.913,
+        "iou": 0.0,
+        "centroid_shift_km": 5.663,
+        "real_centroid_lonlat": [
+          -122.31885,
+          47.69886
+        ]
+      },
+      {
+        "ai_name": "Othello",
+        "real_match": "Brighton",
+        "ai_area_km2": 9.783,
+        "ai_centroid_lonlat": [
+          -122.27071,
+          47.48836
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.705,
+        "area_ratio_ai_over_real": 5.737,
+        "iou": 0.0,
+        "centroid_shift_km": 5.625,
+        "real_centroid_lonlat": [
+          -122.27534,
+          47.53888
+        ]
+      },
+      {
+        "ai_name": "Denny-Blaine",
+        "real_match": "Harrison/Denny-Blaine",
+        "ai_area_km2": 2.031,
+        "ai_centroid_lonlat": [
+          -122.25142,
+          47.57982
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.263,
+        "area_ratio_ai_over_real": 1.608,
+        "iou": 0.0,
+        "centroid_shift_km": 5.56,
+        "real_centroid_lonlat": [
+          -122.28721,
+          47.62361
+        ]
+      }
+    ],
+    "worst_iou": [
+      {
+        "ai_name": "Pinehurst",
+        "real_match": "Pinehurst",
+        "ai_area_km2": 6.855,
+        "ai_centroid_lonlat": [
+          -122.29677,
+          47.69494
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 2.733,
+        "area_ratio_ai_over_real": 2.508,
+        "iou": 0.0,
+        "centroid_shift_km": 3.291,
+        "real_centroid_lonlat": [
+          -122.31919,
+          47.72039
+        ]
+      },
+      {
+        "ai_name": "Cedar Park",
+        "real_match": "Cedar Park",
+        "ai_area_km2": 2.543,
+        "ai_centroid_lonlat": [
+          -122.23953,
+          47.71884
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.898,
+        "area_ratio_ai_over_real": 1.34,
+        "iou": 0.0,
+        "centroid_shift_km": 3.625,
+        "real_centroid_lonlat": [
+          -122.2873,
+          47.7238
+        ]
+      },
+      {
+        "ai_name": "Matthews Beach",
+        "real_match": "Matthews Beach",
+        "ai_area_km2": 4.705,
+        "ai_centroid_lonlat": [
+          -122.23566,
+          47.68546
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 2.876,
+        "area_ratio_ai_over_real": 1.636,
+        "iou": 0.0,
+        "centroid_shift_km": 4.063,
+        "real_centroid_lonlat": [
+          -122.2817,
+          47.7047
+        ]
+      },
+      {
+        "ai_name": "Olympic Hills",
+        "real_match": "Olympic Hills",
+        "ai_area_km2": 5.151,
+        "ai_centroid_lonlat": [
+          -122.2594,
+          47.67862
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 2.399,
+        "area_ratio_ai_over_real": 2.148,
+        "iou": 0.0,
+        "centroid_shift_km": 6.259,
+        "real_centroid_lonlat": [
+          -122.30276,
+          47.72673
+        ]
+      },
+      {
+        "ai_name": "Meadowbrook",
+        "real_match": "Meadowbrook",
+        "ai_area_km2": 6.908,
+        "ai_centroid_lonlat": [
+          -122.26337,
+          47.67533
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.582,
+        "area_ratio_ai_over_real": 4.368,
+        "iou": 0.0,
+        "centroid_shift_km": 4.168,
+        "real_centroid_lonlat": [
+          -122.29622,
+          47.70556
+        ]
+      },
+      {
+        "ai_name": "View Ridge",
+        "real_match": "View Ridge",
+        "ai_area_km2": 7.286,
+        "ai_centroid_lonlat": [
+          -122.24308,
+          47.65903
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 2.378,
+        "area_ratio_ai_over_real": 3.064,
+        "iou": 0.0,
+        "centroid_shift_km": 3.512,
+        "real_centroid_lonlat": [
+          -122.27364,
+          47.68295
+        ]
+      }
+    ],
+    "biggest_bloat": [
+      {
+        "ai_name": "Ballard",
+        "real_match": "Ballard",
+        "ai_area_km2": 19.381,
+        "ai_centroid_lonlat": [
+          -122.39256,
+          47.66232
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 2.094,
+        "area_ratio_ai_over_real": 9.257,
+        "iou": 0.108,
+        "centroid_shift_km": 0.979,
+        "real_centroid_lonlat": [
+          -122.38636,
+          47.67007
+        ]
+      },
+      {
+        "ai_name": "High Point",
+        "real_match": "High Point",
+        "ai_area_km2": 18.221,
+        "ai_centroid_lonlat": [
+          -122.35849,
+          47.51223
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 2.167,
+        "area_ratio_ai_over_real": 8.408,
+        "iou": 0.0,
+        "centroid_shift_km": 3.654,
+        "real_centroid_lonlat": [
+          -122.36878,
+          47.54436
+        ]
+      },
+      {
+        "ai_name": "Crown Hill",
+        "real_match": "Crown Hill",
+        "ai_area_km2": 10.0,
+        "ai_centroid_lonlat": [
+          -122.36035,
+          47.6887
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.473,
+        "area_ratio_ai_over_real": 6.789,
+        "iou": 0.12,
+        "centroid_shift_km": 1.296,
+        "real_centroid_lonlat": [
+          -122.3725,
+          47.69699
+        ]
+      },
+      {
+        "ai_name": "West Seattle Junction",
+        "real_match": "Genesee",
+        "ai_area_km2": 13.246,
+        "ai_centroid_lonlat": [
+          -122.37721,
+          47.532
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.965,
+        "area_ratio_ai_over_real": 6.742,
+        "iou": 0.0,
+        "centroid_shift_km": 3.777,
+        "real_centroid_lonlat": [
+          -122.3876,
+          47.56524
+        ]
+      },
+      {
+        "ai_name": "Othello",
+        "real_match": "Brighton",
+        "ai_area_km2": 9.783,
+        "ai_centroid_lonlat": [
+          -122.27071,
+          47.48836
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.705,
+        "area_ratio_ai_over_real": 5.737,
+        "iou": 0.0,
+        "centroid_shift_km": 5.625,
+        "real_centroid_lonlat": [
+          -122.27534,
+          47.53888
+        ]
+      }
+    ],
+    "biggest_shrink": [
+      {
+        "ai_name": "Wedgwood",
+        "real_match": "Wedgwood",
+        "ai_area_km2": 1.581,
+        "ai_centroid_lonlat": [
+          -122.273,
+          47.65633
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 2.841,
+        "area_ratio_ai_over_real": 0.557,
+        "iou": 0.0,
+        "centroid_shift_km": 4.065,
+        "real_centroid_lonlat": [
+          -122.29189,
+          47.69061
+        ]
+      },
+      {
+        "ai_name": "Sand Point",
+        "real_match": "Sand Point",
+        "ai_area_km2": 1.058,
+        "ai_centroid_lonlat": [
+          -122.24069,
+          47.64319
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.787,
+        "area_ratio_ai_over_real": 0.592,
+        "iou": 0.0,
+        "centroid_shift_km": 4.391,
+        "real_centroid_lonlat": [
+          -122.25611,
+          47.6813
+        ]
+      },
+      {
+        "ai_name": "North Beacon Hill",
+        "real_match": "North Beacon Hill",
+        "ai_area_km2": 2.664,
+        "ai_centroid_lonlat": [
+          -122.28794,
+          47.5468
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 4.5,
+        "area_ratio_ai_over_real": 0.592,
+        "iou": 0.001,
+        "centroid_shift_km": 3.873,
+        "real_centroid_lonlat": [
+          -122.30977,
+          47.57836
+        ]
+      },
+      {
+        "ai_name": "Interbay",
+        "real_match": "Interbay",
+        "ai_area_km2": 2.004,
+        "ai_centroid_lonlat": [
+          -122.38033,
+          47.6235
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 3.11,
+        "area_ratio_ai_over_real": 0.644,
+        "iou": 0.042,
+        "centroid_shift_km": 2.027,
+        "real_centroid_lonlat": [
+          -122.38107,
+          47.64173
+        ]
+      },
+      {
+        "ai_name": "Central District",
+        "real_match": "Minor",
+        "ai_area_km2": 1.563,
+        "ai_centroid_lonlat": [
+          -122.30676,
+          47.57476
+        ],
+        "ai_confidence": "low",
+        "real_area_km2": 1.665,
+        "area_ratio_ai_over_real": 0.939,
+        "iou": 0.0,
+        "centroid_shift_km": 3.791,
+        "real_centroid_lonlat": [
+          -122.30921,
+          47.60883
+        ]
+      }
+    ]
+  },
+  "per": [
+    {
+      "ai_name": "Broadview",
+      "real_match": "Broadview",
+      "ai_area_km2": 15.109,
+      "ai_centroid_lonlat": [
+        -122.37945,
+        47.71967
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 4.467,
+      "area_ratio_ai_over_real": 3.382,
+      "iou": 0.28,
+      "centroid_shift_km": 1.044,
+      "real_centroid_lonlat": [
+        -122.36555,
+        47.7202
+      ]
+    },
+    {
+      "ai_name": "Bitter Lake",
+      "real_match": "Bitter Lake",
+      "ai_area_km2": 8.044,
+      "ai_centroid_lonlat": [
+        -122.33864,
+        47.7223
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.571,
+      "area_ratio_ai_over_real": 3.129,
+      "iou": 0.131,
+      "centroid_shift_km": 0.922,
+      "real_centroid_lonlat": [
+        -122.35022,
+        47.71953
+      ]
+    },
+    {
+      "ai_name": "Haller Lake",
+      "real_match": "Haller Lake",
+      "ai_area_km2": 10.033,
+      "ai_centroid_lonlat": [
+        -122.30755,
+        47.71603
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 4.382,
+      "area_ratio_ai_over_real": 2.289,
+      "iou": 0.006,
+      "centroid_shift_km": 2.167,
+      "real_centroid_lonlat": [
+        -122.33544,
+        47.72112
+      ]
+    },
+    {
+      "ai_name": "Pinehurst",
+      "real_match": "Pinehurst",
+      "ai_area_km2": 6.855,
+      "ai_centroid_lonlat": [
+        -122.29677,
+        47.69494
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.733,
+      "area_ratio_ai_over_real": 2.508,
+      "iou": 0.0,
+      "centroid_shift_km": 3.291,
+      "real_centroid_lonlat": [
+        -122.31919,
+        47.72039
+      ]
+    },
+    {
+      "ai_name": "North Beach / Blue Ridge",
+      "real_match": "North Beach/Blue Ridge",
+      "ai_area_km2": 11.075,
+      "ai_centroid_lonlat": [
+        -122.40719,
+        47.69313
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.884,
+      "area_ratio_ai_over_real": 3.841,
+      "iou": 0.115,
+      "centroid_shift_km": 1.872,
+      "real_centroid_lonlat": [
+        -122.38421,
+        47.69968
+      ]
+    },
+    {
+      "ai_name": "Crown Hill",
+      "real_match": "Crown Hill",
+      "ai_area_km2": 10.0,
+      "ai_centroid_lonlat": [
+        -122.36035,
+        47.6887
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.473,
+      "area_ratio_ai_over_real": 6.789,
+      "iou": 0.12,
+      "centroid_shift_km": 1.296,
+      "real_centroid_lonlat": [
+        -122.3725,
+        47.69699
+      ]
+    },
+    {
+      "ai_name": "Greenwood",
+      "real_match": "Greenwood",
+      "ai_area_km2": 6.59,
+      "ai_centroid_lonlat": [
+        -122.33269,
+        47.68368
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.903,
+      "area_ratio_ai_over_real": 1.688,
+      "iou": 0.004,
+      "centroid_shift_km": 2.06,
+      "real_centroid_lonlat": [
+        -122.35532,
+        47.69417
+      ]
+    },
+    {
+      "ai_name": "Northgate",
+      "real_match": null,
+      "ai_area_km2": 7.838,
+      "ai_centroid_lonlat": [
+        -122.29312,
+        47.67682
+      ],
+      "ai_confidence": "low"
+    },
+    {
+      "ai_name": "Lake City",
+      "real_match": null,
+      "ai_area_km2": 11.192,
+      "ai_centroid_lonlat": [
+        -122.2659,
+        47.71411
+      ],
+      "ai_confidence": "low"
+    },
+    {
+      "ai_name": "Cedar Park",
+      "real_match": "Cedar Park",
+      "ai_area_km2": 2.543,
+      "ai_centroid_lonlat": [
+        -122.23953,
+        47.71884
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.898,
+      "area_ratio_ai_over_real": 1.34,
+      "iou": 0.0,
+      "centroid_shift_km": 3.625,
+      "real_centroid_lonlat": [
+        -122.2873,
+        47.7238
+      ]
+    },
+    {
+      "ai_name": "Matthews Beach",
+      "real_match": "Matthews Beach",
+      "ai_area_km2": 4.705,
+      "ai_centroid_lonlat": [
+        -122.23566,
+        47.68546
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.876,
+      "area_ratio_ai_over_real": 1.636,
+      "iou": 0.0,
+      "centroid_shift_km": 4.063,
+      "real_centroid_lonlat": [
+        -122.2817,
+        47.7047
+      ]
+    },
+    {
+      "ai_name": "Olympic Hills",
+      "real_match": "Olympic Hills",
+      "ai_area_km2": 5.151,
+      "ai_centroid_lonlat": [
+        -122.2594,
+        47.67862
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.399,
+      "area_ratio_ai_over_real": 2.148,
+      "iou": 0.0,
+      "centroid_shift_km": 6.259,
+      "real_centroid_lonlat": [
+        -122.30276,
+        47.72673
+      ]
+    },
+    {
+      "ai_name": "Meadowbrook",
+      "real_match": "Meadowbrook",
+      "ai_area_km2": 6.908,
+      "ai_centroid_lonlat": [
+        -122.26337,
+        47.67533
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.582,
+      "area_ratio_ai_over_real": 4.368,
+      "iou": 0.0,
+      "centroid_shift_km": 4.168,
+      "real_centroid_lonlat": [
+        -122.29622,
+        47.70556
+      ]
+    },
+    {
+      "ai_name": "View Ridge",
+      "real_match": "View Ridge",
+      "ai_area_km2": 7.286,
+      "ai_centroid_lonlat": [
+        -122.24308,
+        47.65903
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.378,
+      "area_ratio_ai_over_real": 3.064,
+      "iou": 0.0,
+      "centroid_shift_km": 3.512,
+      "real_centroid_lonlat": [
+        -122.27364,
+        47.68295
+      ]
+    },
+    {
+      "ai_name": "Wedgwood",
+      "real_match": "Wedgwood",
+      "ai_area_km2": 1.581,
+      "ai_centroid_lonlat": [
+        -122.273,
+        47.65633
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.841,
+      "area_ratio_ai_over_real": 0.557,
+      "iou": 0.0,
+      "centroid_shift_km": 4.065,
+      "real_centroid_lonlat": [
+        -122.29189,
+        47.69061
+      ]
+    },
+    {
+      "ai_name": "Ballard",
+      "real_match": "Ballard",
+      "ai_area_km2": 19.381,
+      "ai_centroid_lonlat": [
+        -122.39256,
+        47.66232
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.094,
+      "area_ratio_ai_over_real": 9.257,
+      "iou": 0.108,
+      "centroid_shift_km": 0.979,
+      "real_centroid_lonlat": [
+        -122.38636,
+        47.67007
+      ]
+    },
+    {
+      "ai_name": "Whittier Heights",
+      "real_match": "Whittier Heights",
+      "ai_area_km2": 5.188,
+      "ai_centroid_lonlat": [
+        -122.34835,
+        47.6517
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.318,
+      "area_ratio_ai_over_real": 3.936,
+      "iou": 0.0,
+      "centroid_shift_km": 3.916,
+      "real_centroid_lonlat": [
+        -122.3714,
+        47.6833
+      ]
+    },
+    {
+      "ai_name": "Phinney Ridge",
+      "real_match": "Phinney Ridge",
+      "ai_area_km2": 2.984,
+      "ai_centroid_lonlat": [
+        -122.32857,
+        47.66008
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.982,
+      "area_ratio_ai_over_real": 1.0,
+      "iou": 0.031,
+      "centroid_shift_km": 2.421,
+      "real_centroid_lonlat": [
+        -122.35332,
+        47.67404
+      ]
+    },
+    {
+      "ai_name": "Green Lake",
+      "real_match": "Green Lake",
+      "ai_area_km2": 5.909,
+      "ai_centroid_lonlat": [
+        -122.31081,
+        47.65187
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.464,
+      "area_ratio_ai_over_real": 1.706,
+      "iou": 0.0,
+      "centroid_shift_km": 3.615,
+      "real_centroid_lonlat": [
+        -122.33405,
+        47.68036
+      ]
+    },
+    {
+      "ai_name": "Maple Leaf",
+      "real_match": "Maple Leaf",
+      "ai_area_km2": 9.299,
+      "ai_centroid_lonlat": [
+        -122.29624,
+        47.65025
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.192,
+      "area_ratio_ai_over_real": 2.913,
+      "iou": 0.0,
+      "centroid_shift_km": 5.663,
+      "real_centroid_lonlat": [
+        -122.31885,
+        47.69886
+      ]
+    },
+    {
+      "ai_name": "Roosevelt",
+      "real_match": "Roosevelt",
+      "ai_area_km2": 4.935,
+      "ai_centroid_lonlat": [
+        -122.30183,
+        47.63016
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.995,
+      "area_ratio_ai_over_real": 2.473,
+      "iou": 0.0,
+      "centroid_shift_km": 5.982,
+      "real_centroid_lonlat": [
+        -122.31642,
+        47.68307
+      ]
+    },
+    {
+      "ai_name": "Bryant",
+      "real_match": "Bryant",
+      "ai_area_km2": 5.439,
+      "ai_centroid_lonlat": [
+        -122.25533,
+        47.6376
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.438,
+      "area_ratio_ai_over_real": 3.784,
+      "iou": 0.0,
+      "centroid_shift_km": 4.427,
+      "real_centroid_lonlat": [
+        -122.28598,
+        47.67163
+      ]
+    },
+    {
+      "ai_name": "Ravenna",
+      "real_match": "Ravenna",
+      "ai_area_km2": 3.42,
+      "ai_centroid_lonlat": [
+        -122.27812,
+        47.62224
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.415,
+      "area_ratio_ai_over_real": 1.001,
+      "iou": 0.0,
+      "centroid_shift_km": 6.103,
+      "real_centroid_lonlat": [
+        -122.29998,
+        47.67513
+      ]
+    },
+    {
+      "ai_name": "University District",
+      "real_match": "University District",
+      "ai_area_km2": 6.28,
+      "ai_centroid_lonlat": [
+        -122.29404,
+        47.62914
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.271,
+      "area_ratio_ai_over_real": 4.942,
+      "iou": 0.0,
+      "centroid_shift_km": 3.887,
+      "real_centroid_lonlat": [
+        -122.31295,
+        47.66169
+      ]
+    },
+    {
+      "ai_name": "Laurelhurst",
+      "real_match": "Laurelhurst",
+      "ai_area_km2": 3.992,
+      "ai_centroid_lonlat": [
+        -122.25594,
+        47.61841
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.769,
+      "area_ratio_ai_over_real": 2.257,
+      "iou": 0.0,
+      "centroid_shift_km": 4.878,
+      "real_centroid_lonlat": [
+        -122.27887,
+        47.65947
+      ]
+    },
+    {
+      "ai_name": "Sand Point",
+      "real_match": "Sand Point",
+      "ai_area_km2": 1.058,
+      "ai_centroid_lonlat": [
+        -122.24069,
+        47.64319
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.787,
+      "area_ratio_ai_over_real": 0.592,
+      "iou": 0.0,
+      "centroid_shift_km": 4.391,
+      "real_centroid_lonlat": [
+        -122.25611,
+        47.6813
+      ]
+    },
+    {
+      "ai_name": "Wallingford",
+      "real_match": "Wallingford",
+      "ai_area_km2": 6.893,
+      "ai_centroid_lonlat": [
+        -122.33609,
+        47.63062
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.906,
+      "area_ratio_ai_over_real": 1.765,
+      "iou": 0.003,
+      "centroid_shift_km": 3.273,
+      "real_centroid_lonlat": [
+        -122.33307,
+        47.65999
+      ]
+    },
+    {
+      "ai_name": "Fremont",
+      "real_match": "Fremont",
+      "ai_area_km2": 4.788,
+      "ai_centroid_lonlat": [
+        -122.37185,
+        47.63372
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.461,
+      "area_ratio_ai_over_real": 1.946,
+      "iou": 0.0,
+      "centroid_shift_km": 2.94,
+      "real_centroid_lonlat": [
+        -122.35279,
+        47.65682
+      ]
+    },
+    {
+      "ai_name": "Eastlake",
+      "real_match": "Eastlake",
+      "ai_area_km2": 2.338,
+      "ai_centroid_lonlat": [
+        -122.30778,
+        47.62722
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 0.69,
+      "area_ratio_ai_over_real": 3.391,
+      "iou": 0.0,
+      "centroid_shift_km": 2.129,
+      "real_centroid_lonlat": [
+        -122.32546,
+        47.64219
+      ]
+    },
+    {
+      "ai_name": "Magnolia",
+      "real_match": null,
+      "ai_area_km2": 18.65,
+      "ai_centroid_lonlat": [
+        -122.41886,
+        47.62889
+      ],
+      "ai_confidence": "low"
+    },
+    {
+      "ai_name": "Interbay",
+      "real_match": "Interbay",
+      "ai_area_km2": 2.004,
+      "ai_centroid_lonlat": [
+        -122.38033,
+        47.6235
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.11,
+      "area_ratio_ai_over_real": 0.644,
+      "iou": 0.042,
+      "centroid_shift_km": 2.027,
+      "real_centroid_lonlat": [
+        -122.38107,
+        47.64173
+      ]
+    },
+    {
+      "ai_name": "Queen Anne",
+      "real_match": null,
+      "ai_area_km2": 5.588,
+      "ai_centroid_lonlat": [
+        -122.34775,
+        47.61149
+      ],
+      "ai_confidence": "low"
+    },
+    {
+      "ai_name": "Lower Queen Anne / Uptown",
+      "real_match": "Lower Queen Anne",
+      "ai_area_km2": 4.578,
+      "ai_centroid_lonlat": [
+        -122.34423,
+        47.6099
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.626,
+      "area_ratio_ai_over_real": 2.815,
+      "iou": 0.028,
+      "centroid_shift_km": 1.848,
+      "real_centroid_lonlat": [
+        -122.35508,
+        47.62482
+      ]
+    },
+    {
+      "ai_name": "South Lake Union",
+      "real_match": "South Lake Union",
+      "ai_area_km2": 2.823,
+      "ai_centroid_lonlat": [
+        -122.32021,
+        47.61127
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.495,
+      "area_ratio_ai_over_real": 1.888,
+      "iou": 0.001,
+      "centroid_shift_km": 1.838,
+      "real_centroid_lonlat": [
+        -122.33567,
+        47.62409
+      ]
+    },
+    {
+      "ai_name": "Cascade",
+      "real_match": null,
+      "ai_area_km2": 1.491,
+      "ai_centroid_lonlat": [
+        -122.30266,
+        47.61404
+      ],
+      "ai_confidence": "low"
+    },
+    {
+      "ai_name": "Capitol Hill",
+      "real_match": null,
+      "ai_area_km2": 5.994,
+      "ai_centroid_lonlat": [
+        -122.29481,
+        47.60187
+      ],
+      "ai_confidence": "low"
+    },
+    {
+      "ai_name": "Madison Valley",
+      "real_match": "Harrison/Denny-Blaine",
+      "ai_area_km2": 2.364,
+      "ai_centroid_lonlat": [
+        -122.26804,
+        47.60002
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.263,
+      "area_ratio_ai_over_real": 1.872,
+      "iou": 0.0,
+      "centroid_shift_km": 2.991,
+      "real_centroid_lonlat": [
+        -122.28721,
+        47.62361
+      ]
+    },
+    {
+      "ai_name": "Madison Park",
+      "real_match": "Madison Park",
+      "ai_area_km2": 4.085,
+      "ai_centroid_lonlat": [
+        -122.24725,
+        47.603
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.291,
+      "area_ratio_ai_over_real": 1.783,
+      "iou": 0.0,
+      "centroid_shift_km": 4.703,
+      "real_centroid_lonlat": [
+        -122.287,
+        47.63569
+      ]
+    },
+    {
+      "ai_name": "Denny-Blaine",
+      "real_match": "Harrison/Denny-Blaine",
+      "ai_area_km2": 2.031,
+      "ai_centroid_lonlat": [
+        -122.25142,
+        47.57982
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.263,
+      "area_ratio_ai_over_real": 1.608,
+      "iou": 0.0,
+      "centroid_shift_km": 5.56,
+      "real_centroid_lonlat": [
+        -122.28721,
+        47.62361
+      ]
+    },
+    {
+      "ai_name": "Madrona",
+      "real_match": "Madrona",
+      "ai_area_km2": 6.51,
+      "ai_centroid_lonlat": [
+        -122.27556,
+        47.58223
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.285,
+      "area_ratio_ai_over_real": 5.065,
+      "iou": 0.0,
+      "centroid_shift_km": 3.597,
+      "real_centroid_lonlat": [
+        -122.28893,
+        47.61331
+      ]
+    },
+    {
+      "ai_name": "Leschi",
+      "real_match": "Leschi",
+      "ai_area_km2": 6.826,
+      "ai_centroid_lonlat": [
+        -122.28385,
+        47.56298
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.68,
+      "area_ratio_ai_over_real": 4.064,
+      "iou": 0.0,
+      "centroid_shift_km": 4.153,
+      "real_centroid_lonlat": [
+        -122.29112,
+        47.60002
+      ]
+    },
+    {
+      "ai_name": "Belltown",
+      "real_match": "Belltown",
+      "ai_area_km2": 2.933,
+      "ai_centroid_lonlat": [
+        -122.33861,
+        47.59516
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 0.914,
+      "area_ratio_ai_over_real": 3.208,
+      "iou": 0.0,
+      "centroid_shift_km": 2.328,
+      "real_centroid_lonlat": [
+        -122.34847,
+        47.61502
+      ]
+    },
+    {
+      "ai_name": "Denny Triangle",
+      "real_match": "Denny Triangle",
+      "ai_area_km2": 2.407,
+      "ai_centroid_lonlat": [
+        -122.31932,
+        47.59253
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 0.476,
+      "area_ratio_ai_over_real": 5.055,
+      "iou": 0.0,
+      "centroid_shift_km": 2.946,
+      "real_centroid_lonlat": [
+        -122.33622,
+        47.61644
+      ]
+    },
+    {
+      "ai_name": "Downtown",
+      "real_match": null,
+      "ai_area_km2": 3.481,
+      "ai_centroid_lonlat": [
+        -122.33256,
+        47.58244
+      ],
+      "ai_confidence": "low"
+    },
+    {
+      "ai_name": "First Hill",
+      "real_match": "First Hill",
+      "ai_area_km2": 1.73,
+      "ai_centroid_lonlat": [
+        -122.3067,
+        47.5785
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 0.884,
+      "area_ratio_ai_over_real": 1.958,
+      "iou": 0.0,
+      "centroid_shift_km": 3.725,
+      "real_centroid_lonlat": [
+        -122.32397,
+        47.60991
+      ]
+    },
+    {
+      "ai_name": "Pioneer Square",
+      "real_match": "Pioneer Square",
+      "ai_area_km2": 3.31,
+      "ai_centroid_lonlat": [
+        -122.33665,
+        47.5735
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 0.701,
+      "area_ratio_ai_over_real": 4.725,
+      "iou": 0.0,
+      "centroid_shift_km": 2.855,
+      "real_centroid_lonlat": [
+        -122.33202,
+        47.59899
+      ]
+    },
+    {
+      "ai_name": "Chinatown-International District",
+      "real_match": "International District",
+      "ai_area_km2": 0.744,
+      "ai_centroid_lonlat": [
+        -122.30797,
+        47.5663
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 0.573,
+      "area_ratio_ai_over_real": 1.299,
+      "iou": 0.0,
+      "centroid_shift_km": 3.684,
+      "real_centroid_lonlat": [
+        -122.3219,
+        47.59807
+      ]
+    },
+    {
+      "ai_name": "Central District",
+      "real_match": "Minor",
+      "ai_area_km2": 1.563,
+      "ai_centroid_lonlat": [
+        -122.30676,
+        47.57476
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.665,
+      "area_ratio_ai_over_real": 0.939,
+      "iou": 0.0,
+      "centroid_shift_km": 3.791,
+      "real_centroid_lonlat": [
+        -122.30921,
+        47.60883
+      ]
+    },
+    {
+      "ai_name": "Judkins Park",
+      "real_match": "Atlantic",
+      "ai_area_km2": 2.664,
+      "ai_centroid_lonlat": [
+        -122.28794,
+        47.5468
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.919,
+      "area_ratio_ai_over_real": 1.389,
+      "iou": 0.0,
+      "centroid_shift_km": 5.336,
+      "real_centroid_lonlat": [
+        -122.30387,
+        47.59359
+      ]
+    },
+    {
+      "ai_name": "SODO",
+      "real_match": "SODO",
+      "ai_area_km2": 13.986,
+      "ai_centroid_lonlat": [
+        -122.33443,
+        47.55122
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 4.605,
+      "area_ratio_ai_over_real": 3.037,
+      "iou": 0.0,
+      "centroid_shift_km": 3.599,
+      "real_centroid_lonlat": [
+        -122.33152,
+        47.58354
+      ]
+    },
+    {
+      "ai_name": "Harbor Island",
+      "real_match": "Harbor Island",
+      "ai_area_km2": 2.173,
+      "ai_centroid_lonlat": [
+        -122.36942,
+        47.5799
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.655,
+      "area_ratio_ai_over_real": 1.313,
+      "iou": 0.024,
+      "centroid_shift_km": 1.356,
+      "real_centroid_lonlat": [
+        -122.35139,
+        47.57963
+      ]
+    },
+    {
+      "ai_name": "Beacon Hill",
+      "real_match": null,
+      "ai_area_km2": 5.019,
+      "ai_centroid_lonlat": [
+        -122.29933,
+        47.54009
+      ],
+      "ai_confidence": "low"
+    },
+    {
+      "ai_name": "North Beacon Hill",
+      "real_match": "North Beacon Hill",
+      "ai_area_km2": 2.664,
+      "ai_centroid_lonlat": [
+        -122.28794,
+        47.5468
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 4.5,
+      "area_ratio_ai_over_real": 0.592,
+      "iou": 0.001,
+      "centroid_shift_km": 3.873,
+      "real_centroid_lonlat": [
+        -122.30977,
+        47.57836
+      ]
+    },
+    {
+      "ai_name": "Mount Baker",
+      "real_match": "Mount Baker",
+      "ai_area_km2": 6.223,
+      "ai_centroid_lonlat": [
+        -122.26096,
+        47.53919
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.691,
+      "area_ratio_ai_over_real": 2.313,
+      "iou": 0.0,
+      "centroid_shift_km": 4.805,
+      "real_centroid_lonlat": [
+        -122.28906,
+        47.57802
+      ]
+    },
+    {
+      "ai_name": "Columbia City",
+      "real_match": "Columbia City",
+      "ai_area_km2": 7.899,
+      "ai_centroid_lonlat": [
+        -122.27277,
+        47.51643
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.473,
+      "area_ratio_ai_over_real": 2.275,
+      "iou": 0.0,
+      "centroid_shift_km": 4.833,
+      "real_centroid_lonlat": [
+        -122.28618,
+        47.55896
+      ]
+    },
+    {
+      "ai_name": "Hillman City",
+      "real_match": "Brighton",
+      "ai_area_km2": 4.832,
+      "ai_centroid_lonlat": [
+        -122.23965,
+        47.52289
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.705,
+      "area_ratio_ai_over_real": 2.834,
+      "iou": 0.0,
+      "centroid_shift_km": 3.221,
+      "real_centroid_lonlat": [
+        -122.27534,
+        47.53888
+      ]
+    },
+    {
+      "ai_name": "Seward Park",
+      "real_match": "Seward Park",
+      "ai_area_km2": 9.781,
+      "ai_centroid_lonlat": [
+        -122.23934,
+        47.52093
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 4.07,
+      "area_ratio_ai_over_real": 2.403,
+      "iou": 0.013,
+      "centroid_shift_km": 4.056,
+      "real_centroid_lonlat": [
+        -122.26446,
+        47.55321
+      ]
+    },
+    {
+      "ai_name": "Brighton",
+      "real_match": "Brighton",
+      "ai_area_km2": 5.784,
+      "ai_centroid_lonlat": [
+        -122.24416,
+        47.49928
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.705,
+      "area_ratio_ai_over_real": 3.392,
+      "iou": 0.0,
+      "centroid_shift_km": 4.988,
+      "real_centroid_lonlat": [
+        -122.27534,
+        47.53888
+      ]
+    },
+    {
+      "ai_name": "Othello",
+      "real_match": "Brighton",
+      "ai_area_km2": 9.783,
+      "ai_centroid_lonlat": [
+        -122.27071,
+        47.48836
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.705,
+      "area_ratio_ai_over_real": 5.737,
+      "iou": 0.0,
+      "centroid_shift_km": 5.625,
+      "real_centroid_lonlat": [
+        -122.27534,
+        47.53888
+      ]
+    },
+    {
+      "ai_name": "Rainier Beach",
+      "real_match": "Rainier Beach",
+      "ai_area_km2": 4.271,
+      "ai_centroid_lonlat": [
+        -122.2348,
+        47.47949
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.076,
+      "area_ratio_ai_over_real": 1.389,
+      "iou": 0.0,
+      "centroid_shift_km": 4.289,
+      "real_centroid_lonlat": [
+        -122.26325,
+        47.51292
+      ]
+    },
+    {
+      "ai_name": "Georgetown",
+      "real_match": "Georgetown",
+      "ai_area_km2": 8.292,
+      "ai_centroid_lonlat": [
+        -122.31914,
+        47.51928
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 4.763,
+      "area_ratio_ai_over_real": 1.741,
+      "iou": 0.063,
+      "centroid_shift_km": 2.461,
+      "real_centroid_lonlat": [
+        -122.31807,
+        47.54141
+      ]
+    },
+    {
+      "ai_name": "South Park",
+      "real_match": "South Park",
+      "ai_area_km2": 9.962,
+      "ai_centroid_lonlat": [
+        -122.33112,
+        47.49255
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.732,
+      "area_ratio_ai_over_real": 3.647,
+      "iou": 0.0,
+      "centroid_shift_km": 3.989,
+      "real_centroid_lonlat": [
+        -122.32601,
+        47.52828
+      ]
+    },
+    {
+      "ai_name": "Alki",
+      "real_match": "Alki",
+      "ai_area_km2": 12.517,
+      "ai_centroid_lonlat": [
+        -122.43223,
+        47.57518
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.282,
+      "area_ratio_ai_over_real": 5.484,
+      "iou": 0.072,
+      "centroid_shift_km": 2.099,
+      "real_centroid_lonlat": [
+        -122.40435,
+        47.57452
+      ]
+    },
+    {
+      "ai_name": "North Admiral",
+      "real_match": "North Admiral",
+      "ai_area_km2": 10.586,
+      "ai_centroid_lonlat": [
+        -122.41021,
+        47.57568
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 4.51,
+      "area_ratio_ai_over_real": 2.347,
+      "iou": 0.196,
+      "centroid_shift_km": 1.782,
+      "real_centroid_lonlat": [
+        -122.38706,
+        47.57912
+      ]
+    },
+    {
+      "ai_name": "Admiral",
+      "real_match": "North Admiral",
+      "ai_area_km2": 7.976,
+      "ai_centroid_lonlat": [
+        -122.38737,
+        47.56197
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 4.51,
+      "area_ratio_ai_over_real": 1.769,
+      "iou": 0.122,
+      "centroid_shift_km": 1.906,
+      "real_centroid_lonlat": [
+        -122.38706,
+        47.57912
+      ]
+    },
+    {
+      "ai_name": "West Seattle Junction",
+      "real_match": "Genesee",
+      "ai_area_km2": 13.246,
+      "ai_centroid_lonlat": [
+        -122.37721,
+        47.532
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 1.965,
+      "area_ratio_ai_over_real": 6.742,
+      "iou": 0.0,
+      "centroid_shift_km": 3.777,
+      "real_centroid_lonlat": [
+        -122.3876,
+        47.56524
+      ]
+    },
+    {
+      "ai_name": "North Delridge",
+      "real_match": "North Delridge",
+      "ai_area_km2": 6.226,
+      "ai_centroid_lonlat": [
+        -122.34787,
+        47.54907
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.734,
+      "area_ratio_ai_over_real": 2.277,
+      "iou": 0.132,
+      "centroid_shift_km": 1.962,
+      "real_centroid_lonlat": [
+        -122.3648,
+        47.5625
+      ]
+    },
+    {
+      "ai_name": "Delridge",
+      "real_match": null,
+      "ai_area_km2": 6.391,
+      "ai_centroid_lonlat": [
+        -122.33061,
+        47.53079
+      ],
+      "ai_confidence": "low"
+    },
+    {
+      "ai_name": "High Point",
+      "real_match": "High Point",
+      "ai_area_km2": 18.221,
+      "ai_centroid_lonlat": [
+        -122.35849,
+        47.51223
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.167,
+      "area_ratio_ai_over_real": 8.408,
+      "iou": 0.0,
+      "centroid_shift_km": 3.654,
+      "real_centroid_lonlat": [
+        -122.36878,
+        47.54436
+      ]
+    },
+    {
+      "ai_name": "Riverview",
+      "real_match": "Riverview",
+      "ai_area_km2": 6.761,
+      "ai_centroid_lonlat": [
+        -122.32954,
+        47.51899
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.067,
+      "area_ratio_ai_over_real": 2.204,
+      "iou": 0.0,
+      "centroid_shift_km": 3.56,
+      "real_centroid_lonlat": [
+        -122.35371,
+        47.54652
+      ]
+    },
+    {
+      "ai_name": "Highland Park",
+      "real_match": "Highland Park",
+      "ai_area_km2": 9.26,
+      "ai_centroid_lonlat": [
+        -122.32732,
+        47.49206
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.696,
+      "area_ratio_ai_over_real": 2.505,
+      "iou": 0.0,
+      "centroid_shift_km": 3.985,
+      "real_centroid_lonlat": [
+        -122.34324,
+        47.52626
+      ]
+    },
+    {
+      "ai_name": "Fauntleroy",
+      "real_match": "Fauntleroy",
+      "ai_area_km2": 15.925,
+      "ai_centroid_lonlat": [
+        -122.40016,
+        47.48595
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 3.145,
+      "area_ratio_ai_over_real": 5.063,
+      "iou": 0.0,
+      "centroid_shift_km": 4.164,
+      "real_centroid_lonlat": [
+        -122.38869,
+        47.52261
+      ]
+    },
+    {
+      "ai_name": "Arbor Heights",
+      "real_match": "Arbor Heights",
+      "ai_area_km2": 11.245,
+      "ai_centroid_lonlat": [
+        -122.40223,
+        47.46204
+      ],
+      "ai_confidence": "low",
+      "real_area_km2": 2.432,
+      "area_ratio_ai_over_real": 4.624,
+      "iou": 0.0,
+      "centroid_shift_km": 5.514,
+      "real_centroid_lonlat": [
+        -122.37956,
+        47.50921
+      ]
+    }
+  ]
+}

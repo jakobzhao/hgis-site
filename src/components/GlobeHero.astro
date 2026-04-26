@@ -2,9 +2,10 @@
 import projects from '../data/projects.json';
 import { news, outletCity } from '../data/news';
 import { talks } from '../data/talks';
+import { entries as fhEntries } from '../data/friday-harbor';
 
 // Build a unified point list. Each marker has type/lat/lon/title/href/date.
-type Pt = { type: 'project' | 'press' | 'talk'; lat: number; lon: number; title: string; sub: string; href?: string; date?: string };
+type Pt = { type: 'project' | 'press' | 'talk' | 'maps'; lat: number; lon: number; title: string; sub: string; href?: string; date?: string };
 
 const pts: Pt[] = [];
 
@@ -23,15 +24,34 @@ for (const n of news) {
 for (const t of talks) {
   pts.push({ type: 'talk', lat: t.lat, lon: t.lon, title: t.title, sub: `${t.host} · ${t.place}`, date: String(t.year) });
 }
+
+// Each Friday Harbor article carries a bbox (and sometimes pins) for its
+// mini-map. The bbox centre is the right anchor for the globe marker —
+// pins are inside the bbox by construction. If an article has no thumb,
+// it skips the globe (text-only entries don't earn a dot).
+for (const e of fhEntries) {
+  if (!e.thumb) continue;
+  const lon = (e.thumb.bbox.west + e.thumb.bbox.east) / 2;
+  const lat = (e.thumb.bbox.south + e.thumb.bbox.north) / 2;
+  pts.push({
+    type: 'maps',
+    lat, lon,
+    title: e.title.en,
+    sub: `Friday Harbor · ${e.place.en}`,
+    href: `/friday-harbor/${e.slug}/`,
+    date: e.date,
+  });
+}
 ---
 <div class="globe-wrap">
-  <svg id="globe" data-points={JSON.stringify(pts)} aria-label="Rotating globe of HGIS Lab projects, press, and talks"></svg>
+  <svg id="globe" data-points={JSON.stringify(pts)} aria-label="Rotating globe of HGIS Lab projects, press, talks, and Friday Harbor maps"></svg>
   <div id="globe-tooltip" class="globe-tooltip" hidden></div>
-</div>
-<div class="globe-legend">
-  <span><i class="dot dot-project"></i> Projects</span>
-  <span><i class="dot dot-press"></i> Press</span>
-  <span><i class="dot dot-talk"></i> Talks</span>
+  <ul class="globe-legend" aria-label="legend">
+    <li><i class="dot dot-project"></i> Projects</li>
+    <li><i class="dot dot-press"></i> Press</li>
+    <li><i class="dot dot-talk"></i> Talks</li>
+    <li><i class="dot dot-maps"></i> Maps</li>
+  </ul>
 </div>
 
 <script is:inline type="module">
@@ -291,28 +311,42 @@ for (const t of talks) {
   #globe { display: block; width: 100%; touch-action: none; cursor: grab; }
   #globe:active { cursor: grabbing; }
 
+  /* Legend lives INSIDE the globe wrap so the right column of the
+     hero grid measures only as tall as the sphere itself. Anchored
+     bottom-right and stacked vertically — small, vertical, sitting
+     at the foot of the globe like a key in the corner of a chart. */
   .globe-legend {
-    margin: 0.6rem 0 0;
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    margin: 0;
     padding: 0;
-    font-size: 0.74rem;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.66rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink-faint);
+    pointer-events: none;
+  }
+  .globe-legend li {
     display: flex;
-    justify-content: center;
-    gap: 1.6rem;
+    align-items: center;
+    gap: 5px;
+    line-height: 1.1;
   }
   .globe-legend .dot {
     display: inline-block;
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    margin-right: 4px;
-    vertical-align: middle;
   }
   .dot-project { background: var(--uw-purple); }
   .dot-press   { background: var(--uw-gold); }
   .dot-talk    { background: var(--sage); }
+  .dot-maps    { background: var(--rose); }
 
   /* Markers */
   :global(.pt-project .core) { fill: var(--uw-purple); }
@@ -321,6 +355,8 @@ for (const t of talks) {
   :global(.pt-press .halo)   { fill: var(--uw-gold); fill-opacity: 0.20; }
   :global(.pt-talk .core)    { fill: var(--sage); }
   :global(.pt-talk .halo)    { fill: var(--sage); fill-opacity: 0.20; }
+  :global(.pt-maps .core)    { fill: var(--rose); }
+  :global(.pt-maps .halo)    { fill: var(--rose); fill-opacity: 0.22; }
   :global(.pt .core) { stroke: var(--bg-card); stroke-width: 1.2; transition: r 0.15s ease; }
   :global(.pt:hover .core) { r: 5; }
   :global(.pt:hover .halo) { fill-opacity: 0.35; }
@@ -382,4 +418,5 @@ for (const t of talks) {
   .tip-project { background: var(--uw-purple); color: var(--bg-card); }
   .tip-press   { background: var(--uw-gold);   color: var(--bg-card); }
   .tip-talk    { background: var(--sage);      color: var(--bg-card); }
+  .tip-maps    { background: var(--rose);      color: var(--bg-card); }
 </style>

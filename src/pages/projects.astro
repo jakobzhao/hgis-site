@@ -68,6 +68,8 @@ const sorted = [...projects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
     display: block;
     overflow: hidden;
     transition: transform 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    isolation: isolate;
   }
   .proj-img img {
     width: 100%;
@@ -75,11 +77,40 @@ const sorted = [...projects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
     object-fit: cover;
     object-position: center;
     display: block;
+    /* Morandi screenshot treatment — same idea as the home cards.
+       Tuned to feel *bright + dusty*: brightness lifts the image,
+       contrast is barely touched, and the overlay uses `soft-light`
+       (tints highlights without dimming them). Hover restores the raw shot. */
+    filter: grayscale(0.35) saturate(0.85) brightness(1.06) contrast(0.96);
+    transition: filter 0.35s ease, transform 0.4s ease;
+  }
+  .proj-img:not(.proj-img-placeholder)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    opacity: 0.7;
+    transition: opacity 0.35s ease;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--rose-soft) 100%);
+  }
+  /* Rotate four Morandi tones down the project list so neighbouring
+     cards read as a small palette rather than identical washes. */
+  .proj-list .proj:nth-child(4n+2) .proj-img:not(.proj-img-placeholder)::after {
+    background: linear-gradient(135deg, var(--rose-soft) 0%, var(--uw-gold-soft) 100%);
+  }
+  .proj-list .proj:nth-child(4n+3) .proj-img:not(.proj-img-placeholder)::after {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--sage-soft) 100%);
+  }
+  .proj-list .proj:nth-child(4n+4) .proj-img:not(.proj-img-placeholder)::after {
+    background: linear-gradient(135deg, var(--rose-soft) 0%, var(--uw-purple-soft) 100%);
   }
   a.proj-img:hover {
     border-color: var(--uw-gold);
     transform: scale(1.01);
   }
+  a.proj-img:hover img { filter: none; }
+  a.proj-img:hover::after { opacity: 0; }
   .proj-img-placeholder {
     background: linear-gradient(135deg, var(--rose-soft) 0%, var(--sage-soft) 100%);
   }

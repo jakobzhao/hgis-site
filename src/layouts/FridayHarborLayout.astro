@@ -1,6 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { UI, type Entry } from '../data/friday-harbor';
+import { UI, entries, type Entry } from '../data/friday-harbor';
 
 interface Props {
   entry: Entry;
@@ -11,12 +11,67 @@ const dateLong = {
   en: dt.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
   zh: dt.toLocaleDateString('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
 };
+// Issue number = chronological position in the registry (oldest = 001).
+// Computed from a date-sorted copy so the registry array order doesn't
+// have to be perfectly maintained, and so the dates can be rearranged
+// without renumbering by hand.
 const issueNo = (() => {
-  const launch = new Date('2026-04-25T00:00:00');
-  const days = Math.max(0, Math.round((dt.getTime() - launch.getTime()) / 86400000));
-  return String(days + 1).padStart(3, '0');
+  const ascByDate = [...entries].sort((a, b) => a.date.localeCompare(b.date));
+  const idx = ascByDate.findIndex(e => e.slug === entry.slug);
+  return String(idx + 1).padStart(3, '0');
 })();
 const year = entry.date.slice(0, 4);
+
+// ---- Citation generation ----
+// All formats are derived from the entry data, so adding a new piece
+// doesn't require touching the layout — just register the entry.
+const url = `https://hgis.uw.edu/friday-harbor/${entry.slug}/`;
+const bibKey = entry.citeKey ?? (() => {
+  // Fallback: {lastname}{year}{slug-first-word-after-date}.
+  const tail = entry.slug.replace(/^\d{4}-\d{2}-\d{2}-/, '').split('-')[0];
+  const ln = (entry.author.split(' ').pop() ?? 'zhao').toLowerCase();
+  return `${ln}${year}${tail}`;
+})();
+const monthShort = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'][dt.getMonth()];
+const monthLong  = ['January','February','March','April','May','June','July','August','September','October','November','December'][dt.getMonth()];
+const day = dt.getDate();
+const issueNoInt = parseInt(issueNo, 10);
+const cite = {
+  // APA 7 — for an online column the closest canonical form is
+  // periodical-with-article-number. We treat the issue number as the
+  // article number (per APA's guidance for online-only articles).
+  apa:
+`Zhao, B. (${year}, ${monthLong} ${day}). ${entry.title.en}. Friday Harbor (HGIS Lab Column), Article ${issueNoInt}.
+Humanistic GIS Lab, University of Washington. ${url}`,
+  // Chicago notes-and-bibliography, online-magazine style.
+  chicago:
+`Zhao, Bo. "${entry.title.en}." Friday Harbor (HGIS Lab column), no. ${issueNo}, ${monthLong} ${day}, ${year}. ${url}`,
+  bibtex:
+`@misc{${bibKey},
+  author       = {Bo Zhao},
+  title        = {${entry.title.en}},
+  howpublished = {Friday Harbor (HGIS Lab Column), Article ${issueNoInt}},
+  institution  = {Humanistic GIS Lab, University of Washington},
+  year         = {${year}},
+  month        = ${monthShort},
+  url          = {${url}}
+}`,
+  // RIS — the lingua franca for Zotero / EndNote / Mendeley / Papers
+  // import. TY: GEN keeps it agnostic; "T2" is the container series.
+  ris:
+`TY  - GEN
+AU  - Zhao, Bo
+TI  - ${entry.title.en}
+T2  - Friday Harbor (HGIS Lab Column)
+IS  - ${issueNoInt}
+PY  - ${year}
+DA  - ${entry.date}
+PB  - Humanistic GIS Lab, University of Washington
+UR  - ${url}
+ER  - `,
+  gbt:
+`赵博. ${entry.title.zh}[EB/OL]. Friday Harbor (HGIS 实验室专栏), 第 ${issueNo} 期, ${entry.date}. ${url}`,
+};
 ---
 <BaseLayout title={`${entry.title.en} · Friday Harbor`} description={entry.subtitle.en}>
   <div class="fh-root" data-lang="en">
@@ -51,25 +106,32 @@ const year = entry.date.slice(0, 4);
 
       <div class="fh-body">
         <section class="fh-col fh-notebook">
-          <h2><span data-lang="en">{UI.notebook.en}</span><span data-lang="zh">{UI.notebook.zh}</span></h2>
           <div data-lang="en"><slot name="notebook-en" /></div>
           <div data-lang="zh"><slot name="notebook-zh" /></div>
         </section>
-        <section class="fh-col fh-provenance">
-          <h2><span data-lang="en">{UI.provenance.en}</span><span data-lang="zh">{UI.provenance.zh}</span></h2>
+        <section class="fh-col fh-endnote">
+          <h2><span data-lang="en">{UI.endnote.en}</span><span data-lang="zh">{UI.endnote.zh}</span></h2>
           <div data-lang="en"><slot name="provenance-en" /></div>
           <div data-lang="zh"><slot name="provenance-zh" /></div>
         </section>
         <section class="fh-col fh-cite">
           <h2><span data-lang="en">{UI.howToCite.en}</span><span data-lang="zh">{UI.howToCite.zh}</span></h2>
-          <pre class="fh-citation" data-lang="en">Zhao, B. ({year}). {entry.title.en}.
-Friday Harbor № {issueNo}, HGIS Lab,
-University of Washington.
-{`https://hgis.uw.edu/friday-harbor/${entry.slug}/`}</pre>
-          <pre class="fh-citation" data-lang="zh">赵博（{year}）。{entry.title.zh}。
-Friday Harbor № {issueNo}，HGIS 实验室，
-华盛顿大学。
-{`https://hgis.uw.edu/friday-harbor/${entry.slug}/`}</pre>
+          <div class="fh-cite-widget">
+            <div class="fh-cite-tabs" role="tablist">
+              <button class="fh-cite-tab is-active" type="button" role="tab" data-fmt="apa" aria-selected="true">APA</button>
+              <button class="fh-cite-tab" type="button" role="tab" data-fmt="chicago" aria-selected="false">Chicago</button>
+              <button class="fh-cite-tab" type="button" role="tab" data-fmt="bibtex" aria-selected="false">BibTeX</button>
+              <button class="fh-cite-tab" type="button" role="tab" data-fmt="ris" aria-selected="false">RIS</button>
+              <button class="fh-cite-tab" type="button" role="tab" data-fmt="gbt" aria-selected="false">GB/T 7714</button>
+              <button class="fh-cite-copy" type="button" aria-label="copy citation"
+                ><span data-lang="en">{UI.citeCopy.en}</span><span data-lang="zh">{UI.citeCopy.zh}</span></button>
+            </div>
+            <pre class="fh-citation is-active" data-fmt="apa">{cite.apa}</pre>
+            <pre class="fh-citation" data-fmt="chicago" hidden>{cite.chicago}</pre>
+            <pre class="fh-citation" data-fmt="bibtex" hidden>{cite.bibtex}</pre>
+            <pre class="fh-citation" data-fmt="ris" hidden>{cite.ris}</pre>
+            <pre class="fh-citation" data-fmt="gbt" hidden>{cite.gbt}</pre>
+          </div>
         </section>
       </div>
 
@@ -165,10 +227,20 @@ Friday Harbor № {issueNo}，HGIS 实验室，
     line-height: 1.78;
     letter-spacing: 0.01em;
   }
+  /* Every entry's figcaption shares the body's reading measure, so the
+     prose under the figure aligns visually with the lede above and the
+     notebook/endnote/citation below. The figure itself stays wide. */
+  .fh-root .fh-figure-wrap figcaption {
+    max-width: 760px;
+  }
 </style>
 
 <style>
   .fh-entry {
+    /* One reading measure for all body-prose blocks: lede, notebook,
+       endnote, citation, and figcaption. The figure itself can break
+       out wider — it's the visual element. */
+    --fh-measure: 760px;
     max-width: 1100px;
     margin: 0 auto;
     padding: 2.5rem 1.75rem 5rem;
@@ -249,7 +321,7 @@ Friday Harbor № {issueNo}，HGIS 实验室，
     line-height: 1.5;
     color: var(--ink);
     margin: 0 0 1.6rem;
-    max-width: 720px;
+    max-width: var(--fh-measure);
   }
   .fh-figure-wrap {
     margin: 0 0 2rem;
@@ -260,38 +332,106 @@ Friday Harbor № {issueNo}，HGIS 实验室，
   }
 
   .fh-body {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr 1fr;
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
     border-top: 1px solid var(--rule);
     padding-top: 1.6rem;
+    max-width: var(--fh-measure);
   }
   .fh-col h2 {
     font-family: var(--serif);
     font-weight: 500;
     font-style: italic;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     letter-spacing: 0.04em;
     color: var(--uw-purple);
-    margin: 0 0 0.6rem;
+    margin: 0 0 0.7rem;
     border-bottom: 1px solid var(--rule);
     padding-bottom: 0.4rem;
   }
-  .fh-col :global(p) { font-size: 0.92rem; line-height: 1.6; margin: 0 0 0.7rem; }
-  .fh-col :global(ul) { font-size: 0.88rem; line-height: 1.55; padding-left: 1.1rem; margin: 0; }
-  .fh-col :global(li) { margin-bottom: 0.4rem; }
+  /* The notebook is the body; no heading needed. The first paragraph
+     does the work a heading would have done. */
+  .fh-notebook {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .fh-col :global(p) { font-size: 0.96rem; line-height: 1.65; margin: 0 0 0.85rem; }
+  .fh-notebook :global(p) { font-size: 1rem; }
+  .fh-col :global(ul) { font-size: 0.92rem; line-height: 1.6; padding-left: 1.1rem; margin: 0; }
+  .fh-col :global(li) { margin-bottom: 0.5rem; }
   .fh-col :global(a)  { color: var(--uw-purple); border-bottom: 1px dotted var(--uw-purple); }
+
+  /* Smart citation widget */
+  .fh-cite-widget { position: relative; }
+  .fh-cite-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+  }
+  .fh-cite-tab {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-soft, #6c6358);
+    padding: 3px 11px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .fh-cite-tab:hover {
+    color: var(--uw-purple);
+    border-color: var(--uw-purple);
+  }
+  .fh-cite-tab.is-active {
+    color: #fff;
+    background: var(--uw-purple);
+    border-color: var(--uw-purple);
+  }
+  .fh-cite-copy {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    padding: 3px 11px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .fh-cite-copy:hover {
+    color: var(--uw-purple);
+    border-color: var(--uw-purple);
+  }
+  .fh-cite-copy.is-flashed {
+    background: var(--uw-purple);
+    color: #fff;
+    border-color: var(--uw-purple);
+  }
   .fh-citation {
     background: var(--bg-card, #f6f3ed);
     border: 1px solid var(--rule);
     border-radius: 4px;
-    padding: 0.7rem 0.8rem;
-    font-size: 0.78rem;
-    line-height: 1.5;
+    padding: 0.8rem 0.9rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
     white-space: pre-wrap;
     word-break: break-word;
     color: var(--ink);
+    margin: 0;
+    font-family: inherit;
   }
+  .fh-citation[data-fmt="bibtex"],
+  .fh-citation[data-fmt="ris"] {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+  }
+  .fh-citation:not(.is-active) { display: none; }
 
   .fh-foot {
     display: flex; justify-content: space-between;
@@ -598,5 +738,54 @@ Friday Harbor № {issueNo}，HGIS 实验室，
         else window.open(href, '_blank', 'noopener,width=640,height=560');
       });
     });
+
+    // ----- citation widget -----
+    const widget = root.querySelector('.fh-cite-widget');
+    if (widget) {
+      const tabs = widget.querySelectorAll('.fh-cite-tab');
+      const blocks = widget.querySelectorAll('.fh-citation');
+      const copyBtn = widget.querySelector('.fh-cite-copy');
+      const select = (fmt) => {
+        tabs.forEach(t => {
+          const on = t.getAttribute('data-fmt') === fmt;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        blocks.forEach(b => {
+          const on = b.getAttribute('data-fmt') === fmt;
+          b.classList.toggle('is-active', on);
+          if (on) b.removeAttribute('hidden');
+          else b.setAttribute('hidden', '');
+        });
+      };
+      tabs.forEach(t => t.addEventListener('click', () => select(t.getAttribute('data-fmt'))));
+      if (copyBtn) copyBtn.addEventListener('click', () => {
+        const active = widget.querySelector('.fh-citation.is-active');
+        if (!active) return;
+        const text = active.textContent || '';
+        const orig = copyBtn.innerHTML;
+        const done = () => {
+          copyBtn.classList.add('is-flashed');
+          const lang = root.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+          copyBtn.textContent = lang === 'zh' ? '已复制' : 'Copied';
+          setTimeout(() => {
+            copyBtn.classList.remove('is-flashed');
+            copyBtn.innerHTML = orig;
+          }, 1500);
+        };
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(done, done);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text; document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+          done();
+        }
+      });
+      // Default tab: ZH UI lands on GB/T, EN UI on APA.
+      const initLang = root.getAttribute('data-lang') === 'zh' ? 'gbt' : 'apa';
+      select(initLang);
+    }
   })();
 </script>

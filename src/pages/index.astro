@@ -3,11 +3,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import GlobeHero from '../components/GlobeHero.astro';
 import projects from '../data/projects.json';
 import { sortedNews } from '../data/news';
+import { entries as fhEntries } from '../data/friday-harbor';
 
-const featuredSlugs = ['yifutuan', 'chop', 'lgbtqspaces'];
-const featured = featuredSlugs
+// Featured row mixes one Friday Harbor article and two projects in a
+// single 3-up grid, so the homepage doesn't keep repeating "Featured X"
+// headers. The FH article comes first (it's the most-shared piece this
+// month) and the two projects follow.
+const featuredFHSlug = '2026-04-17-does-ai-know-your-city';
+const featuredFH = fhEntries.find(e => e.slug === featuredFHSlug);
+
+const featuredProjectSlugs = ['yifutuan', 'chop'];
+const featuredProjects = featuredProjectSlugs
   .map(slug => projects.find(p => p.slug === slug))
   .filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+// What's currently being taught — surfaced at the top of the homepage
+// because summer registration is open and the GEOG 495 / 428 special
+// topic has shifted from web/mobile GIS to GeoAI.
+const thisTerm = [
+  {
+    code: 'GEOG 495 / 428',
+    title: 'Special Topics — Geospatial Artificial Intelligence',
+    term: 'Summer 2026',
+    note: 'Course code updating from GEOG 495 → GEOG 428',
+    notice: 'Registration is open — register before summer starts',
+    desc: 'A hands-on course on integrating machine learning, deep learning, and large language models into spatial analysis. Students work with real-world datasets — housing inequality, algorithmic bias — while reading the ethics and political stakes of the technology.',
+    href: 'https://github.com/jakobzhao/geog428',
+  },
+  {
+    code: 'GEOG 521',
+    title: 'Research Seminar: Critical GIS',
+    term: 'Spring 2026',
+    note: '',
+    notice: '',
+    desc: 'Graduate seminar on the social, ethical, and political dimensions of geographic information systems.',
+    href: 'https://jakobzhao.github.io/geog521/',
+  },
+];
 
 const recentNews = sortedNews().slice(0, 4);
 
@@ -15,6 +47,11 @@ function formatDate(iso: string) {
   const [y, m] = iso.split('-');
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return `${months[parseInt(m, 10) - 1]} ${y}`;
+}
+
+function fhDateLabel(iso: string) {
+  const dt = new Date(iso + 'T00:00:00');
+  return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 ---
 <BaseLayout
@@ -37,7 +74,7 @@ function formatDate(iso: string) {
         </p>
         <div class="cta-row">
           <a class="btn" href="/research/">Explore the research</a>
-          <a class="btn-link" href="/friday-harbor/">Friday Harbor — the lab's notebook →</a>
+          <a class="btn-link" href="/friday-harbor/">Friday Harbor — dispatches from the lab<span class="btn-link-arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
       <div class="hero-globe">
@@ -50,10 +87,46 @@ function formatDate(iso: string) {
 
   <section class="container section">
     <div class="section-head">
-      <span class="eyebrow">Featured projects</span>
+      <span class="eyebrow">In the classroom</span>
+    </div>
+    <div class="card-grid term-grid">
+      {thisTerm.map((c, i) => (
+        <a class={`card term-card${i === 0 ? ' is-priority' : ''}`} href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener' : undefined}>
+          {c.notice && <span class="term-notice">{c.notice}</span>}
+          <div class="term-head">
+            <span class="term-code">{c.code}</span>
+            <span class="term-when">{c.term}</span>
+          </div>
+          <h3>{c.title}</h3>
+          <p>{c.desc}</p>
+          {c.note && <p class="term-note">{c.note}</p>}
+        </a>
+      ))}
+    </div>
+    <p class="more"><a href="/teaching/">All courses →</a></p>
+  </section>
+
+  <hr class="rule" />
+
+  <section class="container section">
+    <div class="section-head">
+      <span class="eyebrow">Featured</span>
     </div>
     <div class="card-grid">
-      {featured.map(p => (
+      {featuredFH && (
+        <a class="card fh-feat-card" href={`/friday-harbor/${featuredFH.slug}/`}>
+          <div class="card-img fh-feat-thumb"
+               data-fh-thumb={featuredFH.thumb ? JSON.stringify(featuredFH.thumb) : null}>
+            <!-- Mini-map renders into here at runtime. -->
+          </div>
+          <div class="card-body">
+            <p class="card-year">{fhDateLabel(featuredFH.date)} · Friday Harbor</p>
+            <h3>{featuredFH.title.en}</h3>
+            <p>{featuredFH.subtitle.en}</p>
+          </div>
+        </a>
+      )}
+      {featuredProjects.map(p => (
         <a class="card" href={`/projects/#${p.slug}`}>
           <div class="card-img">
             {p.image && <img src={p.image} alt={p.title} loading="lazy" decoding="async" />}
@@ -66,7 +139,7 @@ function formatDate(iso: string) {
         </a>
       ))}
     </div>
-    <p class="more"><a href="/projects/">All projects →</a></p>
+    <p class="more"><a href="/projects/">All projects →</a> · <a href="/friday-harbor/">All Friday Harbor articles →</a></p>
   </section>
 
   <hr class="rule" />
@@ -163,6 +236,36 @@ function formatDate(iso: string) {
     border-bottom: 1px solid transparent;
   }
   .btn-link:hover { border-bottom-color: var(--uw-gold); }
+  /* The arrow drifts right and back on a slow, low-amplitude loop —
+     enough to catch the eye without ever finishing somewhere new. On
+     hover it commits forward (translates further and slows the loop)
+     so the arrow reads as "this is the action you want to take." */
+  .btn-link-arrow {
+    display: inline-block;
+    margin-left: 0.4em;
+    color: var(--uw-purple);
+    animation: arrowDrift 2.2s ease-in-out infinite;
+    will-change: transform;
+  }
+  .btn-link:hover .btn-link-arrow {
+    animation: arrowDriftHover 0.9s ease-out infinite;
+  }
+  @keyframes arrowDrift {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(5px); }
+  }
+  @keyframes arrowDriftHover {
+    0%   { transform: translateX(0);   opacity: 1; }
+    60%  { transform: translateX(11px); opacity: 1; }
+    61%  { transform: translateX(11px); opacity: 0; }
+    62%  { transform: translateX(-6px); opacity: 0; }
+    63%  { transform: translateX(-6px); opacity: 1; }
+    100% { transform: translateX(0);   opacity: 1; }
+  }
+  /* Respect user motion preference. */
+  @media (prefers-reduced-motion: reduce) {
+    .btn-link-arrow { animation: none !important; }
+  }
 
   .rule {
     border: 0;
@@ -185,14 +288,21 @@ function formatDate(iso: string) {
     transform: translateX(-50%) rotate(45deg);
   }
 
-  .section-head { margin-bottom: 1.8rem; }
+  /* Tighten the page rhythm — the homepage now stacks four sections
+     between the hero and the footer; the global 3.5 rem padding makes
+     them read as four discrete pages. 2.2 rem keeps each section
+     legibly separate without forcing scroll fatigue. (Astro scopes
+     this <style>, so this only affects the homepage.) */
+  .section { padding: 2.2rem 0; }
+  .section-head { margin-bottom: 1.1rem; }
   .section-head h2 {
-    margin: 0.3em 0 0;
-    font-size: 1.7rem;
+    margin: 0.25em 0 0;
+    font-size: 1.45rem;
     font-family: var(--serif);
     font-weight: 500;
     font-variation-settings: "opsz" 48, "SOFT" 50;
   }
+  .more { margin-top: 1.2rem !important; }
 
   .card { display: block; color: inherit; }
   .card .card-img {
@@ -206,6 +316,108 @@ function formatDate(iso: string) {
     letter-spacing: 0.1em;
     margin: 0 0 0.3rem;
     font-weight: 600;
+  }
+
+  /* ---- Featured Friday Harbor graphics ----------------------------- */
+  .fh-feat-thumb {
+    background: var(--bg-deep);
+    /* The Morandi screenshot wash applied to .card .card-img assumes
+       there's an <img> below; FH thumbs are <svg> rendered at runtime,
+       so suppress that overlay so the map reads at full saturation. */
+  }
+  .fh-feat-thumb::after { display: none !important; }
+  .fh-feat-thumb svg { display: block; width: 100%; height: 100%; }
+  .fh-feat-card h3 {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+  .fh-feat-card .card-body p:last-child {
+    color: var(--ink-soft);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ---- Teaching-this-term cards ------------------------------------ */
+  .term-grid { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 720px) {
+    .term-grid { grid-template-columns: 1fr; }
+  }
+  .term-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.2rem 1.3rem 1.4rem;
+    position: relative;
+  }
+  /* The first card in this row is the summer course; it gets a small
+     "register now" notice strip + a slightly louder border so it
+     reads as actionable, not just informational. */
+  .term-card.is-priority {
+    border-color: var(--uw-gold);
+    background: linear-gradient(180deg, #fffaee 0%, var(--bg-card) 60%);
+  }
+  .term-card.is-priority:hover {
+    border-color: var(--uw-purple);
+  }
+  .term-notice {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--uw-gold);
+    color: #fffdf7;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .term-notice::before {
+    content: "▸ ";
+  }
+  .term-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.2rem;
+  }
+  .term-code {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--uw-purple);
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+  .term-when {
+    font-size: 0.72rem;
+    color: var(--uw-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+  .term-card h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .term-card p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .term-note {
+    margin-top: 0.3rem !important;
+    font-size: 0.78rem !important;
+    font-style: italic;
+    color: var(--ink-faint) !important;
   }
 
   .more { margin-top: 2rem; font-size: 0.95rem; }
@@ -252,3 +464,76 @@ function formatDate(iso: string) {
     .news-list li { grid-template-columns: 80px 1fr; gap: 0.9rem; }
   }
 </style>
+
+<script type="module">
+  // Render the same Friday-Harbor mini-maps used on the column index
+  // into the homepage's "Featured graphics" thumbnails. Only three
+  // cards on this page, so the network/render cost is negligible.
+  import * as d3 from 'https://esm.sh/d3@7';
+  const NE = 'https://cdn.jsdelivr.net/gh/martynafford/natural-earth-geojson@master/10m';
+  const els = Array.from(document.querySelectorAll('.fh-feat-thumb[data-fh-thumb]'))
+    .filter(el => el.dataset.fhThumb);
+  if (els.length) {
+    fetch(`${NE}/physical/ne_10m_land.json`)
+      .then(r => r.json())
+      .then(land => els.forEach(el => render(el, land)))
+      .catch(() => {});
+  }
+
+  function render(el, land) {
+    const data = JSON.parse(el.dataset.fhThumb);
+    const w = el.clientWidth || 280;
+    const h = el.clientHeight || 168;
+    const { bbox, pins = [] } = data;
+
+    const lon0 = (bbox.west + bbox.east) / 2;
+    const lat0 = (bbox.south + bbox.north) / 2;
+    const yProj = lat => Math.log(Math.tan(Math.PI/4 + lat * Math.PI/360));
+    const lonSpan = (bbox.east - bbox.west) * Math.PI / 180;
+    const ySpan   = yProj(bbox.north) - yProj(bbox.south);
+    const scale = Math.min(w / lonSpan, h / ySpan) * 0.97;
+
+    const projection = d3.geoMercator()
+      .center([lon0, lat0]).scale(scale)
+      .translate([w / 2, h / 2])
+      .clipExtent([[0, 0], [w, h]])
+      .precision(0.5);
+    const path = d3.geoPath(projection);
+
+    el.innerHTML = '';
+    const svg = d3.select(el).append('svg')
+      .attr('viewBox', `0 0 ${w} ${h}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('display', 'block');
+
+    const gid = `tg-${Math.random().toString(36).slice(2, 8)}`;
+    const grad = svg.append('defs').append('linearGradient')
+      .attr('id', gid)
+      .attr('gradientUnits', 'userSpaceOnUse')
+      .attr('x1', w / 2).attr('y1', 0)
+      .attr('x2', w / 2).attr('y2', h);
+    grad.append('stop').attr('offset', '0%').attr('stop-color', '#d2d8d6');
+    grad.append('stop').attr('offset', '55%').attr('stop-color', '#bcc4c4');
+    grad.append('stop').attr('offset', '100%').attr('stop-color', '#a8b1b3');
+    svg.append('rect').attr('width', w).attr('height', h).attr('fill', `url(#${gid})`);
+
+    svg.append('path').datum(land).attr('d', path)
+      .attr('fill', 'none')
+      .attr('stroke', '#b4bdaf').attr('stroke-opacity', 0.55)
+      .attr('stroke-width', 4);
+
+    svg.append('path').datum(land).attr('d', path)
+      .attr('fill', '#f5efe2')
+      .attr('stroke', '#6c6358').attr('stroke-width', 0.6)
+      .attr('stroke-linejoin', 'round');
+
+    pins.forEach(p => {
+      const xy = projection([p.lon, p.lat]);
+      if (!xy) return;
+      svg.append('circle').attr('cx', xy[0]).attr('cy', xy[1])
+        .attr('r', 9).attr('fill', '#c2a094').attr('fill-opacity', 0.45);
+      svg.append('circle').attr('cx', xy[0]).attr('cy', xy[1])
+        .attr('r', 3.5).attr('fill', '#8a3e2e');
+    });
+  }
+</script>

@@ -116,7 +116,17 @@ const groups = [
   .people-grid {
     display: grid;
     gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    /* Always 3-up on desktop. A solo Director used to stretch to full
+       width because of auto-fit; a fixed three-column track keeps each
+       card to one third regardless of how many members are in the group,
+       and any 4th+ member naturally wraps to the next row. */
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 760px) {
+    .people-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .people-grid { grid-template-columns: 1fr; }
   }
   .person {
     color: var(--ink);

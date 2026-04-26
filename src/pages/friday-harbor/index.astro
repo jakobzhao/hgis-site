@@ -4,6 +4,14 @@ import { entries, UI } from '../../data/friday-harbor';
 
 const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
 const total = sorted.length;
+
+// Both manifesto blocks carry multiple paragraphs (what + why-the-name
+// at the top, cadence + authorship disclosure at the bottom). Split on
+// a blank line so each data string stays one logical entry.
+const topEn = UI.manifestoTop.en.split(/\n{2,}/);
+const topZh = UI.manifestoTop.zh.split(/\n{2,}/);
+const botEn = UI.manifestoBottom.en.split(/\n{2,}/);
+const botZh = UI.manifestoBottom.zh.split(/\n{2,}/);
 ---
 <BaseLayout
   title="Friday Harbor"
@@ -16,17 +24,50 @@ const total = sorted.length;
           <em><span data-lang="en">{UI.rubric.en}</span><span data-lang="zh">{UI.rubric.zh}</span></em>
         </h1>
         <div class="manifesto-wrap">
-          <p class="manifesto">
-            <span data-lang="en">{UI.manifesto.en}</span>
-            <span data-lang="zh">{UI.manifesto.zh}</span>
-          </p>
+          <div class="manifesto" data-lang="en">
+            {topEn.map(para => <p>{para}</p>)}
+          </div>
+          <div class="manifesto" data-lang="zh">
+            {topZh.map(para => <p>{para}</p>)}
+          </div>
           <button class="fh-lang-toggle" type="button" aria-label="switch language">
             <span data-lang="en">中文</span><span data-lang="zh">EN</span>
           </button>
         </div>
       </header>
 
-      <ol class="fh-list">
+      <div class="fh-toolbar" role="search" aria-label="search and sort articles">
+        <label class="fh-search">
+          <span class="fh-search-icon" aria-hidden="true">⌕</span>
+          <input
+            type="search"
+            id="fh-q"
+            class="fh-search-input"
+            autocomplete="off"
+            spellcheck="false"
+            data-ph-en={UI.searchPlaceholder.en}
+            data-ph-zh={UI.searchPlaceholder.zh}
+            aria-label="search"
+          />
+        </label>
+        <div class="fh-sort">
+          <span class="fh-sort-label">
+            <span data-lang="en">{UI.sortLabel.en}</span><span data-lang="zh">{UI.sortLabel.zh}</span>
+          </span>
+          <button type="button" class="fh-sort-btn is-active" data-sort="newest">
+            <span data-lang="en">{UI.sortNewest.en}</span><span data-lang="zh">{UI.sortNewest.zh}</span>
+          </button>
+          <button type="button" class="fh-sort-btn" data-sort="oldest">
+            <span data-lang="en">{UI.sortOldest.en}</span><span data-lang="zh">{UI.sortOldest.zh}</span>
+          </button>
+          <button type="button" class="fh-sort-btn" data-sort="az">
+            <span data-lang="en">{UI.sortAZ.en}</span><span data-lang="zh">{UI.sortAZ.zh}</span>
+          </button>
+        </div>
+        <p class="fh-search-status" id="fh-status" aria-live="polite"></p>
+      </div>
+
+      <ol class="fh-list" id="fh-list">
         {sorted.map((e, i) => {
           const dt = new Date(e.date + 'T00:00:00');
           const dlEn = dt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -34,8 +75,19 @@ const total = sorted.length;
           const wdEn = dt.toLocaleDateString('en-US', { weekday: 'short' });
           const wdZh = dt.toLocaleDateString('zh-CN', { weekday: 'short' });
           const num = String(total - i).padStart(3, '0');
+          // Pre-built searchable haystack (lower-cased) — JS reads
+          // this attribute instead of walking the DOM each keystroke.
+          const haystack = [
+            e.title.en, e.title.zh, e.subtitle.en, e.subtitle.zh,
+            e.place.en, e.place.zh,
+            ...e.techniques,
+          ].join('   ').toLowerCase();
           return (
-            <li class="fh-row">
+            <li class="fh-row"
+                data-date={e.date}
+                data-title-en={e.title.en.toLowerCase()}
+                data-title-zh={e.title.zh}
+                data-search={haystack}>
               <a href={`/friday-harbor/${e.slug}/`} class="fh-row-link">
                 <div class="fh-row-thumb"
                      data-fh-thumb={e.thumb ? JSON.stringify(e.thumb) : null}>
@@ -67,6 +119,30 @@ const total = sorted.length;
           );
         })}
       </ol>
+
+      <div class="fh-list-more" id="fh-more">
+        <button type="button" class="fh-show-all" id="fh-show-all">
+          <span data-lang="en" data-tpl={UI.showAll.en}></span>
+          <span data-lang="zh" data-tpl={UI.showAll.zh}></span>
+        </button>
+        <button type="button" class="fh-show-fewer" id="fh-show-fewer" hidden>
+          <span data-lang="en">{UI.showFewer.en}</span>
+          <span data-lang="zh">{UI.showFewer.zh}</span>
+        </button>
+      </div>
+      <p class="fh-empty" id="fh-empty" hidden>
+        <span data-lang="en">{UI.noMatches.en}</span>
+        <span data-lang="zh">{UI.noMatches.zh}</span>
+      </p>
+
+      <footer class="fh-index-foot">
+        <div class="fh-foot-explainer" data-lang="en">
+          {botEn.map(para => <p>{para}</p>)}
+        </div>
+        <div class="fh-foot-explainer" data-lang="zh">
+          {botZh.map(para => <p>{para}</p>)}
+        </div>
+      </footer>
     </section>
   </div>
 </BaseLayout>
@@ -136,9 +212,10 @@ const total = sorted.length;
     font-style: italic;
     line-height: 1.65;
     color: var(--ink);
-    margin: 0;
     font-size: 1.02rem;
   }
+  .manifesto p { margin: 0 0 0.85rem; }
+  .manifesto p:last-child { margin-bottom: 0; }
   .fh-lang-toggle {
     background: transparent;
     border: 1px solid var(--rule);
@@ -153,8 +230,122 @@ const total = sorted.length;
   }
   .fh-lang-toggle:hover { border-color: var(--uw-purple); color: var(--uw-purple); }
 
-  .fh-list { list-style: none; padding: 0; margin: 1.6rem 0 0; }
+  /* ---- Toolbar: search + sort -------------------------------------- */
+  .fh-toolbar {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) auto;
+    gap: 0.9rem 1.4rem;
+    align-items: center;
+    margin: 1.6rem 0 0.4rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .fh-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .fh-search-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--ink-faint);
+    font-size: 1.1rem;
+    pointer-events: none;
+  }
+  .fh-search-input {
+    width: 100%;
+    border: 1px solid var(--rule);
+    background: var(--bg-card, #f6f3ed);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 8px 14px 8px 36px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .fh-search-input::placeholder { color: var(--ink-faint); font-style: italic; }
+  .fh-search-input:focus {
+    outline: none;
+    border-color: var(--uw-purple);
+    background: #fffdf7;
+  }
+  .fh-sort {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+  }
+  .fh-sort-label {
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-right: 0.3rem;
+  }
+  .fh-sort-btn {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-soft, #6c6358);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .fh-sort-btn:hover { border-color: var(--uw-purple); color: var(--uw-purple); }
+  .fh-sort-btn.is-active {
+    background: var(--uw-purple);
+    color: #fffdf7;
+    border-color: var(--uw-purple);
+  }
+  .fh-search-status {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    min-height: 1em;
+  }
+  .fh-search-status:empty { display: none; }
+
+  /* ---- "Show all / Show fewer" + empty state ----------------------- */
+  .fh-list-more {
+    display: flex;
+    justify-content: center;
+    margin: 1.4rem 0 0;
+  }
+  .fh-list-more[hidden] { display: none; }
+  .fh-show-all,
+  .fh-show-fewer {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--uw-purple);
+    border-radius: 999px;
+    padding: 7px 18px;
+    font-family: inherit;
+    font-size: 0.86rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .fh-show-all:hover,
+  .fh-show-fewer:hover {
+    background: var(--uw-purple);
+    color: #fffdf7;
+    border-color: var(--uw-purple);
+  }
+  .fh-empty {
+    margin: 2rem 0 0.5rem;
+    text-align: center;
+    color: var(--ink-faint);
+    font-family: var(--serif);
+    font-style: italic;
+  }
+
+  .fh-list { list-style: none; padding: 0; margin: 1.2rem 0 0; }
   .fh-row { border-bottom: 1px solid var(--rule); }
+  .fh-row[hidden] { display: none; }
   .fh-row-link {
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -220,6 +411,29 @@ const total = sorted.length;
     color: var(--ink-faint);
     font-style: italic;
   }
+
+  /* ---- Footer block: single explainer paragraph. The masthead at the
+     top tells the reader what Friday Harbor is; this block, below the
+     list, tells them what the column does and how it is made. The
+     vibe-coding disclosure used to be its own boxed aside next to this
+     paragraph — folded into the same paragraph as the closing sentence
+     to keep the page from carrying two parallel footers. */
+  .fh-index-foot {
+    margin-top: 2.4rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--rule);
+    max-width: 760px;
+  }
+  .fh-foot-explainer {
+    margin: 0;
+    font-family: var(--serif);
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink);
+    font-size: 1.02rem;
+  }
+  .fh-foot-explainer p { margin: 0 0 0.85rem; }
+  .fh-foot-explainer p:last-child { margin-bottom: 0; }
 
   @media (max-width: 720px) {
     .fh-index-mast { grid-template-columns: 1fr; gap: 1rem; }
@@ -311,15 +525,149 @@ const total = sorted.length;
   (function () {
     const root = document.querySelector('.fh-root');
     if (!root) return;
-    let lang = 'en';
+
+    // ----- language toggle (existing) ---------------------------------
+    var lang = 'en';
     try { lang = localStorage.getItem('fh-lang') || 'en'; } catch (e) {}
     if (lang !== 'en' && lang !== 'zh') lang = 'en';
     root.setAttribute('data-lang', lang);
-    const btn = root.querySelector('.fh-lang-toggle');
-    if (btn) btn.addEventListener('click', () => {
-      const next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+    function applyLangToToolbar() {
+      var cur = root.getAttribute('data-lang') || 'en';
+      var input = document.getElementById('fh-q');
+      if (input) {
+        var ph = input.getAttribute('data-ph-' + cur) || '';
+        input.placeholder = ph;
+      }
+      // show-all button: render its template with current visible-hidden count
+      renderToolbarStatus();
+    }
+    var langBtn = root.querySelector('.fh-lang-toggle');
+    if (langBtn) langBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
       root.setAttribute('data-lang', next);
       try { localStorage.setItem('fh-lang', next); } catch (e) {}
+      applyLangToToolbar();
     });
+
+    // ----- search + sort + default-5 limit -----------------------------
+    var DEFAULT_LIMIT = 5;
+    var listEl   = document.getElementById('fh-list');
+    var rowsAll  = listEl ? Array.prototype.slice.call(listEl.querySelectorAll('.fh-row')) : [];
+    var input    = document.getElementById('fh-q');
+    var sortBtns = document.querySelectorAll('.fh-sort-btn');
+    var showAll  = document.getElementById('fh-show-all');
+    var showFew  = document.getElementById('fh-show-fewer');
+    var moreWrap = document.getElementById('fh-more');
+    var emptyEl  = document.getElementById('fh-empty');
+    var statusEl = document.getElementById('fh-status');
+
+    var state = {
+      q: '',
+      sort: 'newest',
+      expanded: false,   // when true, ignore the 5-row limit
+    };
+
+    function compareRows(a, b, mode) {
+      var da = a.getAttribute('data-date') || '';
+      var db = b.getAttribute('data-date') || '';
+      if (mode === 'oldest') return da < db ? -1 : da > db ? 1 : 0;
+      if (mode === 'az') {
+        var langCur = root.getAttribute('data-lang') || 'en';
+        var ka = (langCur === 'zh' ? a.getAttribute('data-title-zh') : a.getAttribute('data-title-en')) || '';
+        var kb = (langCur === 'zh' ? b.getAttribute('data-title-zh') : b.getAttribute('data-title-en')) || '';
+        return ka.localeCompare(kb, langCur === 'zh' ? 'zh' : 'en');
+      }
+      // default: newest first
+      return da < db ? 1 : da > db ? -1 : 0;
+    }
+
+    function applyFilterAndSort() {
+      if (!listEl) return;
+      var q = state.q.trim().toLowerCase();
+      // Filter
+      var matched = rowsAll.filter(function (r) {
+        if (!q) return true;
+        var hay = r.getAttribute('data-search') || '';
+        return hay.indexOf(q) !== -1;
+      });
+      // Sort: clone the matched array and sort, then reorder DOM
+      var sorted = matched.slice().sort(function (a, b) { return compareRows(a, b, state.sort); });
+      // Reattach in sorted order; hide non-matches.
+      rowsAll.forEach(function (r) { r.hidden = true; });
+      sorted.forEach(function (r) {
+        listEl.appendChild(r);  // moving an element to the end re-orders it
+      });
+      // Apply limit-5 unless searching or expanded
+      var limited = (!q && !state.expanded);
+      sorted.forEach(function (r, i) {
+        r.hidden = limited && i >= DEFAULT_LIMIT;
+      });
+      // Empty state
+      if (emptyEl) emptyEl.hidden = sorted.length > 0;
+      // Toolbar (show-all button + status text)
+      var hiddenByLimit = limited ? Math.max(0, sorted.length - DEFAULT_LIMIT) : 0;
+      if (moreWrap) moreWrap.hidden = (hiddenByLimit === 0 && !state.expanded);
+      if (showAll) showAll.hidden = state.expanded || hiddenByLimit === 0;
+      if (showFew) showFew.hidden = !state.expanded || q.length > 0;
+      renderToolbarStatus(sorted.length, hiddenByLimit);
+    }
+
+    function renderToolbarStatus(matchCount, hiddenByLimit) {
+      // show-all button label uses the {n} template baked from the data file
+      var langCur = root.getAttribute('data-lang') || 'en';
+      if (showAll) {
+        showAll.querySelectorAll('[data-tpl]').forEach(function (sp) {
+          var tpl = sp.getAttribute('data-tpl') || '';
+          // n = total matched (the button is only shown when there are
+          // hidden rows, so total is the right number to advertise)
+          var n = (typeof matchCount === 'number') ? matchCount : rowsAll.length;
+          sp.textContent = tpl.replace('{n}', n);
+        });
+      }
+      // status line: only show a count while a query is active
+      if (statusEl) {
+        if (state.q && typeof matchCount === 'number') {
+          var tplEn = '{n} matching';
+          var tplZh = '{n} 篇匹配';
+          statusEl.textContent = (langCur === 'zh' ? tplZh : tplEn).replace('{n}', matchCount);
+        } else {
+          statusEl.textContent = '';
+        }
+      }
+    }
+
+    if (input) {
+      input.addEventListener('input', function () {
+        state.q = input.value || '';
+        // When searching, automatically expand so all matches are visible
+        state.expanded = state.q.length > 0;
+        applyFilterAndSort();
+      });
+    }
+    sortBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        state.sort = b.getAttribute('data-sort') || 'newest';
+        sortBtns.forEach(function (x) {
+          var on = x === b;
+          x.classList.toggle('is-active', on);
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        applyFilterAndSort();
+      });
+    });
+    if (showAll) showAll.addEventListener('click', function () {
+      state.expanded = true;
+      applyFilterAndSort();
+    });
+    if (showFew) showFew.addEventListener('click', function () {
+      state.expanded = false;
+      applyFilterAndSort();
+      // Scroll back up to the top of the list so the reader doesn't get
+      // stranded mid-page after collapsing.
+      if (listEl && listEl.scrollIntoView) listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    applyLangToToolbar();
+    applyFilterAndSort();
   })();
 </script>

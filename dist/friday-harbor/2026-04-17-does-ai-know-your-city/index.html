@@ -1,0 +1,580 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Does the AI Really Know Your City? · Friday Harbor · Humanistic GIS Laboratory</title><meta name="description" content="Asked to draw Seattle's neighborhoods from memory, GPT-5.5 Thinking returned a city twice the size, with a median IoU of zero. The right ocean — almost everything else wrong."><link rel="canonical" href="https://hgis.uw.edu/friday-harbor/2026-04-17-does-ai-know-your-city/"><!-- Open Graph --><meta property="og:type" content="article"><meta property="og:site_name" content="Humanistic GIS Laboratory"><meta property="og:title" content="Does the AI Really Know Your City? · Friday Harbor · Humanistic GIS Laboratory"><meta property="og:description" content="Asked to draw Seattle's neighborhoods from memory, GPT-5.5 Thinking returned a city twice the size, with a median IoU of zero. The right ocean — almost everything else wrong."><meta property="og:url" content="https://hgis.uw.edu/friday-harbor/2026-04-17-does-ai-know-your-city/"><meta property="og:image" content="https://hgis.uw.edu/hgis-logo.png"><meta property="og:locale" content="en_US"><!-- Twitter / X card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Does the AI Really Know Your City? · Friday Harbor · Humanistic GIS Laboratory"><meta name="twitter:description" content="Asked to draw Seattle's neighborhoods from memory, GPT-5.5 Thinking returned a city twice the size, with a median IoU of zero. The right ocean — almost everything else wrong."><meta name="twitter:image" content="https://hgis.uw.edu/hgis-logo.png"><!-- Crawl hints --><meta name="robots" content="index, follow, max-image-preview:large"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet"><!-- Icons --><link rel="icon" type="image/png" href="/hgis-logo.png"><link rel="apple-touch-icon" href="/hgis-logo.png"><link rel="stylesheet" href="/_astro/2026-04-17-does-ai-know-your-city.BZu1J7nN.css">
+<link rel="stylesheet" href="/_astro/2026-04-14-anacortes-to-friday-harbor.Cqwnycj_.css">
+<link rel="stylesheet" href="/_astro/2026-04-14-anacortes-to-friday-harbor.CvUxr7yG.css"></head> <body> <header class="site-header" data-astro-cid-3ef6ksr2> <div class="container header-inner" data-astro-cid-3ef6ksr2> <a href="/" class="brand" aria-label="Humanistic GIS Laboratory home" data-astro-cid-3ef6ksr2> <svg class="brand-logo" viewBox="160 555 325 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HGIS Lab logo" data-astro-cid-3ef6ksr2> <path class="brand-bar brand-bar-humanistic" pathLength="100" d="M299.2,565.6L175,791.6l22.8,41l103-186.7l57.5,105.9h45.5L299.2,565.6z" data-astro-cid-3ef6ksr2></path> <path class="brand-bar brand-bar-geoai" pathLength="100" d="M300.8,645.9l22.7,41.8l-58.4,103.9l205.9,0.1l-21.7,42l-251.5-1.2L300.8,645.9z" data-astro-cid-3ef6ksr2></path> <path class="brand-bar brand-bar-fake" pathLength="100" d="M299.2,565.6l104.5,186.1l-116.2,0.1l-22.3,39.8l205.8,0L345.5,565.5L299.2,565.6z" data-astro-cid-3ef6ksr2></path> </svg> <span class="brand-text" data-astro-cid-3ef6ksr2> <strong data-astro-cid-3ef6ksr2>Humanistic GIS Laboratory</strong> <small data-astro-cid-3ef6ksr2>University of Washington · Department of Geography</small> </span> </a> <nav data-astro-cid-3ef6ksr2> <ul data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2> <a href="/" class="nav-link" data-astro-cid-3ef6ksr2> Home </a> </li><li data-astro-cid-3ef6ksr2> <a href="/friday-harbor/" class="nav-link nav-featured active" aria-label="Friday Harbor — issue 005" data-astro-cid-3ef6ksr2> <span class="nav-marker" aria-hidden="true" data-astro-cid-3ef6ksr2></span> <em class="nav-featured-text" data-astro-cid-3ef6ksr2> Friday Harbor<sup class="nav-issue" data-astro-cid-3ef6ksr2>005</sup> </em> </a> </li><li data-astro-cid-3ef6ksr2> <a href="/research/" class="nav-link" data-astro-cid-3ef6ksr2> Research </a> </li><li data-astro-cid-3ef6ksr2> <a href="/projects/" class="nav-link" data-astro-cid-3ef6ksr2> Projects </a> </li><li data-astro-cid-3ef6ksr2> <a href="/publications/" class="nav-link" data-astro-cid-3ef6ksr2> Publications </a> </li><li data-astro-cid-3ef6ksr2> <a href="/people/" class="nav-link" data-astro-cid-3ef6ksr2> People </a> </li><li data-astro-cid-3ef6ksr2> <a href="/teaching/" class="nav-link" data-astro-cid-3ef6ksr2> Teaching </a> </li> </ul> </nav> </div> <div class="gold-rule" data-astro-cid-3ef6ksr2></div> </header>  <script>
+  (function () {
+    const logo = document.querySelector('.brand-logo');
+    if (!logo) return;
+    // Only play an entry animation on the first pageview of the session;
+    // subsequent navigations skip entry but still get the idle motion.
+    let played = false;
+    try { played = sessionStorage.getItem('hgis-logo-entry') === '1'; } catch (e) {}
+    if (played) {
+      logo.classList.add('is-idle');
+      return;
+    }
+    const variants = ['entry-spin', 'entry-draw', 'entry-assemble'];
+    const pick = variants[Math.floor(Math.random() * variants.length)];
+    logo.classList.add(pick);
+    try { sessionStorage.setItem('hgis-logo-entry', '1'); } catch (e) {}
+    // After the entry animation settles, hand off to the idle loop so the
+    // logo never sits dead-still but also never feels overactive.
+    setTimeout(() => {
+      logo.classList.remove(pick);
+      logo.classList.add('is-idle');
+    }, 1800);
+  })();
+</script> <main>  <div class="fh-root" data-lang="en" data-astro-cid-wvq62lyj> <article class="fh-entry" data-astro-cid-wvq62lyj> <header class="fh-masthead" data-astro-cid-wvq62lyj> <a href="/friday-harbor/" class="fh-rubric" data-astro-cid-wvq62lyj> <em data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Friday Harbor</span><span data-lang="zh" data-astro-cid-wvq62lyj>周五港</span></em> </a> <div class="fh-meta" data-astro-cid-wvq62lyj> <span data-astro-cid-wvq62lyj>№ 002</span> <span data-lang="en" data-astro-cid-wvq62lyj>Friday, April 17, 2026</span> <span data-lang="zh" data-astro-cid-wvq62lyj>2026年4月17日星期五</span> <span class="fh-place" data-lang="en" data-astro-cid-wvq62lyj>Seattle, WA · Neighborhood Map Atlas vs. GPT-5.5 Thinking</span> <span class="fh-place" data-lang="zh" data-astro-cid-wvq62lyj>西雅图 · 《邻里地图集》对照 GPT-5.5 Thinking</span> <button class="fh-lang-toggle" type="button" aria-label="switch language" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>中文</span><span data-lang="zh" data-astro-cid-wvq62lyj>EN</span> </button> </div> </header> <h1 class="fh-title" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>Does the AI Really Know Your City?</span> <span data-lang="zh" data-astro-cid-wvq62lyj>AI 真的懂你的城市吗？</span> </h1> <p class="fh-lede" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>Asked to draw Seattle&#39;s neighborhoods from memory, GPT-5.5 Thinking returned a city twice the size, with a median IoU of zero. The right ocean — almost everything else wrong.</span> <span data-lang="zh" data-astro-cid-wvq62lyj>让 GPT-5.5 Thinking 凭记忆画出西雅图的邻里边界，它给出的城市面积是真实的两倍，同名邻里的 IoU 中位数等于零。海是对的，剩下的几乎全错了。</span> </p> <div class="fh-figure-wrap" data-astro-cid-wvq62lyj> <figure class="memory-figure" data-astro-cid-g2iyrgdb> <div class="memory-stage" id="stage" aria-label="Two side-by-side maps comparing real Seattle neighborhood boundaries with the boundaries GPT-5.5 Thinking drew from memory" data-astro-cid-g2iyrgdb> <div class="memory-panel" data-astro-cid-g2iyrgdb> <h3 class="memory-panel-title" data-lang="en" data-astro-cid-g2iyrgdb>Real Seattle <small data-astro-cid-g2iyrgdb>· Neighborhood Map Atlas, 94 sub-hoods · framed to the real city</small></h3> <h3 class="memory-panel-title" data-lang="zh" data-astro-cid-g2iyrgdb>真实西雅图 <small data-astro-cid-g2iyrgdb>· 邻里地图集，94 个子片区 · 按城市自身范围出图</small></h3> <svg class="memory-svg" id="svgReal" viewBox="0 0 480 560" preserveAspectRatio="xMidYMid meet" role="img" data-astro-cid-g2iyrgdb></svg> </div> <div class="memory-panel" data-astro-cid-g2iyrgdb> <h3 class="memory-panel-title" data-lang="en" data-astro-cid-g2iyrgdb>From memory <small data-astro-cid-g2iyrgdb>· GPT-5.5 Thinking, 73 polygons · framed to fit ALL the model drew</small></h3> <h3 class="memory-panel-title" data-lang="zh" data-astro-cid-g2iyrgdb>凭记忆画的 <small data-astro-cid-g2iyrgdb>· GPT-5.5 Thinking，73 个多边形 · 按模型自身范围出图</small></h3> <svg class="memory-svg" id="svgAI" viewBox="0 0 480 560" preserveAspectRatio="xMidYMid meet" role="img" data-astro-cid-g2iyrgdb></svg> </div> <p class="map-status" id="status" data-astro-cid-g2iyrgdb> <span data-lang="en" data-astro-cid-g2iyrgdb>Loading boundaries...</span> <span data-lang="zh" data-astro-cid-g2iyrgdb>边界加载中...</span> </p> </div> <figcaption data-lang="en" data-astro-cid-g2iyrgdb> <b data-astro-cid-g2iyrgdb>Left: the real Seattle, framed to its actual bounds. Right: the entire city the model drew, framed to fit all of it.</b>
+We deliberately let the right panel zoom out — what the model imagined extends well past the real city, so we show all of it. Only the
+      eight neighborhoods where the deviation is the headline get labelled: red where the model bloats one, green where it shrinks one. The
+      same eight are highlighted in the same colours on the left, so each red shape on the left has a red chip on the right.
+<span class="legend-line" data-astro-cid-g2iyrgdb> <span class="legend-swatch swatch-bloat" data-astro-cid-g2iyrgdb></span> <span data-astro-cid-g2iyrgdb><b data-astro-cid-g2iyrgdb>Bloat</b> — drawn much larger than reality. The chip carries the multiplier.</span> </span> <span class="legend-line" data-astro-cid-g2iyrgdb> <span class="legend-swatch swatch-shrink" data-astro-cid-g2iyrgdb></span> <span data-astro-cid-g2iyrgdb><b data-astro-cid-g2iyrgdb>Shrink</b> — drawn smaller than reality. The chip carries the multiplier.</span> </span> </figcaption> <figcaption data-lang="zh" data-astro-cid-g2iyrgdb> <b data-astro-cid-g2iyrgdb>左：真实西雅图，按城市自身的范围出图。右：模型脑里画出的整座城，按它自己的范围出图。</b>
+右图我们刻意放大视野——模型想象出的西雅图比真城大得多，与其裁掉一半，不如让它全部显示。只在八个分歧最显著的邻里上做标签：
+      红色是模型把这个邻里画大了，绿色是画小了。同样这八个，左图用同样的颜色高亮——左侧的每一块红，对应右侧同名的红 chip。
+<span class="legend-line" data-astro-cid-g2iyrgdb> <span class="legend-swatch swatch-bloat" data-astro-cid-g2iyrgdb></span> <span data-astro-cid-g2iyrgdb><b data-astro-cid-g2iyrgdb>膨胀</b>——画得比真实大很多，chip 上是倍数。</span> </span> <span class="legend-line" data-astro-cid-g2iyrgdb> <span class="legend-swatch swatch-shrink" data-astro-cid-g2iyrgdb></span> <span data-astro-cid-g2iyrgdb><b data-astro-cid-g2iyrgdb>压缩</b>——画得比真实小，chip 上是倍数。</span> </span> </figcaption> <aside class="memory-stats" aria-label="key bias figures" data-astro-cid-g2iyrgdb> <div class="stat" data-lang="en" data-astro-cid-g2iyrgdb> <span class="stat-num" data-astro-cid-g2iyrgdb>1.9<small data-astro-cid-g2iyrgdb>&nbsp;×</small></span> <span class="stat-label" data-astro-cid-g2iyrgdb>AI Seattle is nearly twice the city's area (408 vs 216 km²)</span> </div> <div class="stat" data-lang="zh" data-astro-cid-g2iyrgdb> <span class="stat-num" data-astro-cid-g2iyrgdb>1.9<small data-astro-cid-g2iyrgdb>&nbsp;倍</small></span> <span class="stat-label" data-astro-cid-g2iyrgdb>AI 画的西雅图面积近真实城市两倍（408 vs 216 平方公里）</span> </div> <div class="stat" data-lang="en" data-astro-cid-g2iyrgdb> <span class="stat-num" data-astro-cid-g2iyrgdb>52<small data-astro-cid-g2iyrgdb>&nbsp;%</small></span> <span class="stat-label" data-astro-cid-g2iyrgdb>of the AI's polygons fall inside the real city; the other half spills out</span> </div> <div class="stat" data-lang="zh" data-astro-cid-g2iyrgdb> <span class="stat-num" data-astro-cid-g2iyrgdb>52<small data-astro-cid-g2iyrgdb>&nbsp;%</small></span> <span class="stat-label" data-astro-cid-g2iyrgdb>AI 画出的图仅一半落在真实西雅图内，另一半溢出到城外</span> </div> <div class="stat" data-lang="en" data-astro-cid-g2iyrgdb> <span class="stat-num" data-astro-cid-g2iyrgdb>0<small data-astro-cid-g2iyrgdb>&nbsp;%</small></span> <span class="stat-label" data-astro-cid-g2iyrgdb>typical overlap between an AI neighborhood and its real namesake — most don't touch at all</span> </div> <div class="stat" data-lang="zh" data-astro-cid-g2iyrgdb> <span class="stat-num" data-astro-cid-g2iyrgdb>0<small data-astro-cid-g2iyrgdb>&nbsp;%</small></span> <span class="stat-label" data-astro-cid-g2iyrgdb>AI 邻里与同名真实邻里的典型重叠率 —— 多数情况完全不相交</span> </div> <div class="stat" data-lang="en" data-astro-cid-g2iyrgdb> <span class="stat-num" data-astro-cid-g2iyrgdb>3.7<small data-astro-cid-g2iyrgdb>&nbsp;km</small></span> <span class="stat-label" data-astro-cid-g2iyrgdb>median centroid shift — neighborhoods themselves are typically 1–2 km across</span> </div> <div class="stat" data-lang="zh" data-astro-cid-g2iyrgdb> <span class="stat-num" data-astro-cid-g2iyrgdb>3.7<small data-astro-cid-g2iyrgdb>&nbsp;公里</small></span> <span class="stat-label" data-astro-cid-g2iyrgdb>质心位移中位数 —— 一个邻里本身通常只有 1–2 公里宽</span> </div> </aside> <details class="memory-prompt-box" data-astro-cid-g2iyrgdb> <summary data-astro-cid-g2iyrgdb><span data-lang="en" data-astro-cid-g2iyrgdb>The exact prompt given to the model</span><span data-lang="zh" data-astro-cid-g2iyrgdb>给模型的原始提示词</span></summary> <pre class="memory-prompt" data-astro-cid-g2iyrgdb>Generate a GeoJSON FeatureCollection of Seattle neighborhoods from memory only. Draw detailed polygon boundaries for each neighborhood as accurately as possible. Add metadata stating the boundaries are approximate and not authoritative.</pre> <p class="memory-prompt-note" data-lang="en" data-astro-cid-g2iyrgdb>No tools, no web access, no system prompt steering toward a source. The model returned 73 polygons and self-tagged the file <code data-astro-cid-g2iyrgdb>generated_from_memory_only: true</code>, <code data-astro-cid-g2iyrgdb>authoritative: false</code>.</p> <p class="memory-prompt-note" data-lang="zh" data-astro-cid-g2iyrgdb>未联网、未调用任何工具、系统提示也未导向任何数据源。模型给出 73 个多边形，并自行在文件元数据里标注 <code data-astro-cid-g2iyrgdb>generated_from_memory_only: true</code>、<code data-astro-cid-g2iyrgdb>authoritative: false</code>。</p> </details> </figure> </div> <div class="fh-body" data-astro-cid-wvq62lyj> <section class="fh-col fh-notebook" data-astro-cid-wvq62lyj> <div data-lang="en" data-astro-cid-wvq62lyj><div data-astro-cid-g2iyrgdb> <p data-astro-cid-g2iyrgdb>
+On April 17, 2026, the most capable "thinking" model in OpenAI's
+      current line — which self-identifies in its output as
+<em data-astro-cid-g2iyrgdb>GPT-5.5 Thinking</em> — was given the prompt above and no tools.
+      Just: draw Seattle's neighborhoods, from memory. It returned 73
+      named polygons, attached metadata saying the boundaries were
+      "approximate and not authoritative," and exited gracefully.
+</p> <p data-astro-cid-g2iyrgdb>
+The map it drew is <em data-astro-cid-g2iyrgdb>twice</em> the size of the city. The 73
+      polygons cover 408 km²; the real Neighborhood Map Atlas covers 216.
+      The AI's Seattle does include the actual Seattle — its union
+      overlaps 98 % of the real city — but only about half of what the
+      model drew falls inside the real city. The other half is Puget
+      Sound, the lake, neighboring suburbs, or invented land beyond
+      King County.
+</p> <p data-astro-cid-g2iyrgdb>
+Per neighborhood, the dissonance gets sharper. Of 64 name-matched
+      pairs, more than half the time the model's polygon for a given
+      neighborhood does not overlap the real one <em data-astro-cid-g2iyrgdb>at all</em>. The
+      model knows the rough north-to-south order; it does not know
+      where any one neighborhood stops.
+</p> <p data-astro-cid-g2iyrgdb>
+What this map actually plots is <b data-astro-cid-g2iyrgdb>discourse density</b>.
+      An AI's resolution of a place is a function of how much was
+      written about it. The neighborhoods drawn boldly here are the
+      ones the language pays attention to — <b data-astro-cid-g2iyrgdb>Ballard</b>, the
+      loudest neighborhood on the Seattle internet, drawn 9.3 ×
+      too big; <b data-astro-cid-g2iyrgdb>High Point</b>, a West Seattle housing-policy
+      keyword, 8.4 ×; <b data-astro-cid-g2iyrgdb>Crown Hill</b>, 6.8 ×. The ones that
+      shrink or get swallowed are the ones the language has not
+      paid attention to — <b data-astro-cid-g2iyrgdb>Wedgwood</b>, 0.56 ×; <b data-astro-cid-g2iyrgdb>Sand Point</b>,
+      0.59 ×, the name half-eaten by the older naval base;
+<b data-astro-cid-g2iyrgdb>Interbay</b>, 0.64 ×, a working strip the city itself
+      never quite labels. The model is doing what a language-trained
+      memory should: how much was said about a place becomes how
+      much space it gets on the map.
+</p> <p class="aside" data-astro-cid-g2iyrgdb>
+The interesting object here is not the error — it is the <em data-astro-cid-g2iyrgdb>shape</em>
+of the error. Visibility <em data-astro-cid-g2iyrgdb>in language</em>, not visibility on
+      the ground, is what such a model will return. When a chatbot,
+      a search summary, or a generative map is asked to "show Seattle"
+      to a reader who has never been here, this is the city it draws.
+      That distance, in cartographic terms, is bias; in humanistic-GIS
+      terms, it is the city's <em data-astro-cid-g2iyrgdb>palimpsest of attention</em> — made
+      visible because a model with no training on land was made to
+      sketch the place from words alone.
+</p> </div></div> <div data-lang="zh" data-astro-cid-wvq62lyj><div data-astro-cid-g2iyrgdb> <p data-astro-cid-g2iyrgdb>
+2026 年 4 月 17 日，我们给 OpenAI 当下最强的「思考」模型——
+      它在元数据里自报为 <em data-astro-cid-g2iyrgdb>GPT-5.5 Thinking</em> —— 上面那条
+      原始提示词，并明确不允许联网或调用任何工具：
+      只凭记忆，把西雅图所有邻里的边界尽量画出来。
+      它干净利落地给出 73 个命名多边形，附上「边界为近似、非权威」的
+      元数据，关闭对话。
+</p> <p data-astro-cid-g2iyrgdb>
+它画出的西雅图，面积是真实西雅图的<em data-astro-cid-g2iyrgdb>两倍</em>。
+      73 个多边形合起来 408 平方公里，权威的《邻里地图集》是 216。
+      模型的范围确实涵盖了真实西雅图 98% 的地，
+      但它画出的图只有约一半落在真实西雅图境内；另一半飘到了普吉特湾里、湖里、邻郊、或干脆是金县外凭空多出来的土地。
+</p> <p data-astro-cid-g2iyrgdb>
+逐个邻里看，差距更刺眼。能一一配上名字的 64 对里，
+<em data-astro-cid-g2iyrgdb>多于一半</em>的情形，模型画出的某邻里与真实同名邻里
+      完全没有交集。模型大致知道这些邻里从北到南的排列顺序，
+      却不知道任何一个的边界停在哪里。
+</p> <p data-astro-cid-g2iyrgdb>
+这张图实际画出来的，是<b data-astro-cid-g2iyrgdb>讨论的密度</b>。
+      AI 对一个地方的分辨率，是这个地方被写过多少的函数。
+      被画得最大胆的，都是语言里反复出现的：
+<b data-astro-cid-g2iyrgdb>Ballard</b>——西雅图互联网上最热的街区——画到了
+      9.3 倍；<b data-astro-cid-g2iyrgdb>High Point</b>——美国公共住房政策写作的关键词
+      ——8.4 倍；<b data-astro-cid-g2iyrgdb>Crown Hill</b> 6.8 倍。
+      被压缩或被吞掉的，都是语言里失声的：
+<b data-astro-cid-g2iyrgdb>Wedgwood</b> 0.56 倍；<b data-astro-cid-g2iyrgdb>Sand Point</b> 0.59 倍——
+      名字被同名军用基地吃掉了一半语义；<b data-astro-cid-g2iyrgdb>Interbay</b>
+0.64 倍——这片工业带连市政自己都没怎么命名。
+      模型做的，正是一台语言训练出的记忆机器该做的事：
+<b data-astro-cid-g2iyrgdb>每个地方被写过多少，就被它换算成在地图上获得多少空间</b>。
+</p> <p class="aside" data-astro-cid-g2iyrgdb>
+这里值得读的不是错误本身，而是<em data-astro-cid-g2iyrgdb>错误的形状</em>。
+      模型最终画出的，是<em data-astro-cid-g2iyrgdb>语言世界里能见度高</em>的城市，
+      不是地面上的西雅图。
+      当一台聊天机器、一段搜索摘要、或一张生成式地图被一个从未来过的读者用来「看西雅图」，
+      它返回给读者的就是这个版本——
+      它语料里被反复描写的那个城市，不是这座城市本身。
+      两者之间的距离，在制图学里就是 bias；
+      在人文 GIS 的语言里，是这座城市的「被关注度」留下的<em data-astro-cid-g2iyrgdb>重写本</em>——
+      只有当一个完全不懂土地的模型被迫只用语言画它时，
+      这层重写本才被显形。
+</p> </div></div> </section> <section class="fh-col fh-endnote" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Endnote</span><span data-lang="zh" data-astro-cid-wvq62lyj>尾注</span></h2> <div data-lang="en" data-astro-cid-wvq62lyj><ul data-astro-cid-g2iyrgdb> <li data-astro-cid-g2iyrgdb>AI-generated polygons: <em data-astro-cid-g2iyrgdb>GPT-5.5 Thinking</em> via the prompt shown verbatim under the maps. Single-shot, no tools, no web. The model self-tagged the FeatureCollection <code data-astro-cid-g2iyrgdb>generated_from_memory_only: true</code>, <code data-astro-cid-g2iyrgdb>authoritative: false</code>. File: <code data-astro-cid-g2iyrgdb>docs/seattle_neighborhoods_from_memory_detailed_polygons.geojson</code>.</li> <li data-astro-cid-g2iyrgdb>Authoritative boundaries: City of Seattle Open Data — <a href="https://data-seattlecitygis.opendata.arcgis.com/datasets/SeattleCityGIS::neighborhood-map-atlas-neighborhoods/explore" rel="noopener" data-astro-cid-g2iyrgdb><em data-astro-cid-g2iyrgdb>Neighborhood Map Atlas</em> (sub-neighborhoods)</a>. 94 polygons. Downloaded 2026-04-17.</li> <li data-astro-cid-g2iyrgdb>Method: WGS84 → UTM Zone 10N (EPSG:32610) reprojection before any metric computation. Per-neighborhood overlap, area ratio, and centroid distance — measured in metres. Names joined by exact match with a small hand-edited alias table for cases where the model lumps two sub-hoods (e.g. <em data-astro-cid-g2iyrgdb>Chinatown-International District</em> → <em data-astro-cid-g2iyrgdb>International District</em>) or uses an L_HOOD label. 64 of the 73 model polygons matched a sub-hood; 9 were unmatched and excluded from per-name metrics. The fixed AI geometry served to the page (under <code data-astro-cid-g2iyrgdb>public/data/</code>) was repaired with <code data-astro-cid-g2iyrgdb>shapely.make_valid + buffer(0)</code>; properties unchanged. The original model output is preserved in <code data-astro-cid-g2iyrgdb>docs/seattle_neighborhoods_from_memory_detailed_polygons.geojson</code>.</li> <li data-astro-cid-g2iyrgdb>9 model labels with no atlas match — the model invented or merged: <em data-astro-cid-g2iyrgdb>Lower Queen Anne / Uptown</em>, <em data-astro-cid-g2iyrgdb>Madison Valley</em>, <em data-astro-cid-g2iyrgdb>Chinatown-International District</em>, <em data-astro-cid-g2iyrgdb>Central District</em>, <em data-astro-cid-g2iyrgdb>Judkins Park</em>, <em data-astro-cid-g2iyrgdb>Hillman City</em>, <em data-astro-cid-g2iyrgdb>Othello</em>, <em data-astro-cid-g2iyrgdb>Admiral</em>, <em data-astro-cid-g2iyrgdb>West Seattle Junction</em>. Several are real Seattle place-names; none correspond to single sub-hoods in the atlas.</li> <li data-astro-cid-g2iyrgdb>34 atlas sub-hoods with no model entry — the model omitted: <em data-astro-cid-g2iyrgdb>Atlantic, Briarcliff, Broadway, Central Business District, Industrial District, Montlake, Pike-Market, Portage Bay,</em> et al. Notable: the Central Business District (downtown's actual name in the atlas) and Montlake (a high-profile neighborhood) are absent.</li> <li data-astro-cid-g2iyrgdb>Source map &amp; analysis script: <code data-astro-cid-g2iyrgdb>src/pages/friday-harbor/2026-04-17-does-ai-know-your-city.astro</code>; comparison written into <code data-astro-cid-g2iyrgdb>public/data/seattle_neighborhoods_compare.json</code>.</li> </ul></div> <div data-lang="zh" data-astro-cid-wvq62lyj><ul data-astro-cid-g2iyrgdb> <li data-astro-cid-g2iyrgdb>AI 生成多边形：<em data-astro-cid-g2iyrgdb>GPT-5.5 Thinking</em>，提示词原文已贴在地图下方。一次性调用，未联网、未调用任何工具。模型在 FeatureCollection 元数据里自标 <code data-astro-cid-g2iyrgdb>generated_from_memory_only: true</code>、<code data-astro-cid-g2iyrgdb>authoritative: false</code>。文件：<code data-astro-cid-g2iyrgdb>docs/seattle_neighborhoods_from_memory_detailed_polygons.geojson</code>。</li> <li data-astro-cid-g2iyrgdb>权威边界：西雅图市政开放数据《<a href="https://data-seattlecitygis.opendata.arcgis.com/datasets/SeattleCityGIS::neighborhood-map-atlas-neighborhoods/explore" rel="noopener" data-astro-cid-g2iyrgdb>邻里地图集</a>》子片区层（sub-neighborhoods），共 94 个多边形。下载日期 2026-04-17。</li> <li data-astro-cid-g2iyrgdb>方法：先把所有几何重投影到 UTM 10N（EPSG:32610）以米为单位，再逐个邻里测量重叠率、面积比、质心距离。名字用精确匹配；少数情况下模型把两个子片区合成一个或用大片区标签的，靠手工别名表对齐（如 <em data-astro-cid-g2iyrgdb>Chinatown-International District</em> → <em data-astro-cid-g2iyrgdb>International District</em>）。73 个模型多边形中 64 个对上 sub-hood；9 个无匹配，未参与逐项统计。供页面渲染的 AI 几何（<code data-astro-cid-g2iyrgdb>public/data/</code> 下的副本）经过 <code data-astro-cid-g2iyrgdb>shapely.make_valid + buffer(0)</code> 修复（修了 4 处 self-intersection），属性不变；模型原始输出保留在 <code data-astro-cid-g2iyrgdb>docs/seattle_neighborhoods_from_memory_detailed_polygons.geojson</code>。</li> <li data-astro-cid-g2iyrgdb>9 个模型自创或合并的标签：<em data-astro-cid-g2iyrgdb>Lower Queen Anne / Uptown</em>、<em data-astro-cid-g2iyrgdb>Madison Valley</em>、<em data-astro-cid-g2iyrgdb>Chinatown-International District</em>、<em data-astro-cid-g2iyrgdb>Central District</em>、<em data-astro-cid-g2iyrgdb>Judkins Park</em>、<em data-astro-cid-g2iyrgdb>Hillman City</em>、<em data-astro-cid-g2iyrgdb>Othello</em>、<em data-astro-cid-g2iyrgdb>Admiral</em>、<em data-astro-cid-g2iyrgdb>West Seattle Junction</em>。多数是西雅图实际存在的地名，但没有任何一个对应到地图集里某一个子片区。</li> <li data-astro-cid-g2iyrgdb>34 个权威子片区被模型整个漏掉，包括 <em data-astro-cid-g2iyrgdb>Atlantic、Briarcliff、Broadway、Central Business District（即真正的市中心商业区）、Industrial District、Montlake、Pike-Market、Portage Bay</em> 等。其中 CBD 和 Montlake 的缺席尤其值得注意。</li> <li data-astro-cid-g2iyrgdb>源代码与比较脚本：<code data-astro-cid-g2iyrgdb>src/pages/friday-harbor/2026-04-17-does-ai-know-your-city.astro</code>；比较结果落盘在 <code data-astro-cid-g2iyrgdb>public/data/seattle_neighborhoods_compare.json</code>。</li> </ul></div> </section> <section class="fh-col fh-cite" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>How to cite</span><span data-lang="zh" data-astro-cid-wvq62lyj>引用格式</span></h2> <div class="fh-cite-widget" data-astro-cid-wvq62lyj> <div class="fh-cite-tabs" role="tablist" data-astro-cid-wvq62lyj> <button class="fh-cite-tab is-active" type="button" role="tab" data-fmt="apa" aria-selected="true" data-astro-cid-wvq62lyj>APA</button> <button class="fh-cite-tab" type="button" role="tab" data-fmt="chicago" aria-selected="false" data-astro-cid-wvq62lyj>Chicago</button> <button class="fh-cite-tab" type="button" role="tab" data-fmt="bibtex" aria-selected="false" data-astro-cid-wvq62lyj>BibTeX</button> <button class="fh-cite-tab" type="button" role="tab" data-fmt="ris" aria-selected="false" data-astro-cid-wvq62lyj>RIS</button> <button class="fh-cite-tab" type="button" role="tab" data-fmt="gbt" aria-selected="false" data-astro-cid-wvq62lyj>GB/T 7714</button> <button class="fh-cite-copy" type="button" aria-label="copy citation" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Copy</span><span data-lang="zh" data-astro-cid-wvq62lyj>复制</span></button> </div> <pre class="fh-citation is-active" data-fmt="apa" data-astro-cid-wvq62lyj>Zhao, B. (2026, April 17). Does the AI Really Know Your City?. Friday Harbor (HGIS Lab Column), Article 2.
+Humanistic GIS Lab, University of Washington. https://hgis.uw.edu/friday-harbor/2026-04-17-does-ai-know-your-city/</pre> <pre class="fh-citation" data-fmt="chicago" hidden data-astro-cid-wvq62lyj>Zhao, Bo. &quot;Does the AI Really Know Your City?.&quot; Friday Harbor (HGIS Lab column), no. 002, April 17, 2026. https://hgis.uw.edu/friday-harbor/2026-04-17-does-ai-know-your-city/</pre> <pre class="fh-citation" data-fmt="bibtex" hidden data-astro-cid-wvq62lyj>@misc{zhao2026memory,
+  author       = {Bo Zhao},
+  title        = {Does the AI Really Know Your City?},
+  howpublished = {Friday Harbor (HGIS Lab Column), Article 2},
+  institution  = {Humanistic GIS Lab, University of Washington},
+  year         = {2026},
+  month        = apr,
+  url          = {https://hgis.uw.edu/friday-harbor/2026-04-17-does-ai-know-your-city/}
+}</pre> <pre class="fh-citation" data-fmt="ris" hidden data-astro-cid-wvq62lyj>TY  - GEN
+AU  - Zhao, Bo
+TI  - Does the AI Really Know Your City?
+T2  - Friday Harbor (HGIS Lab Column)
+IS  - 2
+PY  - 2026
+DA  - 2026-04-17
+PB  - Humanistic GIS Lab, University of Washington
+UR  - https://hgis.uw.edu/friday-harbor/2026-04-17-does-ai-know-your-city/
+ER  - </pre> <pre class="fh-citation" data-fmt="gbt" hidden data-astro-cid-wvq62lyj>赵博. AI 真的懂你的城市吗？[EB/OL]. Friday Harbor (HGIS 实验室专栏), 第 002 期, 2026-04-17. https://hgis.uw.edu/friday-harbor/2026-04-17-does-ai-know-your-city/</pre> </div> </section> </div> <section class="fh-share" aria-label="share this entry" data-astro-cid-wvq62lyj> <div class="fh-share-row" data-astro-cid-wvq62lyj> <span class="fh-share-label" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>Share</span><span data-lang="zh" data-astro-cid-wvq62lyj>Share</span> </span> <a class="fh-share-btn fh-share-native" data-share="native" href="#" hidden data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Share…</span><span data-lang="zh" data-astro-cid-wvq62lyj>系统分享…</span></a> <a class="fh-share-btn" data-share="x" href="#" rel="noopener" data-astro-cid-wvq62lyj>X</a> <a class="fh-share-btn" data-share="bluesky" href="#" rel="noopener" data-astro-cid-wvq62lyj>Bluesky</a> <a class="fh-share-btn" data-share="linkedin" href="#" rel="noopener" data-astro-cid-wvq62lyj>LinkedIn</a> <a class="fh-share-btn" data-share="facebook" href="#" rel="noopener" data-astro-cid-wvq62lyj>Facebook</a> <a class="fh-share-btn" data-share="email" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Email</span><span data-lang="zh" data-astro-cid-wvq62lyj>邮件</span></a> </div> <div class="fh-share-row fh-share-cn" data-astro-cid-wvq62lyj> <span class="fh-share-label" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>分享</span><span data-lang="zh" data-astro-cid-wvq62lyj>分享</span> </span> <a class="fh-share-btn" data-share="weibo" href="#" rel="noopener" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Weibo</span><span data-lang="zh" data-astro-cid-wvq62lyj>微博</span></a> <a class="fh-share-btn" data-share="wechat" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>WeChat</span><span data-lang="zh" data-astro-cid-wvq62lyj>微信</span></a> <a class="fh-share-btn" data-share="xhs" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Xiaohongshu</span><span data-lang="zh" data-astro-cid-wvq62lyj>小红书</span></a> <a class="fh-share-btn" data-share="douban" href="#" rel="noopener" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Douban</span><span data-lang="zh" data-astro-cid-wvq62lyj>豆瓣</span></a> <a class="fh-share-btn fh-share-copy" data-share="copy" href="#" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Copy link</span><span data-lang="zh" data-astro-cid-wvq62lyj>复制链接</span></a> </div> <!-- toast for transient share feedback (XHS / errors / etc.) --> <div class="fh-toast" role="status" aria-live="polite" data-astro-cid-wvq62lyj></div> <!-- WeChat QR popover (hidden by default) --> <div class="fh-wechat" id="fh-wechat" hidden data-astro-cid-wvq62lyj> <button class="fh-wechat-x" type="button" aria-label="close" data-astro-cid-wvq62lyj>×</button> <img class="fh-wechat-qr" alt="WeChat QR" data-astro-cid-wvq62lyj> <p class="fh-wechat-tip" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>Scan with the WeChat camera. The page link is below.</span><span data-lang="zh" data-astro-cid-wvq62lyj>用微信扫一扫。下方为页面链接。</span> </p> <div class="fh-wechat-urlrow" data-astro-cid-wvq62lyj> <code class="fh-wechat-url" data-astro-cid-wvq62lyj></code> <button class="fh-wechat-copy" type="button" data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>Copy URL</span><span data-lang="zh" data-astro-cid-wvq62lyj>复制网址</span></button> </div> </div> </section> <footer class="fh-foot" data-astro-cid-wvq62lyj> <a href="/friday-harbor/" data-astro-cid-wvq62lyj> <span data-lang="en" data-astro-cid-wvq62lyj>← back to the harbor</span><span data-lang="zh" data-astro-cid-wvq62lyj>← 返回港口</span> </a> <span data-astro-cid-wvq62lyj> <em data-astro-cid-wvq62lyj>Bo Zhao</em>,
+<span data-lang="en" data-astro-cid-wvq62lyj> HGIS Lab</span><span data-lang="zh" data-astro-cid-wvq62lyj> HGIS 实验室</span> </span> </footer> </article> </div>  </main> <footer class="site-footer" data-astro-cid-sz7xmlte> <div class="gold-rule" data-astro-cid-sz7xmlte></div> <div class="container footer-grid" data-astro-cid-sz7xmlte> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Humanistic GIS Laboratory</strong> <p data-astro-cid-sz7xmlte>
+Department of Geography<br data-astro-cid-sz7xmlte>
+University of Washington<br data-astro-cid-sz7xmlte>
+Smith Hall 405A · Box 353550<br data-astro-cid-sz7xmlte>
+Seattle, WA 98195-3550
+</p> </div> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Contact</strong> <p data-astro-cid-sz7xmlte> <a href="mailto:hgis@uw.edu" data-astro-cid-sz7xmlte>hgis@uw.edu</a> </p> </div> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Affiliations</strong> <p data-astro-cid-sz7xmlte> <a href="https://geography.washington.edu/" data-astro-cid-sz7xmlte>Department of Geography</a><br data-astro-cid-sz7xmlte> <a href="https://www.washington.edu/" data-astro-cid-sz7xmlte>University of Washington</a><br data-astro-cid-sz7xmlte> <a href="https://csde.washington.edu/" rel="noopener" data-astro-cid-sz7xmlte>Center for Studies in Demography and Ecology</a><br data-astro-cid-sz7xmlte> <a href="https://escience.washington.edu/" rel="noopener" data-astro-cid-sz7xmlte>eScience Institute</a><br data-astro-cid-sz7xmlte> <a href="https://jsis.washington.edu/china/" rel="noopener" data-astro-cid-sz7xmlte>China Studies Program</a><br data-astro-cid-sz7xmlte> <a href="https://cip.uw.edu/" rel="noopener" data-astro-cid-sz7xmlte>Center for an Informed Public</a> </p> </div> </div> <div class="footer-bottom container" data-astro-cid-sz7xmlte> <small data-astro-cid-sz7xmlte>© 2026 Humanistic GIS Laboratory · Built with Astro</small> </div> </footer>  </body></html>   <script>
+  (function () {
+    const root = document.querySelector('.fh-root');
+    if (!root) return;
+    let lang = 'en';
+    try { lang = localStorage.getItem('fh-lang') || 'en'; } catch (e) {}
+    if (lang !== 'en' && lang !== 'zh') lang = 'en';
+    root.setAttribute('data-lang', lang);
+    const btn = root.querySelector('.fh-lang-toggle');
+    if (btn) btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+      root.setAttribute('data-lang', next);
+      try { localStorage.setItem('fh-lang', next); } catch (e) {}
+    });
+
+    // ----- share row -----
+    const url = location.href;
+    const titleEl = root.querySelector('.fh-title');
+    const ledeEl  = root.querySelector('.fh-lede');
+
+    function curLang() {
+      return root.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+    }
+    function pickLangText(el, lang) {
+      if (!el) return '';
+      const span = el.querySelector('[data-lang="' + lang + '"]');
+      return (span ? span.textContent : (el.textContent || '')).trim();
+    }
+    function shareTitle() {
+      return pickLangText(titleEl, curLang()) || document.title;
+    }
+    function shareLede() {
+      return pickLangText(ledeEl, curLang());
+    }
+    function tip(key) {
+      const en = { copied: 'Link copied', xhs: 'Link copied — open Xiaohongshu and paste it.' };
+      const zh = { copied: '链接已复制', xhs: '链接已复制 —— 回到小红书 App 内粘贴即可。' };
+      return (curLang() === 'zh' ? zh : en)[key];
+    }
+
+    function buildTargets() {
+      const title  = shareTitle();
+      const lede   = shareLede();
+      const t      = encodeURIComponent(title);
+      const u      = encodeURIComponent(url);
+      const teaser = encodeURIComponent(lede ? title + ' — ' + lede : title);
+      const body   = encodeURIComponent((lede ? lede + '\n\n' : '') + url);
+      return {
+        x:        'https://x.com/intent/post?text=' + teaser + '&url=' + u,
+        bluesky:  'https://bsky.app/intent/compose?text=' + teaser + '%20' + u,
+        linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + u,
+        facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
+        email:    'mailto:?subject=' + t + '&body=' + body,
+        weibo:    'https://service.weibo.com/share/share.php?url=' + u + '&title=' + t,
+        douban:   'https://www.douban.com/share/service?href=' + u + '&name=' + t,
+      };
+    }
+
+    const toast = root.querySelector('.fh-toast');
+    let toastTimer = 0;
+    function showToast(msg) {
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('is-on');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('is-on'), 2600);
+    }
+
+    function flash(btn, msg) {
+      btn.classList.add('is-flashed');
+      const orig = btn.innerHTML;
+      btn.textContent = msg || tip('copied');
+      setTimeout(() => { btn.classList.remove('is-flashed'); btn.innerHTML = orig; }, 1600);
+    }
+
+    function copyLink() {
+      return new Promise((resolve) => {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(resolve, resolve);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = url; document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+          resolve();
+        }
+      });
+    }
+
+    const wechat = root.querySelector('#fh-wechat');
+    function openWechat() {
+      if (!wechat) return;
+      wechat.querySelector('.fh-wechat-qr').src =
+        'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(url);
+      wechat.querySelector('.fh-wechat-url').textContent = url;
+      wechat.hidden = false;
+    }
+    function closeWechat() { if (wechat) wechat.hidden = true; }
+    if (wechat) {
+      wechat.querySelector('.fh-wechat-x').addEventListener('click', closeWechat);
+      const wechatCopy = wechat.querySelector('.fh-wechat-copy');
+      if (wechatCopy) wechatCopy.addEventListener('click', () => {
+        copyLink().then(() => flash(wechatCopy));
+      });
+    }
+    document.addEventListener('click', (e) => {
+      if (wechat && !wechat.hidden && !wechat.contains(e.target)
+          && !e.target.closest('[data-share="wechat"]')) closeWechat();
+    });
+
+    // Native Web Share API — only revealed when supported (mobile, Safari, Chrome).
+    // When available it gives the user every share target their device knows about.
+    const nativeBtn = root.querySelector('[data-share="native"]');
+    if (nativeBtn && typeof navigator.share === 'function') {
+      nativeBtn.hidden = false;
+      nativeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigator.share({
+          title: shareTitle(),
+          text:  shareLede() || shareTitle(),
+          url:   url,
+        }).catch(() => { /* user cancelled or unsupported scheme — ignore */ });
+      });
+    }
+
+    root.querySelectorAll('[data-share]').forEach(b => {
+      const k = b.getAttribute('data-share');
+      if (k === 'native') return; // handled above
+      b.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (k === 'copy') {
+          copyLink().then(() => flash(b));
+          return;
+        }
+        if (k === 'xhs') {
+          copyLink().then(() => { flash(b); showToast(tip('xhs')); });
+          return;
+        }
+        if (k === 'wechat') { openWechat(); return; }
+        const href = buildTargets()[k];
+        if (!href) return;
+        if (k === 'email') location.href = href;
+        else window.open(href, '_blank', 'noopener,width=640,height=560');
+      });
+    });
+
+    // ----- citation widget -----
+    const widget = root.querySelector('.fh-cite-widget');
+    if (widget) {
+      const tabs = widget.querySelectorAll('.fh-cite-tab');
+      const blocks = widget.querySelectorAll('.fh-citation');
+      const copyBtn = widget.querySelector('.fh-cite-copy');
+      const select = (fmt) => {
+        tabs.forEach(t => {
+          const on = t.getAttribute('data-fmt') === fmt;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        blocks.forEach(b => {
+          const on = b.getAttribute('data-fmt') === fmt;
+          b.classList.toggle('is-active', on);
+          if (on) b.removeAttribute('hidden');
+          else b.setAttribute('hidden', '');
+        });
+      };
+      tabs.forEach(t => t.addEventListener('click', () => select(t.getAttribute('data-fmt'))));
+      if (copyBtn) copyBtn.addEventListener('click', () => {
+        const active = widget.querySelector('.fh-citation.is-active');
+        if (!active) return;
+        const text = active.textContent || '';
+        const orig = copyBtn.innerHTML;
+        const done = () => {
+          copyBtn.classList.add('is-flashed');
+          const lang = root.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+          copyBtn.textContent = lang === 'zh' ? '已复制' : 'Copied';
+          setTimeout(() => {
+            copyBtn.classList.remove('is-flashed');
+            copyBtn.innerHTML = orig;
+          }, 1500);
+        };
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(done, done);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text; document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+          done();
+        }
+      });
+      // Default tab: ZH UI lands on GB/T, EN UI on APA.
+      const initLang = root.getAttribute('data-lang') === 'zh' ? 'gbt' : 'apa';
+      select(initLang);
+    }
+  })();
+</script>  <script type="module">
+  import * as d3 from 'https://esm.sh/d3@7';
+
+  const REAL_URL    = '/data/seattle_neighborhoods_real.geojson';
+  const AI_URL      = '/data/seattle_neighborhoods_ai.geojson';
+  // Tiny world land file for the single locator inset (small download).
+  const WORLD_URL   = 'https://cdn.jsdelivr.net/gh/martynafford/natural-earth-geojson@master/110m/physical/ne_110m_land.json';
+
+  // The eight neighborhoods where the model's deviation is the headline.
+  // These — and only these — get chips on each panel.
+  const AI_BLOAT  = { 'Ballard': 9.3, 'High Point': 8.4, 'Crown Hill': 6.8, 'West Seattle Junction': 6.7 };
+  const AI_SHRINK = { 'Wedgwood': 0.56, 'Sand Point': 0.59, 'North Beacon Hill': 0.59, 'Interbay': 0.64 };
+
+  // Mirror highlights: atlas S_HOODs that correspond to the model's labels.
+  // "West Seattle Junction" is the model's free-form name for the area
+  // whose atlas S_HOOD is Genesee; the rest match directly.
+  const REAL_BLOAT  = { 'Ballard': 'Ballard', 'High Point': 'High Point', 'Crown Hill': 'Crown Hill', 'Genesee': 'West Seattle Junction' };
+  const REAL_SHRINK = { 'Wedgwood': 'Wedgwood', 'Sand Point': 'Sand Point', 'North Beacon Hill': 'North Beacon Hill', 'Interbay': 'Interbay' };
+  // Display name on the LEFT chip — using the model's label so the eye can
+  // pair "the Ballard chip on the left" with "the Ballard chip on the right"
+  // even when the atlas name differs (Genesee → West Seattle Junction).
+  const REAL_DISPLAY = REAL_BLOAT;
+  const REAL_DISPLAY_S = REAL_SHRINK;
+
+  let _world = null;
+  Promise.all([
+    fetch(REAL_URL).then(r => r.json()),
+    fetch(AI_URL).then(r => r.json()),
+    fetch(WORLD_URL).then(r => r.ok ? r.json() : null).catch(() => null),
+  ]).then(([real, ai, world]) => {
+    _world = world;
+    document.getElementById('status')?.classList.add('is-done');
+    drawPanels(real, ai);
+    window.addEventListener('resize', () => drawPanels(real, ai), { passive: true });
+  }).catch(err => {
+    const s = document.getElementById('status');
+    if (s) s.innerHTML = '<span>Map data failed to load — showing text only.</span>';
+    console.error(err);
+  });
+
+  function drawPanels(real, ai) {
+    const svgReal = d3.select('#svgReal');
+    const svgAI   = d3.select('#svgAI');
+    svgReal.selectAll('*').remove();
+    svgAI.selectAll('*').remove();
+
+    // Each panel gets its OWN projection. The left fits the real city;
+    // the right fits the entire model output (which extends well past
+    // Seattle's actual edge). Different scales on purpose — the editorial
+    // point is "look at what the model drew", not pixel-by-pixel shape
+    // comparison. Each panel carries its own scale bar so the reader can
+    // see they aren't the same scale.
+    const W = 480, H = 560, PAD = 14;
+    const projReal = d3.geoMercator().fitExtent([[PAD, PAD], [W - PAD, H - PAD]], real);
+    const projAI   = d3.geoMercator().fitExtent([[PAD, PAD], [W - PAD, H - PAD]], ai);
+    const pathReal = d3.geoPath(projReal);
+    const pathAI   = d3.geoPath(projAI);
+
+    // ---------- LEFT: real ----------
+    // Highlighted polygons render last so they sit on top.
+    const isRealHL = (f) => REAL_BLOAT[f.properties.S_HOOD] != null || REAL_SHRINK[f.properties.S_HOOD] != null;
+    const realSorted = [...real.features].sort((a, b) => (isRealHL(a) ? 1 : 0) - (isRealHL(b) ? 1 : 0));
+
+    svgReal.append('g').attr('class', 'g-real')
+      .selectAll('path')
+      .data(realSorted)
+      .join('path')
+      .attr('d', pathReal)
+      .attr('class', d => {
+        const s = d.properties.S_HOOD;
+        if (REAL_BLOAT[s]  != null) return 'nh-real is-bloat';
+        if (REAL_SHRINK[s] != null) return 'nh-real is-shrink';
+        return 'nh-real';
+      })
+      .append('title')
+      .text(d => d.properties.S_HOOD || '');
+
+    drawHighlightChips(svgReal, real.features, pathReal, {
+      getName: f => f.properties.S_HOOD,
+      bloatMap:  REAL_BLOAT,    // S_HOOD -> display name (model's term)
+      shrinkMap: REAL_SHRINK,
+      withMultiplier: false,    // left panel has no "×N" — it IS reality
+    });
+
+    drawLocatorInset(svgReal, W, H);
+    drawScaleBar(svgReal, projReal, W, H, 2);
+    drawNorthArrow(svgReal, W, H);
+
+    // ---------- RIGHT: AI from memory ----------
+    const isAIHL = (f) => AI_BLOAT[f.properties.name] != null || AI_SHRINK[f.properties.name] != null;
+    const aiSorted = [...ai.features].sort((a, b) => (isAIHL(a) ? 1 : 0) - (isAIHL(b) ? 1 : 0));
+
+    svgAI.append('g').attr('class', 'g-ai')
+      .selectAll('path')
+      .data(aiSorted)
+      .join('path')
+      .attr('d', pathAI)
+      .attr('class', d => {
+        const n = d.properties.name;
+        if (AI_BLOAT[n]  != null) return 'nh-ai is-bloat';
+        if (AI_SHRINK[n] != null) return 'nh-ai is-shrink';
+        return 'nh-ai';
+      })
+      .append('title')
+      .text(d => {
+        const n = d.properties.name;
+        const m = AI_BLOAT[n] ?? AI_SHRINK[n];
+        return m ? `${n} (drawn ${m}× the real area)` : n;
+      });
+
+    drawHighlightChips(svgAI, ai.features, pathAI, {
+      getName: f => f.properties.name,
+      bloatMap:  Object.fromEntries(Object.keys(AI_BLOAT).map(k => [k, k])),
+      shrinkMap: Object.fromEntries(Object.keys(AI_SHRINK).map(k => [k, k])),
+      withMultiplier: true,
+      multipliers: { ...AI_BLOAT, ...AI_SHRINK },
+    });
+    // Scale bar matched to the AI projection. Pick a bar length that
+    // reads cleanly at this (zoomed-out) scale — 5 km is right.
+    drawScaleBar(svgAI, projAI, W, H, 5);
+  }
+
+  // Chip-style callouts for highlighted neighborhoods. Used on both panels.
+  // - On the left: just the model's name in a coloured pill (no ×N — left is reality).
+  // - On the right: a small ×N pill plus the model's name beneath it.
+  function drawHighlightChips(svg, features, path, opts) {
+    const { getName, bloatMap, shrinkMap, withMultiplier, multipliers } = opts;
+    const g = svg.append('g').attr('class', 'nh-chips');
+    features.forEach(f => {
+      const raw = getName(f);
+      const isB = bloatMap[raw]  != null;
+      const isS = shrinkMap[raw] != null;
+      if (!isB && !isS) return;
+      const c = path.centroid(f);
+      if (!isFinite(c[0]) || !isFinite(c[1])) return;
+      const cls    = isB ? 'is-bloat' : 'is-shrink';
+      const display = (isB ? bloatMap[raw] : shrinkMap[raw]);
+      const mult    = withMultiplier ? multipliers[raw] : null;
+      const grp = g.append('g')
+        .attr('class', 'nh-chip ' + cls)
+        .attr('transform', `translate(${c[0]}, ${c[1]})`);
+      // Multiplier pill (top), name pill (bottom). Pills are sized to text.
+      const namePillH = 13.5;
+      const namePillW = 7 + display.length * 5.6;
+      let yOffsetName = 0;
+      if (mult != null) {
+        const multText = '×' + mult;
+        const multPillW = 8 + multText.length * 5.6;
+        grp.append('rect')
+          .attr('class', 'nh-chip-pill is-mult')
+          .attr('x', -multPillW / 2).attr('y', -namePillH - 2)
+          .attr('width', multPillW).attr('height', namePillH)
+          .attr('rx', 6.5).attr('ry', 6.5);
+        grp.append('text')
+          .attr('class', 'nh-chip-num')
+          .attr('x', 0).attr('y', -4.5)
+          .attr('text-anchor', 'middle')
+          .text(multText);
+        yOffsetName = 0; // name pill sits at chip origin
+      }
+      grp.append('rect')
+        .attr('class', 'nh-chip-pill is-name')
+        .attr('x', -namePillW / 2).attr('y', yOffsetName)
+        .attr('width', namePillW).attr('height', namePillH)
+        .attr('rx', 6.5).attr('ry', 6.5);
+      grp.append('text')
+        .attr('class', 'nh-chip-name')
+        .attr('x', 0).attr('y', yOffsetName + 9.5)
+        .attr('text-anchor', 'middle')
+        .text(display);
+    });
+  }
+
+  // ---- carto furniture: locator inset, scale bar, north arrow ----
+
+  function drawLocatorInset(svg, W, H) {
+    if (!_world) return;
+    const size = 78;
+    const cx = 14 + size / 2;
+    const cy = H - 14 - size / 2;
+    const g = svg.append('g')
+      .attr('class', 'inset-globe')
+      .attr('transform', `translate(${cx}, ${cy})`);
+    // backing
+    g.append('circle').attr('r', size / 2).attr('class', 'inset-bg');
+    // orthographic centred slightly off-axis so PNW is recognisable
+    const proj = d3.geoOrthographic()
+      .scale(size / 2 - 1)
+      .translate([0, 0])
+      .rotate([122.3, -47.6]); // negate sign convention: rotate to centre on Seattle
+    const p = d3.geoPath(proj);
+    // graticule
+    const grat = d3.geoGraticule().step([30, 30]);
+    g.append('path').datum(grat()).attr('d', p).attr('class', 'inset-grat');
+    // land
+    g.append('g')
+      .selectAll('path')
+      .data(_world.features)
+      .join('path')
+      .attr('d', p)
+      .attr('class', 'inset-land');
+    // sphere outline
+    g.append('path').datum({type:'Sphere'}).attr('d', p).attr('class', 'inset-sphere');
+    // Seattle dot
+    const seattlePx = proj([-122.32, 47.6]);
+    if (seattlePx) {
+      g.append('circle')
+        .attr('cx', seattlePx[0]).attr('cy', seattlePx[1])
+        .attr('r', 2.6).attr('class', 'inset-dot');
+      g.append('circle')
+        .attr('cx', seattlePx[0]).attr('cy', seattlePx[1])
+        .attr('r', 5.5).attr('class', 'inset-halo');
+    }
+  }
+
+  function drawScaleBar(svg, projection, W, H, km = 2) {
+    // Pixels per kilometre at Seattle's latitude.
+    const lat = 47.6, lon0 = -122.32;
+    const oneKmDegLon = 1 / (111.32 * Math.cos(lat * Math.PI / 180));
+    const a = projection([lon0, lat]);
+    const b = projection([lon0 + oneKmDegLon, lat]);
+    if (!a || !b) return;
+    const pxPerKm = b[0] - a[0];
+    const barLen = pxPerKm * km;
+    const x0 = W - 14 - barLen, y0 = H - 18;
+    const g = svg.append('g').attr('class', 'scale-bar');
+    g.append('line').attr('x1', x0).attr('x2', x0 + barLen).attr('y1', y0).attr('y2', y0).attr('class', 'sb-rule');
+    g.append('line').attr('x1', x0).attr('x2', x0).attr('y1', y0 - 3).attr('y2', y0 + 3).attr('class', 'sb-tick');
+    g.append('line').attr('x1', x0 + barLen / 2).attr('x2', x0 + barLen / 2).attr('y1', y0 - 2).attr('y2', y0 + 2).attr('class', 'sb-tick');
+    g.append('line').attr('x1', x0 + barLen).attr('x2', x0 + barLen).attr('y1', y0 - 3).attr('y2', y0 + 3).attr('class', 'sb-tick');
+    g.append('text').attr('x', x0).attr('y', y0 - 6).attr('text-anchor', 'start').attr('class', 'sb-label').text('0');
+    g.append('text').attr('x', x0 + barLen).attr('y', y0 - 6).attr('text-anchor', 'end').attr('class', 'sb-label').text(km + ' km');
+    g.append('text').attr('x', x0 + barLen / 2).attr('y', y0 + 13).attr('text-anchor', 'middle').attr('class', 'sb-mid').text('SCALE');
+  }
+
+  function drawNorthArrow(svg, W, H) {
+    const x = W - 22, y = 32;
+    const g = svg.append('g').attr('class', 'north-arrow').attr('transform', `translate(${x}, ${y})`);
+    g.append('path').attr('d', 'M0,-12 L5,8 L0,3 L-5,8 Z').attr('class', 'na-tri');
+    g.append('text').attr('x', 0).attr('y', -15).attr('text-anchor', 'middle').attr('class', 'na-n').text('N');
+  }
+</script>

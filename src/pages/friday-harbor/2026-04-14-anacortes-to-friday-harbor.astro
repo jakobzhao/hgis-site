@@ -1,7 +1,7 @@
 ---
 import FridayHarborLayout from '../../layouts/FridayHarborLayout.astro';
 import { entries } from '../../data/friday-harbor';
-const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbor')!;
+const entry = entries.find(e => e.slug === '2026-04-14-anacortes-to-friday-harbor')!;
 ---
 <FridayHarborLayout entry={entry}>
   <figure slot="figure" class="ferry-figure">
@@ -19,7 +19,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     </p>
 
     <figcaption data-lang="en">
-      <b>The journal takes its name from a port on San Juan Island.</b>
+      <b>The column takes its name from a port on San Juan Island.</b>
       In 1993, geographers and critical theorists gathered there for what is
       now called the Friday Harbor meeting — the moment that opened the social
       turn in geographic information science. They got there the way most
@@ -87,7 +87,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
 
   <div slot="notebook-en">
     <p>
-      The water you are looking at is the water this journal is named after.
+      The water you are looking at is the water this column is named after.
       The harbor in question is on the western side of San Juan Island, in
       the inland sea between Vancouver Island and the mainland Pacific
       Northwest. To get there, almost everyone takes a Washington State
@@ -123,7 +123,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
       route line, there is a real boat there right now, with about a hundred
       and fifty cars on it. Where there is no arrow, the schedule may be
       saying "delayed" or "cancelled." Cartographically the move here is
-      small: the journal puts a map of its own name's geography on its own
+      small: the column puts a map of its own name's geography on its own
       pages, and lets the geography keep happening.
     </p>
     <p class="aside">
@@ -181,7 +181,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     <li>System statistics: <a href="https://wsdot.wa.gov/travel/washington-state-ferries/our-fleet" rel="noopener">WSF Our Fleet</a>; <a href="https://wsdot.wa.gov/travel/washington-state-ferries/about-wsf" rel="noopener">WSF About</a>; <a href="https://wsdot.wa.gov/travel/washington-state-ferries/performance-statistics" rel="noopener">WSF Performance Statistics</a>.</li>
     <li>Friday Harbor meeting reference: National Center for Geographic Information and Analysis, Initiative 19; <em>Ground Truth</em> (Pickles, ed., 1995).</li>
     <li>Coastline: Natural Earth 1:10m (the finest tier Natural Earth ships) via natural-earth-geojson, augmented with the matching <code>ne_10m_coastline</code> and <code>ne_10m_minor_islands_coastline</code> line layers. Even at 1:10m, narrow channels in the San Juan archipelago (Thatcher Pass, Upright Channel) sit below the data's effective resolution; for that reason the route corridor is intentionally not drawn on the main map. Going finer would require an OSM-derived shoreline pipeline (osmcoastline / GSHHG full-resolution), which is a build-time data step rather than a runtime fetch.</li>
-    <li>Source map &amp; build script: <code>src/pages/friday-harbor/2026-04-28-anacortes-to-friday-harbor.astro</code>.</li>
+    <li>Source map &amp; build script: <code>src/pages/friday-harbor/2026-04-14-anacortes-to-friday-harbor.astro</code>.</li>
   </ul>
 
   <ul slot="provenance-zh">
@@ -191,7 +191,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     <li>系统数据：<a href="https://wsdot.wa.gov/travel/washington-state-ferries/our-fleet" rel="noopener">WSF Our Fleet</a>、<a href="https://wsdot.wa.gov/travel/washington-state-ferries/about-wsf" rel="noopener">About</a>、<a href="https://wsdot.wa.gov/travel/washington-state-ferries/performance-statistics" rel="noopener">Performance Statistics</a>。</li>
     <li>「周五港会议」参考：NCGIA Initiative 19；<em>Ground Truth</em>（Pickles 主编，1995）。</li>
     <li>海岸线：Natural Earth 1:10m（Natural Earth 提供的最细一档），经 natural-earth-geojson 加载，并叠加同源的 <code>ne_10m_coastline</code> 与 <code>ne_10m_minor_islands_coastline</code> 线图层。即便如此，圣胡安群岛之间的窄水道（Thatcher Pass、Upright Channel 等）已经在该数据的有效分辨率之下；因此主图刻意不画航线走廊。要再细一档，必须使用 OSM 派生的海岸线数据（osmcoastline / GSHHG 全分辨率），那属于构建时的数据流水线，不是运行时拉取能解决的。</li>
-    <li>源码与构建脚本：<code>src/pages/friday-harbor/2026-04-28-anacortes-to-friday-harbor.astro</code>。</li>
+    <li>源码与构建脚本：<code>src/pages/friday-harbor/2026-04-14-anacortes-to-friday-harbor.astro</code>。</li>
   </ul>
 </FridayHarborLayout>
 

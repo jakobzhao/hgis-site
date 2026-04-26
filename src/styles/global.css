@@ -139,6 +139,8 @@ h3 { font-size: 1.15rem; margin: 1.5em 0 0.4em; font-family: var(--sans); font-w
   overflow: hidden;
   background: var(--bg-deep);
   border-bottom: 1px solid var(--rule);
+  position: relative;
+  isolation: isolate;
 }
 .card .card-img img {
   width: 100%;
@@ -146,7 +148,36 @@ h3 { font-size: 1.15rem; margin: 1.5em 0 0.4em; font-family: var(--sans); font-w
   object-fit: cover;
   object-position: center top;
   display: block;
+  /* Morandi treatment — pull screenshots into the page's colour
+     register so they don't read like raw interface captures.
+     Tuned to feel *bright + dusty*, not gloomy: brightness lifts the
+     image slightly, contrast is barely touched, and the overlay uses
+     `soft-light` (which tints highlights instead of dimming them) at
+     a generous opacity. Hover restores the original. */
+  filter: grayscale(0.35) saturate(0.85) brightness(1.06) contrast(0.96);
+  transition: filter 0.35s ease, transform 0.4s ease;
 }
+.card .card-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  opacity: 0.7;
+  transition: opacity 0.35s ease;
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--rose-soft) 100%);
+}
+/* Per-card variation so a row of three cards reads as a small
+   Morandi triptych, not three identical washes. Lighter end first
+   so the highlight side stays luminous. */
+.card-grid > :nth-child(2n) .card-img::after {
+  background: linear-gradient(135deg, var(--rose-soft) 0%, var(--uw-gold-soft) 100%);
+}
+.card-grid > :nth-child(3n) .card-img::after {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--sage-soft) 100%);
+}
+.card:hover .card-img img { filter: none; }
+.card:hover .card-img::after { opacity: 0; }
 
 .card .card-body { padding: 1.1rem 1.25rem 1.4rem; }
 .card h3 { margin: 0 0 0.35em; font-size: 1.02rem; }
