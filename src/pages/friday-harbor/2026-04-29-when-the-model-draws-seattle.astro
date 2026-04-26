@@ -388,8 +388,33 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
   }
 
   function drawAll() {
-    drawPanel('stage-real',   _real,   { fill: REAL_FILL,   stroke: REAL_STROKE,   strokeDash: null,   showSilhouette: false });
-    drawPanel('stage-claude', _claude, { fill: CLAUDE_FILL, stroke: CLAUDE_STROKE, strokeDash: '4 3',  showSilhouette: true  });
+    drawPanel('stage-real',   _real,   { kind: 'real',   showSilhouette: false });
+    drawPanel('stage-claude', _claude, { kind: 'claude', showSilhouette: true  });
+  }
+
+  // Latitude-banded tint so 90 adjacent rectangles read as 90 cells.
+  // Northern bands: cooler/paler. Southern: warmer/deeper. Same hue family
+  // (terracotta/rose) so the panel still reads as one editorial colour.
+  function claudeFill(feature) {
+    const ring = feature.geometry.coordinates[0];
+    const lat = (ring[0][1] + ring[2][1]) / 2;
+    const t = Math.max(0, Math.min(1, (47.74 - lat) / (47.74 - 47.49)));
+    const lerp = (a, b) => Math.round(a + (b - a) * t);
+    const r = lerp(214, 174);
+    const g = lerp(186, 110);
+    const b = lerp(170,  90);
+    return `rgba(${r},${g},${b},0.62)`;
+  }
+  function realFill(feature) {
+    const ring = feature.geometry.coordinates[0];
+    const ys = ring.map(p => p[1]);
+    const lat = (Math.min(...ys) + Math.max(...ys)) / 2;
+    const t = Math.max(0, Math.min(1, (47.74 - lat) / (47.74 - 47.49)));
+    const lerp = (a, b) => Math.round(a + (b - a) * t);
+    const r = lerp(180, 130);
+    const g = lerp(196, 156);
+    const b = lerp(176, 132);
+    return `rgba(${r},${g},${b},0.65)`;
   }
 
   function makeProjection(W, H) {
@@ -458,15 +483,19 @@ const entry = entries.find(e => e.slug === '2026-04-29-when-the-model-draws-seat
         .attr('stroke-linejoin', 'round');
     }
 
+    const isClaude = style.kind === 'claude';
+    const fillFn   = isClaude ? claudeFill : realFill;
+    const strokeC  = isClaude ? CLAUDE_STROKE : REAL_STROKE;
+
     const layer = svg.append('g').attr('class', 'nbhd-layer');
     layer.selectAll('path')
       .data(data.features)
       .join('path')
       .attr('d', path)
-      .attr('fill', style.fill)
-      .attr('stroke', style.stroke)
-      .attr('stroke-width', 0.9)
-      .attr('stroke-dasharray', style.strokeDash || null)
+      .attr('fill', d => fillFn(d))
+      .attr('stroke', strokeC)
+      .attr('stroke-opacity', 0.85)
+      .attr('stroke-width', 1.1)
       .attr('stroke-linejoin', 'round');
 
     // Label only the shared set, at polygon centroid.
