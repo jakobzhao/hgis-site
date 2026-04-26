@@ -337,16 +337,21 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
   const WSDOT_VESSELS_URL = 'https://www.wsdot.wa.gov/ferries/api/vessels/rest/vessellocations';
   const POLL_MS = 30000;
 
-  // Anacortes—Friday Harbor route waypoints (hand-traced, in order):
+  // Anacortes—Friday Harbor route — re-traced to hug actual channels
+  // (Rosario Strait → Thatcher Pass → up east of Lopez → Upright Channel
+  //  between Lopez & Shaw → west around Shaw → south through San Juan
+  //  Channel → Friday Harbor). Each waypoint is open water, so the line
+  //  doesn't appear to cut across small islands at this zoom.
   const ROUTE = [
     [-122.674, 48.506],   // Anacortes terminal
-    [-122.720, 48.503],
-    [-122.770, 48.500],   // Thatcher Pass approach
-    [-122.815, 48.502],
-    [-122.860, 48.515],   // Lopez Pass / Upright Head
-    [-122.905, 48.555],
-    [-122.945, 48.585],   // Harney Channel
-    [-122.985, 48.560],
+    [-122.730, 48.498],
+    [-122.790, 48.495],   // approach Thatcher Pass
+    [-122.825, 48.510],   // Thatcher Pass (between Decatur & Blakely)
+    [-122.840, 48.540],   // turning N, east of Decatur, NE of Lopez
+    [-122.860, 48.578],   // off Upright Head (Lopez NE)
+    [-122.910, 48.586],   // Upright Channel between Lopez & Shaw
+    [-122.985, 48.582],   // exiting west of Shaw, into Wasp Passage
+    [-123.005, 48.560],   // San Juan Channel approach
     [-123.012, 48.535]    // Friday Harbor terminal
   ];
 
@@ -358,13 +363,12 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     { id: 'friday',        name: { en: 'Friday Harbor',   zh: '周五港'     }, lon: -123.012, lat: 48.535, anchor: true  }
   ];
 
-  // Static fallback snapshot — vessel positions placed on actual ROUTE
-  // waypoints (which are guaranteed water by definition of the route), so
-  // they don't accidentally render on top of small islands at this scale.
+  // Static fallback snapshot — vessel positions interpolated along the new
+  // ROUTE waypoints, so they sit unambiguously in water at all data scales.
   const SNAPSHOT = [
-    { id: 1, name: 'M/V Yakima',    lon: -122.745, lat: 48.502, heading:  85, inService: true, snapshot: true },  // Rosario Strait
-    { id: 2, name: 'M/V Tillikum',  lon: -122.905, lat: 48.555, heading: 280, inService: true, snapshot: true },  // off Shaw / Harney Channel
-    { id: 3, name: 'M/V Chelan',    lon: -122.998, lat: 48.548, heading: 200, inService: true, snapshot: true }   // San Juan Channel approach
+    { id: 1, name: 'M/V Yakima',   lon: -122.760, lat: 48.497, heading:  85, inService: true, snapshot: true },  // Rosario Strait, eastbound→westbound
+    { id: 2, name: 'M/V Tillikum', lon: -122.910, lat: 48.586, heading: 270, inService: true, snapshot: true },  // mid Upright Channel
+    { id: 3, name: 'M/V Chelan',   lon: -123.000, lat: 48.555, heading: 195, inService: true, snapshot: true }   // San Juan Channel, approaching FH
   ];
 
   // ===== PALETTE ====================================================
@@ -386,26 +390,43 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
   const EVENT_DEEP = '#8a3e2e';
 
   // ===== STATE ======================================================
-  let _land = null;
-  let _vessels = SNAPSHOT.slice();   // start with snapshot
+  let _land = null;        // polygons (filled)
+  let _coastlines = null;  // line strings (additional finer detail)
+  let _vessels = SNAPSHOT.slice();
   let _lastUpdated = null;
   let _pollTimer = null;
-  let _vesselLayer = null;           // re-rendered each tick
-  let _projection = null;            // closure over draw() so updates can re-project
+  let _vesselLayer = null;
+  let _projection = null;
 
   // ===== DATA LOAD ==================================================
-  // Fetch BOTH the main land file and the minor-islands file so that small
-  // islands (San Juan, Lopez, Shaw, Orcas at this zoom) actually have
-  // recognisable coastlines instead of being smoothed out of existence.
+  // Three Natural-Earth files together give the best detail this scale of
+  // map can pull from a free, hosted CDN:
+  //   ne_10m_land                     — main land polygons
+  //   ne_10m_minor_islands            — additional polygons for small islands
+  //   ne_10m_coastline                — line geometry, often denser vertices
+  //                                     than the polygon edges, for crisper shore
+  //   ne_10m_minor_islands_coastline  — same idea, for the minor islands
+  // Polygons drive the fill + hillshade + clipping; the line files are
+  // overlaid as strokes on top to sharpen the coastline.
   const NE = 'https://cdn.jsdelivr.net/gh/martynafford/natural-earth-geojson@master/10m/physical';
   Promise.all([
     fetch(`${NE}/ne_10m_land.json`).then(r => r.ok ? r.json() : Promise.reject()),
-    fetch(`${NE}/ne_10m_minor_islands.json`).then(r => r.ok ? r.json() : null).catch(() => null)
+    fetch(`${NE}/ne_10m_minor_islands.json`).then(r => r.ok ? r.json() : null).catch(() => null),
+    fetch(`${NE}/ne_10m_coastline.json`).then(r => r.ok ? r.json() : null).catch(() => null),
+    fetch(`${NE}/ne_10m_minor_islands_coastline.json`).then(r => r.ok ? r.json() : null).catch(() => null),
   ])
-  .then(([landGJ, minorGJ]) => {
-    const features = [...(landGJ.features || [])];
-    if (minorGJ && minorGJ.features) features.push(...minorGJ.features);
-    _land = { type: 'FeatureCollection', features };
+  .then(([landGJ, minorGJ, coastGJ, minorCoastGJ]) => {
+    const polyFeatures = [...(landGJ.features || [])];
+    if (minorGJ && minorGJ.features) polyFeatures.push(...minorGJ.features);
+    _land = { type: 'FeatureCollection', features: polyFeatures };
+
+    const lineFeatures = [];
+    if (coastGJ && coastGJ.features) lineFeatures.push(...coastGJ.features);
+    if (minorCoastGJ && minorCoastGJ.features) lineFeatures.push(...minorCoastGJ.features);
+    _coastlines = lineFeatures.length
+      ? { type: 'FeatureCollection', features: lineFeatures }
+      : null;
+
     requestAnimationFrame(() => draw());
   })
   .catch(() => {
@@ -500,9 +521,9 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     stage.innerHTML = '';
 
     const lang = currentLang();
-    const padL = 14, padR = 14, padT = 16, padB = 14;
-    const mapW = W - padL - padR;
-    const mapH = H - padT - padB;
+    // Full-bleed: no inner padding, no inner border. The figure is the map.
+    const mapW = W;
+    const mapH = H;
 
     // --- main projection: tight on San Juan Islands + Anacortes ---
     const BBOX = [[-123.18, 48.40], [-122.45, 48.78]];
@@ -511,12 +532,12 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     const yProj = lat => Math.log(Math.tan(Math.PI/4 + lat * Math.PI/360));
     const lonSpan = (BBOX[1][0] - BBOX[0][0]) * Math.PI / 180;
     const ySpan   = yProj(BBOX[1][1]) - yProj(BBOX[0][1]);
-    const scale = Math.min(mapW / lonSpan, mapH / ySpan) * 0.95;
-    const tx = padL + mapW / 2 - (lon0 * Math.PI / 180) * scale;
-    const ty = padT + mapH / 2 + yProj(lat0) * scale;
+    const scale = Math.min(mapW / lonSpan, mapH / ySpan) * 0.98;
+    const tx = mapW / 2 - (lon0 * Math.PI / 180) * scale;
+    const ty = mapH / 2 + yProj(lat0) * scale;
     _projection = d3.geoMercator()
       .scale(scale).translate([tx, ty])
-      .clipExtent([[padL, padT], [padL + mapW, padT + mapH]])
+      .clipExtent([[0, 0], [W, H]])
       .precision(0.3);
     const path = d3.geoPath(_projection);
 
@@ -534,8 +555,8 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     // map area, not the world-scale source path's bounding box.
     const hill = defs.append('filter').attr('id', 'fh-ferry-hill')
       .attr('filterUnits', 'userSpaceOnUse')
-      .attr('x', padL).attr('y', padT)
-      .attr('width', mapW).attr('height', mapH)
+      .attr('x', 0).attr('y', 0)
+      .attr('width', W).attr('height', H)
       .attr('color-interpolation-filters', 'sRGB');
     hill.append('feTurbulence')
       .attr('type', 'fractalNoise')
@@ -557,8 +578,8 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     // stretched lower-frequency noise so it reads like ocean ridges, not hills.
     const sea = defs.append('filter').attr('id', 'fh-ferry-sea')
       .attr('filterUnits', 'userSpaceOnUse')
-      .attr('x', padL).attr('y', padT)
-      .attr('width', mapW).attr('height', mapH)
+      .attr('x', 0).attr('y', 0)
+      .attr('width', W).attr('height', H)
       .attr('color-interpolation-filters', 'sRGB');
     sea.append('feTurbulence')
       .attr('type', 'fractalNoise')
@@ -577,9 +598,9 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     // ---------- sea ----------
     // Base mist colour fills the whole figure
     svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#bcc4c4');
-    // Subtle bathymetric relief over the map area
-    svg.append('rect').attr('x', padL).attr('y', padT)
-      .attr('width', mapW).attr('height', mapH)
+    // Subtle bathymetric relief over the whole frame
+    svg.append('rect').attr('x', 0).attr('y', 0)
+      .attr('width', W).attr('height', H)
       .attr('filter', `url(#fh-ferry-sea)`)
       .attr('opacity', 0.22)
       .style('mix-blend-mode', 'multiply');
@@ -607,9 +628,22 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     svg.append('path').datum(_land).attr('d', path)
       .attr('fill', 'none')
       .attr('stroke', c.ink)
-      .attr('stroke-width', 1.0)
+      .attr('stroke-width', 0.9)
       .attr('stroke-linejoin', 'round')
       .attr('stroke-linecap', 'round');
+
+    // Line-geometry coastline overlay — Natural Earth's dedicated coastline
+    // file has denser vertices than the polygon edges in many places, so it
+    // adds a touch of small-island detail this zoom needs.
+    if (_coastlines) {
+      svg.append('path').datum(_coastlines).attr('d', path)
+        .attr('fill', 'none')
+        .attr('stroke', c.ink)
+        .attr('stroke-width', 0.7)
+        .attr('stroke-opacity', 0.95)
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round');
+    }
 
     // Route line — wider soft stroke under, dashed crisp on top
     const routeLine = d3.line()
@@ -665,9 +699,9 @@ const entry = entries.find(e => e.slug === '2026-04-28-anacortes-to-friday-harbo
     // ----- INSET: Puget Sound system overview -----
     const inSize = 130;
     const inH = 110;
-    const inMargin = 12;
-    const inX = padL + mapW - inSize - inMargin;
-    const inY = padT + mapH - inH - inMargin;
+    const inMargin = 16;
+    const inX = W - inSize - inMargin;
+    const inY = H - inH - inMargin;
     const inG = svg.append('g').attr('class', 'fh-ferry-inset')
       .attr('transform', `translate(${inX}, ${inY})`);
     inG.append('rect').attr('x', -8).attr('y', -8)
