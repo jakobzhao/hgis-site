@@ -64,8 +64,8 @@ export const entries: Entry[] = [
       zh: "AI 真的懂你的城市吗？",
     },
     subtitle: {
-      en: "Asked to draw Seattle's neighborhoods from memory, GPT-5.5 Thinking returned a city twice the size, with a median IoU of zero. The right ocean — almost everything else wrong.",
-      zh: "让 GPT-5.5 Thinking 凭记忆画出西雅图的邻里边界，它给出的城市面积是真实的两倍，同名邻里的 IoU 中位数等于零。海是对的，剩下的几乎全错了。",
+      en: "Asked to draw Seattle's neighborhoods from memory, GPT-5.5 Thinking returned polygons that mostly miss their real-world counterparts. Read the misses as a diagram — where a language model's geographic imagination thickens, and where it thins.",
+      zh: "让 GPT-5.5 Thinking 凭记忆画出西雅图的邻里边界，它画出的多边形多数对不上真实邻里。把这些偏差当一张图看——一台语言模型的地理想象，在哪里厚、在哪里薄。",
     },
     place: {
       en: "Seattle, WA · Neighborhood Map Atlas vs. GPT-5.5 Thinking",
