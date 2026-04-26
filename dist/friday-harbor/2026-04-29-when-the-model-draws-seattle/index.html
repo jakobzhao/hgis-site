@@ -71,13 +71,6 @@ The visual evidence is even stronger than the numbers. Look along the
       the joins between Capitol Hill, the Central District, and Madrona:
       gaps where the model didn't keep track of which streets divide them.
       Each of those failures is the model showing you what it doesn't know.
-</p> <p data-astro-cid-3whg3lmh>
-This is therefore a small anti-map of the kind the Friday Harbor
-      project argues for. It does not show the city. It shows the
-<em data-astro-cid-3whg3lmh>shape of attention</em> that produced the model. The places that
-      get drawn well are the places the English-language internet has
-      written about — landmarks, tourist sites, gentrification stories,
-      real-estate beats. The places that get drawn badly are the rest.
 </p> </div></div> <div data-lang="zh" data-astro-cid-wvq62lyj><div data-astro-cid-3whg3lmh> <p data-astro-cid-3whg3lmh>
 这一题问得很直接：拿西雅图市政府公布的 90 个标准命名街区列表，作为一个完整任务交给
       Claude（Opus 4.7）——请它<em data-astro-cid-3whg3lmh>把全部 90 条边界画出来</em>，顶点要落在它认为该街区边界实际所在的地方：
@@ -106,10 +99,6 @@ This is therefore a small anti-map of the kind the Friday Harbor
       再看 Capitol Hill、Central District、Madrona 三者交界的地方：
       出现了一些缝隙——模型没记住到底是哪几条街把它们分开的。
       每一处这样的失败，都是模型在直接告诉你它不知道什么。
-</p> <p data-astro-cid-3whg3lmh>
-所以这是 Friday Harbor 脉络所主张的那种「反图」（anti-map）——它呈现的不是城市，
-      而是<em data-astro-cid-3whg3lmh>生产这个模型的那份注意力的形状</em>。被画好的街区，是英文互联网写过最多的那些——
-      地标、旅游点、士绅化新闻、房产报道。被画坏的街区，是其余那些。
 </p> </div></div> </section> <section class="fh-col fh-provenance" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>The provenance</span><span data-lang="zh" data-astro-cid-wvq62lyj>出处</span></h2> <div data-lang="en" data-astro-cid-wvq62lyj><ul data-astro-cid-3whg3lmh> <li data-astro-cid-3whg3lmh>Real boundaries: City of Seattle Neighborhood Map Atlas via the <a href="https://github.com/seattleio/seattle-boundaries-data" rel="noopener" data-astro-cid-3whg3lmh>seattleio/seattle-boundaries-data</a> repository, filtered to <code data-astro-cid-3whg3lmh>city == "Seattle"</code>; coordinates rounded to 4 decimal places (~11 m precision).</li> <li data-astro-cid-3whg3lmh>AI boundaries: single task issued to Claude Opus 4.7 within this writing session — "draw all 90 Seattle neighborhood boundaries, vertices following streets, freeways, shorelines, ridges; return one GeoJSON file." No external lookups. The returned polygons are stored verbatim — not reshaped, not snapped, not cleaned. The model's output is the data. File: <code data-astro-cid-3whg3lmh>seattle-neighborhoods-claude-shaped.geojson</code>.</li> <li data-astro-cid-3whg3lmh>Both layers projected with d3-geo's Albers projection, parallels at 47.5° and 47.75°, centred on Seattle.</li> <li data-astro-cid-3whg3lmh>Centroid drift figure computed locally as the median Haversine distance between the centroid of each Claude polygon and the centroid of the same-named real polygon (35 pairs).</li> <li data-astro-cid-3whg3lmh>Source map &amp; build script: <code data-astro-cid-3whg3lmh>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>; data files in <code data-astro-cid-3whg3lmh>public/data/seattle-neighborhoods-real.geojson</code> and <code data-astro-cid-3whg3lmh>seattle-neighborhoods-claude.geojson</code>.</li> </ul></div> <div data-lang="zh" data-astro-cid-wvq62lyj><ul data-astro-cid-3whg3lmh> <li data-astro-cid-3whg3lmh>真实边界：西雅图市《Neighborhood Map Atlas》，经 <a href="https://github.com/seattleio/seattle-boundaries-data" rel="noopener" data-astro-cid-3whg3lmh>seattleio/seattle-boundaries-data</a> 仓库加载，筛选 <code data-astro-cid-3whg3lmh>city == "Seattle"</code>；坐标保留 4 位小数（约 11 m 精度）。</li> <li data-astro-cid-3whg3lmh>AI 边界：在本次写作会话中，向 Claude Opus 4.7 提交一个完整任务——「请把 90 个西雅图街区边界都画出来，顶点沿主干道、高速、湖岸、山脊走，返回一个 GeoJSON 文件」。禁止查阅外部资料。返回的多边形原样保存——未做整形、未对齐网格、未清洗。模型输出本身就是数据。文件：<code data-astro-cid-3whg3lmh>seattle-neighborhoods-claude-shaped.geojson</code>。</li> <li data-astro-cid-3whg3lmh>两层数据均用 d3-geo 的 Albers 投影渲染，标准纬线 47.5°、47.75°，中心点设在西雅图。</li> <li data-astro-cid-3whg3lmh>质心偏移：本地计算，每对同名街区（共 35 对）的多边形质心间的 Haversine 距离，取其中位数。</li> <li data-astro-cid-3whg3lmh>源码与构建脚本：<code data-astro-cid-3whg3lmh>src/pages/friday-harbor/2026-04-29-when-the-model-draws-seattle.astro</code>；数据文件：<code data-astro-cid-3whg3lmh>public/data/seattle-neighborhoods-real.geojson</code> 与 <code data-astro-cid-3whg3lmh>seattle-neighborhoods-claude.geojson</code>。</li> </ul></div> </section> <section class="fh-col fh-cite" data-astro-cid-wvq62lyj> <h2 data-astro-cid-wvq62lyj><span data-lang="en" data-astro-cid-wvq62lyj>How to cite</span><span data-lang="zh" data-astro-cid-wvq62lyj>引用格式</span></h2> <pre class="fh-citation" data-lang="en" data-astro-cid-wvq62lyj>Zhao, B. (2026). When the Model Draws Seattle.
 Friday Harbor № 005, HGIS Lab,
 University of Washington.
@@ -217,9 +206,9 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
     mist:    css.getPropertyValue('--mist').trim()      || '#a8b1b3',
   };
   const REAL_FILL   = 'rgba(142, 156, 138, 0.55)';
-  const REAL_STROKE = '#3f4a3e';
+  const REAL_STROKE = '#5e7558';
   const CLAUDE_FILL = 'rgba(194, 160, 148, 0.50)';
-  const CLAUDE_STROKE = '#8a3e2e';
+  const CLAUDE_STROKE = '#a05543';
   const SEA = '#cfd5d3';
 
   // Common bbox / projection so the two panels are directly comparable.
@@ -292,10 +281,10 @@ https://hgis.uw.edu/friday-harbor/2026-04-29-when-the-model-draws-seattle/</pre>
     const lat = (Math.min(...ys) + Math.max(...ys)) / 2;
     const t = Math.max(0, Math.min(1, (47.74 - lat) / (47.74 - 47.49)));
     const lerp = (a, b) => Math.round(a + (b - a) * t);
-    const r = lerp(180, 130);
-    const g = lerp(196, 156);
-    const b = lerp(176, 132);
-    return `rgba(${r},${g},${b},0.65)`;
+    const r = lerp(178, 122);
+    const g = lerp(202, 162);
+    const b = lerp(170, 122);
+    return `rgba(${r},${g},${b},0.78)`;
   }
 
   function makeProjection(W, H) {
