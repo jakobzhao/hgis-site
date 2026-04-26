@@ -243,9 +243,10 @@ Friday Harbor № {issueNo}，HGIS 实验室，
 
   .fh-figure-wrap {
     margin: 0 0 2rem;
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    padding: 1.4rem 0;
+    padding: 1.4rem 0 0;
+    /* No border-top: tags above the map carry visual weight already.
+       No border-bottom: the body section below has its own top rule —
+       stacking two hairlines was redundant. */
   }
 
   .fh-body {
