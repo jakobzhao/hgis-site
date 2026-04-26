@@ -4,19 +4,6 @@ import { entries, UI } from '../../data/friday-harbor';
 
 const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
 const total = sorted.length;
-
-// Cover story = the most recent entry. The rest of the list — the
-// "archive" — renders below the cover with the toolbar.
-const cover = sorted[0];
-const archive = sorted.slice(1);
-
-// Issue number for the cover story = chronological position in the
-// registry (oldest = 001), matching the per-entry rule used in the
-// FridayHarborLayout. The cover is the latest, so its number is `total`.
-const coverIssueNo = String(total).padStart(3, '0');
-const coverDt = new Date(cover.date + 'T00:00:00');
-const coverDateEn = coverDt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-const coverDateZh = coverDt.toLocaleDateString('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 ---
 <BaseLayout
   title="Friday Harbor"
@@ -24,58 +11,17 @@ const coverDateZh = coverDt.toLocaleDateString('zh-CN', { weekday: 'long', year:
 >
   <div class="fh-root" data-lang="en">
     <section class="fh-index">
-      <header class="fh-flag">
-        <h1 class="fh-flag-name">
+      <header class="fh-index-mast">
+        <h1>
           <span data-lang="en">{UI.rubric.en}</span><span data-lang="zh">{UI.rubric.zh}</span>
         </h1>
-        <div class="fh-flag-manifesto">
+        <div class="manifesto-wrap">
           <p class="manifesto" data-lang="en">{UI.manifestoTop.en}</p>
           <p class="manifesto" data-lang="zh">{UI.manifestoTop.zh}</p>
         </div>
       </header>
 
-      {/* ---- COVER STORY ---- */}
-      <article class="fh-cover">
-        <a href={`/friday-harbor/${cover.slug}/`} class="fh-cover-link">
-          <div class="fh-cover-thumb"
-               data-fh-thumb={cover.thumb ? JSON.stringify(cover.thumb) : null}>
-            <p class="fh-cover-loading">
-              <span data-lang="en">Loading map…</span>
-              <span data-lang="zh">地图加载中…</span>
-            </p>
-          </div>
-          <div class="fh-cover-text">
-            <span class="fh-cover-kicker">
-              <span data-lang="en">{UI.coverStory.en}</span>
-              <span data-lang="zh">{UI.coverStory.zh}</span>
-              <span class="fh-cover-no">№ {coverIssueNo}</span>
-            </span>
-            <h2 class="fh-cover-title">
-              <span data-lang="en">{cover.title.en}</span>
-              <span data-lang="zh">{cover.title.zh}</span>
-            </h2>
-            <p class="fh-cover-lede">
-              <span data-lang="en">{cover.subtitle.en}</span>
-              <span data-lang="zh">{cover.subtitle.zh}</span>
-            </p>
-            <p class="fh-cover-place">
-              <span data-lang="en">{cover.place.en}</span>
-              <span data-lang="zh">{cover.place.zh}</span>
-            </p>
-            <span class="fh-cover-cta">
-              <span data-lang="en">{UI.readThis.en}</span>
-              <span data-lang="zh">{UI.readThis.zh}</span>
-            </span>
-          </div>
-        </a>
-      </article>
-
-      {/* ---- ARCHIVE ---- */}
       <div class="fh-toolbar" role="search" aria-label="search, sort, and language">
-        <h3 class="fh-archive-head">
-          <span data-lang="en">{UI.fromArchive.en}</span>
-          <span data-lang="zh">{UI.fromArchive.zh}</span>
-        </h3>
         <label class="fh-search">
           <span class="fh-search-icon" aria-hidden="true">⌕</span>
           <input
@@ -111,15 +57,13 @@ const coverDateZh = coverDt.toLocaleDateString('zh-CN', { weekday: 'long', year:
       </div>
 
       <ol class="fh-list" id="fh-list">
-        {archive.map((e, i) => {
+        {sorted.map((e, i) => {
           const dt = new Date(e.date + 'T00:00:00');
           const dlEn = dt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
           const dlZh = dt.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric', year: 'numeric' });
           const wdEn = dt.toLocaleDateString('en-US', { weekday: 'short' });
           const wdZh = dt.toLocaleDateString('zh-CN', { weekday: 'short' });
-          // Archive numbering continues *down* from the cover. Cover = total,
-          // first archive row = total - 1, etc. (i is 0-based within archive)
-          const num = String(total - 1 - i).padStart(3, '0');
+          const num = String(total - i).padStart(3, '0');
           // Pre-built searchable haystack (lower-cased) — JS reads
           // this attribute instead of walking the DOM each keystroke.
           const haystack = [
@@ -220,174 +164,41 @@ const coverDateZh = coverDt.toLocaleDateString('zh-CN', { weekday: 'long', year:
     padding: 2.5rem 1.75rem 5rem;
   }
 
-  /* ---- Masthead -------------------------------------------------
-     Stripped lockup: just the wordmark + strapline + manifesto. The
-     site header above already carries the publisher info, so we don't
-     restate it here. The wordmark uses the same upright Cormorant
-     register as the per-article titles (compare `.fh-title` in
-     FridayHarborLayout) so the column reads as a single typographic
-     family — the only difference is the purple. */
-  .fh-flag {
-    text-align: center;
-    padding: 0.4rem 0 1.6rem;
+  .fh-index-mast {
+    padding: 0.4rem 0 1.4rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 2rem;
+    align-items: end;
   }
-  .fh-flag-name {
+  .fh-index-mast h1 {
     font-family: var(--serif);
     font-weight: 500;
-    font-size: clamp(3.6rem, 9vw, 6.4rem);
-    line-height: 0.95;
-    margin: 0 0 0.3rem;
-    letter-spacing: -0.012em;
+    font-size: 2.3rem;
+    line-height: 1.05;
+    margin: 0;
+    letter-spacing: -0.008em;
     color: var(--uw-purple);
   }
-  /* Chinese flag uses Kaiti for the calligraphic editorial register. */
-  .fh-flag-name :global([data-lang="zh"]) {
+  /* Chinese rubric uses Kaiti for the calligraphic editorial register. */
+  .fh-index-mast h1 :global([data-lang="zh"]) {
     font-family: "Kaiti SC", "STKaiti", "Kaiti", KaiTi, "Noto Serif SC", serif;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
   }
-  .fh-flag-manifesto { max-width: 720px; margin: 1rem auto 0; }
   .manifesto {
     font-family: var(--serif);
     font-style: italic;
     line-height: 1.65;
     color: var(--ink);
-    font-size: 1rem;
+    font-size: 1.02rem;
     margin: 0;
-    text-align: left;
-  }
-  .fh-root[data-lang="zh"] .manifesto { text-align: justify; }
-
-  /* ---- Cover story -----------------------------------------------
-     One hero block per issue: large mini-map on the left, oversized
-     title + lede on the right, with a kicker that reads "COVER STORY ·
-     № 005" so the reader knows the editorial weight. The whole block
-     is one anchor — clicking anywhere goes to the entry. */
-  .fh-cover {
-    margin: 1.4rem 0 2rem;
-    padding: 1.6rem 0 1.8rem;
-    border-top: 1px solid var(--ink);
-    border-bottom: 1px solid var(--rule);
-  }
-  .fh-cover-link {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 2rem;
-    color: var(--ink);
-    border-bottom: 0;
-    align-items: center;
-  }
-  .fh-cover-link:hover { border-bottom: 0; }
-  .fh-cover-link:hover .fh-cover-title { color: var(--uw-purple); }
-  .fh-cover-link:hover .fh-cover-cta { color: var(--uw-purple-deep); }
-  .fh-cover-thumb {
-    width: 100%;
-    aspect-ratio: 5 / 3;
-    background: var(--bg-card);
-    border: 1px solid var(--rule);
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 6px 24px rgba(50, 42, 38, 0.10);
-  }
-  .fh-cover-thumb svg { display: block; width: 100%; height: 100%; }
-  .fh-cover-loading {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--ink-faint); font-style: italic; font-family: var(--serif);
-    margin: 0;
-  }
-  .fh-cover-text { display: flex; flex-direction: column; gap: 0.6rem; }
-  .fh-cover-kicker {
-    font-size: 0.74rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--uw-gold);
-    font-weight: 600;
-    display: flex;
-    align-items: baseline;
-    gap: 0.7rem;
-    flex-wrap: wrap;
-  }
-  .fh-root[data-lang="zh"] .fh-cover-kicker {
-    text-transform: none;
-    letter-spacing: 0.1em;
-    font-size: 0.82rem;
-  }
-  .fh-cover-no {
-    color: var(--ink-faint);
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-  }
-  .fh-cover-title {
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: clamp(2rem, 3.6vw, 2.8rem);
-    line-height: 1.08;
-    letter-spacing: -0.012em;
-    margin: 0.2rem 0 0.3rem;
-    transition: color 0.18s ease;
-  }
-  .fh-root[data-lang="zh"] .fh-cover-title {
-    font-family: var(--zh-display);
-    letter-spacing: 0.02em;
-  }
-  .fh-cover-lede {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 1.15rem;
-    line-height: 1.5;
-    color: var(--ink);
-    margin: 0;
-  }
-  .fh-root[data-lang="zh"] .fh-cover-lede {
-    font-family: "Noto Serif SC", "Songti SC", serif;
-    font-style: normal;
-    font-weight: 300;
-  }
-  .fh-cover-place {
-    font-size: 0.78rem;
-    color: var(--ink-faint);
-    font-style: italic;
-    margin: 0.3rem 0 0;
-  }
-  .fh-cover-cta {
-    margin-top: 0.7rem;
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 1rem;
-    color: var(--uw-purple);
-    letter-spacing: 0.02em;
-    transition: color 0.18s ease;
   }
 
-  /* ---- Archive section header ------------------------------------
-     Inline label that sits in the leftmost cell of the toolbar grid,
-     so "From the archive · [search] [sort] [lang]" reads as one row.
-     No top/bottom rules of its own — the toolbar's own border-bottom
-     is the only horizontal rule under this band. */
-  .fh-archive-head {
-    margin: 0;
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 500;
-    font-size: 1rem;
-    color: var(--ink-soft, #6c6358);
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-  }
-  .fh-root[data-lang="zh"] .fh-archive-head {
-    font-family: var(--zh-display);
-    font-style: normal;
-    letter-spacing: 0.1em;
-  }
-
-  /* ---- Toolbar: archive label + search + sort + language ---------- */
+  /* ---- Toolbar: search + sort + language --------------------------- */
   .fh-toolbar {
     display: grid;
-    grid-template-columns: auto minmax(220px, 1fr) auto auto;
+    grid-template-columns: minmax(220px, 1fr) auto auto;
     gap: 0.9rem 1.2rem;
     align-items: center;
     margin: 1.6rem 0 0.4rem;
@@ -633,8 +444,7 @@ const coverDateZh = coverDt.toLocaleDateString('zh-CN', { weekday: 'long', year:
   }
 
   @media (max-width: 720px) {
-    .fh-flag-name { font-size: clamp(2.6rem, 12vw, 4rem); }
-    .fh-cover-link { grid-template-columns: 1fr; gap: 1.2rem; }
+    .fh-index-mast { grid-template-columns: 1fr; gap: 1rem; }
     .fh-row-link { grid-template-columns: 1fr; gap: 0.9rem; }
     .fh-row-thumb { width: 100%; }
     .fh-place { margin-left: 0; }

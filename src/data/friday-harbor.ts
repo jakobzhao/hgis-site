@@ -198,14 +198,6 @@ export const entries: Entry[] = [
 
 export const UI: Record<string, Bi> = {
   rubric:     { en: "Friday Harbor",   zh: "周五港" },
-  subtitle:   { en: "a cartographer's notebook", zh: "一份制图者的札记" },
-  publisher:  { en: "Humanistic GIS Laboratory · University of Washington",
-                zh: "人本 GIS 实验室 · 华盛顿大学" },
-  issueLabel: { en: "Issue",            zh: "第" },
-  issueSuffixZh: { en: "",              zh: "期" },
-  coverStory: { en: "Cover story",      zh: "封面故事" },
-  readThis:   { en: "Read this issue →", zh: "翻开本期 →" },
-  fromArchive:{ en: "From the archive", zh: "往期目录" },
   // Top of the index page — a single paragraph: what the column is +
   // who edits it + where the name comes from, all in one breath.
   manifestoTop: {
