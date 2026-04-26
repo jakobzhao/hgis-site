@@ -23,11 +23,32 @@ const entry = entries.find(e => e.slug === '2026-04-17-does-ai-know-your-city')!
     </div>
 
     <figcaption data-lang="en">
-      EN: "Asked to draw Seattle's neighborhoods from memory, GPT-5.5 Thinking returned polygons that mostly miss their real-world counterparts. Read the misses as a diagram — where a language model's geographic imagination thickens, and where it thins."
+      <b>Left: the real Seattle, framed to its actual bounds. Right: the entire city the model drew, framed to fit all of it.</b>
+      We deliberately let the right panel zoom out — what the model imagined extends well past the real city, so we show all of it. Only the
+      eight neighborhoods where the deviation is the headline get labelled: red where the model bloats one, green where it shrinks one. The
+      same eight are highlighted in the same colours on the left, so each red shape on the left has a red chip on the right.
+      <span class="legend-line">
+        <span class="legend-swatch swatch-bloat"></span>
+        <span><b>Bloat</b> — drawn much larger than reality. The chip carries the multiplier.</span>
+      </span>
+      <span class="legend-line">
+        <span class="legend-swatch swatch-shrink"></span>
+        <span><b>Shrink</b> — drawn smaller than reality. The chip carries the multiplier.</span>
+      </span>
     </figcaption>
 
     <figcaption data-lang="zh">
-      ZH: "让 GPT-5.5 Thinking 凭记忆画出西雅图的邻里边界，它画出的多边形多数对不上真实邻里。把这些偏差当一张图看——一台语言模型的地理想象，在哪里厚、在哪里薄。"
+      <b>左：真实西雅图，按城市自身的范围出图。右：模型脑里画出的整座城，按它自己的范围出图。</b>
+      右图我们刻意放大视野——模型想象出的西雅图比真城大得多，与其裁掉一半，不如让它全部显示。只在八个分歧最显著的邻里上做标签：
+      红色是模型把这个邻里画大了，绿色是画小了。同样这八个，左图用同样的颜色高亮——左侧的每一块红，对应右侧同名的红 chip。
+      <span class="legend-line">
+        <span class="legend-swatch swatch-bloat"></span>
+        <span><b>膨胀</b>——画得比真实大很多，chip 上是倍数。</span>
+      </span>
+      <span class="legend-line">
+        <span class="legend-swatch swatch-shrink"></span>
+        <span><b>压缩</b>——画得比真实小，chip 上是倍数。</span>
+      </span>
     </figcaption>
 
     <aside class="memory-stats" aria-label="key bias figures">
