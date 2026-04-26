@@ -1,224 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Projects · Humanistic GIS Laboratory</title><meta name="description" content="Public scholarship maps and software from the HGIS Lab: CHOP archive, Shifting Queer Space, the Global Refugee Atlas, the COVID-19 infection map, Stand with #StandingRock, and more."><link rel="canonical" href="https://hgis.uw.edu/projects/"><!-- Open Graph --><meta property="og:type" content="article"><meta property="og:site_name" content="Humanistic GIS Laboratory"><meta property="og:title" content="Projects · Humanistic GIS Laboratory"><meta property="og:description" content="Public scholarship maps and software from the HGIS Lab: CHOP archive, Shifting Queer Space, the Global Refugee Atlas, the COVID-19 infection map, Stand with #StandingRock, and more."><meta property="og:url" content="https://hgis.uw.edu/projects/"><meta property="og:image" content="https://hgis.uw.edu/hgis-logo.png"><meta property="og:locale" content="en_US"><!-- Twitter / X card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Projects · Humanistic GIS Laboratory"><meta name="twitter:description" content="Public scholarship maps and software from the HGIS Lab: CHOP archive, Shifting Queer Space, the Global Refugee Atlas, the COVID-19 infection map, Stand with #StandingRock, and more."><meta name="twitter:image" content="https://hgis.uw.edu/hgis-logo.png"><!-- Crawl hints --><meta name="robots" content="index, follow, max-image-preview:large"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><!-- Icons --><link rel="icon" type="image/png" href="/hgis-logo.png"><link rel="apple-touch-icon" href="/hgis-logo.png"><link rel="stylesheet" href="/_astro/2026-04-25-eye-of-the-needle.CS82-Djn.css">
+<link rel="stylesheet" href="/_astro/projects.UkgBV3Lj.css"></head> <body> <header class="site-header" data-astro-cid-3ef6ksr2> <div class="container header-inner" data-astro-cid-3ef6ksr2> <a href="/" class="brand" aria-label="Humanistic GIS Laboratory home" data-astro-cid-3ef6ksr2> <svg class="brand-logo" viewBox="160 555 325 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HGIS Lab logo" data-astro-cid-3ef6ksr2> <path class="brand-bar brand-bar-humanistic" pathLength="100" d="M299.2,565.6L175,791.6l22.8,41l103-186.7l57.5,105.9h45.5L299.2,565.6z" data-astro-cid-3ef6ksr2></path> <path class="brand-bar brand-bar-geoai" pathLength="100" d="M300.8,645.9l22.7,41.8l-58.4,103.9l205.9,0.1l-21.7,42l-251.5-1.2L300.8,645.9z" data-astro-cid-3ef6ksr2></path> <path class="brand-bar brand-bar-fake" pathLength="100" d="M299.2,565.6l104.5,186.1l-116.2,0.1l-22.3,39.8l205.8,0L345.5,565.5L299.2,565.6z" data-astro-cid-3ef6ksr2></path> </svg> <span class="brand-text" data-astro-cid-3ef6ksr2> <strong data-astro-cid-3ef6ksr2>Humanistic GIS Laboratory</strong> <small data-astro-cid-3ef6ksr2>University of Washington · Department of Geography</small> </span> </a> <nav data-astro-cid-3ef6ksr2> <ul data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2> <a href="/" class="nav-link" data-astro-cid-3ef6ksr2> Home </a> </li><li data-astro-cid-3ef6ksr2> <a href="/friday-harbor/" class="nav-link nav-featured" aria-label="Friday Harbor — issue 004" data-astro-cid-3ef6ksr2> <span class="nav-marker" aria-hidden="true" data-astro-cid-3ef6ksr2></span> <em class="nav-featured-text" data-astro-cid-3ef6ksr2> Friday Harbor<sup class="nav-issue" data-astro-cid-3ef6ksr2>004</sup> </em> </a> </li><li data-astro-cid-3ef6ksr2> <a href="/research/" class="nav-link" data-astro-cid-3ef6ksr2> Research </a> </li><li data-astro-cid-3ef6ksr2> <a href="/projects/" class="nav-link active" data-astro-cid-3ef6ksr2> Projects </a> </li><li data-astro-cid-3ef6ksr2> <a href="/publications/" class="nav-link" data-astro-cid-3ef6ksr2> Publications </a> </li><li data-astro-cid-3ef6ksr2> <a href="/people/" class="nav-link" data-astro-cid-3ef6ksr2> People </a> </li><li data-astro-cid-3ef6ksr2> <a href="/teaching/" class="nav-link" data-astro-cid-3ef6ksr2> Teaching </a> </li> </ul> </nav> </div> <div class="gold-rule" data-astro-cid-3ef6ksr2></div> </header>  <script>
+  (function () {
+    const logo = document.querySelector('.brand-logo');
+    if (!logo) return;
+    // Only play an entry animation on the first pageview of the session;
+    // subsequent navigations skip entry but still get the idle motion.
+    let played = false;
+    try { played = sessionStorage.getItem('hgis-logo-entry') === '1'; } catch (e) {}
+    if (played) {
+      logo.classList.add('is-idle');
+      return;
+    }
+    const variants = ['entry-spin', 'entry-draw', 'entry-assemble'];
+    const pick = variants[Math.floor(Math.random() * variants.length)];
+    logo.classList.add(pick);
+    try { sessionStorage.setItem('hgis-logo-entry', '1'); } catch (e) {}
+    // After the entry animation settles, hand off to the idle loop so the
+    // logo never sits dead-still but also never feels overactive.
+    setTimeout(() => {
+      logo.classList.remove(pick);
+      logo.classList.add('is-idle');
+    }, 1800);
+  })();
+</script> <main>  <section class="container section" data-astro-cid-aid3sr62> <span class="eyebrow" data-astro-cid-aid3sr62>Projects</span> <h1 data-astro-cid-aid3sr62>Field experiments in humanistic mapping</h1> <p class="lede" data-astro-cid-aid3sr62>Each project is a working answer to one question: how do we render the meaning of a place? Below are public-scholarship maps, web platforms, and software released by the lab.</p> <figure class="pmap-wrap" aria-label="Butterfly atlas of HGIS Laboratory projects in flight" data-astro-cid-qn5jfjju> <div class="pmap-stage" data-astro-cid-qn5jfjju> <canvas id="pmap-canvas" data-points="[{&#34;slug&#34;:&#34;aeropulse&#34;,&#34;lat&#34;:47.6062,&#34;lon&#34;:-122.3321,&#34;title&#34;:&#34;AeroPulse: Real-time Flight Disruption Tracker&#34;,&#34;year&#34;:2025,&#34;image&#34;:&#34;/projects/aeropulse.png&#34;,&#34;summary&#34;:&#34;A live map of flight delays, cancellations, and diversions, surfacing how disruptions ripple across the global aviation network.&#34;},{&#34;slug&#34;:&#34;scl&#34;,&#34;lat&#34;:47.6062,&#34;lon&#34;:-122.3321,&#34;title&#34;:&#34;Seattle City Lights: Mapping Urban Illumination&#34;,&#34;year&#34;:2025,&#34;image&#34;:&#34;/projects/scl.png&#34;,&#34;summary&#34;:&#34;An interactive cartography of Seattle's nighttime light landscape, reading the city through its illuminated infrastructures.&#34;},{&#34;slug&#34;:&#34;mbta-equity&#34;,&#34;lat&#34;:42.3601,&#34;lon&#34;:-71.0589,&#34;title&#34;:&#34;MBTA Transit Equity Atlas&#34;,&#34;year&#34;:2025,&#34;image&#34;:&#34;/projects/mbta-equity.png&#34;,&#34;summary&#34;:&#34;An equity-focused web atlas of Boston's MBTA system, examining how transit access intersects with race, income, and opportunity.&#34;},{&#34;slug&#34;:&#34;yifutuan&#34;,&#34;lat&#34;:43.0731,&#34;lon&#34;:-89.4012,&#34;title&#34;:&#34;Mapping Yi-Fu Tuan's Humanistic Geography&#34;,&#34;year&#34;:2025,&#34;image&#34;:&#34;/projects/yifutuan.png&#34;,&#34;summary&#34;:&#34;A geo-narrative tribute to Yi-Fu Tuan, tracing the places, ideas, and itineraries that shaped humanistic geography.&#34;},{&#34;slug&#34;:&#34;lgbtqspaces&#34;,&#34;lat&#34;:39.5,&#34;lon&#34;:-98.35,&#34;title&#34;:&#34;Shifting LGBTQ+ Spaces&#34;,&#34;year&#34;:2024,&#34;image&#34;:&#34;/projects/lgbtqspaces.png&#34;,&#34;summary&#34;:&#34;A continuing inquiry into the geographies of LGBTQ+ life, charting how queer spaces emerge, persist, and disappear across time.&#34;},{&#34;slug&#34;:&#34;chop&#34;,&#34;lat&#34;:47.6149,&#34;lon&#34;:-122.3194,&#34;title&#34;:&#34;Archiving the Capitol Hill Organized Protest (CHOP)&#34;,&#34;year&#34;:2023,&#34;image&#34;:&#34;/projects/chop.png&#34;,&#34;summary&#34;:&#34;Critical and creative (un)mapping of the 2020 CHOP, weaving archival materials and oral histories into a layered geo-narrative of the protest space.&#34;},{&#34;slug&#34;:&#34;shiftingqueerspace&#34;,&#34;lat&#34;:39.5,&#34;lon&#34;:-98.35,&#34;title&#34;:&#34;Shifting Queer Space in the United States (2000—2019)&#34;,&#34;year&#34;:2022,&#34;image&#34;:&#34;/projects/sqs2.png&#34;,&#34;summary&#34;:&#34;A web map of Damron Men's Travel Guide venues over two decades, charting the shifting geography of queer life across the United States.&#34;},{&#34;slug&#34;:&#34;covid19-workers&#34;,&#34;lat&#34;:47.4,&#34;lon&#34;:-120.5,&#34;title&#34;:&#34;COVID-19 Risk to Washington Workers&#34;,&#34;year&#34;:2020,&#34;image&#34;:&#34;/projects/risk-workers.png&#34;,&#34;summary&#34;:&#34;A smart dashboard characterizing occupational risk to Washington workers during the COVID-19 economic recovery.&#34;},{&#34;slug&#34;:&#34;virus&#34;,&#34;lat&#34;:47.6062,&#34;lon&#34;:-122.3321,&#34;title&#34;:&#34;Novel Coronavirus Infection Map&#34;,&#34;year&#34;:2020,&#34;image&#34;:&#34;/projects/virus.png&#34;,&#34;summary&#34;:&#34;One of the earliest live dashboards of the COVID-19 pandemic, built in February 2020 and reported by BBC, National Geographic, and Anadolu Agency.&#34;},{&#34;slug&#34;:&#34;sefs&#34;,&#34;lat&#34;:47.6553,&#34;lon&#34;:-122.3035,&#34;title&#34;:&#34;University of Washington Virtual Tour&#34;,&#34;year&#34;:2020,&#34;image&#34;:&#34;/projects/sefs.jpg&#34;,&#34;summary&#34;:&#34;An interactive virtual tour of UW's School of Environmental and Forest Sciences, blending 3D scenes with on-the-ground photography.&#34;},{&#34;slug&#34;:&#34;damron&#34;,&#34;lat&#34;:47.6062,&#34;lon&#34;:-122.3321,&#34;title&#34;:&#34;Damron Seattle: Mapping Queer Space&#34;,&#34;year&#34;:2019,&#34;image&#34;:&#34;/projects/damron.png&#34;,&#34;summary&#34;:&#34;A Seattle case study from the Damron Men's Travel Guide: locating decades of LGBTQ+ venues to recover a long-silenced urban history.&#34;},{&#34;slug&#34;:&#34;storymap-js&#34;,&#34;lat&#34;:47.6553,&#34;lon&#34;:-122.3035,&#34;title&#34;:&#34;Storymap.js&#34;,&#34;year&#34;:2016,&#34;image&#34;:&#34;/projects/storymap.png&#34;,&#34;summary&#34;:&#34;A lightweight JavaScript library for telling place-based stories on web maps. Used in courses and community projects.&#34;},{&#34;slug&#34;:&#34;oregon-water&#34;,&#34;lat&#34;:44.1,&#34;lon&#34;:-120.5,&#34;title&#34;:&#34;Oregon Water Atlas&#34;,&#34;year&#34;:2017,&#34;image&#34;:&#34;/projects/oregonwater.png&#34;,&#34;summary&#34;:&#34;A digital collection and visualization of Oregon's water resources — winner of the Student Environment Challenge (Oregon Chapter, AWMA).&#34;},{&#34;slug&#34;:&#34;slr&#34;,&#34;lat&#34;:30,&#34;lon&#34;:-89.9,&#34;title&#34;:&#34;Sea Level Rise Induced Migration&#34;,&#34;year&#34;:2017,&#34;image&#34;:&#34;/projects/slr.jpg&#34;,&#34;summary&#34;:&#34;An award-winning visualization of how sea level rise reshapes coastal migration patterns in the United States. Grand Prize, Ecological Visualization Contest.&#34;},{&#34;slug&#34;:&#34;standingrock&#34;,&#34;lat&#34;:46,&#34;lon&#34;:-100.7,&#34;title&#34;:&#34;Stand with #StandingRock&#34;,&#34;year&#34;:2018,&#34;image&#34;:&#34;/projects/standingrock.png&#34;,&#34;summary&#34;:&#34;An epistemological experiment in geospatial big data during the post-truth era, supporting the land claims of Sioux tribes through critical mapping.&#34;},{&#34;slug&#34;:&#34;hja&#34;,&#34;lat&#34;:44.21,&#34;lon&#34;:-122.25,&#34;title&#34;:&#34;H.J. Andrews Experimental Forest Point Cloud&#34;,&#34;year&#34;:2017,&#34;image&#34;:&#34;/projects/hja.jpg&#34;,&#34;summary&#34;:&#34;A web point-cloud visualization of the H.J. Andrews Experimental Forest headquarters area, built from terrestrial lidar.&#34;}]" data-astro-cid-qn5jfjju></canvas> <div class="pmap-marker" id="pmap-marker" aria-hidden="true" data-astro-cid-qn5jfjju></div> </div> <figcaption data-astro-cid-qn5jfjju> <span class="pmap-cap-lede" data-astro-cid-qn5jfjju>Atlas in flight — the world unfolded from an octahedron.</span> <span class="pmap-cap-cite" data-astro-cid-qn5jfjju>Cahill butterfly projection, restless under wind. Hover any thumbnail below — its place lights up on the wing.</span> </figcaption> <div class="pmap-strip" aria-label="Projects — locate any of these places on the wing" data-astro-cid-qn5jfjju> <button type="button" class="pmap-thumb" data-slug="aeropulse" style="background-image: url(/projects/aeropulse.png)" aria-label="AeroPulse: Real-time Flight Disruption Tracker (2025)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="scl" style="background-image: url(/projects/scl.png)" aria-label="Seattle City Lights: Mapping Urban Illumination (2025)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="mbta-equity" style="background-image: url(/projects/mbta-equity.png)" aria-label="MBTA Transit Equity Atlas (2025)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="yifutuan" style="background-image: url(/projects/yifutuan.png)" aria-label="Mapping Yi-Fu Tuan's Humanistic Geography (2025)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="lgbtqspaces" style="background-image: url(/projects/lgbtqspaces.png)" aria-label="Shifting LGBTQ+ Spaces (2024)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="chop" style="background-image: url(/projects/chop.png)" aria-label="Archiving the Capitol Hill Organized Protest (CHOP) (2023)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="shiftingqueerspace" style="background-image: url(/projects/sqs2.png)" aria-label="Shifting Queer Space in the United States (2000—2019) (2022)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="covid19-workers" style="background-image: url(/projects/risk-workers.png)" aria-label="COVID-19 Risk to Washington Workers (2020)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="virus" style="background-image: url(/projects/virus.png)" aria-label="Novel Coronavirus Infection Map (2020)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="sefs" style="background-image: url(/projects/sefs.jpg)" aria-label="University of Washington Virtual Tour (2020)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="damron" style="background-image: url(/projects/damron.png)" aria-label="Damron Seattle: Mapping Queer Space (2019)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="storymap-js" style="background-image: url(/projects/storymap.png)" aria-label="Storymap.js (2016)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="oregon-water" style="background-image: url(/projects/oregonwater.png)" aria-label="Oregon Water Atlas (2017)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="slr" style="background-image: url(/projects/slr.jpg)" aria-label="Sea Level Rise Induced Migration (2017)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="standingrock" style="background-image: url(/projects/standingrock.png)" aria-label="Stand with #StandingRock (2018)" data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="hja" style="background-image: url(/projects/hja.jpg)" aria-label="H.J. Andrews Experimental Forest Point Cloud (2017)" data-astro-cid-qn5jfjju></button> </div> <div id="pmap-tip" class="pmap-tip" hidden data-astro-cid-qn5jfjju></div> </figure> <script type="module">
+  import * as THREE from 'https://esm.sh/three@0.160.0';
+  import * as d3 from 'https://esm.sh/d3@7';
+  import { geoPolyhedralButterfly } from 'https://esm.sh/d3-geo-projection@4';
+  import { feature } from 'https://esm.sh/topojson-client@3';
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Projects · Humanistic GIS Laboratory</title>
-  <meta name="description"
-    content="Public scholarship maps and software from the HGIS Lab: CHOP archive, Shifting Queer Space, the Global Refugee Atlas, the COVID-19 infection map, Stand with #StandingRock, and more.">
-  <link rel="canonical" href="https://hgis.uw.edu/projects/"><!-- Open Graph -->
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Humanistic GIS Laboratory">
-  <meta property="og:title" content="Projects · Humanistic GIS Laboratory">
-  <meta property="og:description"
-    content="Public scholarship maps and software from the HGIS Lab: CHOP archive, Shifting Queer Space, the Global Refugee Atlas, the COVID-19 infection map, Stand with #StandingRock, and more.">
-  <meta property="og:url" content="https://hgis.uw.edu/projects/">
-  <meta property="og:image" content="https://hgis.uw.edu/hgis-logo.png">
-  <meta property="og:locale" content="en_US"><!-- Twitter / X card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Projects · Humanistic GIS Laboratory">
-  <meta name="twitter:description"
-    content="Public scholarship maps and software from the HGIS Lab: CHOP archive, Shifting Queer Space, the Global Refugee Atlas, the COVID-19 infection map, Stand with #StandingRock, and more.">
-  <meta name="twitter:image" content="https://hgis.uw.edu/hgis-logo.png"><!-- Crawl hints -->
-  <meta name="robots" content="index, follow, max-image-preview:large"><!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"><!-- Icons -->
-  <link rel="icon" type="image/png" href="/hgis-logo.png">
-  <link rel="apple-touch-icon" href="/hgis-logo.png">
-  <link rel="stylesheet" href="/_astro/2026-04-25-eye-of-the-needle.CS82-Djn.css">
-  <link rel="stylesheet" href="/_astro/projects.UkgBV3Lj.css">
-</head>
+  const canvas = document.getElementById('pmap-canvas');
+  const wrap = canvas.closest('.pmap-wrap');
+  const stage = canvas.parentElement;
+  const pts = JSON.parse(canvas.dataset.points || '[]');
 
-<body>
-  <header class="site-header" data-astro-cid-3ef6ksr2>
-    <div class="container header-inner" data-astro-cid-3ef6ksr2> <a href="/" class="brand"
-        aria-label="Humanistic GIS Laboratory home" data-astro-cid-3ef6ksr2> <svg class="brand-logo"
-          viewBox="160 555 325 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HGIS Lab logo"
-          data-astro-cid-3ef6ksr2>
-          <path class="brand-bar brand-bar-humanistic" pathLength="100"
-            d="M299.2,565.6L175,791.6l22.8,41l103-186.7l57.5,105.9h45.5L299.2,565.6z" data-astro-cid-3ef6ksr2></path>
-          <path class="brand-bar brand-bar-geoai" pathLength="100"
-            d="M300.8,645.9l22.7,41.8l-58.4,103.9l205.9,0.1l-21.7,42l-251.5-1.2L300.8,645.9z" data-astro-cid-3ef6ksr2>
-          </path>
-          <path class="brand-bar brand-bar-fake" pathLength="100"
-            d="M299.2,565.6l104.5,186.1l-116.2,0.1l-22.3,39.8l205.8,0L345.5,565.5L299.2,565.6z" data-astro-cid-3ef6ksr2>
-          </path>
-        </svg> <span class="brand-text" data-astro-cid-3ef6ksr2> <strong data-astro-cid-3ef6ksr2>Humanistic GIS
-            Laboratory</strong> <small data-astro-cid-3ef6ksr2>University of Washington · Department of
-            Geography</small> </span> </a>
-      <nav data-astro-cid-3ef6ksr2>
-        <ul data-astro-cid-3ef6ksr2>
-          <li data-astro-cid-3ef6ksr2> <a href="/" class="nav-link" data-astro-cid-3ef6ksr2> Home </a> </li>
-          <li data-astro-cid-3ef6ksr2> <a href="/friday-harbor/" class="nav-link nav-featured"
-              aria-label="Friday Harbor — issue 004" data-astro-cid-3ef6ksr2> <span class="nav-marker"
-                aria-hidden="true" data-astro-cid-3ef6ksr2></span> <em class="nav-featured-text"
-                data-astro-cid-3ef6ksr2> Friday Harbor<sup class="nav-issue" data-astro-cid-3ef6ksr2>004</sup> </em>
-            </a> </li>
-          <li data-astro-cid-3ef6ksr2> <a href="/research/" class="nav-link" data-astro-cid-3ef6ksr2> Research </a>
-          </li>
-          <li data-astro-cid-3ef6ksr2> <a href="/projects/" class="nav-link active" data-astro-cid-3ef6ksr2> Projects
-            </a> </li>
-          <li data-astro-cid-3ef6ksr2> <a href="/publications/" class="nav-link" data-astro-cid-3ef6ksr2> Publications
-            </a> </li>
-          <li data-astro-cid-3ef6ksr2> <a href="/people/" class="nav-link" data-astro-cid-3ef6ksr2> People </a> </li>
-          <li data-astro-cid-3ef6ksr2> <a href="/teaching/" class="nav-link" data-astro-cid-3ef6ksr2> Teaching </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <div class="gold-rule" data-astro-cid-3ef6ksr2></div>
-  </header>
-  <script>
-    (function () {
-      const logo = document.querySelector('.brand-logo');
-      if (!logo) return;
-      // Only play an entry animation on the first pageview of the session;
-      // subsequent navigations skip entry but still get the idle motion.
-      let played = false;
-      try { played = sessionStorage.getItem('hgis-logo-entry') === '1'; } catch (e) { }
-      if (played) {
-        logo.classList.add('is-idle');
-        return;
-      }
-      const variants = ['entry-spin', 'entry-draw', 'entry-assemble'];
-      const pick = variants[Math.floor(Math.random() * variants.length)];
-      logo.classList.add(pick);
-      try { sessionStorage.setItem('hgis-logo-entry', '1'); } catch (e) { }
-      // After the entry animation settles, hand off to the idle loop so the
-      // logo never sits dead-still but also never feels overactive.
-      setTimeout(() => {
-        logo.classList.remove(pick);
-        logo.classList.add('is-idle');
-      }, 1800);
-    })();
-  </script>
-  <main>
-    <section class="container section" data-astro-cid-aid3sr62> <span class="eyebrow"
-        data-astro-cid-aid3sr62>Projects</span>
-      <h1 data-astro-cid-aid3sr62>Field experiments in humanistic mapping</h1>
-      <p class="lede" data-astro-cid-aid3sr62>Each project is a working answer to one question: how do we render the
-        meaning of a place? Below are public-scholarship maps, web platforms, and software released by the lab.</p>
-      <figure class="pmap-wrap" aria-label="Butterfly atlas of HGIS Laboratory projects in flight"
-        data-astro-cid-qn5jfjju>
-        <div class="pmap-stage" data-astro-cid-qn5jfjju> <canvas id="pmap-canvas"
-            data-points="[{&#34;slug&#34;:&#34;aeropulse&#34;,&#34;lat&#34;:47.6062,&#34;lon&#34;:-122.3321,&#34;title&#34;:&#34;AeroPulse: Real-time Flight Disruption Tracker&#34;,&#34;year&#34;:2025,&#34;image&#34;:&#34;/projects/aeropulse.png&#34;,&#34;summary&#34;:&#34;A live map of flight delays, cancellations, and diversions, surfacing how disruptions ripple across the global aviation network.&#34;},{&#34;slug&#34;:&#34;scl&#34;,&#34;lat&#34;:47.6062,&#34;lon&#34;:-122.3321,&#34;title&#34;:&#34;Seattle City Lights: Mapping Urban Illumination&#34;,&#34;year&#34;:2025,&#34;image&#34;:&#34;/projects/scl.png&#34;,&#34;summary&#34;:&#34;An interactive cartography of Seattle's nighttime light landscape, reading the city through its illuminated infrastructures.&#34;},{&#34;slug&#34;:&#34;mbta-equity&#34;,&#34;lat&#34;:42.3601,&#34;lon&#34;:-71.0589,&#34;title&#34;:&#34;MBTA Transit Equity Atlas&#34;,&#34;year&#34;:2025,&#34;image&#34;:&#34;/projects/mbta-equity.png&#34;,&#34;summary&#34;:&#34;An equity-focused web atlas of Boston's MBTA system, examining how transit access intersects with race, income, and opportunity.&#34;},{&#34;slug&#34;:&#34;yifutuan&#34;,&#34;lat&#34;:43.0731,&#34;lon&#34;:-89.4012,&#34;title&#34;:&#34;Mapping Yi-Fu Tuan's Humanistic Geography&#34;,&#34;year&#34;:2025,&#34;image&#34;:&#34;/projects/yifutuan.png&#34;,&#34;summary&#34;:&#34;A geo-narrative tribute to Yi-Fu Tuan, tracing the places, ideas, and itineraries that shaped humanistic geography.&#34;},{&#34;slug&#34;:&#34;lgbtqspaces&#34;,&#34;lat&#34;:39.5,&#34;lon&#34;:-98.35,&#34;title&#34;:&#34;Shifting LGBTQ+ Spaces&#34;,&#34;year&#34;:2024,&#34;image&#34;:&#34;/projects/lgbtqspaces.png&#34;,&#34;summary&#34;:&#34;A continuing inquiry into the geographies of LGBTQ+ life, charting how queer spaces emerge, persist, and disappear across time.&#34;},{&#34;slug&#34;:&#34;chop&#34;,&#34;lat&#34;:47.6149,&#34;lon&#34;:-122.3194,&#34;title&#34;:&#34;Archiving the Capitol Hill Organized Protest (CHOP)&#34;,&#34;year&#34;:2023,&#34;image&#34;:&#34;/projects/chop.png&#34;,&#34;summary&#34;:&#34;Critical and creative (un)mapping of the 2020 CHOP, weaving archival materials and oral histories into a layered geo-narrative of the protest space.&#34;},{&#34;slug&#34;:&#34;shiftingqueerspace&#34;,&#34;lat&#34;:39.5,&#34;lon&#34;:-98.35,&#34;title&#34;:&#34;Shifting Queer Space in the United States (2000—2019)&#34;,&#34;year&#34;:2022,&#34;image&#34;:&#34;/projects/sqs2.png&#34;,&#34;summary&#34;:&#34;A web map of Damron Men's Travel Guide venues over two decades, charting the shifting geography of queer life across the United States.&#34;},{&#34;slug&#34;:&#34;covid19-workers&#34;,&#34;lat&#34;:47.4,&#34;lon&#34;:-120.5,&#34;title&#34;:&#34;COVID-19 Risk to Washington Workers&#34;,&#34;year&#34;:2020,&#34;image&#34;:&#34;/projects/risk-workers.png&#34;,&#34;summary&#34;:&#34;A smart dashboard characterizing occupational risk to Washington workers during the COVID-19 economic recovery.&#34;},{&#34;slug&#34;:&#34;virus&#34;,&#34;lat&#34;:47.6062,&#34;lon&#34;:-122.3321,&#34;title&#34;:&#34;Novel Coronavirus Infection Map&#34;,&#34;year&#34;:2020,&#34;image&#34;:&#34;/projects/virus.png&#34;,&#34;summary&#34;:&#34;One of the earliest live dashboards of the COVID-19 pandemic, built in February 2020 and reported by BBC, National Geographic, and Anadolu Agency.&#34;},{&#34;slug&#34;:&#34;sefs&#34;,&#34;lat&#34;:47.6553,&#34;lon&#34;:-122.3035,&#34;title&#34;:&#34;University of Washington Virtual Tour&#34;,&#34;year&#34;:2020,&#34;image&#34;:&#34;/projects/sefs.jpg&#34;,&#34;summary&#34;:&#34;An interactive virtual tour of UW's School of Environmental and Forest Sciences, blending 3D scenes with on-the-ground photography.&#34;},{&#34;slug&#34;:&#34;damron&#34;,&#34;lat&#34;:47.6062,&#34;lon&#34;:-122.3321,&#34;title&#34;:&#34;Damron Seattle: Mapping Queer Space&#34;,&#34;year&#34;:2019,&#34;image&#34;:&#34;/projects/damron.png&#34;,&#34;summary&#34;:&#34;A Seattle case study from the Damron Men's Travel Guide: locating decades of LGBTQ+ venues to recover a long-silenced urban history.&#34;},{&#34;slug&#34;:&#34;storymap-js&#34;,&#34;lat&#34;:47.6553,&#34;lon&#34;:-122.3035,&#34;title&#34;:&#34;Storymap.js&#34;,&#34;year&#34;:2016,&#34;image&#34;:&#34;/projects/storymap.png&#34;,&#34;summary&#34;:&#34;A lightweight JavaScript library for telling place-based stories on web maps. Used in courses and community projects.&#34;},{&#34;slug&#34;:&#34;oregon-water&#34;,&#34;lat&#34;:44.1,&#34;lon&#34;:-120.5,&#34;title&#34;:&#34;Oregon Water Atlas&#34;,&#34;year&#34;:2017,&#34;image&#34;:&#34;/projects/oregonwater.png&#34;,&#34;summary&#34;:&#34;A digital collection and visualization of Oregon's water resources — winner of the Student Environment Challenge (Oregon Chapter, AWMA).&#34;},{&#34;slug&#34;:&#34;slr&#34;,&#34;lat&#34;:30,&#34;lon&#34;:-89.9,&#34;title&#34;:&#34;Sea Level Rise Induced Migration&#34;,&#34;year&#34;:2017,&#34;image&#34;:&#34;/projects/slr.jpg&#34;,&#34;summary&#34;:&#34;An award-winning visualization of how sea level rise reshapes coastal migration patterns in the United States. Grand Prize, Ecological Visualization Contest.&#34;},{&#34;slug&#34;:&#34;standingrock&#34;,&#34;lat&#34;:46,&#34;lon&#34;:-100.7,&#34;title&#34;:&#34;Stand with #StandingRock&#34;,&#34;year&#34;:2018,&#34;image&#34;:&#34;/projects/standingrock.png&#34;,&#34;summary&#34;:&#34;An epistemological experiment in geospatial big data during the post-truth era, supporting the land claims of Sioux tribes through critical mapping.&#34;},{&#34;slug&#34;:&#34;hja&#34;,&#34;lat&#34;:44.21,&#34;lon&#34;:-122.25,&#34;title&#34;:&#34;H.J. Andrews Experimental Forest Point Cloud&#34;,&#34;year&#34;:2017,&#34;image&#34;:&#34;/projects/hja.jpg&#34;,&#34;summary&#34;:&#34;A web point-cloud visualization of the H.J. Andrews Experimental Forest headquarters area, built from terrestrial lidar.&#34;}]"
-            data-astro-cid-qn5jfjju></canvas>
-          <div class="pmap-marker" id="pmap-marker" aria-hidden="true" data-astro-cid-qn5jfjju></div>
-        </div>
-        <figcaption data-astro-cid-qn5jfjju> <span class="pmap-cap-lede" data-astro-cid-qn5jfjju>Atlas in flight — the
-            world unfolded from an octahedron.</span> <span class="pmap-cap-cite" data-astro-cid-qn5jfjju>Cahill
-            butterfly projection, restless under wind. Hover any thumbnail below — its place lights up on the
-            wing.</span> </figcaption>
-        <div class="pmap-strip" aria-label="Projects — locate any of these places on the wing" data-astro-cid-qn5jfjju>
-          <button type="button" class="pmap-thumb" data-slug="aeropulse"
-            style="background-image: url(/projects/aeropulse.png)"
-            aria-label="AeroPulse: Real-time Flight Disruption Tracker (2025)" data-astro-cid-qn5jfjju></button><button
-            type="button" class="pmap-thumb" data-slug="scl" style="background-image: url(/projects/scl.png)"
-            aria-label="Seattle City Lights: Mapping Urban Illumination (2025)" data-astro-cid-qn5jfjju></button><button
-            type="button" class="pmap-thumb" data-slug="mbta-equity"
-            style="background-image: url(/projects/mbta-equity.png)" aria-label="MBTA Transit Equity Atlas (2025)"
-            data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="yifutuan"
-            style="background-image: url(/projects/yifutuan.png)"
-            aria-label="Mapping Yi-Fu Tuan's Humanistic Geography (2025)" data-astro-cid-qn5jfjju></button><button
-            type="button" class="pmap-thumb" data-slug="lgbtqspaces"
-            style="background-image: url(/projects/lgbtqspaces.png)" aria-label="Shifting LGBTQ+ Spaces (2024)"
-            data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="chop"
-            style="background-image: url(/projects/chop.png)"
-            aria-label="Archiving the Capitol Hill Organized Protest (CHOP) (2023)"
-            data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="shiftingqueerspace"
-            style="background-image: url(/projects/sqs2.png)"
-            aria-label="Shifting Queer Space in the United States (2000—2019) (2022)"
-            data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="covid19-workers"
-            style="background-image: url(/projects/risk-workers.png)"
-            aria-label="COVID-19 Risk to Washington Workers (2020)" data-astro-cid-qn5jfjju></button><button
-            type="button" class="pmap-thumb" data-slug="virus" style="background-image: url(/projects/virus.png)"
-            aria-label="Novel Coronavirus Infection Map (2020)" data-astro-cid-qn5jfjju></button><button type="button"
-            class="pmap-thumb" data-slug="sefs" style="background-image: url(/projects/sefs.jpg)"
-            aria-label="University of Washington Virtual Tour (2020)" data-astro-cid-qn5jfjju></button><button
-            type="button" class="pmap-thumb" data-slug="damron" style="background-image: url(/projects/damron.png)"
-            aria-label="Damron Seattle: Mapping Queer Space (2019)" data-astro-cid-qn5jfjju></button><button
-            type="button" class="pmap-thumb" data-slug="storymap-js"
-            style="background-image: url(/projects/storymap.png)" aria-label="Storymap.js (2016)"
-            data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="oregon-water"
-            style="background-image: url(/projects/oregonwater.png)" aria-label="Oregon Water Atlas (2017)"
-            data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="slr"
-            style="background-image: url(/projects/slr.jpg)" aria-label="Sea Level Rise Induced Migration (2017)"
-            data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="standingrock"
-            style="background-image: url(/projects/standingrock.png)" aria-label="Stand with #StandingRock (2018)"
-            data-astro-cid-qn5jfjju></button><button type="button" class="pmap-thumb" data-slug="hja"
-            style="background-image: url(/projects/hja.jpg)"
-            aria-label="H.J. Andrews Experimental Forest Point Cloud (2017)" data-astro-cid-qn5jfjju></button> </div>
-        <div id="pmap-tip" class="pmap-tip" hidden data-astro-cid-qn5jfjju></div>
-      </figure>
-      <script type="module">
-        import * as THREE from 'https://esm.sh/three@0.160.0';
-        import * as d3 from 'https://esm.sh/d3@7';
-        import { geoPolyhedralButterfly } from 'https://esm.sh/d3-geo-projection@4';
-        import { feature } from 'https://esm.sh/topojson-client@3';
+  // ----- sizing -----
+  const measure = () => {
+    const w = stage.clientWidth;
+    const h = Math.min(440, Math.max(280, w * 0.52));
+    return { w, h };
+  };
+  let { w, h } = measure();
 
-        const canvas = document.getElementById('pmap-canvas');
-        const wrap = canvas.closest('.pmap-wrap');
-        const stage = canvas.parentElement;
-        const pts = JSON.parse(canvas.dataset.points || '[]');
+  // ----- three.js setup -----
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h, false);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-        // ----- sizing -----
-        const measure = () => {
-          const w = stage.clientWidth;
-          const h = Math.min(440, Math.max(280, w * 0.52));
-          return { w, h };
-        };
-        let { w, h } = measure();
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100);
+  camera.position.set(0, 1.4, 5.4);
+  camera.lookAt(0, -0.05, 0);
 
-        // ----- three.js setup -----
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setSize(w, h, false);
-        renderer.outputColorSpace = THREE.SRGBColorSpace;
+  // ----- map texture: D3-rendered Cahill butterfly atlas.
+  //       The canvas is transparent outside the butterfly silhouette,
+  //       so the rendered plane only shows where the world is. -----
+  const TEX_W = 2048;
+  const TEX_H = 1280;
+  const texCanvas = document.createElement('canvas');
+  texCanvas.width = TEX_W;
+  texCanvas.height = TEX_H;
+  const texCtx = texCanvas.getContext('2d');
+  texCtx.clearRect(0, 0, TEX_W, TEX_H);
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100);
-        camera.position.set(0, 1.4, 5.4);
-        camera.lookAt(0, -0.05, 0);
+  const projection = geoPolyhedralButterfly();
+  projection.fitSize([TEX_W - 60, TEX_H - 60], { type: 'Sphere' });
+  const path = d3.geoPath(projection, texCtx);
+  const graticule = d3.geoGraticule10();
 
-        // ----- map texture: D3-rendered Cahill butterfly atlas.
-        //       The canvas is transparent outside the butterfly silhouette,
-        //       so the rendered plane only shows where the world is. -----
-        const TEX_W = 2048;
-        const TEX_H = 1280;
-        const texCanvas = document.createElement('canvas');
-        texCanvas.width = TEX_W;
-        texCanvas.height = TEX_H;
-        const texCtx = texCanvas.getContext('2d');
-        texCtx.clearRect(0, 0, TEX_W, TEX_H);
+  const mapTexture = new THREE.CanvasTexture(texCanvas);
+  mapTexture.colorSpace = THREE.SRGBColorSpace;
+  mapTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-        const projection = geoPolyhedralButterfly();
-        projection.fitSize([TEX_W - 60, TEX_H - 60], { type: 'Sphere' });
-        const path = d3.geoPath(projection, texCtx);
-        const graticule = d3.geoGraticule10();
+  // ----- plane (the paper) + custom shader for folds + flap -----
+  const PLANE_W = 5.6;
+  const PLANE_H = 3.5;          // butterfly aspect ~ 1.6:1
+  const planeGeom = new THREE.PlaneGeometry(PLANE_W, PLANE_H, 130, 80);
 
-        const mapTexture = new THREE.CanvasTexture(texCanvas);
-        mapTexture.colorSpace = THREE.SRGBColorSpace;
-        mapTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const uniforms = {
+    uMap:           { value: mapTexture },
+    uFocal:         { value: new THREE.Vector2(0.5, 0.5) },
+    uFocalStrength: { value: 0 },
+    uTime:          { value: 0 },
+  };
 
-        // ----- plane (the paper) + custom shader for folds + flap -----
-        const PLANE_W = 5.6;
-        const PLANE_H = 3.5;          // butterfly aspect ~ 1.6:1
-        const planeGeom = new THREE.PlaneGeometry(PLANE_W, PLANE_H, 130, 80);
-
-        const uniforms = {
-          uMap: { value: mapTexture },
-          uFocal: { value: new THREE.Vector2(0.5, 0.5) },
-          uFocalStrength: { value: 0 },
-          uTime: { value: 0 },
-        };
-
-        const planeMaterial = new THREE.ShaderMaterial({
-          uniforms,
-          vertexShader: `
+  const planeMaterial = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: `
       uniform vec2  uFocal;
       uniform float uFocalStrength;
       uniform float uTime;
@@ -282,7 +150,7 @@
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
       }
     `,
-          fragmentShader: `
+    fragmentShader: `
       precision highp float;
       uniform sampler2D uMap;
       varying vec2  vUv;
@@ -301,680 +169,282 @@
         gl_FragColor = vec4(col, c.a);
       }
     `,
-          transparent: true,
-          depthWrite: false,
-        });
+    transparent: true,
+    depthWrite: false,
+  });
 
-        const plane = new THREE.Mesh(planeGeom, planeMaterial);
-        plane.rotation.x = -0.62;     // tilt the paper toward the viewer (~-35°)
-        scene.add(plane);
+  const plane = new THREE.Mesh(planeGeom, planeMaterial);
+  plane.rotation.x = -0.62;     // tilt the paper toward the viewer (~-35°)
+  scene.add(plane);
 
-        // ----- compute each project's UV from lat/lon — kept for the
-        //       card-hover -> fold-at-its-location interaction below -----
-        pts.forEach(pt => {
-          const c = projection([pt.lon, pt.lat]);
-          if (!c) return;
-          pt.uv = { x: c[0] / TEX_W, y: c[1] / TEX_H };
-        });
+  // ----- compute each project's UV from lat/lon — kept for the
+  //       card-hover -> fold-at-its-location interaction below -----
+  pts.forEach(pt => {
+    const c = projection([pt.lon, pt.lat]);
+    if (!c) return;
+    pt.uv = { x: c[0] / TEX_W, y: c[1] / TEX_H };
+  });
 
-        // ----- focal animation state -----
-        const focalTarget = { x: 0.5, y: 0.5, strength: 0 };
-        const focalCurrent = { x: 0.5, y: 0.5, strength: 0 };
+  // ----- focal animation state -----
+  const focalTarget  = { x: 0.5, y: 0.5, strength: 0 };
+  const focalCurrent = { x: 0.5, y: 0.5, strength: 0 };
 
-        function setFocalTarget(pt) {
-          if (!pt || !pt.uv) return;
-          focalTarget.x = pt.uv.x;
-          focalTarget.y = pt.uv.y;
-          focalTarget.strength = 1.0;
-        }
-        function clearFocal() {
-          focalTarget.strength = 0;
-        }
+  function setFocalTarget(pt) {
+    if (!pt || !pt.uv) return;
+    focalTarget.x = pt.uv.x;
+    focalTarget.y = pt.uv.y;
+    focalTarget.strength = 1.0;
+  }
+  function clearFocal() {
+    focalTarget.strength = 0;
+  }
 
-        // when a project article is hovered below, light its marker on the wing
-        document.addEventListener('pointerover', (e) => {
-          if (!e.target || !e.target.closest) return;
-          const card = e.target.closest('article.proj');
-          if (!card || !card.id) return;
-          const from = e.relatedTarget && e.relatedTarget.closest
-            ? e.relatedTarget.closest('article.proj') : null;
-          if (from && from.id === card.id) return;
-          const pt = pts.find(p => p.slug === card.id);
-          if (pt) activate(pt, null);
-        });
-        document.addEventListener('pointerout', (e) => {
-          if (!e.target || !e.target.closest) return;
-          const card = e.target.closest('article.proj');
-          if (!card) return;
-          const to = e.relatedTarget && e.relatedTarget.closest
-            ? e.relatedTarget.closest('article.proj') : null;
-          if (to && card.id === to.id) return;
-          deactivate(null);
-        });
+  // when a project article is hovered below, light its marker on the wing
+  document.addEventListener('pointerover', (e) => {
+    if (!e.target || !e.target.closest) return;
+    const card = e.target.closest('article.proj');
+    if (!card || !card.id) return;
+    const from = e.relatedTarget && e.relatedTarget.closest
+      ? e.relatedTarget.closest('article.proj') : null;
+    if (from && from.id === card.id) return;
+    const pt = pts.find(p => p.slug === card.id);
+    if (pt) activate(pt, null);
+  });
+  document.addEventListener('pointerout', (e) => {
+    if (!e.target || !e.target.closest) return;
+    const card = e.target.closest('article.proj');
+    if (!card) return;
+    const to = e.relatedTarget && e.relatedTarget.closest
+      ? e.relatedTarget.closest('article.proj') : null;
+    if (to && card.id === to.id) return;
+    deactivate(null);
+  });
 
-        // ----- world atlas: paint butterfly silhouette + content -----
-        fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json')
-          .then(r => r.json())
-          .then(world => {
-            const land = feature(world, world.objects.land);
-            texCtx.clearRect(0, 0, TEX_W, TEX_H);
-            // 1. Sphere/ocean fill — matches the homepage globe (bg-deep)
-            texCtx.fillStyle = '#ddd4c2';
-            texCtx.beginPath();
-            path({ type: 'Sphere' });
-            texCtx.fill();
-            // 2. Clip subsequent drawing to the butterfly so graticule + land
-            //    don't bleed past the wing edges.
-            texCtx.save();
-            texCtx.beginPath();
-            path({ type: 'Sphere' });
-            texCtx.clip();
-            // graticule (rule-soft, low alpha — same as the globe)
-            texCtx.strokeStyle = '#e9e2d4';
-            texCtx.lineWidth = 1.4;
-            texCtx.globalAlpha = 0.55;
-            texCtx.beginPath();
-            path(graticule);
-            texCtx.stroke();
-            texCtx.globalAlpha = 1;
-            // land (bg-card fill + rule stroke — matches the globe)
-            texCtx.fillStyle = '#f5efe2';
-            texCtx.strokeStyle = '#d6cdbf';
-            texCtx.lineWidth = 1.0;
-            texCtx.beginPath();
-            path(land);
-            texCtx.fill();
-            texCtx.stroke();
-            texCtx.restore();
-            // 3. Sphere outline last (no clip) — clean wing edge
-            texCtx.strokeStyle = '#d6cdbf';
-            texCtx.lineWidth = 1.6;
-            texCtx.beginPath();
-            path({ type: 'Sphere' });
-            texCtx.stroke();
-            mapTexture.needsUpdate = true;
-          })
-          .catch(() => { });
+  // ----- world atlas: paint butterfly silhouette + content -----
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json')
+    .then(r => r.json())
+    .then(world => {
+      const land = feature(world, world.objects.land);
+      texCtx.clearRect(0, 0, TEX_W, TEX_H);
+      // 1. Sphere/ocean fill — matches the homepage globe (bg-deep)
+      texCtx.fillStyle = '#ddd4c2';
+      texCtx.beginPath();
+      path({ type: 'Sphere' });
+      texCtx.fill();
+      // 2. Clip subsequent drawing to the butterfly so graticule + land
+      //    don't bleed past the wing edges.
+      texCtx.save();
+      texCtx.beginPath();
+      path({ type: 'Sphere' });
+      texCtx.clip();
+      // graticule (rule-soft, low alpha — same as the globe)
+      texCtx.strokeStyle = '#e9e2d4';
+      texCtx.lineWidth = 1.4;
+      texCtx.globalAlpha = 0.55;
+      texCtx.beginPath();
+      path(graticule);
+      texCtx.stroke();
+      texCtx.globalAlpha = 1;
+      // land (bg-card fill + rule stroke — matches the globe)
+      texCtx.fillStyle = '#f5efe2';
+      texCtx.strokeStyle = '#d6cdbf';
+      texCtx.lineWidth = 1.0;
+      texCtx.beginPath();
+      path(land);
+      texCtx.fill();
+      texCtx.stroke();
+      texCtx.restore();
+      // 3. Sphere outline last (no clip) — clean wing edge
+      texCtx.strokeStyle = '#d6cdbf';
+      texCtx.lineWidth = 1.6;
+      texCtx.beginPath();
+      path({ type: 'Sphere' });
+      texCtx.stroke();
+      mapTexture.needsUpdate = true;
+    })
+    .catch(() => {});
 
-        // ----- main loop. Paused while the canvas is off-screen so we don't
-        //       burn GPU + battery for nothing. -----
-        let raf = 0;
-        let visible = true;
-        let baseTime = 0;
-        let pauseStart = 0;
-        function animate(t) {
-          const time = (t - baseTime) * 0.001;
-          uniforms.uTime.value = time;
-          // focal fold is dormant (left at zero) — surface stays unchanged
-          uniforms.uFocalStrength.value = 0;
-          if (typeof updateMarker === 'function') updateMarker(time);
-          renderer.render(scene, camera);
-          raf = requestAnimationFrame(animate);
-        }
-        function startLoop() {
-          if (raf) return;
-          if (pauseStart) baseTime += performance.now() - pauseStart;
-          raf = requestAnimationFrame(animate);
-        }
-        function stopLoop() {
-          if (!raf) return;
-          cancelAnimationFrame(raf);
-          raf = 0;
-          pauseStart = performance.now();
-        }
-        const io = new IntersectionObserver(entries => {
-          for (const e of entries) {
-            visible = e.isIntersecting;
-            if (visible) startLoop(); else stopLoop();
-          }
-        }, { rootMargin: '120px' });
-        io.observe(canvas);
-        // Also pause when the tab is hidden
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) stopLoop();
-          else if (visible) startLoop();
-        });
-        // Honor reduced-motion preference
-        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          // render one frame then stop forever — paper sits still
-          renderer.render(scene, camera);
-        } else {
-          startLoop();
-        }
+// ----- main loop. Paused while the canvas is off-screen so we don't
+  //       burn GPU + battery for nothing. -----
+  let raf = 0;
+  let visible = true;
+  let baseTime = 0;
+  let pauseStart = 0;
+  function animate(t) {
+    const time = (t - baseTime) * 0.001;
+    uniforms.uTime.value = time;
+    // focal fold is dormant (left at zero) — surface stays unchanged
+    uniforms.uFocalStrength.value = 0;
+    if (typeof updateMarker === 'function') updateMarker(time);
+    renderer.render(scene, camera);
+    raf = requestAnimationFrame(animate);
+  }
+  function startLoop() {
+    if (raf) return;
+    if (pauseStart) baseTime += performance.now() - pauseStart;
+    raf = requestAnimationFrame(animate);
+  }
+  function stopLoop() {
+    if (!raf) return;
+    cancelAnimationFrame(raf);
+    raf = 0;
+    pauseStart = performance.now();
+  }
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      visible = e.isIntersecting;
+      if (visible) startLoop(); else stopLoop();
+    }
+  }, { rootMargin: '120px' });
+  io.observe(canvas);
+  // Also pause when the tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopLoop();
+    else if (visible) startLoop();
+  });
+  // Honor reduced-motion preference
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // render one frame then stop forever — paper sits still
+    renderer.render(scene, camera);
+  } else {
+    startLoop();
+  }
 
 
-        // ----- thumbnail strip — hover/focus shows a single marker glued
-        //       to the live (wind- and flap-deformed) surface; the butterfly
-        //       itself stays unchanged. -----
-        const markerEl = document.getElementById('pmap-marker');
-        let activePt = null;
+  // ----- thumbnail strip — hover/focus shows a single marker glued
+  //       to the live (wind- and flap-deformed) surface; the butterfly
+  //       itself stays unchanged. -----
+  const markerEl = document.getElementById('pmap-marker');
+  let activePt = null;
 
-        // Mirror the shader's per-vertex displacement (without the focal fold,
-        // which we no longer trigger) so the marker rides the same surface.
-        function displacementAt(uv, time) {
-          const px = uv.x * 2 - 1;
-          const py = uv.y * 2 - 1;
-          const wingSign = Math.sign(px);
-          const wingFactor = Math.pow(Math.abs(px), 1.5);
-          const asym = wingSign * 0.06 * Math.sin(time * 0.31);
-          const rawPhase = Math.sin(time * 2.0 + asym);
-          const flapPhase = Math.sign(rawPhase) * Math.pow(Math.abs(rawPhase), 0.55);
-          const flap = flapPhase * 0.78 * wingFactor;
-          const lag = Math.sin(time * 2.0 - py * 1.1 + asym) * 0.14 * wingFactor;
-          const curl = Math.max(flapPhase, 0) * Math.pow(Math.abs(px), 4.0) * 0.55;
-          const roll = Math.sin(time * 0.46 + 0.8) * 0.10;
-          const windAng = time * 0.13 + 0.85 * Math.sin(time * 0.07);
-          const wdx = Math.cos(windAng);
-          const wdy = Math.sin(windAng);
-          const u_along = (uv.x - 0.5) * wdx + (uv.y - 0.5) * wdy;
-          const u_cross = (uv.x - 0.5) * (-wdy) + (uv.y - 0.5) * wdx;
-          const gust = 0.5 + 0.5 * Math.sin(time * 0.28 + 0.7);
-          const w1 = Math.sin(u_along * 9.0 - time * 1.05) * 0.110;
-          const w2 = Math.sin(u_along * 17.0 - time * 1.85 + u_cross * 4.0) * 0.050;
-          const w3 = Math.cos(u_along * 24.0 - time * 2.40 + u_cross * 7.0) * 0.030;
-          const w4 = Math.sin(u_cross * 8.0 + time * 0.95) * 0.040;
-          const edgeBias = 0.45 + 0.55 * Math.pow(Math.max(Math.abs(px), Math.abs(py)), 1.25);
-          const wind = (w1 + w2 + w3 + w4) * edgeBias * gust;
-          const breath = Math.sin(uv.x * 2.6 + time * 0.45)
-            * Math.cos(uv.y * 1.7 - time * 0.32) * 0.022;
-          return flap + lag + curl + roll * px + wind + breath;
-        }
-        function bodyTranslation(time) {
-          const rawPhase = Math.sin(time * 2.0);
-          const flapPhase = Math.sign(rawPhase) * Math.pow(Math.abs(rawPhase), 0.55);
-          return {
-            dx: Math.sin(time * 0.31 + 1.2) * 0.030 + Math.cos(time * 0.18) * 0.018,
-            dy: -flapPhase * 0.07 + Math.sin(time * 0.43) * 0.022,
-          };
-        }
-        const tmpVec = new THREE.Vector3();
-        function updateMarker(time) {
-          if (!activePt || !markerEl) return;
-          const { dx, dy } = bodyTranslation(time);
-          const lx = (activePt.uv.x - 0.5) * PLANE_W + dx;
-          const ly = (0.5 - activePt.uv.y) * PLANE_H + dy;
-          const lz = displacementAt(activePt.uv, time);
-          tmpVec.set(lx, ly, lz);
-          tmpVec.applyMatrix4(plane.matrixWorld);
-          tmpVec.project(camera);
-          const rect = canvas.getBoundingClientRect();
-          const sx = (tmpVec.x * 0.5 + 0.5) * rect.width;
-          const sy = (-tmpVec.y * 0.5 + 0.5) * rect.height;
-          markerEl.style.transform = `translate(${sx.toFixed(1)}px, ${sy.toFixed(1)}px)`;
-        }
+  // Mirror the shader's per-vertex displacement (without the focal fold,
+  // which we no longer trigger) so the marker rides the same surface.
+  function displacementAt(uv, time) {
+    const px = uv.x * 2 - 1;
+    const py = uv.y * 2 - 1;
+    const wingSign = Math.sign(px);
+    const wingFactor = Math.pow(Math.abs(px), 1.5);
+    const asym = wingSign * 0.06 * Math.sin(time * 0.31);
+    const rawPhase = Math.sin(time * 2.0 + asym);
+    const flapPhase = Math.sign(rawPhase) * Math.pow(Math.abs(rawPhase), 0.55);
+    const flap = flapPhase * 0.78 * wingFactor;
+    const lag  = Math.sin(time * 2.0 - py * 1.1 + asym) * 0.14 * wingFactor;
+    const curl = Math.max(flapPhase, 0) * Math.pow(Math.abs(px), 4.0) * 0.55;
+    const roll = Math.sin(time * 0.46 + 0.8) * 0.10;
+    const windAng = time * 0.13 + 0.85 * Math.sin(time * 0.07);
+    const wdx = Math.cos(windAng);
+    const wdy = Math.sin(windAng);
+    const u_along = (uv.x - 0.5) * wdx + (uv.y - 0.5) * wdy;
+    const u_cross = (uv.x - 0.5) * (-wdy) + (uv.y - 0.5) * wdx;
+    const gust = 0.5 + 0.5 * Math.sin(time * 0.28 + 0.7);
+    const w1 = Math.sin(u_along *  9.0 - time * 1.05) * 0.110;
+    const w2 = Math.sin(u_along * 17.0 - time * 1.85 + u_cross * 4.0) * 0.050;
+    const w3 = Math.cos(u_along * 24.0 - time * 2.40 + u_cross * 7.0) * 0.030;
+    const w4 = Math.sin(u_cross *  8.0 + time * 0.95) * 0.040;
+    const edgeBias = 0.45 + 0.55 * Math.pow(Math.max(Math.abs(px), Math.abs(py)), 1.25);
+    const wind = (w1 + w2 + w3 + w4) * edgeBias * gust;
+    const breath = Math.sin(uv.x * 2.6 + time * 0.45)
+                 * Math.cos(uv.y * 1.7 - time * 0.32) * 0.022;
+    return flap + lag + curl + roll * px + wind + breath;
+  }
+  function bodyTranslation(time) {
+    const rawPhase = Math.sin(time * 2.0);
+    const flapPhase = Math.sign(rawPhase) * Math.pow(Math.abs(rawPhase), 0.55);
+    return {
+      dx: Math.sin(time * 0.31 + 1.2) * 0.030 + Math.cos(time * 0.18) * 0.018,
+      dy: -flapPhase * 0.07 + Math.sin(time * 0.43) * 0.022,
+    };
+  }
+  const tmpVec = new THREE.Vector3();
+  function updateMarker(time) {
+    if (!activePt || !markerEl) return;
+    const { dx, dy } = bodyTranslation(time);
+    const lx = (activePt.uv.x - 0.5) * PLANE_W + dx;
+    const ly = (0.5 - activePt.uv.y) * PLANE_H + dy;
+    const lz = displacementAt(activePt.uv, time);
+    tmpVec.set(lx, ly, lz);
+    tmpVec.applyMatrix4(plane.matrixWorld);
+    tmpVec.project(camera);
+    const rect = canvas.getBoundingClientRect();
+    const sx = (tmpVec.x * 0.5 + 0.5) * rect.width;
+    const sy = (-tmpVec.y * 0.5 + 0.5) * rect.height;
+    markerEl.style.transform = `translate(${sx.toFixed(1)}px, ${sy.toFixed(1)}px)`;
+  }
 
-        const tipEl = document.getElementById('pmap-tip');
-        function escapeHtml(s) {
-          return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-        }
-        function showTip(pt) {
-          if (!tipEl || !pt) return;
-          tipEl.innerHTML =
-            `<strong>${escapeHtml(pt.title)}</strong>` +
-            (pt.year ? `<time>${escapeHtml(String(pt.year))}</time>` : '') +
-            (pt.summary ? `<em>${escapeHtml(pt.summary)}</em>` : '');
-          tipEl.hidden = false;
-        }
-        function moveTip(e) {
-          if (!tipEl || tipEl.hidden) return;
-          const rect = wrap.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const tw = tipEl.offsetWidth;
-          const th = tipEl.offsetHeight;
-          let left = x + 14;
-          let top = y - th - 14;
-          if (left + tw > rect.width - 8) left = x - tw - 14;
-          if (top < 8) top = y + 18;
-          tipEl.style.left = `${Math.max(8, left)}px`;
-          tipEl.style.top = `${Math.max(8, top)}px`;
-        }
-        function hideTip() { if (tipEl) tipEl.hidden = true; }
+  const tipEl = document.getElementById('pmap-tip');
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function showTip(pt) {
+    if (!tipEl || !pt) return;
+    tipEl.innerHTML =
+      `<strong>${escapeHtml(pt.title)}</strong>` +
+      (pt.year ? `<time>${escapeHtml(String(pt.year))}</time>` : '') +
+      (pt.summary ? `<em>${escapeHtml(pt.summary)}</em>` : '');
+    tipEl.hidden = false;
+  }
+  function moveTip(e) {
+    if (!tipEl || tipEl.hidden) return;
+    const rect = wrap.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const tw = tipEl.offsetWidth;
+    const th = tipEl.offsetHeight;
+    let left = x + 14;
+    let top  = y - th - 14;
+    if (left + tw > rect.width - 8) left = x - tw - 14;
+    if (top < 8) top = y + 18;
+    tipEl.style.left = `${Math.max(8, left)}px`;
+    tipEl.style.top  = `${Math.max(8, top)}px`;
+  }
+  function hideTip() { if (tipEl) tipEl.hidden = true; }
 
-        function activate(pt, btn) {
-          activePt = pt;
-          if (markerEl) markerEl.classList.add('is-on');
-          if (btn) btn.classList.add('is-active');
-          showTip(pt);
-        }
-        function deactivate(btn) {
-          activePt = null;
-          if (markerEl) markerEl.classList.remove('is-on');
-          if (btn) btn.classList.remove('is-active');
-          hideTip();
-        }
+  function activate(pt, btn) {
+    activePt = pt;
+    if (markerEl) markerEl.classList.add('is-on');
+    if (btn) btn.classList.add('is-active');
+    showTip(pt);
+  }
+  function deactivate(btn) {
+    activePt = null;
+    if (markerEl) markerEl.classList.remove('is-on');
+    if (btn) btn.classList.remove('is-active');
+    hideTip();
+  }
 
-        document.querySelectorAll('.pmap-strip .pmap-thumb').forEach(btn => {
-          const slug = btn.dataset.slug;
-          const pt = pts.find(p => p.slug === slug);
-          if (!pt) return;
-          btn.addEventListener('pointerenter', (e) => { activate(pt, btn); moveTip(e); });
-          btn.addEventListener('pointermove', moveTip);
-          btn.addEventListener('pointerleave', () => deactivate(btn));
-          btn.addEventListener('focus', () => {
-            activate(pt, btn);
-            // position tip near the focused thumb
-            const r = btn.getBoundingClientRect();
-            moveTip({ clientX: r.left + r.width / 2, clientY: r.top });
-          });
-          btn.addEventListener('blur', () => deactivate(btn));
-          btn.addEventListener('click', () => {
-            const target = document.getElementById(slug);
-            if (!target) return;
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            target.classList.add('proj-flash');
-            setTimeout(() => target.classList.remove('proj-flash'), 1400);
-          });
-        });
+  document.querySelectorAll('.pmap-strip .pmap-thumb').forEach(btn => {
+    const slug = btn.dataset.slug;
+    const pt = pts.find(p => p.slug === slug);
+    if (!pt) return;
+    btn.addEventListener('pointerenter', (e) => { activate(pt, btn); moveTip(e); });
+    btn.addEventListener('pointermove',  moveTip);
+    btn.addEventListener('pointerleave', () => deactivate(btn));
+    btn.addEventListener('focus',        () => {
+      activate(pt, btn);
+      // position tip near the focused thumb
+      const r = btn.getBoundingClientRect();
+      moveTip({ clientX: r.left + r.width / 2, clientY: r.top });
+    });
+    btn.addEventListener('blur',         () => deactivate(btn));
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(slug);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.classList.add('proj-flash');
+      setTimeout(() => target.classList.remove('proj-flash'), 1400);
+    });
+  });
 
-        // ----- resize -----
-        const ro = new ResizeObserver(() => {
-          const m = measure();
-          if (m.w === w && m.h === h) return;
-          w = m.w; h = m.h;
-          renderer.setSize(w, h, false);
-          camera.aspect = w / h;
-          camera.updateProjectionMatrix();
-        });
-        ro.observe(stage);
+  // ----- resize -----
+  const ro = new ResizeObserver(() => {
+    const m = measure();
+    if (m.w === w && m.h === h) return;
+    w = m.w; h = m.h;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  });
+  ro.observe(stage);
 
-        window.addEventListener('beforeunload', () => cancelAnimationFrame(raf));
-      </script>
-      <div class="proj-list" data-astro-cid-aid3sr62>
-        <article class="proj" id="aeropulse" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://jakobzhao.github.io/aeropulse/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/aeropulse.png" alt="AeroPulse: Real-time Flight Disruption Tracker" loading="lazy"
-              decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2025</p>
-            <h2 data-astro-cid-aid3sr62>AeroPulse: Real-time Flight Disruption Tracker</h2>
-            <p data-astro-cid-aid3sr62>A live map of flight delays, cancellations, and diversions, surfacing how
-              disruptions ripple across the global aviation network.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>aviation</li>
-              <li data-astro-cid-aid3sr62>real-time mapping</li>
-              <li data-astro-cid-aid3sr62>transportation</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/aeropulse/" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="scl" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://jakobzhao.github.io/scl/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/scl.png" alt="Seattle City Lights: Mapping Urban Illumination" loading="lazy"
-              decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2025</p>
-            <h2 data-astro-cid-aid3sr62>Seattle City Lights: Mapping Urban Illumination</h2>
-            <p data-astro-cid-aid3sr62>An interactive cartography of Seattle&#39;s nighttime light landscape, reading
-              the city through its illuminated infrastructures.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>urban</li>
-              <li data-astro-cid-aid3sr62>Seattle</li>
-              <li data-astro-cid-aid3sr62>remote sensing</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/scl/" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="mbta-equity" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://jakobzhao.github.io/mbta_equity/equity.html" target="_blank" rel="noopener"
-            data-astro-cid-aid3sr62> <img src="/projects/mbta-equity.png" alt="MBTA Transit Equity Atlas" loading="lazy"
-              decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2025</p>
-            <h2 data-astro-cid-aid3sr62>MBTA Transit Equity Atlas</h2>
-            <p data-astro-cid-aid3sr62>An equity-focused web atlas of Boston&#39;s MBTA system, examining how transit
-              access intersects with race, income, and opportunity.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>transit</li>
-              <li data-astro-cid-aid3sr62>equity</li>
-              <li data-astro-cid-aid3sr62>Boston</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/mbta_equity/equity.html"
-                target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="yifutuan" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://jakobzhao.github.io/yifutuan/index-en.html" target="_blank" rel="noopener"
-            data-astro-cid-aid3sr62> <img src="/projects/yifutuan.png" alt="Mapping Yi-Fu Tuan's Humanistic Geography"
-              loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2025</p>
-            <h2 data-astro-cid-aid3sr62>Mapping Yi-Fu Tuan&#39;s Humanistic Geography</h2>
-            <p data-astro-cid-aid3sr62>A geo-narrative tribute to Yi-Fu Tuan, tracing the places, ideas, and itineraries
-              that shaped humanistic geography.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>humanistic geography</li>
-              <li data-astro-cid-aid3sr62>geo-narrative</li>
-              <li data-astro-cid-aid3sr62>biography</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/yifutuan/index-en.html"
-                target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="lgbtqspaces" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://hgis.uw.edu/lgbtqspaces" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/lgbtqspaces.png" alt="Shifting LGBTQ+ Spaces" loading="lazy" decoding="async"
-              data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2024</p>
-            <h2 data-astro-cid-aid3sr62>Shifting LGBTQ+ Spaces</h2>
-            <p data-astro-cid-aid3sr62>A continuing inquiry into the geographies of LGBTQ+ life, charting how queer
-              spaces emerge, persist, and disappear across time.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>queer geographies</li>
-              <li data-astro-cid-aid3sr62>historical GIS</li>
-              <li data-astro-cid-aid3sr62>U.S.</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/lgbtqspaces" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="chop" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/chop/"
-            target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/chop.png"
-              alt="Archiving the Capitol Hill Organized Protest (CHOP)" loading="lazy" decoding="async"
-              data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2023</p>
-            <h2 data-astro-cid-aid3sr62>Archiving the Capitol Hill Organized Protest (CHOP)</h2>
-            <p data-astro-cid-aid3sr62>Critical and creative (un)mapping of the 2020 CHOP, weaving archival materials
-              and oral histories into a layered geo-narrative of the protest space.</p>
-            <p class="collab" data-astro-cid-aid3sr62>With D. Koopman, J.-K. Jung, H. Sun, &amp; C. Anderson</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>geo-narrative</li>
-              <li data-astro-cid-aid3sr62>social justice</li>
-              <li data-astro-cid-aid3sr62>Seattle</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/chop/" target="_blank" rel="noopener"
-                data-astro-cid-aid3sr62>Visit site →</a> <a href="https://doi.org/10.6069/4KHS-3W59" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>DOI: 10.6069/4KHS-3W59</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="shiftingqueerspace" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://hgis.uw.edu/shiftingqueerspace" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/sqs2.png" alt="Shifting Queer Space in the United States (2000—2019)" loading="lazy"
-              decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2022</p>
-            <h2 data-astro-cid-aid3sr62>Shifting Queer Space in the United States (2000—2019)</h2>
-            <p data-astro-cid-aid3sr62>A web map of Damron Men&#39;s Travel Guide venues over two decades, charting the
-              shifting geography of queer life across the United States.</p>
-            <p class="collab" data-astro-cid-aid3sr62>With Q. Zhang, Y. Xia, J. Huang, &amp; L. Peng</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>queer geographies</li>
-              <li data-astro-cid-aid3sr62>historical GIS</li>
-              <li data-astro-cid-aid3sr62>U.S.</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/shiftingqueerspace" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> <a href="https://doi.org/10.6069/WT82-TH75"
-                target="_blank" rel="noopener" data-astro-cid-aid3sr62>DOI: 10.6069/WT82-TH75</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="covid19-workers" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://hgis.uw.edu/covid19-workers/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/risk-workers.png" alt="COVID-19 Risk to Washington Workers" loading="lazy" decoding="async"
-              data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2020</p>
-            <h2 data-astro-cid-aid3sr62>COVID-19 Risk to Washington Workers</h2>
-            <p data-astro-cid-aid3sr62>A smart dashboard characterizing occupational risk to Washington workers during
-              the COVID-19 economic recovery.</p>
-            <p class="collab" data-astro-cid-aid3sr62>With Marissa Baker &amp; Kim England · UW Population Health
-              Initiative</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>public health</li>
-              <li data-astro-cid-aid3sr62>labor</li>
-              <li data-astro-cid-aid3sr62>Washington</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/covid19-workers/" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="virus" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/virus"
-            target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/virus.png"
-              alt="Novel Coronavirus Infection Map" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2020</p>
-            <h2 data-astro-cid-aid3sr62>Novel Coronavirus Infection Map</h2>
-            <p data-astro-cid-aid3sr62>One of the earliest live dashboards of the COVID-19 pandemic, built in February
-              2020 and reported by BBC, National Geographic, and Anadolu Agency.</p>
-            <p class="collab" data-astro-cid-aid3sr62>With F. Xu, L. Kang, J. Ji, J. Ho, &amp; S. Bao</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>public health</li>
-              <li data-astro-cid-aid3sr62>real-time mapping</li>
-              <li data-astro-cid-aid3sr62>global</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/virus" target="_blank" rel="noopener"
-                data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="sefs" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/sefs"
-            target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/sefs.jpg"
-              alt="University of Washington Virtual Tour" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2020</p>
-            <h2 data-astro-cid-aid3sr62>University of Washington Virtual Tour</h2>
-            <p data-astro-cid-aid3sr62>An interactive virtual tour of UW&#39;s School of Environmental and Forest
-              Sciences, blending 3D scenes with on-the-ground photography.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>3D</li>
-              <li data-astro-cid-aid3sr62>campus</li>
-              <li data-astro-cid-aid3sr62>virtual tour</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/sefs" target="_blank" rel="noopener"
-                data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="damron" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://hgis.uw.edu/damron/seattle.html" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/damron.png" alt="Damron Seattle: Mapping Queer Space" loading="lazy" decoding="async"
-              data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2019</p>
-            <h2 data-astro-cid-aid3sr62>Damron Seattle: Mapping Queer Space</h2>
-            <p data-astro-cid-aid3sr62>A Seattle case study from the Damron Men&#39;s Travel Guide: locating decades of
-              LGBTQ+ venues to recover a long-silenced urban history.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>queer geographies</li>
-              <li data-astro-cid-aid3sr62>Seattle</li>
-              <li data-astro-cid-aid3sr62>historical GIS</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/damron/seattle.html" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="refugee" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://hgis.uw.edu/refugee" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/gra.png" alt="Global Refugee Atlas" loading="lazy" decoding="async"
-              data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2018</p>
-            <h2 data-astro-cid-aid3sr62>Global Refugee Atlas</h2>
-            <p data-astro-cid-aid3sr62>A National Geographic—funded atlas tracing global refugee flows and the
-              geographies of displacement.</p>
-            <p class="collab" data-astro-cid-aid3sr62>With Jamon Van Den Hoek &amp; Jennifer Alix-Garcia · National
-              Geographic NGS-51699S-18</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>migration</li>
-              <li data-astro-cid-aid3sr62>humanitarian</li>
-              <li data-astro-cid-aid3sr62>global</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/refugee" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="twca" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://jakobzhao.github.io/twca/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/wc.png" alt="TWCA Water Calculator" loading="lazy" decoding="async"
-              data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2018</p>
-            <h2 data-astro-cid-aid3sr62>TWCA Water Calculator</h2>
-            <p data-astro-cid-aid3sr62>A geovisual analytic platform for the Turfgrass Water Conservation Alliance,
-              helping turfgrass producers reason about regional water savings.</p>
-            <p class="collab" data-astro-cid-aid3sr62>Funded by Turfgrass Water Conservation Alliance</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>sustainability</li>
-              <li data-astro-cid-aid3sr62>water</li>
-              <li data-astro-cid-aid3sr62>platform</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/twca/" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="goss" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/goss"
-            target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/point-cloud-goss.jpg"
-              alt="Goss Point Cloud Viewer" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2018</p>
-            <h2 data-astro-cid-aid3sr62>Goss Point Cloud Viewer</h2>
-            <p data-astro-cid-aid3sr62>A WebGL point cloud viewer for sharing high-resolution lidar scans on the open
-              web.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>lidar</li>
-              <li data-astro-cid-aid3sr62>WebGL</li>
-              <li data-astro-cid-aid3sr62>3D</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/goss" target="_blank" rel="noopener"
-                data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="geeviz" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://jakobzhao.github.io/geeviz/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/geeviz.png" alt="GEEViz: Google Earth Engine Geovisualization" loading="lazy"
-              decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2018</p>
-            <h2 data-astro-cid-aid3sr62>GEEViz: Google Earth Engine Geovisualization</h2>
-            <p data-astro-cid-aid3sr62>A web platform for exploring planetary-scale Google Earth Engine datasets through
-              interactive geovisual analytics.</p>
-            <p class="collab" data-astro-cid-aid3sr62>Supported by Google Cloud Platform · with H. Friedrich</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>remote sensing</li>
-              <li data-astro-cid-aid3sr62>GeoAI</li>
-              <li data-astro-cid-aid3sr62>platform</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/geeviz/" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="standingrock" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://winkyt.github.io/standwithstandingrock/index.html" target="_blank" rel="noopener"
-            data-astro-cid-aid3sr62> <img src="/projects/standingrock.png" alt="Stand with #StandingRock" loading="lazy"
-              decoding="async" data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2018</p>
-            <h2 data-astro-cid-aid3sr62>Stand with #StandingRock</h2>
-            <p data-astro-cid-aid3sr62>An epistemological experiment in geospatial big data during the post-truth era,
-              supporting the land claims of Sioux tribes through critical mapping.</p>
-            <p class="collab" data-astro-cid-aid3sr62>With Yuanyuan Tian, Shaozeng Zhang, &amp; Shenliang Chen</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>indigenous</li>
-              <li data-astro-cid-aid3sr62>social justice</li>
-              <li data-astro-cid-aid3sr62>post-truth</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://winkyt.github.io/standwithstandingrock/index.html"
-                target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="oregon-water" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="http://oregonwater.info/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/oregonwater.png" alt="Oregon Water Atlas" loading="lazy" decoding="async"
-              data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2017</p>
-            <h2 data-astro-cid-aid3sr62>Oregon Water Atlas</h2>
-            <p data-astro-cid-aid3sr62>A digital collection and visualization of Oregon&#39;s water resources — winner
-              of the Student Environment Challenge (Oregon Chapter, AWMA).</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>water</li>
-              <li data-astro-cid-aid3sr62>Oregon</li>
-              <li data-astro-cid-aid3sr62>atlas</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="http://oregonwater.info/" target="_blank" rel="noopener"
-                data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="slr" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://jakobzhao.github.io/slr" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/slr.jpg" alt="Sea Level Rise Induced Migration" loading="lazy" decoding="async"
-              data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2017</p>
-            <h2 data-astro-cid-aid3sr62>Sea Level Rise Induced Migration</h2>
-            <p data-astro-cid-aid3sr62>An award-winning visualization of how sea level rise reshapes coastal migration
-              patterns in the United States. Grand Prize, Ecological Visualization Contest.</p>
-            <p class="collab" data-astro-cid-aid3sr62>NSF-DBI-1062566</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>climate</li>
-              <li data-astro-cid-aid3sr62>migration</li>
-              <li data-astro-cid-aid3sr62>visualization</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/slr" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="hja" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://jakobzhao.github.io/hja" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/hja.jpg" alt="H.J. Andrews Experimental Forest Point Cloud" loading="lazy" decoding="async"
-              data-astro-cid-aid3sr62> </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2017</p>
-            <h2 data-astro-cid-aid3sr62>H.J. Andrews Experimental Forest Point Cloud</h2>
-            <p data-astro-cid-aid3sr62>A web point-cloud visualization of the H.J. Andrews Experimental Forest
-              headquarters area, built from terrestrial lidar.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>lidar</li>
-              <li data-astro-cid-aid3sr62>forest</li>
-              <li data-astro-cid-aid3sr62>Oregon</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/hja" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-        <article class="proj" id="storymap-js" data-astro-cid-aid3sr62> <a class="proj-img"
-            href="https://github.com/jakobzhao/storymap" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img
-              src="/projects/storymap.png" alt="Storymap.js" loading="lazy" decoding="async" data-astro-cid-aid3sr62>
-          </a>
-          <div class="proj-body" data-astro-cid-aid3sr62>
-            <p class="year" data-astro-cid-aid3sr62>2016</p>
-            <h2 data-astro-cid-aid3sr62>Storymap.js</h2>
-            <p data-astro-cid-aid3sr62>A lightweight JavaScript library for telling place-based stories on web maps.
-              Used in courses and community projects.</p>
-            <ul class="tags" data-astro-cid-aid3sr62>
-              <li data-astro-cid-aid3sr62>software</li>
-              <li data-astro-cid-aid3sr62>cartography</li>
-              <li data-astro-cid-aid3sr62>open source</li>
-            </ul>
-            <p class="meta" data-astro-cid-aid3sr62> <a href="https://github.com/jakobzhao/storymap" target="_blank"
-                rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> </p>
-          </div>
-        </article>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer" data-astro-cid-sz7xmlte>
-    <div class="gold-rule" data-astro-cid-sz7xmlte></div>
-    <div class="container footer-grid" data-astro-cid-sz7xmlte>
-      <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Humanistic GIS Laboratory</strong>
-        <p data-astro-cid-sz7xmlte>Department of Geography<br data-astro-cid-sz7xmlte>University of Washington<br
-            data-astro-cid-sz7xmlte>Seattle, WA 98195</p>
-      </div>
-      <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Contact</strong>
-        <p data-astro-cid-sz7xmlte> <a href="mailto:hgis@uw.edu" data-astro-cid-sz7xmlte>hgis@uw.edu</a><br
-            data-astro-cid-sz7xmlte> <a href="https://github.com/" rel="noopener" data-astro-cid-sz7xmlte>GitHub</a> ·
-          <a href="https://twitter.com/" rel="noopener" data-astro-cid-sz7xmlte>Twitter / X</a> </p>
-      </div>
-      <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Affiliations</strong>
-        <p data-astro-cid-sz7xmlte> <a href="https://geography.washington.edu/" data-astro-cid-sz7xmlte>UW
-            Geography</a><br data-astro-cid-sz7xmlte> <a href="https://www.washington.edu/"
-            data-astro-cid-sz7xmlte>University of Washington</a> </p>
-      </div>
-    </div>
-    <div class="footer-bottom container" data-astro-cid-sz7xmlte> <small data-astro-cid-sz7xmlte>© 2026 Humanistic GIS
-        Laboratory · Built with Astro · <a href="https://github.com/" data-astro-cid-sz7xmlte>Source</a></small> </div>
-  </footer>
-</body>
-
-</html>
+  window.addEventListener('beforeunload', () => cancelAnimationFrame(raf));
+</script>  <div class="proj-list" data-astro-cid-aid3sr62> <article class="proj" id="aeropulse" data-astro-cid-aid3sr62> <a class="proj-img" href="https://jakobzhao.github.io/aeropulse/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/aeropulse.png" alt="AeroPulse: Real-time Flight Disruption Tracker" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2025</p> <h2 data-astro-cid-aid3sr62>AeroPulse: Real-time Flight Disruption Tracker</h2> <p data-astro-cid-aid3sr62>A live map of flight delays, cancellations, and diversions, surfacing how disruptions ripple across the global aviation network.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>aviation</li><li data-astro-cid-aid3sr62>real-time mapping</li><li data-astro-cid-aid3sr62>transportation</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/aeropulse/" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="scl" data-astro-cid-aid3sr62> <a class="proj-img" href="https://jakobzhao.github.io/scl/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/scl.png" alt="Seattle City Lights: Mapping Urban Illumination" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2025</p> <h2 data-astro-cid-aid3sr62>Seattle City Lights: Mapping Urban Illumination</h2> <p data-astro-cid-aid3sr62>An interactive cartography of Seattle&#39;s nighttime light landscape, reading the city through its illuminated infrastructures.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>urban</li><li data-astro-cid-aid3sr62>Seattle</li><li data-astro-cid-aid3sr62>remote sensing</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/scl/" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="mbta-equity" data-astro-cid-aid3sr62> <a class="proj-img" href="https://jakobzhao.github.io/mbta_equity/equity.html" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/mbta-equity.png" alt="MBTA Transit Equity Atlas" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2025</p> <h2 data-astro-cid-aid3sr62>MBTA Transit Equity Atlas</h2> <p data-astro-cid-aid3sr62>An equity-focused web atlas of Boston&#39;s MBTA system, examining how transit access intersects with race, income, and opportunity.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>transit</li><li data-astro-cid-aid3sr62>equity</li><li data-astro-cid-aid3sr62>Boston</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/mbta_equity/equity.html" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="yifutuan" data-astro-cid-aid3sr62> <a class="proj-img" href="https://jakobzhao.github.io/yifutuan/index-en.html" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/yifutuan.png" alt="Mapping Yi-Fu Tuan's Humanistic Geography" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2025</p> <h2 data-astro-cid-aid3sr62>Mapping Yi-Fu Tuan&#39;s Humanistic Geography</h2> <p data-astro-cid-aid3sr62>A geo-narrative tribute to Yi-Fu Tuan, tracing the places, ideas, and itineraries that shaped humanistic geography.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>humanistic geography</li><li data-astro-cid-aid3sr62>geo-narrative</li><li data-astro-cid-aid3sr62>biography</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/yifutuan/index-en.html" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="lgbtqspaces" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/lgbtqspaces" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/lgbtqspaces.png" alt="Shifting LGBTQ+ Spaces" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2024</p> <h2 data-astro-cid-aid3sr62>Shifting LGBTQ+ Spaces</h2> <p data-astro-cid-aid3sr62>A continuing inquiry into the geographies of LGBTQ+ life, charting how queer spaces emerge, persist, and disappear across time.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>queer geographies</li><li data-astro-cid-aid3sr62>historical GIS</li><li data-astro-cid-aid3sr62>U.S.</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/lgbtqspaces" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="chop" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/chop/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/chop.png" alt="Archiving the Capitol Hill Organized Protest (CHOP)" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2023</p> <h2 data-astro-cid-aid3sr62>Archiving the Capitol Hill Organized Protest (CHOP)</h2> <p data-astro-cid-aid3sr62>Critical and creative (un)mapping of the 2020 CHOP, weaving archival materials and oral histories into a layered geo-narrative of the protest space.</p> <p class="collab" data-astro-cid-aid3sr62>With D. Koopman, J.-K. Jung, H. Sun, &amp; C. Anderson</p> <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>geo-narrative</li><li data-astro-cid-aid3sr62>social justice</li><li data-astro-cid-aid3sr62>Seattle</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/chop/" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> <a href="https://doi.org/10.6069/4KHS-3W59" target="_blank" rel="noopener" data-astro-cid-aid3sr62>DOI: 10.6069/4KHS-3W59</a> </p> </div> </article><article class="proj" id="shiftingqueerspace" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/shiftingqueerspace" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/sqs2.png" alt="Shifting Queer Space in the United States (2000—2019)" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2022</p> <h2 data-astro-cid-aid3sr62>Shifting Queer Space in the United States (2000—2019)</h2> <p data-astro-cid-aid3sr62>A web map of Damron Men&#39;s Travel Guide venues over two decades, charting the shifting geography of queer life across the United States.</p> <p class="collab" data-astro-cid-aid3sr62>With Q. Zhang, Y. Xia, J. Huang, &amp; L. Peng</p> <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>queer geographies</li><li data-astro-cid-aid3sr62>historical GIS</li><li data-astro-cid-aid3sr62>U.S.</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/shiftingqueerspace" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a> <a href="https://doi.org/10.6069/WT82-TH75" target="_blank" rel="noopener" data-astro-cid-aid3sr62>DOI: 10.6069/WT82-TH75</a> </p> </div> </article><article class="proj" id="covid19-workers" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/covid19-workers/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/risk-workers.png" alt="COVID-19 Risk to Washington Workers" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2020</p> <h2 data-astro-cid-aid3sr62>COVID-19 Risk to Washington Workers</h2> <p data-astro-cid-aid3sr62>A smart dashboard characterizing occupational risk to Washington workers during the COVID-19 economic recovery.</p> <p class="collab" data-astro-cid-aid3sr62>With Marissa Baker &amp; Kim England · UW Population Health Initiative</p> <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>public health</li><li data-astro-cid-aid3sr62>labor</li><li data-astro-cid-aid3sr62>Washington</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/covid19-workers/" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="virus" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/virus" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/virus.png" alt="Novel Coronavirus Infection Map" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2020</p> <h2 data-astro-cid-aid3sr62>Novel Coronavirus Infection Map</h2> <p data-astro-cid-aid3sr62>One of the earliest live dashboards of the COVID-19 pandemic, built in February 2020 and reported by BBC, National Geographic, and Anadolu Agency.</p> <p class="collab" data-astro-cid-aid3sr62>With F. Xu, L. Kang, J. Ji, J. Ho, &amp; S. Bao</p> <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>public health</li><li data-astro-cid-aid3sr62>real-time mapping</li><li data-astro-cid-aid3sr62>global</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/virus" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="sefs" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/sefs" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/sefs.jpg" alt="University of Washington Virtual Tour" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2020</p> <h2 data-astro-cid-aid3sr62>University of Washington Virtual Tour</h2> <p data-astro-cid-aid3sr62>An interactive virtual tour of UW&#39;s School of Environmental and Forest Sciences, blending 3D scenes with on-the-ground photography.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>3D</li><li data-astro-cid-aid3sr62>campus</li><li data-astro-cid-aid3sr62>virtual tour</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/sefs" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="damron" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/damron/seattle.html" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/damron.png" alt="Damron Seattle: Mapping Queer Space" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2019</p> <h2 data-astro-cid-aid3sr62>Damron Seattle: Mapping Queer Space</h2> <p data-astro-cid-aid3sr62>A Seattle case study from the Damron Men&#39;s Travel Guide: locating decades of LGBTQ+ venues to recover a long-silenced urban history.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>queer geographies</li><li data-astro-cid-aid3sr62>Seattle</li><li data-astro-cid-aid3sr62>historical GIS</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/damron/seattle.html" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="refugee" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/refugee" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/gra.png" alt="Global Refugee Atlas" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2018</p> <h2 data-astro-cid-aid3sr62>Global Refugee Atlas</h2> <p data-astro-cid-aid3sr62>A National Geographic—funded atlas tracing global refugee flows and the geographies of displacement.</p> <p class="collab" data-astro-cid-aid3sr62>With Jamon Van Den Hoek &amp; Jennifer Alix-Garcia · National Geographic NGS-51699S-18</p> <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>migration</li><li data-astro-cid-aid3sr62>humanitarian</li><li data-astro-cid-aid3sr62>global</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/refugee" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="twca" data-astro-cid-aid3sr62> <a class="proj-img" href="https://jakobzhao.github.io/twca/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/wc.png" alt="TWCA Water Calculator" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2018</p> <h2 data-astro-cid-aid3sr62>TWCA Water Calculator</h2> <p data-astro-cid-aid3sr62>A geovisual analytic platform for the Turfgrass Water Conservation Alliance, helping turfgrass producers reason about regional water savings.</p> <p class="collab" data-astro-cid-aid3sr62>Funded by Turfgrass Water Conservation Alliance</p> <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>sustainability</li><li data-astro-cid-aid3sr62>water</li><li data-astro-cid-aid3sr62>platform</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/twca/" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="goss" data-astro-cid-aid3sr62> <a class="proj-img" href="https://hgis.uw.edu/goss" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/point-cloud-goss.jpg" alt="Goss Point Cloud Viewer" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2018</p> <h2 data-astro-cid-aid3sr62>Goss Point Cloud Viewer</h2> <p data-astro-cid-aid3sr62>A WebGL point cloud viewer for sharing high-resolution lidar scans on the open web.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>lidar</li><li data-astro-cid-aid3sr62>WebGL</li><li data-astro-cid-aid3sr62>3D</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://hgis.uw.edu/goss" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="geeviz" data-astro-cid-aid3sr62> <a class="proj-img" href="https://jakobzhao.github.io/geeviz/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/geeviz.png" alt="GEEViz: Google Earth Engine Geovisualization" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2018</p> <h2 data-astro-cid-aid3sr62>GEEViz: Google Earth Engine Geovisualization</h2> <p data-astro-cid-aid3sr62>A web platform for exploring planetary-scale Google Earth Engine datasets through interactive geovisual analytics.</p> <p class="collab" data-astro-cid-aid3sr62>Supported by Google Cloud Platform · with H. Friedrich</p> <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>remote sensing</li><li data-astro-cid-aid3sr62>GeoAI</li><li data-astro-cid-aid3sr62>platform</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/geeviz/" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="standingrock" data-astro-cid-aid3sr62> <a class="proj-img" href="https://winkyt.github.io/standwithstandingrock/index.html" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/standingrock.png" alt="Stand with #StandingRock" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2018</p> <h2 data-astro-cid-aid3sr62>Stand with #StandingRock</h2> <p data-astro-cid-aid3sr62>An epistemological experiment in geospatial big data during the post-truth era, supporting the land claims of Sioux tribes through critical mapping.</p> <p class="collab" data-astro-cid-aid3sr62>With Yuanyuan Tian, Shaozeng Zhang, &amp; Shenliang Chen</p> <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>indigenous</li><li data-astro-cid-aid3sr62>social justice</li><li data-astro-cid-aid3sr62>post-truth</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://winkyt.github.io/standwithstandingrock/index.html" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="oregon-water" data-astro-cid-aid3sr62> <a class="proj-img" href="http://oregonwater.info/" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/oregonwater.png" alt="Oregon Water Atlas" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2017</p> <h2 data-astro-cid-aid3sr62>Oregon Water Atlas</h2> <p data-astro-cid-aid3sr62>A digital collection and visualization of Oregon&#39;s water resources — winner of the Student Environment Challenge (Oregon Chapter, AWMA).</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>water</li><li data-astro-cid-aid3sr62>Oregon</li><li data-astro-cid-aid3sr62>atlas</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="http://oregonwater.info/" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="slr" data-astro-cid-aid3sr62> <a class="proj-img" href="https://jakobzhao.github.io/slr" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/slr.jpg" alt="Sea Level Rise Induced Migration" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2017</p> <h2 data-astro-cid-aid3sr62>Sea Level Rise Induced Migration</h2> <p data-astro-cid-aid3sr62>An award-winning visualization of how sea level rise reshapes coastal migration patterns in the United States. Grand Prize, Ecological Visualization Contest.</p> <p class="collab" data-astro-cid-aid3sr62>NSF-DBI-1062566</p> <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>climate</li><li data-astro-cid-aid3sr62>migration</li><li data-astro-cid-aid3sr62>visualization</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/slr" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="hja" data-astro-cid-aid3sr62> <a class="proj-img" href="https://jakobzhao.github.io/hja" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/hja.jpg" alt="H.J. Andrews Experimental Forest Point Cloud" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2017</p> <h2 data-astro-cid-aid3sr62>H.J. Andrews Experimental Forest Point Cloud</h2> <p data-astro-cid-aid3sr62>A web point-cloud visualization of the H.J. Andrews Experimental Forest headquarters area, built from terrestrial lidar.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>lidar</li><li data-astro-cid-aid3sr62>forest</li><li data-astro-cid-aid3sr62>Oregon</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://jakobzhao.github.io/hja" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article><article class="proj" id="storymap-js" data-astro-cid-aid3sr62> <a class="proj-img" href="https://github.com/jakobzhao/storymap" target="_blank" rel="noopener" data-astro-cid-aid3sr62> <img src="/projects/storymap.png" alt="Storymap.js" loading="lazy" decoding="async" data-astro-cid-aid3sr62> </a> <div class="proj-body" data-astro-cid-aid3sr62> <p class="year" data-astro-cid-aid3sr62>2016</p> <h2 data-astro-cid-aid3sr62>Storymap.js</h2> <p data-astro-cid-aid3sr62>A lightweight JavaScript library for telling place-based stories on web maps. Used in courses and community projects.</p>  <ul class="tags" data-astro-cid-aid3sr62><li data-astro-cid-aid3sr62>software</li><li data-astro-cid-aid3sr62>cartography</li><li data-astro-cid-aid3sr62>open source</li></ul> <p class="meta" data-astro-cid-aid3sr62> <a href="https://github.com/jakobzhao/storymap" target="_blank" rel="noopener" data-astro-cid-aid3sr62>Visit site →</a>  </p> </div> </article> </div> </section>  </main> <footer class="site-footer" data-astro-cid-sz7xmlte> <div class="gold-rule" data-astro-cid-sz7xmlte></div> <div class="container footer-grid" data-astro-cid-sz7xmlte> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Humanistic GIS Laboratory</strong> <p data-astro-cid-sz7xmlte>Department of Geography<br data-astro-cid-sz7xmlte>University of Washington<br data-astro-cid-sz7xmlte>Seattle, WA 98195</p> </div> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Contact</strong> <p data-astro-cid-sz7xmlte> <a href="mailto:hgis@uw.edu" data-astro-cid-sz7xmlte>hgis@uw.edu</a><br data-astro-cid-sz7xmlte> <a href="https://github.com/" rel="noopener" data-astro-cid-sz7xmlte>GitHub</a> · <a href="https://twitter.com/" rel="noopener" data-astro-cid-sz7xmlte>Twitter / X</a> </p> </div> <div data-astro-cid-sz7xmlte> <strong data-astro-cid-sz7xmlte>Affiliations</strong> <p data-astro-cid-sz7xmlte> <a href="https://geography.washington.edu/" data-astro-cid-sz7xmlte>UW Geography</a><br data-astro-cid-sz7xmlte> <a href="https://www.washington.edu/" data-astro-cid-sz7xmlte>University of Washington</a> </p> </div> </div> <div class="footer-bottom container" data-astro-cid-sz7xmlte> <small data-astro-cid-sz7xmlte>© 2026 Humanistic GIS Laboratory · Built with Astro · <a href="https://github.com/" data-astro-cid-sz7xmlte>Source</a></small> </div> </footer>  </body></html> 
