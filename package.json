@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "snapshots": "scripts/snapshot-thumbs.sh"
+    "snapshots": "scripts/snapshot-thumbs.sh",
+    "deploy": "scripts/publish.sh"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
