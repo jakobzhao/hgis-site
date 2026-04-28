@@ -286,7 +286,7 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
 
   .mirror-figure figcaption {
     margin: 1.1rem 0.2rem 0;
-    font-size: 0.94rem;
+    font-size: 1.02rem;
     color: var(--ink-soft);
     font-family: var(--serif);
     line-height: 1.65;
@@ -297,7 +297,7 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
   .mirror-figure figcaption .legend-line {
     display: flex; align-items: flex-start; gap: 0.55rem;
     margin-top: 0.5rem;
-    font-size: 0.92rem;
+    font-size: 1rem;
   }
   .mirror-figure figcaption .legend-swatch {
     flex: 0 0 auto;
@@ -317,7 +317,7 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
     border-left: 2px solid var(--rule);
     padding-left: 0.8rem;
     color: var(--ink-faint);
-    font-size: 0.88rem !important;
+    font-size: 0.96rem !important;
     font-style: italic;
   }
 
@@ -353,8 +353,8 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
   .mirror-stats .stat-label {
     font-family: var(--serif);
     font-style: italic;
-    font-size: 0.78rem;
-    line-height: 1.35;
+    font-size: 0.88rem;
+    line-height: 1.4;
     color: var(--ink-faint);
     max-width: 14em;
   }
@@ -472,7 +472,7 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
     const chipRowH = 96;
 
     const workaroundY = chipRowY + chipRowH + 16;
-    const workaroundH = 70;
+    const workaroundH = 80;
 
     const timelineY = workaroundY + workaroundH + 16;
     // Use whatever vertical space remains for the timeline so the
@@ -480,36 +480,36 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
     const timelineH = H - timelineY - padBot;
 
     // ----- Headers -----
-    svg.append('text')
+    fitText(svg.append('text')
       .attr('x', colLX + colW / 2).attr('y', padTop + 16)
       .attr('text-anchor', 'middle')
       .attr('fill', US_TONE)
       .attr('font-family', serifFont)
-      .attr('font-size', 17).attr('font-style', 'italic').attr('letter-spacing', '0.18em')
-      .text(lang === 'zh' ? '美国' : 'United States');
+      .attr('font-size', 19).attr('font-style', 'italic').attr('letter-spacing', '0.18em')
+      .text(lang === 'zh' ? '美国' : 'United States'), colW - 12, 13);
 
-    svg.append('text')
+    fitText(svg.append('text')
       .attr('x', colRX + colW / 2).attr('y', padTop + 16)
       .attr('text-anchor', 'middle')
       .attr('fill', CN_TONE)
       .attr('font-family', serifFont)
-      .attr('font-size', 17).attr('font-style', 'italic').attr('letter-spacing', '0.18em')
-      .text(lang === 'zh' ? '中国' : 'China');
+      .attr('font-size', 19).attr('font-style', 'italic').attr('letter-spacing', '0.18em')
+      .text(lang === 'zh' ? '中国' : 'China'), colW - 12, 13);
 
     // Subhead: the asymmetry summary
-    svg.append('text')
+    fitText(svg.append('text')
       .attr('x', colLX + colW / 2).attr('y', padTop + 34)
       .attr('text-anchor', 'middle')
       .attr('fill', c.purpleD)
-      .attr('font-family', serifFont).attr('font-size', 12).attr('font-style', 'italic')
-      .text(lang === 'zh' ? '电力短 · 芯片足' : 'short on electrons · long on silicon');
+      .attr('font-family', serifFont).attr('font-size', 13.5).attr('font-style', 'italic')
+      .text(lang === 'zh' ? '电力短 · 芯片足' : 'short on electrons · long on silicon'), colW - 8, 10);
 
-    svg.append('text')
+    fitText(svg.append('text')
       .attr('x', colRX + colW / 2).attr('y', padTop + 34)
       .attr('text-anchor', 'middle')
       .attr('fill', c.purpleD)
-      .attr('font-family', serifFont).attr('font-size', 12).attr('font-style', 'italic')
-      .text(lang === 'zh' ? '电力足 · 芯片短' : 'long on electrons · short on silicon');
+      .attr('font-family', serifFont).attr('font-size', 13.5).attr('font-style', 'italic')
+      .text(lang === 'zh' ? '电力足 · 芯片短' : 'long on electrons · short on silicon'), colW - 8, 10);
 
     // ----- Row 1: Electricity (both countries) -----
     drawComparisonRow(svg, padX, powerRowY, W - padX * 2, powerRowH,
@@ -586,6 +586,22 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
 
   // ===== Drawing helpers =====
 
+  // Shrink a text element so its rendered width fits within maxWidth.
+  // SVG text doesn't wrap or shrink on its own, so we measure after
+  // append and rescale the font down (never up). minSize prevents
+  // unreadable shrinking; if we hit it, the element keeps that size
+  // and may still overflow — better than vanishing.
+  function fitText(textSel, maxWidth, minSize) {
+    if (minSize === undefined) minSize = 8.5;
+    const node = textSel.node();
+    if (!node || !node.getComputedTextLength) return;
+    const len = node.getComputedTextLength();
+    if (len <= maxWidth) return;
+    const cur = parseFloat(textSel.attr('font-size'));
+    const scaled = cur * (maxWidth / len);
+    textSel.attr('font-size', Math.max(minSize, scaled));
+  }
+
   function ensureHatch(svg, id, baseFill, lineColor) {
     const defs = svg.select('defs').empty() ? svg.append('defs') : svg.select('defs');
     if (defs.select(`#${id}`).empty()) {
@@ -600,12 +616,12 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
 
   function drawComparisonRow(svg, x, y, w, h, colLX, colRX, colW, lang, sansFont, serifFont, opts) {
     // Centered row label across the full width
-    svg.append('text')
+    fitText(svg.append('text')
       .attr('x', x + w / 2).attr('y', y + 12)
       .attr('text-anchor', 'middle')
       .attr('fill', c.purpleD).attr('font-family', serifFont)
-      .attr('font-size', 12).attr('font-style', 'italic').attr('letter-spacing', '0.22em')
-      .text(opts.label);
+      .attr('font-size', 13.5).attr('font-style', 'italic').attr('letter-spacing', '0.22em')
+      .text(opts.label), w - 8, 11);
 
     drawComparisonCell(svg, colLX, y + 18, colW, h - 18, opts.left,  lang, sansFont, serifFont, 'us');
     drawComparisonCell(svg, colRX, y + 18, colW, h - 18, opts.right, lang, sansFont, serifFont, 'cn');
@@ -618,11 +634,11 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
     const barH = 28;
 
     // Headline above the bar
-    svg.append('text')
+    fitText(svg.append('text')
       .attr('x', x + w / 2).attr('y', y + 14)
       .attr('text-anchor', 'middle').attr('font-family', sansFont)
-      .attr('font-size', 10.5).attr('fill', cell.accent).attr('font-weight', 600)
-      .text(cell.headline);
+      .attr('font-size', 12).attr('fill', cell.accent).attr('font-weight', 600)
+      .text(cell.headline), w - 6, 9);
 
     // Track outline (full bar, light)
     svg.append('rect')
@@ -652,39 +668,39 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
 
     // Met label — inside if room, otherwise to the right of the bar
     if (filledW > 80) {
-      svg.append('text')
+      fitText(svg.append('text')
         .attr('x', barX + filledW / 2).attr('y', barY + barH / 2 + 4)
         .attr('text-anchor', 'middle').attr('font-family', sansFont)
-        .attr('font-size', 10.5).attr('fill', '#fff').attr('font-weight', 700)
-        .text(cell.metLabel);
+        .attr('font-size', 12).attr('fill', '#fff').attr('font-weight', 700)
+        .text(cell.metLabel), filledW - 6, 9);
     } else if (filledW > 4) {
-      svg.append('text')
+      fitText(svg.append('text')
         .attr('x', barX + filledW + 4).attr('y', barY + barH / 2 + 4)
-        .attr('font-family', sansFont).attr('font-size', 10).attr('fill', cell.accent).attr('font-weight', 700)
-        .text(cell.metLabel);
+        .attr('font-family', sansFont).attr('font-size', 11.5).attr('fill', cell.accent).attr('font-weight', 700)
+        .text(cell.metLabel), barW - filledW - 6, 9);
     }
 
     // Gap label — inside if room
     if (gapW > 80 && cell.gapLabel) {
-      svg.append('text')
+      fitText(svg.append('text')
         .attr('x', barX + filledW + gapW / 2).attr('y', barY + barH / 2 + 4)
         .attr('text-anchor', 'middle').attr('font-family', sansFont)
-        .attr('font-size', 10.5).attr('fill', cell.gapColor).attr('font-weight', 700)
-        .text(cell.gapLabel);
+        .attr('font-size', 12).attr('fill', cell.gapColor).attr('font-weight', 700)
+        .text(cell.gapLabel), gapW - 6, 9);
     } else if (gapW > 4 && cell.gapLabel) {
       svg.append('text')
         .attr('x', barX + barW + 4).attr('y', barY + barH / 2 + 4)
-        .attr('font-family', sansFont).attr('font-size', 10).attr('fill', cell.gapColor).attr('font-weight', 700)
+        .attr('font-family', sansFont).attr('font-size', 11.5).attr('fill', cell.gapColor).attr('font-weight', 700)
         .text(cell.gapLabel);
     }
 
     // Caption below the bar
     if (cell.caption) {
-      svg.append('text')
+      fitText(svg.append('text')
         .attr('x', x + w / 2).attr('y', barY + barH + 16)
         .attr('text-anchor', 'middle').attr('font-family', serifFont)
-        .attr('font-size', 10.5).attr('fill', c.inkSoft).attr('font-style', 'italic')
-        .text(cell.caption);
+        .attr('font-size', 12).attr('fill', c.inkSoft).attr('font-style', 'italic')
+        .text(cell.caption), w - 8, 9);
     }
   }
 
@@ -693,7 +709,7 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
       .attr('x', x + w / 2).attr('y', y + 12)
       .attr('text-anchor', 'middle')
       .attr('fill', c.inkSoft).attr('font-family', serifFont)
-      .attr('font-size', 12).attr('font-style', 'italic')
+      .attr('font-size', 13.5).attr('font-style', 'italic')
       .text(lang === 'zh' ? '应对：自建电源（绕过电网）' : 'Workaround: build power off the grid');
 
     // Three escape valves as boxes
@@ -714,9 +730,9 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
       const lines = b.label.split('\n');
       lines.forEach((ln, li) => {
         svg.append('text')
-          .attr('x', bx + bw / 2).attr('y', by + 16 + li * 13)
+          .attr('x', bx + bw / 2).attr('y', by + 17 + li * 15)
           .attr('text-anchor', 'middle').attr('font-family', sansFont)
-          .attr('font-size', li === 0 ? 11 : 9.5)
+          .attr('font-size', li === 0 ? 12.5 : 11)
           .attr('fill', li === 0 ? US_TONE : c.inkSoft)
           .attr('font-weight', li === 0 ? 600 : 400)
           .text(ln);
@@ -729,7 +745,7 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
       .attr('x', x + w / 2).attr('y', y + 12)
       .attr('text-anchor', 'middle')
       .attr('fill', c.inkSoft).attr('font-family', serifFont)
-      .attr('font-size', 12).attr('font-style', 'italic')
+      .attr('font-size', 13.5).attr('font-style', 'italic')
       .text(lang === 'zh' ? '应对：算法优化 + 灰渠道 + 国家算力网' : 'Workaround: algorithm + grey channels + state network');
 
     const boxes = [
@@ -749,9 +765,9 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
       const lines = b.label.split('\n');
       lines.forEach((ln, li) => {
         svg.append('text')
-          .attr('x', bx + bw / 2).attr('y', by + 16 + li * 13)
+          .attr('x', bx + bw / 2).attr('y', by + 17 + li * 15)
           .attr('text-anchor', 'middle').attr('font-family', sansFont)
-          .attr('font-size', li === 0 ? 11 : 9.5)
+          .attr('font-size', li === 0 ? 12.5 : 11)
           .attr('fill', li === 0 ? CN_TONE : c.inkSoft)
           .attr('font-weight', li === 0 ? 600 : 400)
           .text(ln);
@@ -780,20 +796,20 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
       const tx = xs(new Date(`${yr}-01-01`).getTime());
       svg.append('line').attr('x1', tx).attr('y1', axisY - 4).attr('x2', tx).attr('y2', axisY + 4)
         .attr('stroke', c.inkSoft).attr('stroke-width', 0.8);
-      svg.append('text').attr('x', tx).attr('y', axisY + 16)
+      svg.append('text').attr('x', tx).attr('y', axisY + 17)
         .attr('text-anchor', 'middle').attr('fill', c.inkSoft)
-        .attr('font-family', serifFont).attr('font-size', 11).attr('font-style', 'italic')
+        .attr('font-family', serifFont).attr('font-size', 12.5).attr('font-style', 'italic')
         .text(yr);
     });
 
     // Side labels — pinned to the band edges so they always sit at the
     // top / bottom of whatever vertical space the timeline got.
-    svg.append('text').attr('x', x + 4).attr('y', y + 12)
-      .attr('font-family', serifFont).attr('font-size', 11).attr('font-style', 'italic')
+    svg.append('text').attr('x', x + 4).attr('y', y + 13)
+      .attr('font-family', serifFont).attr('font-size', 12.5).attr('font-style', 'italic')
       .attr('fill', US_TONE)
       .text(lang === 'zh' ? '美国 ▲' : 'US ▲');
     svg.append('text').attr('x', x + 4).attr('y', y + h - 6)
-      .attr('font-family', serifFont).attr('font-size', 11).attr('font-style', 'italic')
+      .attr('font-family', serifFont).attr('font-size', 12.5).attr('font-style', 'italic')
       .attr('fill', CN_TONE)
       .text(lang === 'zh' ? '中国 ▼' : 'CN ▼');
 
@@ -836,7 +852,7 @@ const entry = entries.find(e => e.slug === '2026-04-27-the-mirror-scarcity')!;
       svg.append('text')
         .attr('x', tx).attr('y', ty)
         .attr('text-anchor', 'middle').attr('font-family', sansFont)
-        .attr('font-size', 9.5).attr('fill', tone)
+        .attr('font-size', 11).attr('fill', tone)
         .attr('paint-order', 'stroke')
         .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3)
         .attr('stroke-linejoin', 'round')
