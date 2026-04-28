@@ -729,6 +729,11 @@ Seattle, WA 98195-3550
     const W = stage.clientWidth | 0;
     const H = stage.clientHeight | 0;
     if (W < 50 || H < 50) { requestAnimationFrame(() => draw()); return; }
+
+    // Canvas-relative font scale — see memory: FH stage canvas scaling.
+    const k = Math.max(0.55, Math.min(1.6, W / 760));
+    const fs = n => Math.max(9, n * k);
+
     stage.innerHTML = '';
 
     const lang = currentLang();
@@ -821,7 +826,7 @@ Seattle, WA 98195-3550
       const isRight = d.side !== 'left';
       const x = p[0] + (isRight ? r + 6 : -r - 6);
       const y = p[1] + 3;
-      const fontSize = d.anchor ? 12.5 : 10.5;
+      const fontSize = fs(d.anchor ? 12.5 : 10.5);
       const weight = d.anchor ? 700 : 600;
       const t = labelG.append('text')
         .attr('x', x).attr('y', y)
@@ -838,7 +843,7 @@ Seattle, WA 98195-3550
         .attr('x', x).attr('y', y + (d.anchor ? 14 : 12))
         .attr('text-anchor', isRight ? 'start' : 'end')
         .attr('fill', c.purpleD)
-        .attr('font-size', d.anchor ? 11 : 9.5)
+        .attr('font-size', fs(d.anchor ? 11 : 9.5))
         .attr('font-weight', 600)
         .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
         .attr('paint-order', 'stroke')
@@ -858,7 +863,7 @@ Seattle, WA 98195-3550
     const legY = padT + mapH - 8;
     const legG = svg.append('g').attr('transform', `translate(${legX},${legY})`);
     legG.append('text').attr('x', 0).attr('y', -54)
-      .attr('font-size', 11).attr('fill', c.inkSoft)
+      .attr('font-size', fs(11)).attr('fill', c.inkSoft)
       .attr('font-style', 'italic').attr('font-family', legSerif)
       .text(lang === 'zh' ? 'filing 总量' : 'filings (annual)');
     legendCaps.forEach((cap, i) => {
@@ -867,7 +872,7 @@ Seattle, WA 98195-3550
       legG.append('circle').attr('cx', x).attr('cy', -22).attr('r', r)
         .attr('fill', 'none').attr('stroke', c.inkSoft).attr('stroke-width', 0.9);
       legG.append('text').attr('x', x).attr('y', -22 + r + 14)
-        .attr('text-anchor', 'middle').attr('font-size', 10)
+        .attr('text-anchor', 'middle').attr('font-size', fs(10))
         .attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
         .text(cap >= 1000 ? `${(cap / 1000) | 0}k` : `${cap}`);
     });
@@ -877,7 +882,7 @@ Seattle, WA 98195-3550
     const rampY = padT + mapH - 28;
     const rampG = svg.append('g').attr('transform', `translate(${rampX},${rampY})`);
     rampG.append('text').attr('x', 0).attr('y', -8)
-      .attr('font-size', 11).attr('fill', c.inkSoft)
+      .attr('font-size', fs(11)).attr('fill', c.inkSoft)
       .attr('font-style', 'italic').attr('font-family', legSerif)
       .text(lang === 'zh' ? 'filing rate（颜色）' : 'filing rate (colour)');
     const rampStops = [3, 8, 13, 20];
@@ -887,10 +892,10 @@ Seattle, WA 98195-3550
         .attr('width', 36).attr('height', 12).attr('fill', fillScale(rate));
     });
     rampG.append('text').attr('x', 0).attr('y', 26)
-      .attr('font-size', 9.5).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .attr('font-size', fs(9.5)).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
       .text('3 %');
     rampG.append('text').attr('x', 144).attr('y', 26).attr('text-anchor', 'end')
-      .attr('font-size', 9.5).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .attr('font-size', fs(9.5)).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
       .text('20 %');
 
     // RTC swatch (right)
@@ -901,7 +906,7 @@ Seattle, WA 98195-3550
       .attr('fill', c.sageS).attr('fill-opacity', 0.72)
       .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.4).attr('stroke-width', 0.5);
     rtcG.append('text').attr('x', 20).attr('y', 11)
-      .attr('font-size', 10).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .attr('font-size', fs(10)).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
       .text(lang === 'zh' ? '较强租客保护' : 'stronger tenant protection');
   }
 </script>
