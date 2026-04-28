@@ -705,11 +705,6 @@ Seattle, WA 98195-3550
     const W = stage.clientWidth | 0;
     const H = stage.clientHeight | 0;
     if (W < 50 || H < 50) { requestAnimationFrame(() => draw()); return; }
-
-    // Canvas-relative font scale — see memory: FH stage canvas scaling.
-    const k = Math.max(0.55, Math.min(1.6, W / 760));
-    const fs = n => Math.max(9, n * k);
-
     stage.innerHTML = '';
 
     const lang = currentLang();
@@ -792,7 +787,7 @@ Seattle, WA 98195-3550
         .attr('fill', c.purpleD).attr('fill-opacity', 0.6)
         .attr('font-style', 'italic')
         .attr('font-family', climateSerif)
-        .attr('font-size', fs(14)).attr('letter-spacing', '0.30em')
+        .attr('font-size', 14).attr('letter-spacing', '0.30em')
         .attr('text-anchor', 'middle')
         .attr('paint-order', 'stroke')
         .attr('stroke', 'rgba(245,239,226,0.85)').attr('stroke-width', 3)
@@ -847,7 +842,7 @@ Seattle, WA 98195-3550
         .attr('x', x).attr('y', y)
         .attr('text-anchor', isRight ? 'start' : 'end')
         .attr('fill', c.ink)
-        .attr('font-size', fs(d.anchor ? 13 : 11))
+        .attr('font-size', d.anchor ? 13 : 11)
         .attr('font-weight', d.anchor ? 700 : 600)
         .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
         .attr('paint-order', 'stroke')
@@ -862,7 +857,7 @@ Seattle, WA 98195-3550
     const legY = padT + mapH - 8;
     const legG = svg.append('g').attr('transform', `translate(${legX},${legY})`);
     legG.append('text').attr('x', 0).attr('y', -54)
-      .attr('font-size', fs(11)).attr('fill', c.inkSoft)
+      .attr('font-size', 11).attr('fill', c.inkSoft)
       .attr('font-style', 'italic')
       .attr('font-family', lang === 'zh'
         ? '"Noto Serif SC", "Songti SC", serif'
@@ -874,7 +869,7 @@ Seattle, WA 98195-3550
       legG.append('circle').attr('cx', x).attr('cy', -22).attr('r', r)
         .attr('fill', 'none').attr('stroke', c.inkSoft).attr('stroke-width', 0.9);
       legG.append('text').attr('x', x).attr('y', -22 + r + 14)
-        .attr('text-anchor', 'middle').attr('font-size', fs(10))
+        .attr('text-anchor', 'middle').attr('font-size', 10)
         .attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
         .text(`${cap}`);
     });
@@ -888,7 +883,7 @@ Seattle, WA 98195-3550
       .attr('fill', '#c9a874').attr('fill-opacity', 0.78)
       .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.4).attr('stroke-width', 0.5);
     aridSwG.append('text').attr('x', 20).attr('y', 11)
-      .attr('font-size', fs(10)).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .attr('font-size', 10).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
       .text(lang === 'zh' ? '干旱 / 水资源紧张' : 'arid · water-stressed');
     // Humid swatch (next to arid)
     const humidOffsetX = lang === 'zh' ? 138 : 152;
@@ -896,7 +891,7 @@ Seattle, WA 98195-3550
       .attr('fill', '#9bb098').attr('fill-opacity', 0.78)
       .attr('stroke', c.inkSoft).attr('stroke-opacity', 0.4).attr('stroke-width', 0.5);
     aridSwG.append('text').attr('x', humidOffsetX + 20).attr('y', 11)
-      .attr('font-size', fs(10)).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
+      .attr('font-size', 10).attr('fill', c.inkSoft).attr('font-family', 'Inter, sans-serif')
       .text(lang === 'zh' ? '湿润' : 'humid');
   }
 </script>
