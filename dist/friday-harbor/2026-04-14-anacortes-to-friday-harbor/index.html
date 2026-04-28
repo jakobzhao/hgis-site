@@ -825,6 +825,14 @@ Seattle, WA 98195-3550
     const W = stage.clientWidth | 0;
     const H = stage.clientHeight | 0;
     if (W < 50 || H < 50) { requestAnimationFrame(() => draw()); return; }
+
+    // Canvas-relative scale: keeps labels and ornaments readable across
+    // mobile (~350 px) and the expand overlay (~1400 px) while leaving
+    // desktop-inline (~760 px) untouched. See memory:
+    // FH stage canvas scaling convention.
+    const k = Math.max(0.55, Math.min(1.6, W / 760));
+    const fs = n => Math.max(9, n * k);
+
     stage.innerHTML = '';
 
     const lang = currentLang();
@@ -986,7 +994,7 @@ Seattle, WA 98195-3550
       const ax = t.id === 'anacortes' ? 'end' : 'start';
       g.append('text').attr('x', dx).attr('y', 4)
         .attr('text-anchor', ax)
-        .attr('fill', c.ink).attr('font-size', t.anchor ? 13 : 11)
+        .attr('fill', c.ink).attr('font-size', fs(t.anchor ? 13 : 11))
         .attr('font-weight', t.anchor ? 700 : 600)
         .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
         .attr('paint-order', 'stroke')
@@ -1000,9 +1008,9 @@ Seattle, WA 98195-3550
     renderVessels();
 
     // ----- INSET: Puget Sound system overview -----
-    const inSize = 130;
-    const inH = 110;
-    const inMargin = 16;
+    const inSize = 130 * k;
+    const inH = 110 * k;
+    const inMargin = 16 * k;
     const inX = W - inSize - inMargin;
     const inY = H - inH - inMargin;
     const inG = svg.append('g').attr('class', 'fh-ferry-inset')
@@ -1050,7 +1058,7 @@ Seattle, WA 98195-3550
     // Inset caption — placed above the inset, with a paper halo so it
     // reads clearly against the bathymetric main-map sea.
     inG.append('text').attr('x', inSize / 2).attr('y', -7)
-      .attr('text-anchor', 'middle').attr('font-size', 10.5)
+      .attr('text-anchor', 'middle').attr('font-size', fs(10.5))
       .attr('fill', c.ink).attr('font-style', 'italic')
       .attr('font-family', lang === 'zh' ? '"Noto Serif SC", serif' : '"Cormorant Garamond", serif')
       .attr('letter-spacing', '0.10em')
