@@ -71,16 +71,28 @@ const total = sorted.length;
             e.place.en, e.place.zh,
             ...e.techniques,
           ].join('   ').toLowerCase();
+          const isDraft = e.published === false;
           return (
             <li class="fh-row"
                 data-date={e.date}
                 data-title-en={e.title.en.toLowerCase()}
                 data-title-zh={e.title.zh}
-                data-search={haystack}>
+                data-search={haystack}
+                data-draft={isDraft ? '1' : null}>
               <a href={`/friday-harbor/${e.slug}/`} class="fh-row-link">
                 <div class="fh-row-thumb"
-                     data-fh-thumb={e.thumb ? JSON.stringify(e.thumb) : null}>
-                  <!-- The mini-map renders into here at runtime. -->
+                     data-fh-thumb={!e.image && e.thumb ? JSON.stringify(e.thumb) : null}>
+                  {e.image && (
+                    <img src={e.image} alt={`${e.title.en} — visualization preview`}
+                         loading="lazy" decoding="async"
+                         class="fh-thumb-img" />
+                  )}
+                  {isDraft && (
+                    <span class="fh-draft-corner">
+                      <span data-lang="en">DRAFT</span>
+                      <span data-lang="zh">草稿</span>
+                    </span>
+                  )}
                 </div>
                 <div class="fh-row-text">
                   <div class="fh-row-meta">
@@ -89,6 +101,12 @@ const total = sorted.length;
                       <b data-lang="en">{wdEn}</b><b data-lang="zh">{wdZh}</b>
                       <span data-lang="en"> {dlEn}</span><span data-lang="zh"> {dlZh}</span>
                     </span>
+                    {isDraft && (
+                      <span class="fh-draft-pill">
+                        <span data-lang="en">draft · not published</span>
+                        <span data-lang="zh">草稿 · 暂未发布</span>
+                      </span>
+                    )}
                     <span class="fh-place">
                       <span data-lang="en">{e.place.en}</span>
                       <span data-lang="zh">{e.place.zh}</span>
@@ -356,6 +374,71 @@ const total = sorted.length;
   .fh-list { list-style: none; padding: 0; margin: 1.2rem 0 0; }
   .fh-row { border-bottom: 1px solid var(--rule); }
   .fh-row[hidden] { display: none; }
+
+  /* Draft entries are hidden in production. The localhost toggle below
+     adds .fh-show-drafts to <body> to reveal them. */
+  .fh-row[data-draft="1"] { display: none; }
+  body.fh-show-drafts .fh-row[data-draft="1"] { display: block; }
+  body.fh-show-drafts .fh-row[data-draft="1"] .fh-row-link {
+    background: rgba(106, 90, 110, 0.06);
+    box-shadow: inset 3px 0 0 var(--uw-purple);
+  }
+
+  /* Corner badge on the thumbnail */
+  .fh-draft-corner {
+    position: absolute;
+    top: 8px; left: 8px;
+    background: var(--uw-purple);
+    color: #fffdf7;
+    font-family: var(--serif);
+    font-size: 0.7rem;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    z-index: 2;
+  }
+  /* Inline pill in the row meta */
+  .fh-draft-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 9px;
+    border: 1px solid var(--uw-purple);
+    border-radius: 999px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.72rem;
+    color: var(--uw-purple);
+    letter-spacing: 0.04em;
+    background: transparent;
+  }
+
+  /* Floating localhost-only toggle (injected by JS, styled here so
+     the script only worries about behaviour) */
+  .fh-draft-toggle {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 9999;
+    background: var(--uw-purple);
+    color: #fffdf7;
+    border: 0;
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.86rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .fh-draft-toggle:hover { transform: translateY(-1px); background: var(--uw-purple-deep, #4a3e4d); }
+  .fh-draft-toggle[aria-pressed="true"] {
+    background: var(--bg-card, #f6f3ed);
+    color: var(--uw-purple);
+    border: 1px solid var(--uw-purple);
+  }
   .fh-row-link {
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -378,6 +461,13 @@ const total = sorted.length;
     position: relative;
   }
   .fh-row-thumb svg { display: block; width: 100%; height: 100%; }
+  .fh-thumb-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 
   .fh-row-meta {
     display: flex; gap: 1rem; align-items: baseline;
@@ -587,6 +677,15 @@ const total = sorted.length;
       expanded: false,   // when true, ignore the 5-row limit
     };
 
+    function visiblePool() {
+      // Drafts are excluded from sort/limit/search unless the localhost
+      // toggle has flipped <body> into show-drafts mode.
+      var showDrafts = document.body.classList.contains('fh-show-drafts');
+      return rowsAll.filter(function (r) {
+        return showDrafts || r.getAttribute('data-draft') !== '1';
+      });
+    }
+
     function compareRows(a, b, mode) {
       var da = a.getAttribute('data-date') || '';
       var db = b.getAttribute('data-date') || '';
@@ -604,8 +703,9 @@ const total = sorted.length;
     function applyFilterAndSort() {
       if (!listEl) return;
       var q = state.q.trim().toLowerCase();
+      var pool = visiblePool();
       // Filter
-      var matched = rowsAll.filter(function (r) {
+      var matched = pool.filter(function (r) {
         if (!q) return true;
         var hay = r.getAttribute('data-search') || '';
         return hay.indexOf(q) !== -1;
@@ -686,6 +786,53 @@ const total = sorted.length;
       // stranded mid-page after collapsing.
       if (listEl && listEl.scrollIntoView) listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+
+    // ----- localhost-only "show drafts" toggle -------------------------
+    // Only injected when the page is loaded from a local dev host. The
+    // toggle flips body.fh-show-drafts, which both reveals the hidden
+    // draft rows (CSS) and re-includes them in the sort/limit pool
+    // (visiblePool above). Persists via localStorage so the dev's
+    // preference sticks across reloads of the dev server.
+    (function () {
+      var h = location.hostname;
+      var isLocal = h === 'localhost' || h === '127.0.0.1' || h === '0.0.0.0' || h.endsWith('.local');
+      if (!isLocal) return;
+      var drafts = document.querySelectorAll('.fh-row[data-draft="1"]');
+      if (!drafts.length) return;
+
+      var stored = '0';
+      try { stored = localStorage.getItem('fh-show-drafts') || '0'; } catch (e) {}
+      if (stored === '1') document.body.classList.add('fh-show-drafts');
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'fh-draft-toggle';
+
+      function paint() {
+        var on = document.body.classList.contains('fh-show-drafts');
+        var langCur = root.getAttribute('data-lang') || 'en';
+        var n = drafts.length;
+        if (langCur === 'zh') {
+          btn.textContent = (on ? '隐藏草稿 (' : '显示草稿 (') + n + ')';
+        } else {
+          btn.textContent = (on ? 'Hide' : 'Show') + ' draft' + (n > 1 ? 's' : '') + ' (' + n + ')';
+        }
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+
+      btn.addEventListener('click', function () {
+        var on = document.body.classList.toggle('fh-show-drafts');
+        try { localStorage.setItem('fh-show-drafts', on ? '1' : '0'); } catch (e) {}
+        paint();
+        applyFilterAndSort();
+      });
+
+      // Repaint label when the language switch flips
+      langBtns.forEach(function (b) { b.addEventListener('click', paint); });
+
+      paint();
+      document.body.appendChild(btn);
+    })();
 
     applyLangToToolbar();
     applyFilterAndSort();

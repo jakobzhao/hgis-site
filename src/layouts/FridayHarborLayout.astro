@@ -132,10 +132,59 @@ const articleSchema = {
   } : {}),
 };
 ---
-<BaseLayout title={`${entry.title.en} · Friday Harbor`} description={entry.subtitle.en}>
+<BaseLayout
+  title={`${entry.title.en} · Friday Harbor`}
+  description={entry.subtitle.en}
+  noindex={entry.published === false}
+>
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline>
+    // Run synchronously, before any layout work, so the thumb-mode CSS
+    // selectors (html[data-fh-thumb="1"] ...) match on first paint.
+    // The original inline script at the bottom of this layout still
+    // handles the language toggle; this only seeds the thumb flag.
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search).get('thumb');
+        if (!p) return;
+        document.documentElement.setAttribute('data-fh-thumb', '1');
+        // Brute-force the stage to viewport size after the page has
+        // hydrated. CSS-only !important overrides lose to aspect-ratio
+        // negotiation in some browsers, so we just write inline styles.
+        function fitStage() {
+          var el = document.getElementById('stage');
+          if (!el) return;
+          el.style.width = window.innerWidth + 'px';
+          el.style.height = window.innerHeight + 'px';
+          el.style.aspectRatio = 'auto';
+          el.style.maxWidth = 'none';
+          // Trigger any per-article re-render listener that watches for
+          // resize events (cloud / mirror / hormuz all do this).
+          window.dispatchEvent(new Event('resize'));
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', fitStage);
+        } else {
+          fitStage();
+        }
+        // Also run after a tick in case the figure script mounts late.
+        setTimeout(fitStage, 200);
+        setTimeout(fitStage, 1200);
+      } catch (e) {}
+    })();
+  </script>
   <div class="fh-root" data-lang="en">
     <article class="fh-entry">
+      {entry.published === false && (
+        <aside class="fh-draft-banner" role="note">
+          <strong>
+            <span data-lang="en">DRAFT</span>
+            <span data-lang="zh">草稿</span>
+          </strong>
+          <span data-lang="en">This entry is not yet published. It is hidden from the column index and from search engines.</span>
+          <span data-lang="zh">本篇尚未发布——已从专栏索引与搜索引擎中隐藏。</span>
+        </aside>
+      )}
       <header class="fh-masthead">
         <a href="/friday-harbor/" class="fh-rubric">
           <em><span data-lang="en">{UI.rubric.en}</span><span data-lang="zh">{UI.rubric.zh}</span></em>
@@ -273,6 +322,60 @@ const articleSchema = {
 <style is:global>
   .fh-root[data-lang="en"] [data-lang="zh"] { display: none !important; }
   .fh-root[data-lang="zh"] [data-lang="en"] { display: none !important; }
+
+  /* ---- Thumb capture mode -----------------------------------------
+     When the page is loaded with ?thumb=1, an inline script flips the
+     <html> element to data-fh-thumb="1". Everything but the figure
+     stage is hidden, and the stage is sized to fill the viewport
+     (5:3 ratio, matching the index card thumbnail box). A headless
+     Chrome capture at 1400×840 then produces a thumbnail with no
+     manual cropping. Captions, stat strips, and body all stay in the
+     DOM at display:none so the figure script still has elements to
+     query. */
+  html[data-fh-thumb="1"],
+  html[data-fh-thumb="1"] body {
+    background: var(--bg-card, #f5efe2) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+  /* Hide the site shell + any iframes (e.g. Giscus comments) + the
+     Astro dev toolbar (a floating <astro-dev-toolbar> web component
+     that shows up on every dev-server page and otherwise leaks into
+     the bottom of the thumbnail). */
+  html[data-fh-thumb="1"] .site-header,
+  html[data-fh-thumb="1"] .site-footer,
+  html[data-fh-thumb="1"] iframe,
+  html[data-fh-thumb="1"] .fh-comments,
+  html[data-fh-thumb="1"] .fh-giscus,
+  html[data-fh-thumb="1"] .giscus,
+  html[data-fh-thumb="1"] .giscus-frame,
+  html[data-fh-thumb="1"] astro-dev-toolbar,
+  html[data-fh-thumb="1"] astro-dev-overlay { display: none !important; visibility: hidden !important; }
+  /* Wildcard: hide everything inside .fh-entry except the figure wrap.
+     This catches share rows, comments, footer, toast, wechat popover,
+     etc. without having to enumerate them. */
+  html[data-fh-thumb="1"] .fh-entry > *:not(.fh-figure-wrap) { display: none !important; visibility: hidden !important; }
+  /* Hide caption / stat strips that sit inside the figure itself. */
+  html[data-fh-thumb="1"] .fh-figure-wrap > figure > figcaption,
+  html[data-fh-thumb="1"] .fh-figure-wrap > figure > aside { display: none !important; }
+  /* Reset entry container so the figure can flush against the viewport. */
+  html[data-fh-thumb="1"] main,
+  html[data-fh-thumb="1"] .fh-root,
+  html[data-fh-thumb="1"] .fh-entry,
+  html[data-fh-thumb="1"] .fh-figure-wrap { margin: 0 !important; padding: 0 !important; max-width: none !important; }
+  html[data-fh-thumb="1"] .fh-figure-wrap > figure { margin: 0 !important; padding: 0 !important; }
+  /* The actual stage is the first child <div> of the figure. Force it
+     to fill the viewport — the per-article aspect-ratio rules use the
+     class .*-stage, so we override on that class via attribute match. */
+  html[data-fh-thumb="1"] .fh-figure-wrap > figure > div[id="stage"] {
+    width: 100vw !important;
+    height: 100vh !important;
+    aspect-ratio: auto !important;
+    max-width: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
   .fh-root[data-lang="zh"] {
     /* Body/serif fallback in Chinese: Noto Serif SC at light weight reads
        like a literary column, not an academic journal. */
@@ -319,6 +422,29 @@ const articleSchema = {
     margin: 0 auto;
     padding: 2.5rem 1.75rem 5rem;
     color: var(--ink);
+  }
+  /* Visible draft notice — rendered when entry.published === false. */
+  .fh-draft-banner {
+    margin: 0 0 1.4rem;
+    padding: 0.7rem 1rem;
+    border: 1px dashed var(--uw-purple);
+    background: rgba(106, 90, 110, 0.06);
+    color: var(--uw-purple);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    border-radius: 4px;
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+  }
+  .fh-draft-banner strong {
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    background: var(--uw-purple);
+    color: #fffdf7;
+    padding: 1px 8px;
+    border-radius: 3px;
   }
   .fh-masthead {
     display: flex;
@@ -701,6 +827,25 @@ const articleSchema = {
   (function () {
     const root = document.querySelector('.fh-root');
     if (!root) return;
+    // Thumb-capture mode: when the page is loaded with ?thumb=1 (or
+    // ?thumb=zh for the Chinese variant), flip a flag on <html> so the
+    // CSS in the layout's <style is:global> block can hide everything
+    // except the figure stage. Used by scripts/snapshot-thumbs.sh to
+    // produce homepage-card thumbnails without manual cropping.
+    try {
+      const params = new URLSearchParams(location.search);
+      const thumb = params.get('thumb');
+      if (thumb) {
+        document.documentElement.setAttribute('data-fh-thumb', '1');
+        // Force a specific language for the snapshot if requested.
+        if (thumb === 'zh' || thumb === 'en') {
+          root.setAttribute('data-lang', thumb);
+          try { localStorage.setItem('fh-lang', thumb); } catch (e) {}
+          // Skip the rest of language-init below to avoid clobbering it.
+          return;
+        }
+      }
+    } catch (e) { /* URLSearchParams missing in ancient browsers */ }
     let lang = 'en';
     try { lang = localStorage.getItem('fh-lang') || 'en'; } catch (e) {}
     if (lang !== 'en' && lang !== 'zh') lang = 'en';

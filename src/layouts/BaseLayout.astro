@@ -10,6 +10,9 @@ interface Props {
   image?: string;
   /** Set to true for the home page only — emits Organization + Person JSON-LD. */
   isHome?: boolean;
+  /** When true, emit a robots noindex,nofollow meta and skip OG/Twitter cards.
+   *  Used for unpublished drafts. */
+  noindex?: boolean;
 }
 
 const {
@@ -17,6 +20,7 @@ const {
   description = 'Humanistic GIS Laboratory at the University of Washington — humanistic GIS, deepfake geography, and geospatial AI. Directed by Bo Zhao.',
   image = '/hgis-logo.png',
   isHome = false,
+  noindex = false,
 } = Astro.props;
 
 const SITE_NAME = 'Humanistic GIS Laboratory';
@@ -85,7 +89,9 @@ const orgLD = {
     <meta name="twitter:image" content={ogImage} />
 
     <!-- Crawl hints -->
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    {noindex
+      ? <meta name="robots" content="noindex, nofollow" />
+      : <meta name="robots" content="index, follow, max-image-preview:large" />}
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

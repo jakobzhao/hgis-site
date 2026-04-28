@@ -116,8 +116,11 @@ function fhDateLabel(iso: string) {
       {featuredFH && (
         <a class="card fh-feat-card" href={`/friday-harbor/${featuredFH.slug}/`}>
           <div class="card-img fh-feat-thumb"
-               data-fh-thumb={featuredFH.thumb ? JSON.stringify(featuredFH.thumb) : null}>
-            <!-- Mini-map renders into here at runtime. -->
+               data-fh-thumb={!featuredFH.image && featuredFH.thumb ? JSON.stringify(featuredFH.thumb) : null}>
+            {featuredFH.image && (
+              <img src={featuredFH.image} alt={`${featuredFH.title.en} — visualization preview`}
+                   loading="lazy" decoding="async" class="fh-feat-img" />
+            )}
           </div>
           <div class="card-body">
             <p class="card-year">{fhDateLabel(featuredFH.date)} · Friday Harbor</p>
@@ -331,6 +334,16 @@ function fhDateLabel(iso: string) {
   }
   .fh-feat-thumb::after { display: none !important; }
   .fh-feat-thumb svg { display: block; width: 100%; height: 100%; }
+  /* Static screenshot variant (preferred when entry.image is set):
+     fill the whole card-img box, cropping equally from top/bottom if
+     the source aspect doesn't match the card's. */
+  .fh-feat-thumb .fh-feat-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
   .fh-feat-card h3 {
     font-family: var(--serif);
     font-size: 1.05rem;

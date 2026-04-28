@@ -49,13 +49,76 @@ export type Entry = {
   techniques: Technique[];
   kind: Kind;
   author: string;
-  /** Optional: generates a live mini-map preview on the index card. */
+  /**
+   * Optional URL for the index thumbnail — typically a screenshot of the
+   * article's own visualization saved under /public/data/thumbs/. When
+   * present this takes priority over `thumb`. Path is site-absolute
+   * (e.g. "/data/thumbs/2026-04-27-the-mirror-scarcity.png").
+   */
+  image?: string;
+  /** Optional fallback: if `image` is absent, generate a live mini-map preview. */
   thumb?: ThumbBox;
   /** Optional readable BibTeX key. Falls back to {lastname}{year}{slug-first-word}. */
   citeKey?: string;
+  /**
+   * Defaults to true. When false the entry is treated as a draft:
+   * hidden from the public Friday Harbor index card list and from the
+   * sitemap, with a noindex meta tag on the entry page itself. The
+   * page still builds, so a localhost-only toggle on the index can
+   * reveal it for preview.
+   */
+  published?: boolean;
 };
 
+/** Slugs of unpublished (draft) entries — used by the sitemap filter. */
+export const DRAFT_SLUGS: readonly string[] = [
+  '2026-04-28-mackinder-redrawn',
+];
+
 export const entries: Entry[] = [
+  {
+    slug: "2026-04-28-mackinder-redrawn",
+    date: "2026-04-28",
+    title: {
+      en: "Mackinder, Redrawn",
+      zh: "麦金德，重画",
+    },
+    subtitle: {
+      en: "In 1904, Halford Mackinder gave the world a map of pivots and crescents. A century later, the world is a section drawing — six layers, six chokepoint sets, and a thesis with a hundred years of dust on it.",
+      zh: "1904 年，麦金德给世界画了一张关于枢纽与新月的地图。一百二十年过去，世界已是一张剖面图——六个图层、六组咽喉点，加上一条积了一个世纪灰尘的论断。",
+    },
+    place: {
+      en: "Earth · Orbit to Subterranean · 1904 ↔ 2026",
+      zh: "地球 · 轨道到地下 · 1904 ↔ 2026",
+    },
+    techniques: ["projection-critique", "palimpsest"],
+    kind: "cartographer-led",
+    author: "Bo Zhao",
+    citeKey: "zhao2026mackinder",
+    image: "/data/thumbs/2026-04-28-mackinder-redrawn.png",
+    published: false,
+  },
+  {
+    slug: "2026-04-27-the-mirror-scarcity",
+    date: "2026-04-27",
+    title: {
+      en: "The Mirror Scarcity",
+      zh: "镜像稀缺：电与卡",
+    },
+    subtitle: {
+      en: "The US and China are both running out — but of different things. America has the chips and the money but not the electrons; China has the electrons and the policy but not the chips. Read the asymmetry on a single time axis.",
+      zh: "美国与中国都在「不够用」——但不够的是不同的东西。美国有卡、有钱，缺的是电；中国有电、有政策，缺的是卡。把这种不对称放在同一根时间轴上看。",
+    },
+    place: {
+      en: "United States ↔ China · 2022–2026 · the AI compute race",
+      zh: "美国 ↔ 中国 · 2022–2026 · AI 算力竞赛",
+    },
+    techniques: ["projection-critique", "chokepoint"],
+    kind: "cartographer-led",
+    author: "Bo Zhao",
+    citeKey: "zhao2026mirror",
+    image: "/data/thumbs/2026-04-27-the-mirror-scarcity.png",
+  },
   {
     slug: "2026-04-17-does-ai-know-your-city",
     date: "2026-04-17",
@@ -75,6 +138,7 @@ export const entries: Entry[] = [
     kind: "anti-map",
     author: "Bo Zhao",
     citeKey: "zhao2026memory",
+    image: "/data/thumbs/2026-04-17-does-ai-know-your-city.png",
     thumb: {
       bbox: { west: -122.46, east: -122.22, south: 47.49, north: 47.74 },
       pins: [
@@ -103,6 +167,7 @@ export const entries: Entry[] = [
     kind: "cartographer-led",
     author: "Bo Zhao",
     citeKey: "zhao2026anacortes",
+    image: "/data/thumbs/2026-04-14-anacortes-to-friday-harbor.png",
     thumb: {
       bbox: { west: -123.15, east: -122.45, south: 48.40, north: 48.75 },
       pins: [
@@ -130,6 +195,7 @@ export const entries: Entry[] = [
     kind: "cartographer-led",
     author: "Bo Zhao",
     citeKey: "zhao2026evictions",
+    image: "/data/thumbs/2026-04-24-1-23-million-eviction-filings.png",
     thumb: {
       bbox: { west: -125, east: -66, south: 24, north: 50 },
       pins: [
@@ -158,6 +224,7 @@ export const entries: Entry[] = [
     kind: "cartographer-led",
     author: "Bo Zhao",
     citeKey: "zhao2026cloud",
+    image: "/data/thumbs/2026-04-21-where-the-cloud-touches-ground.png",
     thumb: {
       bbox: { west: -125, east: -66, south: 24, north: 50 },
       pins: [
@@ -186,6 +253,7 @@ export const entries: Entry[] = [
     kind: "news-led",
     author: "Bo Zhao",
     citeKey: "zhao2026hormuz",
+    image: "/data/thumbs/2026-04-25-eye-of-the-needle.png",
     thumb: {
       bbox: { west: 53.0, east: 58.4, south: 23.0, north: 27.4 },
       pins: [
