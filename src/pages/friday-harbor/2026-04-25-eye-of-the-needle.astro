@@ -395,6 +395,15 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
     const H = stage.clientHeight | 0;
     if (W < 50 || H < 50) { requestAnimationFrame(() => draw()); return; }
 
+    // Canvas-relative font scale: SVG `font-size` values are in user
+    // units (= pixels at viewBox scale 1), so a label tuned for the
+    // 760-px desktop column was reading as gigantic on a 350-px phone
+    // and as cramped in the 1400-px expand overlay. k stretches all
+    // hard-coded sizes proportionally; the floor of 9 keeps the
+    // smallest labels (scale bar, inset caption) above legibility.
+    const k = Math.max(0.55, Math.min(1.6, W / 760));
+    const fs = n => Math.max(9, n * k);
+
     stage.innerHTML = '';
     const svg = d3.select(stage).append('svg')
       .attr('viewBox', `0 0 ${W} ${H}`)
@@ -611,7 +620,7 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
         lang === 'zh' ? '最窄处约 39 公里' : 'narrowest reach · 39 km',
         notePoint[0], notePoint[1], {
           fill: FOCUS,
-          fontSize: lang === 'zh' ? 11 : 10.5,
+          fontSize: fs(lang === 'zh' ? 11 : 10.5),
           fontWeight: 650,
           haloWidth: 4
         });
@@ -637,7 +646,7 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
         fontFamily: seaSerif,
         fontStyle: d.italic ? 'italic' : 'normal',
         fontWeight: d.weight || 400,
-        fontSize: d.size,
+        fontSize: fs(d.size),
         letterSpacing: d.sp || '0.08em',
         halo: 'rgba(245,239,226,0.85)',
         haloWidth: 3.5
@@ -653,7 +662,7 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
         fill: c.inkSoft,
         fontFamily: islandSerif,
         fontStyle: 'italic',
-        fontSize: 11.5,
+        fontSize: fs(11.5),
         letterSpacing: '0.10em',
         halo: 'rgba(245,239,226,0.92)',
         haloWidth: 3.5
@@ -690,7 +699,7 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
         fontFamily: countrySerif,
         fontStyle: lang === 'zh' ? 'normal' : 'italic',
         fontWeight: 500,
-        fontSize: d.size || 14,
+        fontSize: fs(d.size || 14),
         letterSpacing: d.sp || (lang === 'zh' ? '0.22em' : '0.20em'),
         halo: 'rgba(245,239,226,0.92)',
         haloWidth: 5
@@ -707,7 +716,7 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
         .attr('stroke', c.paper).attr('stroke-width', 1.4);
       addText(g, d.name[lang], 7, 4, {
         fill: c.ink,
-        fontSize: 12,
+        fontSize: fs(12),
         fontWeight: 600,
         anchor: 'start',
         halo: 'rgba(245,239,226,0.92)',
@@ -746,7 +755,7 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
       // numeral — deep terracotta with cream halo, placed clear of the pulsing
       // outer ring (max radius 22px; (20,-16) ≈ 26px from centre)
       const numText = g.append('text').attr('x', 20).attr('y', -16)
-        .attr('fill', EVENT_DEEP).attr('font-size', 19).attr('font-weight', 700)
+        .attr('fill', EVENT_DEEP).attr('font-size', fs(19)).attr('font-weight', 700)
         .attr('font-family', 'Inter, "Noto Sans CJK", sans-serif')
         .attr('paint-order', 'stroke')
         .attr('stroke', 'rgba(245,239,226,0.95)')
@@ -781,11 +790,11 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
       });
       // labels
       sg.append('text').attr('x', 0).attr('y', -7).attr('text-anchor', 'middle')
-        .attr('fill', c.inkSoft).attr('font-size', 9).attr('font-family', 'Inter, sans-serif').text('0');
+        .attr('fill', c.inkSoft).attr('font-size', fs(9)).attr('font-family', 'Inter, sans-serif').text('0');
       sg.append('text').attr('x', halfPx).attr('y', -7).attr('text-anchor', 'middle')
-        .attr('fill', c.inkSoft).attr('font-size', 9).attr('font-family', 'Inter, sans-serif').text('25');
+        .attr('fill', c.inkSoft).attr('font-size', fs(9)).attr('font-family', 'Inter, sans-serif').text('25');
       sg.append('text').attr('x', barPx).attr('y', -7).attr('text-anchor', 'middle')
-        .attr('fill', c.inkSoft).attr('font-size', 9).attr('font-family', 'Inter, sans-serif').text(`${totalKm} km`);
+        .attr('fill', c.inkSoft).attr('font-size', fs(9)).attr('font-family', 'Inter, sans-serif').text(`${totalKm} km`);
     }
 
     // ===== LOCATOR INSET — orthographic globe, top-right =====
@@ -854,7 +863,7 @@ const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
         fill: c.inkSoft,
         fontFamily: seaSerif,
         fontStyle: 'italic',
-        fontSize: 10,
+        fontSize: fs(10),
         fontWeight: 500,
         letterSpacing: lang === 'zh' ? '0.18em' : '0.12em',
         haloWidth: 2.5,
