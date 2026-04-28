@@ -1130,11 +1130,8 @@ Seattle, WA 98195-3550
 
     // ===== LOCATOR INSET — orthographic globe, top-right =====
     // A small reference globe so readers know where on Earth this map sits.
-    // Scales with the same canvas factor `k` as the labels — at 116 px
-    // it took up a third of a phone canvas; at k≈0.55 the inset settles
-    // back into "auxiliary" weight on small screens.
-    const inSize = 116 * k;
-    const inMargin = 14 * k;
+    const inSize = 116;
+    const inMargin = 14;
     const inX = padL + mapW - inSize - inMargin;
     const inY = padT + inMargin;
     const cR = inSize / 2;            // globe radius
