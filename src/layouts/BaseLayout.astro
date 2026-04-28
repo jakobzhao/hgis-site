@@ -31,6 +31,10 @@ const fullTitle = isHome
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = new URL(image, Astro.site).toString();
 
+// GA4 measurement ID, read at build time. Leave unset locally to skip
+// loading the gtag script during dev.
+const GA_ID = import.meta.env.PUBLIC_GA_ID;
+
 const orgLD = {
   '@context': 'https://schema.org',
   '@type': 'ResearchOrganization',
@@ -104,6 +108,18 @@ const orgLD = {
 
     {isHome && (
       <script type="application/ld+json" set:html={JSON.stringify(orgLD)} />
+    )}
+
+    {GA_ID && !noindex && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+        <script is:inline define:vars={{ GA_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){ dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', GA_ID, { anonymize_ip: true });
+        </script>
+      </>
     )}
   </head>
   <body>
