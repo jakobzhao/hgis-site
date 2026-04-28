@@ -337,32 +337,49 @@ Seattle, WA 98195-3550
     // ----- figure watermark -----
     // Inject an HGIS Lab · Friday Harbor mark into the bottom-right of
     // every entry's stage. Centralized here so adding a new article
-    // doesn't require remembering to repeat the markup.
+    // doesn't require remembering to repeat the markup. Most entries
+    // call `stage.innerHTML = ''` on resize / language change to redraw,
+    // which would wipe the mark — a MutationObserver re-attaches it as
+    // soon as the stage children change and the mark goes missing.
     (function injectWatermark() {
       const stage = document.getElementById('stage');
-      if (!stage || stage.querySelector('.fh-watermark')) return;
-      const wm = document.createElement('a');
-      wm.className = 'fh-watermark';
-      wm.href = '/friday-harbor/';
-      wm.setAttribute('aria-label', 'HGIS Lab · Friday Harbor');
-      wm.innerHTML = [
-        '<svg class="fh-wm-logo" viewBox="160 555 325 290" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
-          '<path class="fh-wm-bar fh-wm-bar-humanistic" d="M299.2,565.6L175,791.6l22.8,41l103-186.7l57.5,105.9h45.5L299.2,565.6z"/>',
-          '<path class="fh-wm-bar fh-wm-bar-geoai" d="M300.8,645.9l22.7,41.8l-58.4,103.9l205.9,0.1l-21.7,42l-251.5-1.2L300.8,645.9z"/>',
-          '<path class="fh-wm-bar fh-wm-bar-fake" d="M299.2,565.6l104.5,186.1l-116.2,0.1l-22.3,39.8l205.8,0L345.5,565.5L299.2,565.6z"/>',
-        '</svg>',
-        '<span class="fh-wm-lab">HGIS Lab</span>',
-        '<span class="fh-wm-sep" aria-hidden="true">·</span>',
-        '<em class="fh-wm-fh">',
-          '<span data-lang="en">Friday Harbor</span>',
-          '<span data-lang="zh">周五港</span>',
-        '</em>',
-      ].join('');
-      // Stop interaction events from reaching per-article zoom / drag /
-      // brush handlers attached to the stage itself.
-      ['mousedown', 'pointerdown', 'click', 'touchstart'].forEach(evt =>
-        wm.addEventListener(evt, e => e.stopPropagation()));
-      stage.appendChild(wm);
+      if (!stage) return;
+      let wm = null;
+      function buildWatermark() {
+        const a = document.createElement('a');
+        a.className = 'fh-watermark';
+        a.href = '/friday-harbor/';
+        a.setAttribute('aria-label', 'HGIS Lab · Friday Harbor');
+        a.innerHTML = [
+          '<svg class="fh-wm-logo" viewBox="160 555 325 290" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
+            '<path class="fh-wm-bar fh-wm-bar-humanistic" d="M299.2,565.6L175,791.6l22.8,41l103-186.7l57.5,105.9h45.5L299.2,565.6z"/>',
+            '<path class="fh-wm-bar fh-wm-bar-geoai" d="M300.8,645.9l22.7,41.8l-58.4,103.9l205.9,0.1l-21.7,42l-251.5-1.2L300.8,645.9z"/>',
+            '<path class="fh-wm-bar fh-wm-bar-fake" d="M299.2,565.6l104.5,186.1l-116.2,0.1l-22.3,39.8l205.8,0L345.5,565.5L299.2,565.6z"/>',
+          '</svg>',
+          '<span class="fh-wm-lab">HGIS Lab</span>',
+          '<span class="fh-wm-sep" aria-hidden="true">·</span>',
+          '<em class="fh-wm-fh">',
+            '<span data-lang="en">Friday Harbor</span>',
+            '<span data-lang="zh">周五港</span>',
+          '</em>',
+        ].join('');
+        // Stop interaction events from reaching per-article zoom / drag
+        // / brush handlers attached to the stage itself.
+        ['mousedown', 'pointerdown', 'click', 'touchstart'].forEach(evt =>
+          a.addEventListener(evt, e => e.stopPropagation()));
+        return a;
+      }
+      function ensure() {
+        if (stage.querySelector('.fh-watermark')) return;
+        if (!wm) wm = buildWatermark();
+        // appendChild moves the (possibly detached) node back in as the
+        // last child, which keeps it on top of any same-context siblings
+        // that the entry script just appended.
+        stage.appendChild(wm);
+      }
+      ensure();
+      const mo = new MutationObserver(ensure);
+      mo.observe(stage, { childList: true });
     })();
 
     // ----- giscus comments (GitHub Discussions) ------------------------
@@ -944,12 +961,12 @@ Seattle, WA 98195-3550
   }
 
   function drawUSWorkaround(svg, x, y, w, h, lang, sansFont, serifFont) {
-    svg.append('text')
+    fitText(svg.append('text')
       .attr('x', x + w / 2).attr('y', y + 12)
       .attr('text-anchor', 'middle')
       .attr('fill', c.inkSoft).attr('font-family', serifFont)
       .attr('font-size', 13.5).attr('font-style', 'italic')
-      .text(lang === 'zh' ? '应对：自建电源（绕过电网）' : 'Workaround: build power off the grid');
+      .text(lang === 'zh' ? '应对：自建电源（绕过电网）' : 'Workaround: build power off the grid'), w - 8, 10);
 
     // Three escape valves as boxes
     const boxes = [
@@ -957,41 +974,29 @@ Seattle, WA 98195-3550
       { label: lang === 'zh' ? '重启核电 ≈ 2.8 GW\n(MSFT TMI · AWS Talen)' : 'Restart nuclear ≈ 2.8 GW\n(MSFT TMI · AWS Talen)' },
       { label: lang === 'zh' ? '小型模块堆 (SMR)\n2030 年后' : 'Small modular reactors\npost-2030' }
     ];
-    const bw = (w - 24) / 3 - 8;
-    const by = y + 22;
-    const bh = h - 26;
-    boxes.forEach((b, i) => {
-      const bx = x + 12 + i * (bw + 8);
-      svg.append('rect')
-        .attr('x', bx).attr('y', by).attr('width', bw).attr('height', bh)
-        .attr('fill', '#e3eaf1').attr('stroke', US_TONE).attr('stroke-width', 0.8)
-        .attr('rx', 3);
-      const lines = b.label.split('\n');
-      lines.forEach((ln, li) => {
-        svg.append('text')
-          .attr('x', bx + bw / 2).attr('y', by + 17 + li * 15)
-          .attr('text-anchor', 'middle').attr('font-family', sansFont)
-          .attr('font-size', li === 0 ? 12.5 : 11)
-          .attr('fill', li === 0 ? US_TONE : c.inkSoft)
-          .attr('font-weight', li === 0 ? 600 : 400)
-          .text(ln);
-      });
-    });
+    drawWorkaroundBoxes(svg, x, y, w, h, boxes, US_TONE, '#e3eaf1', sansFont);
   }
 
   function drawCNWorkaround(svg, x, y, w, h, lang, sansFont, serifFont) {
-    svg.append('text')
+    fitText(svg.append('text')
       .attr('x', x + w / 2).attr('y', y + 12)
       .attr('text-anchor', 'middle')
       .attr('fill', c.inkSoft).attr('font-family', serifFont)
       .attr('font-size', 13.5).attr('font-style', 'italic')
-      .text(lang === 'zh' ? '应对：算法优化 + 灰渠道 + 国家算力网' : 'Workaround: algorithm + grey channels + state network');
+      .text(lang === 'zh' ? '应对：算法优化 + 灰渠道 + 国家算力网' : 'Workaround: algorithm + grey channels + state network'), w - 8, 10);
 
     const boxes = [
       { label: lang === 'zh' ? '算法优化\n(DeepSeek V3: 2,048 H800)' : 'Algorithmic efficiency\n(DeepSeek V3: 2,048 H800)' },
       { label: lang === 'zh' ? '走私 / 转口\n(新加坡·马来西亚·泰国)' : 'Smuggling / re-export\n(Singapore·Malaysia·Thailand)' },
       { label: lang === 'zh' ? '国家算力网\n8 枢纽 · 138.8 万 PFlops' : 'National compute network\n8 hubs · 1.388 M PFlops' }
     ];
+    drawWorkaroundBoxes(svg, x, y, w, h, boxes, CN_TONE, '#f3e2d6', sansFont);
+  }
+
+  // Shared box renderer — handles the 3-up box layout with auto-fitting
+  // text. The box width gets tight at typical figure widths (~100px) and
+  // English labels in particular need to shrink to stay inside.
+  function drawWorkaroundBoxes(svg, x, y, w, h, boxes, tone, fill, sansFont) {
     const bw = (w - 24) / 3 - 8;
     const by = y + 22;
     const bh = h - 26;
@@ -999,17 +1004,18 @@ Seattle, WA 98195-3550
       const bx = x + 12 + i * (bw + 8);
       svg.append('rect')
         .attr('x', bx).attr('y', by).attr('width', bw).attr('height', bh)
-        .attr('fill', '#f3e2d6').attr('stroke', CN_TONE).attr('stroke-width', 0.8)
+        .attr('fill', fill).attr('stroke', tone).attr('stroke-width', 0.8)
         .attr('rx', 3);
       const lines = b.label.split('\n');
       lines.forEach((ln, li) => {
-        svg.append('text')
+        const baseSize = li === 0 ? 12.5 : 11;
+        fitText(svg.append('text')
           .attr('x', bx + bw / 2).attr('y', by + 17 + li * 15)
           .attr('text-anchor', 'middle').attr('font-family', sansFont)
-          .attr('font-size', li === 0 ? 12.5 : 11)
-          .attr('fill', li === 0 ? CN_TONE : c.inkSoft)
+          .attr('font-size', baseSize)
+          .attr('fill', li === 0 ? tone : c.inkSoft)
           .attr('font-weight', li === 0 ? 600 : 400)
-          .text(ln);
+          .text(ln), bw - 6, 8.5);
       });
     });
   }
@@ -1069,10 +1075,22 @@ Seattle, WA 98195-3550
   function drawEventTrack(svg, events, xs, axisY, direction, tone, rowSpacing, lang, sansFont) {
     // direction: -1 events go above the axis, +1 below.
     // Two-row stagger; row spacing scales with available canvas height.
+    // Cap each label's width by the horizontal distance to the nearest
+    // event on the same row, so dense clusters don't bleed into each other.
     events.forEach((ev, i) => {
       const tx = xs(new Date(ev.date).getTime());
       const row = i % 2 === 0 ? 1 : 2;
       const ty = axisY + direction * (10 + row * rowSpacing);
+
+      // Distance to nearest neighbor on the same staggered row (in px).
+      let neighborGap = Infinity;
+      events.forEach((other, j) => {
+        if (j === i) return;
+        if ((j % 2 === 0 ? 1 : 2) !== row) return;
+        const ox = xs(new Date(other.date).getTime());
+        neighborGap = Math.min(neighborGap, Math.abs(ox - tx));
+      });
+      const maxLabelW = Math.max(60, neighborGap * 0.95);
 
       // Stem — connect tick to label with a thin guide line so events
       // remain readable even when labels are pushed far from the axis.
@@ -1088,14 +1106,14 @@ Seattle, WA 98195-3550
         .attr('fill', tone);
 
       // Label
-      svg.append('text')
+      fitText(svg.append('text')
         .attr('x', tx).attr('y', ty)
         .attr('text-anchor', 'middle').attr('font-family', sansFont)
         .attr('font-size', 11).attr('fill', tone)
         .attr('paint-order', 'stroke')
         .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3)
         .attr('stroke-linejoin', 'round')
-        .text(ev.label[lang]);
+        .text(ev.label[lang]), maxLabelW, 8.5);
     });
   }
 </script>

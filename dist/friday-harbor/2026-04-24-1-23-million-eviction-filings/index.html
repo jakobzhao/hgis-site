@@ -259,32 +259,49 @@ Seattle, WA 98195-3550
     // ----- figure watermark -----
     // Inject an HGIS Lab · Friday Harbor mark into the bottom-right of
     // every entry's stage. Centralized here so adding a new article
-    // doesn't require remembering to repeat the markup.
+    // doesn't require remembering to repeat the markup. Most entries
+    // call `stage.innerHTML = ''` on resize / language change to redraw,
+    // which would wipe the mark — a MutationObserver re-attaches it as
+    // soon as the stage children change and the mark goes missing.
     (function injectWatermark() {
       const stage = document.getElementById('stage');
-      if (!stage || stage.querySelector('.fh-watermark')) return;
-      const wm = document.createElement('a');
-      wm.className = 'fh-watermark';
-      wm.href = '/friday-harbor/';
-      wm.setAttribute('aria-label', 'HGIS Lab · Friday Harbor');
-      wm.innerHTML = [
-        '<svg class="fh-wm-logo" viewBox="160 555 325 290" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
-          '<path class="fh-wm-bar fh-wm-bar-humanistic" d="M299.2,565.6L175,791.6l22.8,41l103-186.7l57.5,105.9h45.5L299.2,565.6z"/>',
-          '<path class="fh-wm-bar fh-wm-bar-geoai" d="M300.8,645.9l22.7,41.8l-58.4,103.9l205.9,0.1l-21.7,42l-251.5-1.2L300.8,645.9z"/>',
-          '<path class="fh-wm-bar fh-wm-bar-fake" d="M299.2,565.6l104.5,186.1l-116.2,0.1l-22.3,39.8l205.8,0L345.5,565.5L299.2,565.6z"/>',
-        '</svg>',
-        '<span class="fh-wm-lab">HGIS Lab</span>',
-        '<span class="fh-wm-sep" aria-hidden="true">·</span>',
-        '<em class="fh-wm-fh">',
-          '<span data-lang="en">Friday Harbor</span>',
-          '<span data-lang="zh">周五港</span>',
-        '</em>',
-      ].join('');
-      // Stop interaction events from reaching per-article zoom / drag /
-      // brush handlers attached to the stage itself.
-      ['mousedown', 'pointerdown', 'click', 'touchstart'].forEach(evt =>
-        wm.addEventListener(evt, e => e.stopPropagation()));
-      stage.appendChild(wm);
+      if (!stage) return;
+      let wm = null;
+      function buildWatermark() {
+        const a = document.createElement('a');
+        a.className = 'fh-watermark';
+        a.href = '/friday-harbor/';
+        a.setAttribute('aria-label', 'HGIS Lab · Friday Harbor');
+        a.innerHTML = [
+          '<svg class="fh-wm-logo" viewBox="160 555 325 290" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
+            '<path class="fh-wm-bar fh-wm-bar-humanistic" d="M299.2,565.6L175,791.6l22.8,41l103-186.7l57.5,105.9h45.5L299.2,565.6z"/>',
+            '<path class="fh-wm-bar fh-wm-bar-geoai" d="M300.8,645.9l22.7,41.8l-58.4,103.9l205.9,0.1l-21.7,42l-251.5-1.2L300.8,645.9z"/>',
+            '<path class="fh-wm-bar fh-wm-bar-fake" d="M299.2,565.6l104.5,186.1l-116.2,0.1l-22.3,39.8l205.8,0L345.5,565.5L299.2,565.6z"/>',
+          '</svg>',
+          '<span class="fh-wm-lab">HGIS Lab</span>',
+          '<span class="fh-wm-sep" aria-hidden="true">·</span>',
+          '<em class="fh-wm-fh">',
+            '<span data-lang="en">Friday Harbor</span>',
+            '<span data-lang="zh">周五港</span>',
+          '</em>',
+        ].join('');
+        // Stop interaction events from reaching per-article zoom / drag
+        // / brush handlers attached to the stage itself.
+        ['mousedown', 'pointerdown', 'click', 'touchstart'].forEach(evt =>
+          a.addEventListener(evt, e => e.stopPropagation()));
+        return a;
+      }
+      function ensure() {
+        if (stage.querySelector('.fh-watermark')) return;
+        if (!wm) wm = buildWatermark();
+        // appendChild moves the (possibly detached) node back in as the
+        // last child, which keeps it on top of any same-context siblings
+        // that the entry script just appended.
+        stage.appendChild(wm);
+      }
+      ensure();
+      const mo = new MutationObserver(ensure);
+      mo.observe(stage, { childList: true });
     })();
 
     // ----- giscus comments (GitHub Discussions) ------------------------
