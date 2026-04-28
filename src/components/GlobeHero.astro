@@ -25,14 +25,23 @@ for (const t of talks) {
   pts.push({ type: 'talk', lat: t.lat, lon: t.lon, title: t.title, sub: `${t.host} · ${t.place}`, date: String(t.year) });
 }
 
-// Each Friday Harbor article carries a bbox (and sometimes pins) for its
-// mini-map. The bbox centre is the right anchor for the globe marker —
-// pins are inside the bbox by construction. If an article has no thumb,
-// it skips the globe (text-only entries don't earn a dot).
+// Each Friday Harbor article either carries a bbox (used for the index
+// mini-map; its centre is the natural globe anchor) or an explicit
+// `globe` lat/lon (for trans-regional pieces that don't fit one bbox).
+// Drafts (published === false) stay off the globe so unpublished work
+// doesn't leak via the homepage marker.
 for (const e of fhEntries) {
-  if (!e.thumb) continue;
-  const lon = (e.thumb.bbox.west + e.thumb.bbox.east) / 2;
-  const lat = (e.thumb.bbox.south + e.thumb.bbox.north) / 2;
+  if (e.published === false) continue;
+  let lat: number, lon: number;
+  if (e.thumb) {
+    lon = (e.thumb.bbox.west + e.thumb.bbox.east) / 2;
+    lat = (e.thumb.bbox.south + e.thumb.bbox.north) / 2;
+  } else if (e.globe) {
+    lat = e.globe.lat;
+    lon = e.globe.lon;
+  } else {
+    continue;
+  }
   pts.push({
     type: 'maps',
     lat, lon,

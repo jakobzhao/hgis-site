@@ -58,6 +58,13 @@ export type Entry = {
   image?: string;
   /** Optional fallback: if `image` is absent, generate a live mini-map preview. */
   thumb?: ThumbBox;
+  /**
+   * Optional anchor point for the homepage globe marker. Used when the
+   * article doesn't have a single `thumb` bbox (e.g. trans-Pacific
+   * comparisons that wouldn't make sense as one rectangle), but should
+   * still appear as a dot on the rotating globe.
+   */
+  globe?: { lat: number; lon: number };
   /** Optional readable BibTeX key. Falls back to {lastname}{year}{slug-first-word}. */
   citeKey?: string;
   /**
@@ -118,6 +125,7 @@ export const entries: Entry[] = [
     author: "Bo Zhao",
     citeKey: "zhao2026mirror",
     image: "/data/thumbs/2026-04-27-the-mirror-scarcity.png",
+    globe: { lat: 39.9, lon: 116.4 },
   },
   {
     slug: "2026-04-17-does-ai-know-your-city",
