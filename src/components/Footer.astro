@@ -32,9 +32,53 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <div class="footer-bottom container">
-    <small>© {year} Humanistic GIS Laboratory · Built with Astro</small>
+    <small>© {year} Humanistic GIS Laboratory · Built <span class="fh-with-toggle" role="button" tabindex="0" aria-label="toggle drafts">with</span> Astro</small>
   </div>
 </footer>
+
+<script is:inline>
+  // Hidden author trigger: clicking the word "with" in the footer toggles
+  // visibility of unpublished Friday Harbor entries. The flag is persisted
+  // in localStorage so the friday-harbor index picks it up on its own,
+  // regardless of which page the click came from. A second click hides
+  // them again.
+  (function () {
+    var trigger = document.querySelector('.fh-with-toggle');
+    if (!trigger) return;
+
+    function flash(on) {
+      trigger.setAttribute('data-flash', on ? 'on' : 'off');
+      setTimeout(function () { trigger.removeAttribute('data-flash'); }, 1300);
+    }
+
+    function toggle() {
+      var next = '1';
+      try {
+        var cur = localStorage.getItem('fh-show-drafts') || '0';
+        next = cur === '1' ? '0' : '1';
+        localStorage.setItem('fh-show-drafts', next);
+      } catch (e) {}
+      var on = next === '1';
+      var onIndex = /^\/friday-harbor\/?$/.test(location.pathname);
+      if (onIndex) {
+        document.body.classList.toggle('fh-show-drafts', on);
+        document.dispatchEvent(new CustomEvent('fh-drafts-toggled', { detail: { on: on } }));
+        flash(on);
+      } else if (on) {
+        // Land on the Friday Harbor index where the freshly-revealed
+        // drafts appear in the card list.
+        location.href = '/friday-harbor/';
+      } else {
+        flash(false);
+      }
+    }
+
+    trigger.addEventListener('click', toggle);
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  })();
+</script>
 
 <style>
   .site-footer {
@@ -42,6 +86,19 @@ const year = new Date().getFullYear();
     background: var(--uw-purple-deep);
     color: #d6cfdf;
     padding: 0 0 1.25rem;
+  }
+  /* Hidden trigger word — only the cursor change hints that it's
+     interactive. A brief flash (gold for "shown", muted for "hidden")
+     confirms the toggle landed. */
+  .fh-with-toggle {
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+  .fh-with-toggle[data-flash="on"]  { color: var(--uw-gold); }
+  .fh-with-toggle[data-flash="off"] { color: #b9b1c6; }
+  .fh-with-toggle:focus-visible {
+    outline: 1px dotted var(--uw-gold-soft);
+    outline-offset: 2px;
   }
   .gold-rule {
     height: 2px;

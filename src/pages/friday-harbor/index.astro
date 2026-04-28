@@ -787,22 +787,33 @@ const total = sorted.length;
       if (listEl && listEl.scrollIntoView) listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    // ----- localhost-only "show drafts" toggle -------------------------
-    // Only injected when the page is loaded from a local dev host. The
-    // toggle flips body.fh-show-drafts, which both reveals the hidden
-    // draft rows (CSS) and re-includes them in the sort/limit pool
-    // (visiblePool above). Persists via localStorage so the dev's
-    // preference sticks across reloads of the dev server.
+    // ----- show-drafts: persisted preference + custom-event listener ---
+    // The localStorage flag is honoured in EVERY environment, because the
+    // hidden trigger word "with" in the global footer can flip it from
+    // any page. The footer dispatches `fh-drafts-toggled` on this same
+    // page so the sort/limit pool updates immediately.
     (function () {
-      var h = location.hostname;
-      var isLocal = h === 'localhost' || h === '127.0.0.1' || h === '0.0.0.0' || h.endsWith('.local');
-      if (!isLocal) return;
       var drafts = document.querySelectorAll('.fh-row[data-draft="1"]');
       if (!drafts.length) return;
 
       var stored = '0';
       try { stored = localStorage.getItem('fh-show-drafts') || '0'; } catch (e) {}
       if (stored === '1') document.body.classList.add('fh-show-drafts');
+
+      document.addEventListener('fh-drafts-toggled', function () {
+        applyFilterAndSort();
+      });
+    })();
+
+    // ----- localhost-only floating toggle button -----------------------
+    // A more discoverable control for the dev environment. The hidden
+    // footer trigger remains the only way to flip the flag in production.
+    (function () {
+      var h = location.hostname;
+      var isLocal = h === 'localhost' || h === '127.0.0.1' || h === '0.0.0.0' || h.endsWith('.local');
+      if (!isLocal) return;
+      var drafts = document.querySelectorAll('.fh-row[data-draft="1"]');
+      if (!drafts.length) return;
 
       var btn = document.createElement('button');
       btn.type = 'button';
