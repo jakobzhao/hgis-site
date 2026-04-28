@@ -4,7 +4,7 @@ import { entries } from '../../data/friday-harbor';
 const entry = entries.find(e => e.slug === '2026-04-25-eye-of-the-needle')!;
 ---
 <FridayHarborLayout entry={entry}>
-  <figure slot="figure" class="hormuz-figure">
+  <figure slot="figure" class="hormuz-figure" data-fh-expandable>
     <div class="hormuz-stage" id="stage" aria-label="Map of the Strait of Hormuz">
       <p class="map-status">
         <span data-lang="en">Loading map...</span>

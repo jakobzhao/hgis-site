@@ -316,6 +316,19 @@ const articleSchema = {
         </span>
       </footer>
     </article>
+
+    {/* Singleton expand-to-fullscreen overlay. Lives outside the article
+        so its position:fixed doesn't get clipped by an ancestor with
+        transform/filter. The script below moves the stage in/out on
+        open/close — only one entry's stage exists per page anyway. */}
+    <div class="fh-overlay" hidden aria-hidden="true">
+      <button class="fh-overlay-close" type="button" aria-label="Close">×</button>
+      <div class="fh-overlay-hint" aria-hidden="true">
+        <span data-lang="en">scroll · pinch to zoom · ESC to close</span>
+        <span data-lang="zh">滑动 · 双指缩放 · ESC 关闭</span>
+      </div>
+      <div class="fh-overlay-inner"></div>
+    </div>
   </div>
 </BaseLayout>
 
@@ -477,6 +490,106 @@ const articleSchema = {
     bottom: 14px;
   }
   html[data-fh-thumb="1"] .fh-wm-logo { width: 18px; height: 18px; }
+
+  /* ---- Expand-to-fullscreen ----------------------------------------
+     Opt-in per entry by adding `data-fh-expandable` to the figure tag.
+     The button is injected by the same script that mounts the
+     watermark, on the top-right of the stage. Click → moves the stage
+     into the overlay below; the entry's d3 redraw runs on the
+     dispatched resize event, so labels lay out for the larger canvas
+     instead of being shrunk to mobile width. */
+  .fh-expand-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    z-index: 5;
+    width: 30px; height: 30px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(74, 47, 130, 0.18);
+    background: rgba(245, 239, 226, 0.86);
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+    transition: opacity 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    font: inherit;
+  }
+  .fh-expand-btn:hover {
+    opacity: 1;
+    background: rgba(245, 239, 226, 0.96);
+    border-color: var(--uw-purple);
+    color: var(--uw-purple);
+  }
+  .fh-expand-btn svg { width: 14px; height: 14px; pointer-events: none; }
+  /* Hidden in thumb-capture mode so social-card thumbnails stay clean. */
+  html[data-fh-thumb="1"] .fh-expand-btn { display: none !important; }
+
+  /* Fullscreen overlay (singleton per page). Hosts the stage when
+     expanded. Min-width forces a wider canvas on phones so labels can
+     space out — the overlay itself scrolls horizontally to reveal it,
+     and pinch-zoom on the page works on top for further zoom. */
+  body.fh-overlay-on { overflow: hidden; }
+  .fh-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(28, 22, 18, 0.82);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .fh-overlay[hidden] { display: none; }
+  .fh-overlay-inner {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    min-width: max(900px, 100vw);
+    padding: 60px 24px 40px;
+    box-sizing: border-box;
+  }
+  .fh-overlay #stage {
+    width: 100%;
+    max-width: 1400px;
+  }
+  /* The expand button itself becomes redundant inside the overlay —
+     the close button takes over. */
+  .fh-overlay .fh-expand-btn { display: none; }
+  .fh-overlay-close {
+    position: fixed;
+    top: 14px; right: 14px;
+    width: 40px; height: 40px;
+    border-radius: 999px;
+    background: rgba(245, 239, 226, 0.94);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .fh-overlay-close:hover { background: #fff; color: var(--uw-purple); }
+  .fh-overlay-hint {
+    position: fixed;
+    top: 14px; left: 14px;
+    padding: 6px 12px;
+    background: rgba(245, 239, 226, 0.9);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink-soft, #6c6358);
+    font-family: var(--serif), Georgia, serif;
+    font-style: italic;
+    font-size: 0.74rem;
+    letter-spacing: 0.02em;
+    z-index: 10000;
+    pointer-events: none;
+  }
 </style>
 
 <style>
@@ -939,17 +1052,29 @@ const articleSchema = {
     }));
     paintLangBtns();
 
-    // ----- figure watermark -----
+    // ----- figure watermark + (opt-in) expand-to-fullscreen -----
     // Inject an HGIS Lab · Friday Harbor mark into the bottom-right of
-    // every entry's stage. Centralized here so adding a new article
-    // doesn't require remembering to repeat the markup. Most entries
-    // call `stage.innerHTML = ''` on resize / language change to redraw,
-    // which would wipe the mark — a MutationObserver re-attaches it as
-    // soon as the stage children change and the mark goes missing.
-    (function injectWatermark() {
+    // every entry's stage, plus an expand button at top-right when the
+    // figure carries data-fh-expandable. Centralized so a new article
+    // only needs the markup attribute to enable both.
+    //
+    // Most entries call `stage.innerHTML = ''` on resize / language
+    // change to redraw, which would wipe the children — a single
+    // MutationObserver re-attaches both elements when they go missing.
+    (function injectStageChrome() {
       const stage = document.getElementById('stage');
       if (!stage) return;
+      const figure = stage.closest('figure');
+      const overlay = document.querySelector('.fh-overlay');
+      const overlayInner = overlay && overlay.querySelector('.fh-overlay-inner');
+      const overlayClose = overlay && overlay.querySelector('.fh-overlay-close');
+      const expandable = !!(figure && figure.hasAttribute('data-fh-expandable') && overlay && overlayInner);
+
       let wm = null;
+      let btn = null;
+      let stageHomeParent = null;
+      let stageHomeNext = null;
+
       function buildWatermark() {
         const a = document.createElement('a');
         a.className = 'fh-watermark';
@@ -968,20 +1093,82 @@ const articleSchema = {
             '<span data-lang="zh">周五港</span>',
           '</em>',
         ].join('');
-        // Stop interaction events from reaching per-article zoom / drag
-        // / brush handlers attached to the stage itself.
         ['mousedown', 'pointerdown', 'click', 'touchstart'].forEach(evt =>
           a.addEventListener(evt, e => e.stopPropagation()));
         return a;
       }
-      function ensure() {
-        if (stage.querySelector('.fh-watermark')) return;
-        if (!wm) wm = buildWatermark();
-        // appendChild moves the (possibly detached) node back in as the
-        // last child, which keeps it on top of any same-context siblings
-        // that the entry script just appended.
-        stage.appendChild(wm);
+      function buildExpandBtn() {
+        const b = document.createElement('button');
+        b.className = 'fh-expand-btn';
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Expand figure');
+        // Four corner brackets — universal "expand" glyph, no icon font.
+        b.innerHTML =
+          '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" '
+          + 'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+          +   '<polyline points="2,6 2,2 6,2"/>'
+          +   '<polyline points="14,6 14,2 10,2"/>'
+          +   '<polyline points="14,10 14,14 10,14"/>'
+          +   '<polyline points="2,10 2,14 6,14"/>'
+          + '</svg>';
+        ['mousedown', 'pointerdown', 'touchstart'].forEach(evt =>
+          b.addEventListener(evt, e => e.stopPropagation()));
+        b.addEventListener('click', e => {
+          e.stopPropagation();
+          e.preventDefault();
+          openOverlay();
+        });
+        return b;
       }
+      function ensure() {
+        if (!stage.querySelector('.fh-watermark')) {
+          if (!wm) wm = buildWatermark();
+          stage.appendChild(wm);
+        }
+        if (expandable && !stage.querySelector('.fh-expand-btn')) {
+          if (!btn) btn = buildExpandBtn();
+          stage.appendChild(btn);
+        }
+      }
+
+      function openOverlay() {
+        if (!overlay || overlay.hidden === false) return;
+        stageHomeParent = stage.parentElement;
+        stageHomeNext = stage.nextElementSibling;
+        overlayInner.appendChild(stage);
+        overlay.hidden = false;
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('fh-overlay-on');
+        // d3 scripts re-render on resize; trigger one so the figure
+        // re-lays out for the larger canvas.
+        window.dispatchEvent(new Event('resize'));
+      }
+      function closeOverlay() {
+        if (!overlay || overlay.hidden) return;
+        if (stageHomeParent) {
+          if (stageHomeNext && stageHomeNext.parentElement === stageHomeParent) {
+            stageHomeParent.insertBefore(stage, stageHomeNext);
+          } else {
+            stageHomeParent.appendChild(stage);
+          }
+        }
+        overlay.hidden = true;
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('fh-overlay-on');
+        window.dispatchEvent(new Event('resize'));
+      }
+      if (expandable) {
+        overlayClose.addEventListener('click', closeOverlay);
+        overlay.addEventListener('click', (e) => {
+          // Backdrop click closes; clicks landing on the inner area
+          // (where the stage lives) don't bubble up to overlay.
+          if (e.target === overlay) closeOverlay();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && !overlay.hidden) closeOverlay();
+        });
+      }
+
       ensure();
       const mo = new MutationObserver(ensure);
       mo.observe(stage, { childList: true });
