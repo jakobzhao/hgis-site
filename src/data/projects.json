@@ -1,5 +1,16 @@
 [
   {
+    "title": "U.S. County Home Values",
+    "slug": "homevalue",
+    "year": 2026,
+    "image": "/projects/homevalue.png",
+    "lat": 39.5,
+    "lon": -98.35,
+    "summary": "An arrow-based visualization of year-over-year change in residential property values across every U.S. county, animating the past twelve months of Zillow's ZHVI.",
+    "tags": ["housing", "real estate", "U.S."],
+    "url": "https://jakobzhao.github.io/homevalue"
+  },
+  {
     "title": "Möbius ∞ City",
     "slug": "mobius-city",
     "year": 2026,
