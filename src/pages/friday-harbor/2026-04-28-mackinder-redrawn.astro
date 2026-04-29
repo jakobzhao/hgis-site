@@ -11,14 +11,6 @@ const entry = entries.find(e => e.slug === '2026-04-28-mackinder-redrawn')!;
         <span data-lang="zh">地球加载中…</span>
       </p>
     </div>
-    <div class="mack-proj-toggle" role="group" aria-label="projection">
-      <button class="mack-proj-btn is-active" type="button" data-proj="globe">
-        <span data-lang="en">Globe</span><span data-lang="zh">地球</span>
-      </button>
-      <button class="mack-proj-btn" type="button" data-proj="mercator">
-        <span data-lang="en">Mercator</span><span data-lang="zh">墨卡托</span>
-      </button>
-    </div>
 
     <figcaption data-lang="en">
       <b>Mackinder's regions, redrawn — and overlaid with the chokepoints that actually do the work in 2026.</b>
@@ -206,46 +198,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-mackinder-redrawn')!;
 </FridayHarborLayout>
 
 <style>
-  .mack-figure { margin: 0; position: relative; }
-
-  /* Globe ↔ Mercator switch — anchored to the stage's top-right.
-     Mackinder originally drew on Mercator, which inflates the Heartland.
-     Toggling lets the reader see his rhetorical bias for themselves. */
-  .mack-proj-toggle {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    z-index: 4;
-    display: inline-flex;
-    background: rgba(245, 239, 226, 0.92);
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    padding: 2px;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-  }
-  .mack-proj-btn {
-    background: transparent;
-    border: 0;
-    padding: 4px 12px;
-    border-radius: 999px;
-    cursor: pointer;
-    color: var(--ink-soft);
-    font-family: var(--serif), Georgia, serif;
-    font-size: 0.75rem;
-    font-style: italic;
-    letter-spacing: 0.04em;
-    line-height: 1;
-    transition: all 0.18s ease;
-  }
-  .mack-proj-btn:hover:not(.is-active) { color: var(--uw-purple); }
-  .mack-proj-btn.is-active {
-    background: var(--uw-purple);
-    color: #fffdf7;
-  }
-  /* Hidden in thumb-capture mode — keeps social-card thumbnails clean. */
-  html[data-fh-thumb="1"] .mack-proj-toggle { display: none !important; }
-
+  .mack-figure { margin: 0; }
   .mack-stage {
     width: 100%;
     aspect-ratio: 5 / 3;
@@ -426,9 +379,8 @@ const entry = entries.find(e => e.slug === '2026-04-28-mackinder-redrawn')!;
     return fhRoot && fhRoot.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
   }
 
-  // ===== Persistent state across re-renders =====
+  // ===== Persistent rotation state across re-renders =====
   let _land = null;
-  let _proj = 'globe';                 // 'globe' | 'mercator'
   let _rotation = [-70, -25, 0];       // initial: Eurasia centred, slight N tilt
   let _autoRotate = true;
   let _hoverInside = false;
@@ -461,31 +413,12 @@ const entry = entries.find(e => e.slug === '2026-04-28-mackinder-redrawn')!;
     if (!stage || stage._mackHandlersAttached) return;
     stage._mackHandlersAttached = true;
 
-    // Wire up the Globe ↔ Mercator toggle. The buttons live outside the
-    // stage (in .mack-figure) so they survive the per-frame SVG rebuild.
-    const toggle = document.querySelector('.mack-proj-toggle');
-    if (toggle) {
-      toggle.querySelectorAll('.mack-proj-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const next = btn.getAttribute('data-proj');
-          if (next === _proj) return;
-          _proj = next;
-          toggle.querySelectorAll('.mack-proj-btn').forEach(b => {
-            b.classList.toggle('is-active', b.getAttribute('data-proj') === _proj);
-          });
-          render();
-        });
-      });
-    }
-
     stage.addEventListener('pointerenter', () => { _hoverInside = true; });
     stage.addEventListener('pointerleave', () => { _hoverInside = false; });
 
     stage.addEventListener('pointerdown', (e) => {
-      // Don't hijack clicks meant for the watermark / expand button / toggle.
-      if (e.target && e.target.closest && e.target.closest('.fh-watermark, .fh-expand-btn, .mack-proj-toggle')) return;
-      // Mercator is a flat fixed-fit map — no rotation, no drag.
-      if (_proj !== 'globe') return;
+      // Don't hijack clicks meant for the watermark / expand button.
+      if (e.target && e.target.closest && e.target.closest('.fh-watermark, .fh-expand-btn')) return;
       _autoRotate = false;
       _draggingNow = true;
       _dragStart = { x: e.clientX, y: e.clientY, rot: [..._rotation] };
@@ -519,7 +452,7 @@ const entry = entries.find(e => e.slug === '2026-04-28-mackinder-redrawn')!;
   // drag is in progress; the homepage globe uses the same pattern.
   let _lastT = 0;
   d3.timer(t => {
-    if (_proj !== 'globe' || !_autoRotate || _hoverInside || _draggingNow || !_land) {
+    if (!_autoRotate || _hoverInside || _draggingNow || !_land) {
       _lastT = t;
       return;
     }
@@ -580,49 +513,28 @@ const entry = entries.find(e => e.slug === '2026-04-28-mackinder-redrawn')!;
     const cy = (padTop + H - padBot) / 2;
     const R  = Math.min(W * 0.42, (H - padTop - padBot) * 0.50);
 
-    const isGlobe = _proj === 'globe';
-    let proj;
-    if (isGlobe) {
-      proj = d3.geoOrthographic()
-        .scale(R)
-        .translate([cx, cy])
-        .clipAngle(90)
-        .rotate(_rotation);
-    } else {
-      // Mercator — fitExtent on a Sphere fits the whole world inside the
-      // map area. The Heartland gets visually inflated at high latitudes —
-      // exactly the rhetorical bias Mackinder's original 1904 map carried.
-      proj = d3.geoMercator()
-        .fitExtent([[20, padTop + 8], [W - 20, H - padBot - 8]], { type: 'Sphere' });
-    }
+    const proj = d3.geoOrthographic()
+      .scale(R)
+      .translate([cx, cy])
+      .clipAngle(90)
+      .rotate(_rotation);
     const path = d3.geoPath(proj);
 
-    if (isGlobe) {
-      // Sphere fill (deep night blue)
-      svg.append('path').datum({type: 'Sphere'}).attr('d', path)
-        .attr('fill', '#1f2734').attr('stroke', c.rule).attr('stroke-width', 0.6);
+    // Sphere fill (deep night blue)
+    svg.append('path').datum({type: 'Sphere'}).attr('d', path)
+      .attr('fill', '#1f2734').attr('stroke', c.rule).attr('stroke-width', 0.6);
 
-      // Soft inner radial shading — gives the planet a roundness
-      const defs = svg.append('defs');
-      const shade = defs.append('radialGradient')
-        .attr('id', 'mack-sphere-shade')
-        .attr('cx', '34%').attr('cy', '32%').attr('r', '70%');
-      shade.append('stop').attr('offset', '0%').attr('stop-color', 'rgba(255,255,255,0.10)');
-      shade.append('stop').attr('offset', '60%').attr('stop-color', 'rgba(255,255,255,0)');
-      shade.append('stop').attr('offset', '100%').attr('stop-color', 'rgba(0,0,0,0.18)');
-      svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', R)
-        .attr('fill', 'url(#mack-sphere-shade)')
-        .attr('pointer-events', 'none');
-    } else {
-      // Mercator — flat sea fill across the visible map rectangle
-      const sphereBounds = path.bounds({ type: 'Sphere' });
-      svg.append('rect')
-        .attr('x', sphereBounds[0][0]).attr('y', sphereBounds[0][1])
-        .attr('width',  sphereBounds[1][0] - sphereBounds[0][0])
-        .attr('height', sphereBounds[1][1] - sphereBounds[0][1])
-        .attr('fill', '#1f2734')
-        .attr('stroke', c.rule).attr('stroke-width', 0.6);
-    }
+    // Soft inner radial shading — gives the planet a roundness
+    const defs = svg.append('defs');
+    const shade = defs.append('radialGradient')
+      .attr('id', 'mack-sphere-shade')
+      .attr('cx', '34%').attr('cy', '32%').attr('r', '70%');
+    shade.append('stop').attr('offset', '0%').attr('stop-color', 'rgba(255,255,255,0.10)');
+    shade.append('stop').attr('offset', '60%').attr('stop-color', 'rgba(255,255,255,0)');
+    shade.append('stop').attr('offset', '100%').attr('stop-color', 'rgba(0,0,0,0.18)');
+    svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', R)
+      .attr('fill', 'url(#mack-sphere-shade)')
+      .attr('pointer-events', 'none');
 
     // Graticule
     const grat = d3.geoGraticule10();
@@ -671,13 +583,10 @@ const entry = entries.find(e => e.slug === '2026-04-28-mackinder-redrawn')!;
       .attr('stroke-linecap', 'round')
       .attr('stroke-linejoin', 'round');
 
-    // Visibility helper — in globe mode, points behind the horizon get
-    // hidden; in Mercator mode the whole world is on screen.
+    // Visibility helper — points behind the horizon get hidden.
     const center = [-_rotation[0], -_rotation[1]];
-    const visible = isGlobe
-      ? (lon, lat, margin = 0.02) =>
-          d3.geoDistance([lon, lat], center) < Math.PI / 2 - margin
-      : () => true;
+    const visible = (lon, lat, margin = 0.02) =>
+      d3.geoDistance([lon, lat], center) < Math.PI / 2 - margin;
 
     // Zone labels — drawn on the surface using the projection
     const ZONE_LABELS = [
