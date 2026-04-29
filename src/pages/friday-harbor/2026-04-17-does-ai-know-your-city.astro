@@ -5,15 +5,15 @@ const entry = entries.find(e => e.slug === '2026-04-17-does-ai-know-your-city')!
 ---
 <FridayHarborLayout entry={entry}>
   <figure slot="figure" class="memory-figure">
-    <div class="memory-stage" id="stage" aria-label="Two side-by-side maps comparing real Seattle neighborhood boundaries with the boundaries GPT-5.5 Thinking drew from memory">
+    <div class="memory-stage" id="stage" aria-label="Two side-by-side maps comparing real Seattle neighborhood boundaries with the boundaries GPT-5.5 Thinking drew from its own internal model">
       <div class="memory-panel">
         <h3 class="memory-panel-title" data-lang="en">Real Seattle <small>· Neighborhood Map Atlas, 94 sub-hoods · framed to the real city</small></h3>
         <h3 class="memory-panel-title" data-lang="zh">真实西雅图 <small>· 邻里地图集，94 个子片区 · 按城市自身范围出图</small></h3>
         <svg class="memory-svg" id="svgReal" viewBox="0 0 480 560" preserveAspectRatio="xMidYMid meet" role="img"></svg>
       </div>
       <div class="memory-panel">
-        <h3 class="memory-panel-title" data-lang="en">From memory <small>· GPT-5.5 Thinking, 73 polygons · framed to fit ALL the model drew</small></h3>
-        <h3 class="memory-panel-title" data-lang="zh">凭记忆画的 <small>· GPT-5.5 Thinking，73 个多边形 · 按模型自身范围出图</small></h3>
+        <h3 class="memory-panel-title" data-lang="en">From its own model <small>· GPT-5.5 Thinking, 73 polygons · framed to fit ALL the model drew</small></h3>
+        <h3 class="memory-panel-title" data-lang="zh">凭自己的建模画的 <small>· GPT-5.5 Thinking，73 个多边形 · 按模型自身范围出图</small></h3>
         <svg class="memory-svg" id="svgAI" viewBox="0 0 480 560" preserveAspectRatio="xMidYMid meet" role="img"></svg>
       </div>
       <p class="map-status" id="status">
@@ -26,28 +26,28 @@ const entry = entries.find(e => e.slug === '2026-04-17-does-ai-know-your-city')!
       <b>Left: the real Seattle, framed to its actual bounds. Right: the entire city the model drew, framed to fit all of it.</b>
       We deliberately let the right panel zoom out — what the model imagined extends well past the real city, so we show all of it. Only the
       eight neighborhoods where the deviation is the headline get labelled: red where the model bloats one, green where it shrinks one. The
-      same eight are highlighted in the same colours on the left, so each red shape on the left has a red chip on the right.
+      same eight are highlighted in the same colours on the left, so each red shape on the left has a matching red label on the right.
       <span class="legend-line">
         <span class="legend-swatch swatch-bloat"></span>
-        <span><b>Bloat</b> — drawn much larger than reality. The chip carries the multiplier.</span>
+        <span><b>Bloat</b> — drawn much larger than reality. The label carries the multiplier.</span>
       </span>
       <span class="legend-line">
         <span class="legend-swatch swatch-shrink"></span>
-        <span><b>Shrink</b> — drawn smaller than reality. The chip carries the multiplier.</span>
+        <span><b>Shrink</b> — drawn smaller than reality. The label carries the multiplier.</span>
       </span>
     </figcaption>
 
     <figcaption data-lang="zh">
       <b>左：真实西雅图，按城市自身的范围出图。右：模型脑里画出的整座城，按它自己的范围出图。</b>
       右图我们刻意放大视野——模型想象出的西雅图比真城大得多，与其裁掉一半，不如让它全部显示。只在八个分歧最显著的邻里上做标签：
-      红色是模型把这个邻里画大了，绿色是画小了。同样这八个，左图用同样的颜色高亮——左侧的每一块红，对应右侧同名的红 chip。
+      红色是模型把这个邻里画大了，绿色是画小了。同样这八个，左图用同样的颜色高亮——左侧的每一块红，对应右侧同名的红色标注。
       <span class="legend-line">
         <span class="legend-swatch swatch-bloat"></span>
-        <span><b>膨胀</b>——画得比真实大很多，chip 上是倍数。</span>
+        <span><b>膨胀</b>——画得比真实大很多，标注上写的是倍数。</span>
       </span>
       <span class="legend-line">
         <span class="legend-swatch swatch-shrink"></span>
-        <span><b>压缩</b>——画得比真实小，chip 上是倍数。</span>
+        <span><b>压缩</b>——画得比真实小，标注上写的是倍数。</span>
       </span>
     </figcaption>
 
@@ -102,7 +102,7 @@ const entry = entries.find(e => e.slug === '2026-04-17-does-ai-know-your-city')!
       On April 17, 2026, the most capable "thinking" model in OpenAI's
       current line — which self-identifies in its output as
       <em>GPT-5.5 Thinking</em> — was given the prompt above and no tools.
-      Just: draw Seattle's neighborhoods, from memory. It returned 73
+      Just: draw Seattle's neighborhoods, from its own internal model of the city. It returned 73
       named polygons, attached metadata saying the boundaries were
       "approximate and not authoritative," and exited gracefully.
     </p>
@@ -156,7 +156,7 @@ const entry = entries.find(e => e.slug === '2026-04-17-does-ai-know-your-city')!
       2026 年 4 月 17 日，我们给 OpenAI 当下最强的「思考」模型——
       它在元数据里自报为 <em>GPT-5.5 Thinking</em> —— 上面那条
       原始提示词，并明确不允许联网或调用任何工具：
-      只凭记忆，把西雅图所有邻里的边界尽量画出来。
+      凭它自己对城市的建模，把西雅图所有邻里的边界尽量画出来。
       它干净利落地给出 73 个命名多边形，附上「边界为近似、非权威」的
       元数据，关闭对话。
     </p>
@@ -742,7 +742,9 @@ const entry = entries.find(e => e.slug === '2026-04-17-does-ai-know-your-city')!
     if (!a || !b) return;
     const pxPerKm = b[0] - a[0];
     const barLen = pxPerKm * km;
-    const x0 = W - 14 - barLen, y0 = H - 18;
+    // Top-left corner — bottom-right is taken by the figure watermark,
+    // and the north arrow sits top-right. Scale bar fills the empty top-left.
+    const x0 = 14, y0 = 32;
     const g = svg.append('g').attr('class', 'scale-bar');
     g.append('line').attr('x1', x0).attr('x2', x0 + barLen).attr('y1', y0).attr('y2', y0).attr('class', 'sb-rule');
     g.append('line').attr('x1', x0).attr('x2', x0).attr('y1', y0 - 3).attr('y2', y0 + 3).attr('class', 'sb-tick');
