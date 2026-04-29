@@ -1,5 +1,14 @@
 [
   {
+    "title": "Möbius ∞ City",
+    "slug": "mobius-city",
+    "year": 2026,
+    "image": "/projects/mobiouscity.png",
+    "summary": "An interactive 3D city built on a Möbius strip with three half-twists, folding streets, blocks, and skylines into a continuous figure-8 topology you can fly through.",
+    "tags": ["3D", "topology", "speculative cartography"],
+    "url": "https://jakobzhao.github.io/mobious/"
+  },
+  {
     "title": "AeroPulse: Real-time Flight Disruption Tracker",
     "slug": "aeropulse",
     "year": 2025,
