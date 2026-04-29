@@ -78,9 +78,7 @@ export type Entry = {
 };
 
 /** Slugs of unpublished (draft) entries — used by the sitemap filter. */
-export const DRAFT_SLUGS: readonly string[] = [
-  '2026-04-28-mackinder-redrawn',
-];
+export const DRAFT_SLUGS: readonly string[] = [];
 
 export const entries: Entry[] = [
   {
@@ -91,19 +89,23 @@ export const entries: Entry[] = [
       zh: "麦金德，重画",
     },
     subtitle: {
-      en: "In 1904, Halford Mackinder gave the world a map of pivots and crescents. A century later, the world is a section drawing — six layers, six chokepoint sets, and a thesis with a hundred years of dust on it.",
-      zh: "1904 年，麦金德给世界画了一张关于枢纽与新月的地图。一百二十年过去，世界已是一张剖面图——六个图层、六组咽喉点，加上一条积了一个世纪灰尘的论断。",
+      en: "In 1904 Halford Mackinder gave the world a map of pivots and crescents. A century later the locks of power aren't where he drew them. They're a dozen chokepoints — most of them on Spykman's coastal rim. A different geography.",
+      zh: "1904 年，麦金德给世界画了一张枢纽与新月的图。一百二十年过去，权力的锁点不在他画的地方——而是一打咽喉点，多数落在 Spykman 的海岸弧上。一种不同的地理逻辑。",
     },
     place: {
-      en: "Earth · Orbit to Subterranean · 1904 ↔ 2026",
-      zh: "地球 · 轨道到地下 · 1904 ↔ 2026",
+      en: "Eurasia · Heartland ↔ Rimland · 1904 ↔ 2026",
+      zh: "欧亚大陆 · 心脏地带 ↔ 边缘地带 · 1904 ↔ 2026",
     },
-    techniques: ["projection-critique", "palimpsest"],
+    techniques: ["projection-critique", "chokepoint"],
     kind: "cartographer-led",
     author: "Bo Zhao",
     citeKey: "zhao2026mackinder",
     image: "/data/thumbs/2026-04-28-mackinder-redrawn.png",
-    published: false,
+    // Central-Eurasian anchor — sits on the Heartland / Rimland border,
+    // the editorial pivot of the piece. Used by the homepage globe to
+    // place the marker (no `thumb` bbox because the article isn't a
+    // single rectangle).
+    globe: { lat: 52, lon: 70 },
   },
   {
     slug: "2026-04-27-the-mirror-scarcity",
