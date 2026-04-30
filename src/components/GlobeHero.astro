@@ -6,10 +6,15 @@ import { entries as fhEntries } from '../data/friday-harbor';
 
 // Build a unified point list. Each marker has type/lat/lon/title/href/date.
 type Pt = { type: 'project' | 'press' | 'talk' | 'maps'; lat: number; lon: number; title: string; sub: string; href?: string; date?: string };
+type Props = { excludeProjectSlugs?: string[] };
+
+const { excludeProjectSlugs = [] } = Astro.props as Props;
+const excludedProjects = new Set(excludeProjectSlugs);
 
 const pts: Pt[] = [];
 
 for (const p of projects) {
+  if (excludedProjects.has(p.slug)) continue;
   if (typeof (p as any).lat === 'number' && typeof (p as any).lon === 'number') {
     pts.push({ type: 'project', lat: (p as any).lat, lon: (p as any).lon, title: p.title, sub: p.summary ?? '', href: `/projects/#${p.slug}`, date: String(p.year ?? '') });
   }

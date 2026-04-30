@@ -101,6 +101,15 @@
     "collaborators": "With Q. Zhang, Y. Xia, J. Huang, & L. Peng"
   },
   {
+    "title": "Deepfake Geography",
+    "slug": "deepfake",
+    "year": 2021,
+    "image": "/projects/deepfake.png",
+    "summary": "A public scholarship project on AI-fabricated satellite imagery and the emerging challenges deepfakes pose to spatial truth, trust, and geographic knowledge.",
+    "tags": ["deepfake geography", "GeoAI", "misinformation"],
+    "url": "https://hgis.uw.edu/deepfake"
+  },
+  {
     "title": "COVID-19 Risk to Washington Workers",
     "slug": "covid19-workers",
     "year": 2020,
