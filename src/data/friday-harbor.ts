@@ -82,6 +82,32 @@ export const DRAFT_SLUGS: readonly string[] = [];
 
 export const entries: Entry[] = [
   {
+    slug: "2026-04-30-seven-turns-one-discipline",
+    date: "2026-04-30",
+    title: {
+      en: "A Century of Anglo-American Human Geography",
+      zh: "英美人文地理学的百年演变",
+    },
+    subtitle: {
+      en: "Ron Johnston and James Sidaway's Geography and Geographers chronicled the field across seven editions; the streamgraph extends the frame to a century and threads in the world events that pulled each turn into being — from the Depression and WWII to '68, the oil shock, the Berlin Wall, 9/11, the 2008 crisis, and COVID.",
+      zh: "Ron Johnston 与 James Sidaway 的《Geography and Geographers》以七版编年记录了这门学科；河流图把视野拉到百年，并把每一次转向背后的时代脉搏串起来——大萧条、二战、六八、石油危机、柏林墙、9·11、金融危机、新冠。",
+    },
+    place: {
+      en: "Anglo-American human geography · 1925 → 2026",
+      zh: "英美人文地理学 · 1925 → 2026",
+    },
+    techniques: ["palimpsest", "field-note"],
+    kind: "cartographer-led",
+    author: "Bo Zhao",
+    citeKey: "zhao2026seventurns",
+    image: "/data/thumbs/2026-04-30-seven-turns-one-discipline.png",
+    // Anchor on the University of Washington — both the institutional home
+    // of this column and one of the foundational sites of the post-war
+    // quantitative revolution (the "Washington school": Garrison, Bunge,
+    // Berry, Marble in the late 1950s).
+    globe: { lat: 47.654, lon: -122.308 },
+  },
+  {
     slug: "2026-04-28-mackinder-redrawn",
     date: "2026-04-28",
     title: {

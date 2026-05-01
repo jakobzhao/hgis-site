@@ -1,0 +1,812 @@
+---
+import FridayHarborLayout from '../../layouts/FridayHarborLayout.astro';
+import { entries } from '../../data/friday-harbor';
+const entry = entries.find(e => e.slug === '2026-04-30-seven-turns-one-discipline')!;
+---
+<FridayHarborLayout entry={entry}>
+  <figure slot="figure" class="gg-figure">
+    <div class="gg-stage" id="stage" aria-label="Streamgraph of Anglo-American human geography paradigms, 1925 to 2026, with representative figures inside each band, world events along the top, and the seven editions of Geography and Geographers above the plot">
+      <p class="map-status">
+        <span data-lang="en">Loading streamgraph…</span>
+        <span data-lang="zh">河流图加载中…</span>
+      </p>
+    </div>
+
+    <figcaption data-lang="en">
+      <b>A century of Anglo-American human geography, read as a streamgraph.</b>
+      Each band is one paradigm; under it, the names that anchor it. Above the plot: the world events that pulled each turn into being, and the seven editions of Johnston (later Johnston &amp; Sidaway), <em>Geography and Geographers</em>, 1979–2016. The bands do not relay; they accumulate.
+      <span class="legend-line">
+        <span class="legend-swatch swatch-era"></span>
+        <span><b>Era event</b> — Depression, WWII, '68, oil shock, Wall, 9/11, 2008, COVID.</span>
+      </span>
+      <span class="legend-line">
+        <span class="legend-swatch swatch-band"></span>
+        <span><b>Band</b> — a paradigm and the figures who made it. Older bands thin but never vanish.</span>
+      </span>
+    </figcaption>
+
+    <figcaption data-lang="zh">
+      <b>百年英美人文地理学，画成一条河流图。</b>
+      每一条带是一种范式，带下标着支撑它的代表人物。图的上方：把每一次转向拉进现实的时代脉搏，以及 Johnston（后与 Sidaway 合著）《Geography and Geographers》自 1979 至 2016 的七版。带不接力，只叠加。
+      <span class="legend-line">
+        <span class="legend-swatch swatch-era"></span>
+        <span><b>时代事件</b>——大萧条、二战、六八、石油、柏林墙、9·11、2008、新冠。</span>
+      </span>
+      <span class="legend-line">
+        <span class="legend-swatch swatch-band"></span>
+        <span><b>条带</b>——一种范式与撑起它的代表人物。老条带只会变细，不会消失。</span>
+      </span>
+    </figcaption>
+
+    <aside class="gg-stats" aria-label="key figures">
+      <div class="stat" data-lang="en">
+        <span class="stat-num">101</span>
+        <span class="stat-label">years on the streamgraph — 1925 to 2026, with the post-war book extended back to its inheritance</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">101</span>
+        <span class="stat-label">年——1925 至 2026，战后那本书往前接上它所继承的传统</span>
+      </div>
+
+      <div class="stat" data-lang="en">
+        <span class="stat-num">7</span>
+        <span class="stat-label">editions: 1979 / 1983 / 1987 / 1991 / 1997 / 2004 / 2016 — Johnston (Sidaway from the 6th)</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">7</span>
+        <span class="stat-label">版：1979 / 1983 / 1987 / 1991 / 1997 / 2004 / 2016——第 6 版起 Sidaway 加入</span>
+      </div>
+
+      <div class="stat" data-lang="en">
+        <span class="stat-num">10</span>
+        <span class="stat-label">paradigms layered — regional, quantitative, behavioral, humanistic, Marxist, cultural, feminist, GIS, non-representational, planetary</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">10</span>
+        <span class="stat-label">条范式——区域、计量、行为、人本、马克思、文化、女性主义、GIS、非表征、行星</span>
+      </div>
+
+      <div class="stat" data-lang="en">
+        <span class="stat-num">0</span>
+        <span class="stat-label">turns that fully replaced the previous one — the discipline accretes, it does not relay</span>
+      </div>
+      <div class="stat" data-lang="zh">
+        <span class="stat-num">0</span>
+        <span class="stat-label">完全取代前一种范式的转向——这门学科是叠加，不是接力</span>
+      </div>
+    </aside>
+  </figure>
+
+  <div slot="notebook-en">
+    <p>
+      Ron Johnston wrote the first edition of <em>Geography and Geographers:
+      Anglo-American Human Geography Since 1945</em> in 1979 and kept rewriting
+      it for the rest of his life. James Sidaway joined for the sixth edition in
+      2004; together they delivered a seventh in 2016. Read end to end across
+      forty-seven years and roughly nine hundred pages, the book is the closest
+      thing the English-speaking discipline has to an authorised chronicle of
+      itself. It is also a quiet polemic. The longer Johnston wrote, the less
+      the chronicle reads as a sequence of revolutions and the more it reads as
+      a layering. Each edition adds a band without erasing the bands beneath.
+    </p>
+    <p>
+      The accepted shorthand has always been <em>turns</em>. The
+      <b>quantitative</b> turn began with Fred Schaefer's 1953 attack on
+      Hartshorne's regional tradition and crystallised in the Washington school
+      of the late 1950s — Garrison and his students Bunge, Berry, Marble — and
+      in Peter Haggett's <em>Locational Analysis</em> at Bristol. By 1969,
+      Harvey's <em>Explanation in Geography</em> read like the field's general
+      theory. Within four years he had renounced it: <em>Social Justice and the
+      City</em> (1973) opened a <b>Marxist / radical</b> turn that the journal
+      <em>Antipode</em> had been preparing since 1969. Almost in parallel,
+      Yi-Fu Tuan's <em>Topophilia</em> (1974) and Anne Buttimer's work on
+      lifeworld defined a <b>humanistic</b> counter-turn — phenomenology,
+      sense-of-place, the experiencing subject. The 1980s added a
+      <b>structurationist / realist</b> register (Sayer, Pred, Gregory reading
+      Giddens) and then the <b>cultural</b> turn (Cosgrove and Daniels,
+      Jackson, Soja); the <b>feminist</b> intervention (McDowell, Rose,
+      Gibson-Graham) ran alongside both. In 1993 a meeting in Friday Harbor
+      brought GIS scientists into a room with critical theorists and produced,
+      via Pickles's <em>Ground Truth</em> (1995), the <b>critical-GIS</b> turn
+      this column is named for. Since 2000: Thrift's
+      <b>non-representational</b> theory, Whatmore's hybrid /
+      more-than-human geographies, and the still-active
+      <b>planetary / decolonial</b> rewriting of who the discipline is
+      supposed to be for.
+    </p>
+    <p>
+      The streamgraph is the right shape for this history. A relay race would
+      put each turn in sequence, baton handed cleanly forward; geography did
+      not do that. Hartshorne's regional thinking did not vanish when
+      quantification arrived — it sat in textbooks and area-studies programmes
+      for another fifty years. Quantitative geography did not vanish when
+      Marxism arrived — it migrated, picked up GIS in the late 1980s, and is
+      now the largest single band on the chart. Marxist geography did not
+      vanish when the cultural turn arrived — Harvey kept publishing, the
+      journal <em>Antipode</em> kept running, and post-2008 the band thickened
+      again. What the discipline has actually done across these eight decades
+      is <em>thicken</em>. New questions were added; old questions were
+      rarely subtracted. Johnston, edition after edition, was documenting
+      exactly that — and the seventh edition has more bands than the first
+      because the chart was honest about it.
+    </p>
+    <p class="aside">
+      <em>What the streamgraph deliberately leaves out.</em> The institutional
+      politics behind each turn — Harvard's closure of geography in 1948, the
+      AAG's slow centre, the journals (<em>Antipode</em> 1969, <em>Society and
+      Space</em> 1983, <em>Gender, Place &amp; Culture</em> 1994) that midwifed
+      each new band, the geographies <em>outside</em> the Anglo-American frame
+      that the book's subtitle quietly admits it is not telling. A more honest
+      eighth edition would widen the frame.
+    </p>
+  </div>
+
+  <div slot="notebook-zh">
+    <p>
+      Ron Johnston 1979 年写下《Geography and Geographers: Anglo-American
+      Human Geography Since 1945》第一版，之后一辈子都在改这本书。
+      James Sidaway 在 2004 年第六版加入；两人合作的第七版于 2016 年问世。
+      四十七年、九百来页通读下来，这本书是英语世界这门学科最接近"官方编年史"
+      的东西。它同时也是一份安静的论辩——Johnston 写得越久，这部编年史
+      越不像一连串革命，越像一层一层叠加。每一版都新加一条带，
+      却从不擦掉下面的带。
+    </p>
+    <p>
+      惯用的简写是<em>转向</em>。<b>计量转向</b>始于 Fred Schaefer 1953 年
+      对 Hartshorne 区域学派的攻击，在 1950 年代末"华盛顿大学学派"
+      （Garrison 与他的学生 Bunge、Berry、Marble）和 Peter Haggett
+      在 Bristol 写的《Locational Analysis》中成形。到 1969 年，
+      Harvey 的《Explanation in Geography》几乎可以读作整个领域的总论。
+      不到四年，他亲手推翻了它：<em>Social Justice and the City</em>（1973）
+      开启了<b>马克思 / 激进</b>转向，期刊 <em>Antipode</em> 自 1969 年起
+      就在为它做准备。几乎同时，段义孚的《Topophilia》（1974）
+      与 Anne Buttimer 关于"生活世界"的研究，定义出一种<b>人本主义</b>
+      反向转——现象学、地方感、有体验的主体。1980 年代再加上
+      <b>结构化 / 现实主义</b>（Sayer、Pred、Gregory 读 Giddens），
+      接着是<b>文化</b>转向（Cosgrove 与 Daniels、Jackson、Soja）；
+      <b>女性主义</b>介入（McDowell、Rose、Gibson-Graham）与这两条并行。
+      1993 年，圣胡安岛上的"周五港会议"把 GIS 科学家与批判理论家请进同一间屋子，
+      经由 Pickles 主编的《Ground Truth》（1995），催生了
+      <b>批判 GIS</b> 转向——也就是这个专栏名字的来由。2000 年以后：
+      Thrift 的<b>非表征理论</b>、Whatmore 的混合 / 超越人地理，
+      以及仍在持续中的<b>行星 / 解殖</b>对"这门学科到底为谁而做"的重新提问。
+    </p>
+    <p>
+      河流图是这段历史正确的形状。如果是一场接力赛，每一种转向接过棒、
+      干净地往前传——但人文地理并不是这样。Hartshorne 的区域思路并没有
+      在计量到来时消失，它在教科书和区域研究项目里又多活了五十年。
+      计量地理也没有在马克思主义到来时消失——它换了个壳，1980 年代末
+      接上 GIS，到今天反而成了图上最厚的一条带。马克思地理也没有在文化转向
+      到来时消失——Harvey 一直在写，<em>Antipode</em> 一直在出，
+      2008 年之后这条带又开始变粗。这门学科八十年里真正做的事情是<em>变厚</em>：
+      新问题不断加入，老问题很少被减去。Johnston 一版一版做的，正是把这件事
+      记录下来——第七版比第一版多出的那几条带，是这张图诚实地承认的。
+    </p>
+    <p class="aside">
+      <em>这张图刻意没画的东西。</em>每一次转向背后的机构政治——
+      1948 年哈佛关掉地理系、AAG 缓慢的中间地带、那些为新条带接生的期刊
+      （<em>Antipode</em> 1969、<em>Society and Space</em> 1983、
+      <em>Gender, Place &amp; Culture</em> 1994）；以及书名"Anglo-American"
+      默认它没在讲的、英美框架之外的那些地理学。更诚实的第八版，
+      应当把框架放宽。
+    </p>
+  </div>
+
+  <ul slot="provenance-en">
+    <li>The chronicle itself: Ron Johnston &amp; James D. Sidaway, <a href="https://www.routledge.com/Geography-and-Geographers-Anglo-American-Human-Geography-since-1945/Johnston-Sidaway/p/book/9780340985106" rel="noopener"><em>Geography and Geographers: Anglo-American Human Geography Since 1945</em>, 7th ed.</a> (Routledge, 2016). First edition 1979 (Johnston, sole author); Sidaway joined for the 6th (2004).</li>
+    <li>Quantitative turn: <a href="https://www.tandfonline.com/doi/abs/10.1080/00045605309352107" rel="noopener">Fred Schaefer, "Exceptionalism in Geography," <em>Annals AAG</em> 43(3), 1953</a>; Peter Haggett, <em>Locational Analysis in Human Geography</em> (1965); David Harvey, <em>Explanation in Geography</em> (1969).</li>
+    <li>Marxist / radical turn: David Harvey, <em>Social Justice and the City</em> (1973); <em>Antipode: A Radical Journal of Geography</em>, founded 1969 — <a href="https://onlinelibrary.wiley.com/journal/14678330" rel="noopener">journal home</a>; Doreen Massey, <em>Spatial Divisions of Labour</em> (1984).</li>
+    <li>Humanistic turn: Yi-Fu Tuan, <em>Topophilia</em> (1974) and <em>Space and Place</em> (1977); Anne Buttimer, "Grasping the Dynamism of Lifeworld," <em>Annals AAG</em> 66(2), 1976; Edward Relph, <em>Place and Placelessness</em> (1976).</li>
+    <li>Cultural turn: Denis Cosgrove &amp; Stephen Daniels (eds.), <em>The Iconography of Landscape</em> (1988); Peter Jackson, <em>Maps of Meaning</em> (1989); Edward Soja, <em>Postmodern Geographies</em> (1989).</li>
+    <li>Feminist intervention: Linda McDowell, <em>Gender, Identity and Place</em> (1999); Gillian Rose, <em>Feminism and Geography</em> (1993); J.K. Gibson-Graham, <em>The End of Capitalism (As We Knew It)</em> (1996); journal <a href="https://www.tandfonline.com/journals/cgpc20" rel="noopener"><em>Gender, Place &amp; Culture</em></a> (founded 1994).</li>
+    <li>The Friday Harbor moment: <a href="https://www.guilford.com/books/Ground-Truth/John-Pickles/9780898622959" rel="noopener">John Pickles (ed.), <em>Ground Truth: The Social Implications of Geographic Information Systems</em></a> (Guilford, 1995) — the volume that came out of the 1993 NCGIA meeting on San Juan Island that this column is named for.</li>
+    <li>Non-representational and more-than-human: Nigel Thrift, <em>Non-Representational Theory: Space, Politics, Affect</em> (Routledge, 2008); Sarah Whatmore, <em>Hybrid Geographies</em> (Sage, 2002).</li>
+    <li>Planetary / decolonial register: Tariq Jazeel, "Mainstreaming Geography's Decolonial Imperative," <em>Trans. Inst. Br. Geogr.</em> 42(3), 2017; Neil Brenner &amp; Christian Schmid, "Planetary Urbanization," in <em>Urban Constellations</em> (2011).</li>
+  </ul>
+
+  <ul slot="provenance-zh">
+    <li>编年史本身：Ron Johnston &amp; James D. Sidaway，<a href="https://www.routledge.com/Geography-and-Geographers-Anglo-American-Human-Geography-since-1945/Johnston-Sidaway/p/book/9780340985106" rel="noopener"><em>Geography and Geographers: Anglo-American Human Geography Since 1945</em>，第 7 版</a>（Routledge, 2016）。第 1 版 1979 年由 Johnston 独立完成；Sidaway 自第 6 版（2004）起加入。</li>
+    <li>计量转向：<a href="https://www.tandfonline.com/doi/abs/10.1080/00045605309352107" rel="noopener">Fred Schaefer，"Exceptionalism in Geography"，<em>Annals AAG</em> 43(3)，1953</a>；Peter Haggett，<em>Locational Analysis in Human Geography</em>（1965）；David Harvey，<em>Explanation in Geography</em>（1969）。</li>
+    <li>马克思 / 激进转向：David Harvey，<em>Social Justice and the City</em>（1973）；<em>Antipode</em> 创刊 1969——<a href="https://onlinelibrary.wiley.com/journal/14678330" rel="noopener">期刊主页</a>；Doreen Massey，<em>Spatial Divisions of Labour</em>（1984）。</li>
+    <li>人本主义转向：段义孚，<em>Topophilia</em>（1974）与 <em>Space and Place</em>（1977）；Anne Buttimer，"Grasping the Dynamism of Lifeworld"，<em>Annals AAG</em> 66(2)，1976；Edward Relph，<em>Place and Placelessness</em>（1976）。</li>
+    <li>文化转向：Denis Cosgrove 与 Stephen Daniels（编），<em>The Iconography of Landscape</em>（1988）；Peter Jackson，<em>Maps of Meaning</em>（1989）；Edward Soja，<em>Postmodern Geographies</em>（1989）。</li>
+    <li>女性主义介入：Linda McDowell，<em>Gender, Identity and Place</em>（1999）；Gillian Rose，<em>Feminism and Geography</em>（1993）；J.K. Gibson-Graham，<em>The End of Capitalism (As We Knew It)</em>（1996）；期刊 <a href="https://www.tandfonline.com/journals/cgpc20" rel="noopener"><em>Gender, Place &amp; Culture</em></a>（创刊 1994）。</li>
+    <li>"周五港"瞬间：<a href="https://www.guilford.com/books/Ground-Truth/John-Pickles/9780898622959" rel="noopener">John Pickles（编），<em>Ground Truth: The Social Implications of Geographic Information Systems</em></a>（Guilford, 1995）——脱胎自 1993 年圣胡安岛 NCGIA 会议的论文集，本专栏名字即取自这场会议。</li>
+    <li>非表征与超越人：Nigel Thrift，<em>Non-Representational Theory: Space, Politics, Affect</em>（Routledge, 2008）；Sarah Whatmore，<em>Hybrid Geographies</em>（Sage, 2002）。</li>
+    <li>行星 / 解殖：Tariq Jazeel，"Mainstreaming Geography's Decolonial Imperative"，<em>Trans. Inst. Br. Geogr.</em> 42(3)，2017；Neil Brenner 与 Christian Schmid，"Planetary Urbanization"，收于 <em>Urban Constellations</em>（2011）。</li>
+  </ul>
+</FridayHarborLayout>
+
+<style>
+  .gg-figure { margin: 0; }
+  .gg-stage {
+    width: 100%;
+    aspect-ratio: 5 / 3;
+    background: transparent;
+    border: 0;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .gg-stage svg { display: block; width: 100%; height: 100%; }
+  .map-status {
+    margin: 0;
+    color: var(--ink-faint);
+    font-family: var(--serif);
+    font-style: italic;
+  }
+
+  .gg-figure figcaption {
+    margin: 1.1rem 0.2rem 0;
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+    font-family: var(--serif);
+    line-height: 1.65;
+    max-width: 880px;
+  }
+  .gg-figure figcaption b { color: var(--ink); font-weight: 500; }
+  .gg-figure figcaption em { color: var(--uw-purple-deep); font-style: italic; }
+  .gg-figure figcaption .legend-line {
+    display: flex; align-items: flex-start; gap: 0.55rem;
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+  }
+  .gg-figure figcaption .legend-swatch {
+    flex: 0 0 auto;
+    width: 14px; height: 14px;
+    margin-top: 4px;
+    border-radius: 3px;
+  }
+  .swatch-era     { background: #b6604a; border: 2px solid #8a3e2e; border-radius: 50%; }
+  .swatch-band    { background: linear-gradient(180deg, #b9a577 0%, #3a6e8c 25%, #6e4e72 50%, #3e8a90 75%, #5a8a6e 100%); }
+
+  .aside {
+    border-left: 2px solid var(--rule);
+    padding-left: 0.8rem;
+    color: var(--ink-faint);
+    font-size: 0.88rem !important;
+    font-style: italic;
+  }
+
+  .gg-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4rem;
+    margin: 1.4rem 0.2rem 0;
+    padding: 1rem 0 0;
+    border-top: 1px solid var(--rule);
+  }
+  .gg-stats .stat {
+    display: flex; flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+  .gg-stats .stat-num {
+    font-family: var(--display, "Cormorant Garamond", Georgia, serif);
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--uw-purple-deep);
+    letter-spacing: -0.005em;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .gg-stats .stat-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--ink-faint);
+    max-width: 16em;
+  }
+  @media (max-width: 720px) {
+    .gg-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  }
+</style>
+
+<script type="module">
+  import * as d3 from 'https://esm.sh/d3@7';
+
+  // ===== Paradigm bands =====
+  // Each paradigm: a set of (year, strength) keypoints between 1925 and
+  // 2026, plus 2–4 representative figures rendered as a sub-line inside
+  // the band. Strengths are interpolated linearly between keypoints; the
+  // streamgraph renormalises across bands. The numbers are editorial
+  // weights, not bibliometrics — they're calibrated to read as Johnston &
+  // Sidaway's chronicle does, with bands that thin without disappearing.
+  const PARADIGMS = [
+    {
+      id: 'regional',
+      label:   { en: 'Regional · areal differentiation',  zh: '区域 · 区位差异' },
+      figures: { en: 'Hartshorne · Sauer · Vidal',        zh: 'Hartshorne · Sauer · Vidal' },
+      color:   '#b9a577',
+      peaks: [
+        [1925, 0.55], [1939, 0.95], [1945, 1.00], [1955, 0.90],
+        [1965, 0.45], [1975, 0.22], [1985, 0.14], [2000, 0.10], [2026, 0.08],
+      ],
+    },
+    {
+      id: 'quantitative',
+      label:   { en: 'Quantitative · spatial science',    zh: '计量 · 空间科学' },
+      figures: { en: 'Schaefer · Haggett · Berry · Bunge', zh: 'Schaefer · Haggett · Berry · Bunge' },
+      color:   '#3a6e8c',
+      peaks: [
+        [1925, 0.02], [1953, 0.10], [1965, 0.85], [1972, 1.00],
+        [1980, 0.65], [1990, 0.50], [2000, 0.55], [2010, 0.65], [2026, 0.70],
+      ],
+    },
+    {
+      id: 'behavioral',
+      label:   { en: 'Behavioral',                         zh: '行为' },
+      figures: { en: 'Golledge · Cox',                     zh: 'Golledge · Cox' },
+      color:   '#8a8e57',
+      peaks: [
+        [1925, 0.0], [1965, 0.05], [1972, 0.55], [1978, 0.65],
+        [1985, 0.40], [1995, 0.20], [2010, 0.12], [2026, 0.10],
+      ],
+    },
+    {
+      id: 'humanistic',
+      label:   { en: 'Humanistic',                          zh: '人本' },
+      figures: { en: 'Tuan · Buttimer · Relph',             zh: '段义孚 · Buttimer · Relph' },
+      color:   '#6e8b75',
+      peaks: [
+        [1925, 0.0], [1972, 0.05], [1978, 0.55], [1985, 0.55],
+        [1995, 0.45], [2005, 0.45], [2026, 0.50],
+      ],
+    },
+    {
+      id: 'marxist',
+      label:   { en: 'Marxist · radical',                   zh: '马克思 · 激进' },
+      figures: { en: 'Harvey · Massey · Peet · Smith',      zh: 'Harvey · Massey · Peet · Smith' },
+      color:   '#a14a3e',
+      peaks: [
+        [1925, 0.0], [1969, 0.05], [1975, 0.45], [1985, 0.85],
+        [1995, 0.70], [2005, 0.55], [2012, 0.75], [2020, 0.70], [2026, 0.65],
+      ],
+    },
+    {
+      id: 'cultural',
+      label:   { en: 'Cultural · postmodern',               zh: '文化 · 后现代' },
+      figures: { en: 'Cosgrove · Jackson · Soja',           zh: 'Cosgrove · Jackson · Soja' },
+      color:   '#6e4e72',
+      peaks: [
+        [1925, 0.0], [1985, 0.05], [1992, 0.55], [2000, 0.85],
+        [2010, 0.75], [2020, 0.60], [2026, 0.55],
+      ],
+    },
+    {
+      id: 'feminist',
+      label:   { en: 'Feminist · queer',                    zh: '女性主义 · 酷儿' },
+      figures: { en: 'McDowell · Rose · Gibson-Graham',     zh: 'McDowell · Rose · Gibson-Graham' },
+      color:   '#b87a8a',
+      peaks: [
+        [1925, 0.0], [1982, 0.05], [1990, 0.30], [2000, 0.55],
+        [2010, 0.70], [2020, 0.80], [2026, 0.85],
+      ],
+    },
+    {
+      id: 'gis',
+      label:   { en: 'GIS · critical GIS',                  zh: 'GIS · 批判 GIS' },
+      figures: { en: 'Goodchild · Pickles · Sheppard',      zh: 'Goodchild · Pickles · Sheppard' },
+      color:   '#3e8a90',
+      peaks: [
+        [1925, 0.0], [1985, 0.05], [1993, 0.40], [2000, 0.75],
+        [2010, 0.95], [2020, 1.05], [2026, 1.10],
+      ],
+    },
+    {
+      id: 'nonrep',
+      label:   { en: 'Non-representational',                zh: '非表征' },
+      figures: { en: 'Thrift · Whatmore',                   zh: 'Thrift · Whatmore' },
+      color:   '#97863a',
+      peaks: [
+        [1925, 0.0], [1996, 0.05], [2005, 0.45], [2012, 0.65],
+        [2020, 0.55], [2026, 0.50],
+      ],
+    },
+    {
+      id: 'planetary',
+      label:   { en: 'More-than-human · planetary · decolonial', zh: '超越人 · 行星 · 解殖' },
+      figures: { en: 'Jazeel · Brenner · Yusoff',                zh: 'Jazeel · Brenner · Yusoff' },
+      color:   '#5a8a6e',
+      peaks: [
+        [1925, 0.0], [2008, 0.05], [2015, 0.40], [2020, 0.70], [2026, 0.95],
+      ],
+    },
+  ];
+
+  // ===== Editions of the book =====
+  const EDITIONS = [
+    { year: 1979, no: 1, note: { en: '1st',           zh: '第 1 版' } },
+    { year: 1983, no: 2, note: { en: '2nd',           zh: '第 2 版' } },
+    { year: 1987, no: 3, note: { en: '3rd',           zh: '第 3 版' } },
+    { year: 1991, no: 4, note: { en: '4th',           zh: '第 4 版' } },
+    { year: 1997, no: 5, note: { en: '5th',           zh: '第 5 版' } },
+    { year: 2004, no: 6, note: { en: '6th · Sidaway', zh: '第 6 版 · Sidaway' } },
+    { year: 2016, no: 7, note: { en: '7th',           zh: '第 7 版' } },
+  ];
+
+  // ===== Era events — the "pulse" of the world the discipline lived in =====
+  // Eight world-historical hinges between 1925 and 2026. Rendered above
+  // the streamgraph in two staggered rows so labels don't collide where
+  // events cluster (1968 / 1973, 2001 / 2008).
+  const ERA_EVENTS = [
+    { year: 1929, label: { en: 'Great Depression',  zh: '大萧条' },   row: 0 },
+    { year: 1945, label: { en: 'end of WWII',        zh: '二战结束' }, row: 1 },
+    { year: 1968, label: { en: "'68",                zh: '六八' },     row: 0 },
+    { year: 1973, label: { en: 'oil shock',          zh: '石油危机' }, row: 1 },
+    { year: 1989, label: { en: 'Berlin Wall',        zh: '柏林墙' },   row: 0 },
+    { year: 2001, label: { en: '9/11',               zh: '9·11' },    row: 1 },
+    { year: 2008, label: { en: 'financial crisis',   zh: '金融危机' }, row: 0 },
+    { year: 2020, label: { en: 'COVID',              zh: '新冠' },     row: 1 },
+  ];
+
+  // Linear interpolation across keypoints.
+  function strengthAt(peaks, year) {
+    if (year <= peaks[0][0]) return peaks[0][1];
+    if (year >= peaks[peaks.length-1][0]) return peaks[peaks.length-1][1];
+    for (let i = 0; i < peaks.length - 1; i++) {
+      const [y0, v0] = peaks[i];
+      const [y1, v1] = peaks[i+1];
+      if (year >= y0 && year <= y1) {
+        const t = (year - y0) / (y1 - y0);
+        return v0 + t * (v1 - v0);
+      }
+    }
+    return 0;
+  }
+
+  const YEAR_START = 1925;
+  const YEAR_END   = 2026;
+  const YEARS = d3.range(YEAR_START, YEAR_END + 1);
+  const STACK_DATA = YEARS.map(y => {
+    const row = { year: y };
+    PARADIGMS.forEach(p => { row[p.id] = strengthAt(p.peaks, y); });
+    return row;
+  });
+
+  const ACCENT    = '#b6604a';  // era-event accent (same brick as the Mackinder chokepoints)
+  const ACCENT_DK = '#8a3e2e';
+
+  const css = getComputedStyle(document.documentElement);
+  const c = {
+    paper:    css.getPropertyValue('--bg-card').trim()   || '#f5efe2',
+    rule:     css.getPropertyValue('--rule').trim()      || '#d6cdbf',
+    ink:      css.getPropertyValue('--ink').trim()       || '#2c2823',
+    inkSoft:  css.getPropertyValue('--ink-soft').trim()  || '#6c6358',
+    inkFaint: css.getPropertyValue('--ink-faint').trim() || '#98907f',
+    purpleD:  css.getPropertyValue('--uw-purple-deep').trim() || '#4a3e4d',
+  };
+
+  function currentLang() {
+    const fhRoot = document.querySelector('.fh-root');
+    return fhRoot && fhRoot.getAttribute('data-lang') === 'zh' ? 'zh' : 'en';
+  }
+
+  // Re-render on language toggle and resize.
+  const fhRoot = document.querySelector('.fh-root');
+  if (fhRoot) {
+    new MutationObserver(() => render())
+      .observe(fhRoot, { attributes: true, attributeFilter: ['data-lang'] });
+  }
+  window.addEventListener('resize', () => render());
+  requestAnimationFrame(() => render());
+
+  function render() {
+    const stage = document.getElementById('stage');
+    if (!stage) return;
+    const W = stage.clientWidth | 0;
+    const H = stage.clientHeight | 0;
+    if (W < 50 || H < 50) { requestAnimationFrame(render); return; }
+
+    stage.innerHTML = '';
+
+    const lang = currentLang();
+    const isEn = lang === 'en';
+    const serifFont = isEn
+      ? '"Cormorant Garamond", Georgia, serif'
+      : '"Noto Serif SC", "Songti SC", serif';
+    const sansFont = 'Inter, "Noto Sans CJK", sans-serif';
+
+    // ---- Font sizes (English bumped one step over Chinese) ----
+    const fs = {
+      title:        isEn ? 20 : 18,
+      eraLabel:     isEn ? 12 : 11,
+      editionLabel: isEn ? 13 : 11,
+      yearAxis:     isEn ? 13 : 12,
+      footer:       isEn ? 10 : 9,
+      bandMin:      isEn ? 12 : 11,
+      bandMax:      isEn ? 17 : 15,
+      figuresMin:   isEn ? 10 :  9,
+      figuresMax:   isEn ? 12 : 11,
+    };
+
+    const svg = d3.select(stage).append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('width', W).attr('height', H)
+      .style('display', 'block')
+      .style('overflow', 'hidden');
+
+    // Background
+    svg.append('rect').attr('width', W).attr('height', H).attr('fill', c.paper);
+
+    // ---- Title strip ----
+    svg.append('text')
+      .attr('x', 24).attr('y', 28)
+      .attr('font-family', serifFont).attr('font-size', fs.title).attr('font-style', 'italic')
+      .attr('fill', c.purpleD).attr('letter-spacing', '0.16em')
+      .text(isEn
+        ? 'A century of Anglo-American human geography · 1925 → 2026'
+        : '英美人文地理学的百年演变 · 1925 → 2026');
+
+    // ---- Layout budget ----
+    // Two thin rows above the streamgraph carry the era-event labels
+    // (row 0 and row 1, staggered to avoid collisions). Below them sits
+    // the edition-label strip. Edition guide lines were removed so the
+    // only vertical temporal guides are the red era-event dashes.
+    const padLeft   = 28;
+    const padRight  = 28;
+    const eraRow0Y  = 56;                  // upper era-label baseline
+    const eraRow1Y  = 78;                  // lower era-label baseline
+    const eraDotY   = 96;                  // dot row, both era rows tie down to this y
+    const editionY  = 116;                 // edition label baseline
+    const plotTop   = 128;                 // streamgraph top (edition lines start here)
+    const plotBot   = H - 56;              // streamgraph bottom
+    const axisY     = H - 40;              // year axis baseline
+    const plotLeft  = padLeft;
+    const plotRight = W - padRight;
+
+    const x = d3.scaleLinear()
+      .domain([YEAR_START, YEAR_END])
+      .range([plotLeft, plotRight]);
+
+    // ---- Stack / streamgraph ----
+    const stack = d3.stack()
+      .keys(PARADIGMS.map(p => p.id))
+      .offset(d3.stackOffsetWiggle)
+      .order(d3.stackOrderInsideOut);
+    const layers = stack(STACK_DATA);
+
+    const yMin = d3.min(layers, l => d3.min(l, d => d[0]));
+    const yMax = d3.max(layers, l => d3.max(l, d => d[1]));
+    const y = d3.scaleLinear()
+      .domain([yMin, yMax])
+      .range([plotBot, plotTop]);
+
+    const area = d3.area()
+      .x(d => x(d.data.year))
+      .y0(d => y(d[0]))
+      .y1(d => y(d[1]))
+      .curve(d3.curveBasis);
+
+    function clampTextX(textSelection, preferredX, inset = 8) {
+      const node = textSelection.node();
+      if (!node) return preferredX;
+      let width = 0;
+      try {
+        width = node.getBBox().width;
+      } catch {
+        width = 0;
+      }
+      if (!width || width >= W - inset * 2) return Math.max(inset, Math.min(W - inset, preferredX));
+      const half = width / 2;
+      return Math.max(inset + half, Math.min(W - inset - half, preferredX));
+    }
+
+    function tokeniseLabel(text) {
+      const spaced = text.replace(/\s+·\s+/g, ' · ');
+      const parts = spaced.split(/\s+/).filter(Boolean);
+      return parts.length > 1 ? parts : Array.from(text);
+    }
+
+    function wrapText(textSelection, text, maxWidth, lineHeightEm = 1.05) {
+      const words = tokeniseLabel(text);
+      textSelection.text(null);
+      let line = [];
+      let lineNumber = 0;
+      let tspan = textSelection.append('tspan')
+        .attr('x', textSelection.attr('x'))
+        .attr('dy', '0em');
+
+      words.forEach(word => {
+        line.push(word);
+        tspan.text(line.join(' '));
+        const node = tspan.node();
+        const tooWide = node && node.getComputedTextLength() > maxWidth;
+        if (tooWide && line.length > 1) {
+          line.pop();
+          tspan.text(line.join(' '));
+          line = [word];
+          lineNumber += 1;
+          tspan = textSelection.append('tspan')
+            .attr('x', textSelection.attr('x'))
+            .attr('dy', `${lineHeightEm}em`)
+            .text(word);
+        }
+      });
+
+      if (lineNumber > 0) {
+        const tspans = textSelection.selectAll('tspan');
+        tspans.attr('dy', (_, i) => i === 0 ? `${-lineNumber * lineHeightEm / 2}em` : `${lineHeightEm}em`);
+      }
+    }
+
+    // ---- Era events (drawn first, so streamgraph sits over the guide lines) ----
+    const eraG = svg.append('g').attr('class', 'gg-era');
+    ERA_EVENTS.forEach(ev => {
+      const xp = x(ev.year);
+      const labelY = ev.row === 0 ? eraRow0Y : eraRow1Y;
+
+      // Thin connector line from label to the dot row.
+      eraG.append('line')
+        .attr('x1', xp).attr('x2', xp)
+        .attr('y1', labelY + 4).attr('y2', eraDotY - 4)
+        .attr('stroke', ACCENT_DK)
+        .attr('stroke-opacity', 0.45)
+        .attr('stroke-width', 0.8);
+
+      // Red dashed guide from the era-event dot to the bottom of the plot.
+      eraG.append('line')
+        .attr('x1', xp).attr('x2', xp)
+        .attr('y1', eraDotY).attr('y2', plotBot)
+        .attr('stroke', ACCENT_DK)
+        .attr('stroke-opacity', 0.22)
+        .attr('stroke-width', 0.9)
+        .attr('stroke-dasharray', '3 5');
+
+      // Brick dot at the dot row.
+      eraG.append('circle')
+        .attr('cx', xp).attr('cy', eraDotY)
+        .attr('r', 4)
+        .attr('fill', ACCENT)
+        .attr('stroke', ACCENT_DK).attr('stroke-width', 1.2);
+
+      // Year + label, stacked compactly above the dot.
+      const eventLabel = eraG.append('text')
+        .attr('x', xp).attr('y', labelY)
+        .attr('text-anchor', 'middle')
+        .attr('font-family', serifFont)
+        .attr('font-size', fs.eraLabel)
+        .attr('font-style', 'italic')
+        .attr('fill', ACCENT_DK)
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3)
+        .attr('stroke-linejoin', 'round')
+        .text(`${ev.year}  ${ev.label[lang]}`);
+      eventLabel.attr('x', clampTextX(eventLabel, xp, 8));
+    });
+
+    // ---- Edition labels (no guide lines) ----
+    const editionG = svg.append('g').attr('class', 'gg-editions');
+    EDITIONS.forEach(ed => {
+      const xp = x(ed.year);
+      const editionLabel = editionG.append('text')
+        .attr('x', xp).attr('y', editionY)
+        .attr('text-anchor', 'middle')
+        .attr('font-family', serifFont)
+        .attr('font-style', 'italic')
+        .attr('font-size', fs.editionLabel)
+        .attr('fill', c.purpleD)
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(245,239,226,0.92)').attr('stroke-width', 3)
+        .attr('stroke-linejoin', 'round')
+        .text(ed.note[lang]);
+      editionLabel.attr('x', clampTextX(editionLabel, xp, 8));
+    });
+
+    // ---- Streamgraph layers ----
+    const layerG = svg.append('g').attr('class', 'gg-layers');
+    layers.forEach((layer, i) => {
+      const p = PARADIGMS[i];
+      layerG.append('path')
+        .datum(layer)
+        .attr('d', area)
+        .attr('fill', p.color)
+        .attr('fill-opacity', 0.86)
+        .attr('stroke', '#fff8e5')
+        .attr('stroke-opacity', 0.40)
+        .attr('stroke-width', 0.6);
+    });
+
+    // ---- Inline band labels — every band gets one, even thin ones ----
+    // Place the label at the year where the band is widest, vertically
+    // centred in the band at that year. Where the band is thick enough,
+    // also render a sans-serif sub-line with the representative figures.
+    const labelG = svg.append('g').attr('class', 'gg-labels');
+    const figuresThreshold = (yMax - yMin) * 0.045;
+    layers.forEach((layer, i) => {
+      const p = PARADIGMS[i];
+      let bestYear = null;
+      let bestThickness = 0;
+      for (let j = 0; j < layer.length; j++) {
+        const t = layer[j][1] - layer[j][0];
+        if (t > bestThickness) {
+          bestThickness = t;
+          bestYear = layer[j].data.year;
+        }
+      }
+      if (bestYear === null) return;
+      const j = bestYear - YEAR_START;
+      const cxp = x(bestYear);
+      const cyp = y((layer[j][0] + layer[j][1]) / 2);
+      const bandPx = Math.abs(y(layer[j][0]) - y(layer[j][1]));
+
+      const showFigures = bandPx > 34;
+      const labelSize   = Math.max(fs.bandMin, Math.min(fs.bandMax, bandPx * 0.22));
+      const figuresSize = Math.max(fs.figuresMin, Math.min(fs.figuresMax, bandPx * 0.13));
+
+      const labelDy   = showFigures ? -2 : 0;
+      const figuresDy = labelSize * 0.65 + figuresSize * 0.55;
+
+      const maxLabelWidth = Math.min(W - 18, Math.max(84, W * 0.48));
+      const labelText = labelG.append('text')
+        .attr('x', cxp).attr('y', cyp + labelDy)
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-family', serifFont)
+        .attr('font-style', 'italic')
+        .attr('font-size', labelSize)
+        .attr('font-weight', 500)
+        .attr('fill', '#1d1a16')
+        .attr('paint-order', 'stroke')
+        .attr('stroke', 'rgba(255,248,229,0.92)')
+        .attr('stroke-width', 3.2)
+        .attr('stroke-linejoin', 'round');
+      wrapText(labelText, p.label[lang], maxLabelWidth, 1.02);
+      const fittedX = clampTextX(labelText, cxp, 8);
+      labelText.attr('x', fittedX);
+      labelText.selectAll('tspan').attr('x', fittedX);
+
+      if (showFigures) {
+        const figuresText = labelG.append('text')
+          .attr('x', fittedX).attr('y', cyp + labelDy + figuresDy)
+          .attr('text-anchor', 'middle')
+          .attr('dominant-baseline', 'middle')
+          .attr('font-family', sansFont)
+          .attr('font-size', figuresSize)
+          .attr('font-weight', 400)
+          .attr('fill', 'rgba(15,12,8,0.78)')
+          .attr('paint-order', 'stroke')
+          .attr('stroke', 'rgba(255,248,229,0.85)')
+          .attr('stroke-width', 2.4)
+          .attr('stroke-linejoin', 'round');
+        wrapText(figuresText, p.figures[lang], maxLabelWidth, 1.05);
+        const fittedFiguresX = clampTextX(figuresText, fittedX, 8);
+        figuresText.attr('x', fittedFiguresX);
+        figuresText.selectAll('tspan').attr('x', fittedFiguresX);
+      }
+    });
+
+    // ---- Year axis ----
+    const yearTicks = [1925, 1945, 1965, 1985, 2005, 2026];
+    const axisG = svg.append('g').attr('class', 'gg-axis');
+    axisG.append('line')
+      .attr('x1', plotLeft).attr('x2', plotRight)
+      .attr('y1', plotBot + 2).attr('y2', plotBot + 2)
+      .attr('stroke', c.rule).attr('stroke-width', 1);
+    yearTicks.forEach(yr => {
+      const xp = x(yr);
+      axisG.append('line')
+        .attr('x1', xp).attr('x2', xp)
+        .attr('y1', plotBot + 2).attr('y2', plotBot + 8)
+        .attr('stroke', c.inkSoft).attr('stroke-width', 0.8);
+      axisG.append('text')
+        .attr('x', xp).attr('y', axisY)
+        .attr('text-anchor', 'middle')
+        .attr('font-family', serifFont)
+        .attr('font-size', fs.yearAxis)
+        .attr('fill', c.inkSoft)
+        .text(yr);
+    });
+
+    // Footer credit
+    svg.append('text')
+      .attr('x', 12).attr('y', H - 8)
+      .attr('text-anchor', 'start')
+      .attr('font-family', serifFont).attr('font-size', fs.footer).attr('font-style', 'italic')
+      .attr('fill', c.inkFaint)
+      .text(isEn
+        ? 'after Johnston (1979–) and Johnston & Sidaway (2004–) · weights are editorial, not bibliometric'
+        : '依据 Johnston（1979 起）与 Johnston & Sidaway（2004 起） · 强度为编辑判断，非文献计量');
+  }
+</script>
