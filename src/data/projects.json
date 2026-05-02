@@ -1,5 +1,16 @@
 [
   {
+    "title": "Rainbow Pride",
+    "slug": "pride",
+    "year": 2026,
+    "image": "/projects/pride.png",
+    "lat": 47.6571,
+    "lon": -122.3079,
+    "summary": "A rainbow field of 3D fragments rises from the UW Quad and other landmarks of queer memory — Stonewall, the Castro, Pulse, Compton's, and beyond — turning each place into a living atmosphere of pride, care, and belonging.",
+    "tags": ["queer geographies", "3D", "memorial"],
+    "url": "https://jakobzhao.github.io/pride/"
+  },
+  {
     "title": "U.S. County Home Values",
     "slug": "homevalue",
     "year": 2026,
